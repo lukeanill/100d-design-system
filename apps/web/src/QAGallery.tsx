@@ -79,9 +79,7 @@ export function QAGallery() {
             Every core component previewed across light, dark, and glass themes.
           </p>
         </div>
-        <Button variant="outline" asChild>
-          <Link to="/">Back to preview</Link>
-        </Button>
+        <Button variant="outline" nativeButton={false} render={<Link to="/">Back to preview</Link>} />
       </div>
 
       <Section

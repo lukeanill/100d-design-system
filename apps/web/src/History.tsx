@@ -38,9 +38,7 @@ export function History() {
             Every component, style, and theme change made to this design system.
           </p>
         </div>
-        <Button variant="outline" asChild>
-          <Link to="/">Back to preview</Link>
-        </Button>
+        <Button variant="outline" nativeButton={false} render={<Link to="/">Back to preview</Link>} />
       </div>
 
       <div className="overflow-x-auto rounded-2xl border">

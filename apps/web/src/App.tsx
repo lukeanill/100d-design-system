@@ -110,15 +110,9 @@ export function App() {
           <h1 className="text-2xl font-semibold">Design System</h1>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" asChild>
-            <Link to="/tokens">Tokens</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link to="/qa">QA</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link to="/history">History</Link>
-          </Button>
+          <Button variant="outline" nativeButton={false} render={<Link to="/tokens">Tokens</Link>} />
+          <Button variant="outline" nativeButton={false} render={<Link to="/qa">QA</Link>} />
+          <Button variant="outline" nativeButton={false} render={<Link to="/history">History</Link>} />
           <ThemeTogglerButton variant="outline" modes={["light", "dark", "glass"]} />
         </div>
       </div>
