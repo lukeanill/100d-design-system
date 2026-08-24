@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Button } from "@workspace/ui/components/button"
 import { Badge } from "@workspace/ui/components/badge"
 import { Avatar, AvatarFallback } from "@workspace/ui/components/avatar"
@@ -10,10 +11,8 @@ import { Separator } from "@workspace/ui/components/separator"
 import { Input } from "@workspace/ui/components/input"
 import { Label } from "@workspace/ui/components/label"
 
-// Live previews for components that render sensibly with no required props/children.
-// Most of the 200+ components in the library need specific props, triggers, or
-// context providers, so this registry is intentionally a curated subset — everything
-// else falls back to showing its source only.
+// Hand-authored previews for components that need real demo data/structure to look
+// meaningful (compound components, things needing specific variants shown together).
 export const PREVIEW_REGISTRY: Record<string, () => React.ReactNode> = {
   "button.tsx": () => (
     <div className="flex flex-wrap items-center gap-3">
@@ -89,4 +88,87 @@ const rawSources = import.meta.glob("../../../packages/ui/src/components/**/*.ts
 
 export function getSource(path: string): string | undefined {
   return rawSources[`../../../packages/ui/src/components/${path}`]
+}
+
+// Every component module, loaded for real (not raw text) so we can attempt to
+// render any of them generically.
+const modules = import.meta.glob("../../../packages/ui/src/components/**/*.tsx", {
+  eager: true,
+}) as Record<string, Record<string, unknown>>
+
+function normalize(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]/g, "")
+}
+
+// Best-effort resolution of "the" component to preview from a module's exports:
+// prefer an export whose name matches the filename, then default export, then
+// the first exported function.
+function resolveComponent(path: string): React.ComponentType<any> | null {
+  const mod = modules[`../../../packages/ui/src/components/${path}`]
+  if (!mod) return null
+
+  const filename = path.split("/").pop()!.replace(/\.tsx$/, "")
+  const targetKey = normalize(filename)
+
+  const namedMatch = Object.entries(mod).find(
+    ([key, value]) => typeof value === "function" && normalize(key) === targetKey
+  )
+  if (namedMatch) return namedMatch[1] as React.ComponentType<any>
+
+  if (typeof mod.default === "function") return mod.default as React.ComponentType<any>
+
+  const firstFn = Object.values(mod).find((value) => typeof value === "function")
+  return (firstFn as React.ComponentType<any>) ?? null
+}
+
+type BoundaryState = { stage: number; exhausted: boolean }
+
+// Renders successive fallback variants of a component, catching render errors
+// (missing required props/context, etc.) and trying the next, simpler variant.
+// If every variant fails, shows an honest "no live preview" message rather than
+// fabricating one.
+class AutoPreviewBoundary extends React.Component<
+  { variants: Array<() => React.ReactNode> },
+  BoundaryState
+> {
+  state: BoundaryState = { stage: 0, exhausted: false }
+
+  componentDidCatch() {
+    const next = this.state.stage + 1
+    if (next >= this.props.variants.length) {
+      this.setState({ exhausted: true })
+    } else {
+      this.setState({ stage: next })
+    }
+  }
+
+  render() {
+    if (this.state.exhausted) {
+      return (
+        <span className="text-muted-foreground text-sm">
+          No live preview available for this component.
+        </span>
+      )
+    }
+    return <React.Fragment key={this.state.stage}>{this.props.variants[this.state.stage]()}</React.Fragment>
+  }
+}
+
+export function AutoPreview({ path }: { path: string }) {
+  const Component = resolveComponent(path)
+  if (!Component) {
+    return (
+      <span className="text-muted-foreground text-sm">
+        No live preview available for this component.
+      </span>
+    )
+  }
+  return (
+    <AutoPreviewBoundary
+      variants={[
+        () => <Component />,
+        () => <Component>Preview</Component>,
+      ]}
+    />
+  )
 }
