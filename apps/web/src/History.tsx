@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react"
 import { Link } from "react-router"
 import {
   Table,
@@ -9,7 +10,16 @@ import {
 } from "@workspace/ui/components/table"
 import { Badge } from "@workspace/ui/components/badge"
 import { Button } from "@workspace/ui/components/button"
-import { historyEntries, type HistoryStatus } from "./history-data"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@workspace/ui/components/select"
+import { historyEntries, type HistoryEntry, type HistoryStatus } from "./history-data"
+
+type TypeFilter = "all" | HistoryEntry["kind"]
 
 const STATUS_VARIANT: Record<HistoryStatus, "default" | "secondary" | "destructive" | "outline"> = {
   Approved: "default",
@@ -29,6 +39,15 @@ function formatDate(iso: string) {
 }
 
 export function History() {
+  const [typeFilter, setTypeFilter] = useState<TypeFilter>("all")
+
+  const entries = useMemo(() => {
+    const sorted = [...historyEntries].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
+    return typeFilter === "all" ? sorted : sorted.filter((entry) => entry.kind === typeFilter)
+  }, [typeFilter])
+
   return (
     <div className="mx-auto flex min-h-svh max-w-5xl flex-col gap-6 p-8">
       <div className="flex items-center justify-between">
@@ -41,11 +60,25 @@ export function History() {
         <Button variant="outline" nativeButton={false} render={<Link to="/">Back to preview</Link>} />
       </div>
 
+      <div className="flex items-center gap-2">
+        <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as TypeFilter)}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All types</SelectItem>
+            <SelectItem value="Component">Component</SelectItem>
+            <SelectItem value="Style">Style</SelectItem>
+            <SelectItem value="Theme">Theme</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       <div className="overflow-x-auto rounded-2xl border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
+              <TableHead className="w-64">Name</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Date &amp; Time</TableHead>
               <TableHead>Preview</TableHead>
@@ -54,9 +87,11 @@ export function History() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {historyEntries.map((entry) => (
+            {entries.map((entry) => (
               <TableRow key={entry.name}>
-                <TableCell className="font-medium">{entry.name}</TableCell>
+                <TableCell className="max-w-64 truncate font-medium" title={entry.name}>
+                  {entry.name}
+                </TableCell>
                 <TableCell>
                   <span className="text-sm">{entry.kind}</span>
                   <span className="text-muted-foreground text-xs"> · {entry.change}</span>
