@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { Skeleton as SkeletonImpl } from "./skeleton"
 
-export default { title: "Components/Skeleton" }
+export default { title: "Components/Skeleton", component: SkeletonImpl }
 
-export const Skeleton = () => <SkeletonImpl />
+export const Skeleton = (args: ComponentProps<typeof SkeletonImpl>) => <SkeletonImpl {...args} />

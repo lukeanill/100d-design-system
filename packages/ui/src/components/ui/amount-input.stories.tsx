@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { AmountInput as AmountInputImpl } from "./amount-input"
 
-export default { title: "Components/Amount Input" }
+export default { title: "Components/Amount Input", component: AmountInputImpl }
 
-export const AmountInput = () => <AmountInputImpl />
+export const AmountInput = (args: ComponentProps<typeof AmountInputImpl>) => <AmountInputImpl {...args} />

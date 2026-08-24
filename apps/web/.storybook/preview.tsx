@@ -3,6 +3,13 @@ import { ThemeProvider } from "../src/components/theme-provider"
 import "@workspace/ui/globals.css"
 
 const preview: Preview = {
+  parameters: {
+    options: {
+      storySort: {
+        method: "alphabetical",
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <ThemeProvider>

@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { ChevronUpDown as ChevronUpDownImpl } from "./chevron-up-down"
 
-export default { title: "Icon/Chevron Up Down" }
+export default { title: "Icon/Chevron Up Down", component: ChevronUpDownImpl }
 
-export const ChevronUpDown = () => <ChevronUpDownImpl />
+export const ChevronUpDown = (args: ComponentProps<typeof ChevronUpDownImpl>) => <ChevronUpDownImpl {...args} />

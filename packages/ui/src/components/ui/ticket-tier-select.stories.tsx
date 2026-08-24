@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { TicketTierSelect as TicketTierSelectImpl } from "./ticket-tier-select"
 
-export default { title: "Components/Ticket Tier Select" }
+export default { title: "Components/Ticket Tier Select", component: TicketTierSelectImpl }
 
-export const TicketTierSelect = () => <TicketTierSelectImpl />
+export const TicketTierSelect = (args: ComponentProps<typeof TicketTierSelectImpl>) => <TicketTierSelectImpl {...args} />

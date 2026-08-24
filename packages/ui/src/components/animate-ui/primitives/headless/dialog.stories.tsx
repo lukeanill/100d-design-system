@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { Dialog as DialogImpl } from "./dialog"
 
-export default { title: "Animation/Dialog (Headless)" }
+export default { title: "Animation/Dialog (Headless)", component: DialogImpl }
 
-export const Dialog = () => <DialogImpl />
+export const Dialog = (args: ComponentProps<typeof DialogImpl>) => <DialogImpl {...args} />

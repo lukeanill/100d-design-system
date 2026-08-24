@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { NativeSelect as NativeSelectImpl } from "./native-select"
 
-export default { title: "Components/Native Select" }
+export default { title: "Components/Native Select", component: NativeSelectImpl }
 
-export const NativeSelect = () => <NativeSelectImpl />
+export const NativeSelect = (args: ComponentProps<typeof NativeSelectImpl>) => <NativeSelectImpl {...args} />

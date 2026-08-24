@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { Accordion as AccordionImpl } from "./accordion"
 
-export default { title: "Components/Accordion" }
+export default { title: "Components/Accordion", component: AccordionImpl }
 
-export const Accordion = () => <AccordionImpl />
+export const Accordion = (args: ComponentProps<typeof AccordionImpl>) => <AccordionImpl {...args} />

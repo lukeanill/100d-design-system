@@ -1,5 +1,6 @@
+import type { ComponentProps } from "react"
 import { PostList as PostListImpl } from "./post-list"
 
-export default { title: "Components/Post List" }
+export default { title: "Components/Post List", component: PostListImpl }
 
-export const PostList = () => <PostListImpl />
+export const PostList = (args: ComponentProps<typeof PostListImpl>) => <PostListImpl {...args} />
