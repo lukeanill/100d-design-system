@@ -6,28 +6,12 @@ export const componentList: ComponentEntry[] = [
     "path": "accordion.tsx"
   },
   {
-    "name": "Accordion",
-    "path": "animate-ui/primitives/base/accordion.tsx"
-  },
-  {
-    "name": "Accordion",
-    "path": "animate-ui/components/base/accordion.tsx"
-  },
-  {
     "name": "Alert",
     "path": "alert.tsx"
   },
   {
     "name": "Alert Dialog",
     "path": "alert-dialog.tsx"
-  },
-  {
-    "name": "Alert Dialog",
-    "path": "animate-ui/primitives/base/alert-dialog.tsx"
-  },
-  {
-    "name": "Alert Dialog",
-    "path": "animate-ui/components/base/alert-dialog.tsx"
   },
   {
     "name": "Amount Input",
@@ -106,24 +90,12 @@ export const componentList: ComponentEntry[] = [
     "path": "bubble.tsx"
   },
   {
-    "name": "Bubble",
-    "path": "animate-ui/components/backgrounds/bubble.tsx"
-  },
-  {
     "name": "Bubble Brand",
     "path": "animate-ui/components/backgrounds/bubble-brand.tsx"
   },
   {
     "name": "Button",
     "path": "button.tsx"
-  },
-  {
-    "name": "Button",
-    "path": "animate-ui/primitives/buttons/button.tsx"
-  },
-  {
-    "name": "Button",
-    "path": "animate-ui/components/buttons/button.tsx"
   },
   {
     "name": "Button Group",
@@ -158,18 +130,6 @@ export const componentList: ComponentEntry[] = [
     "path": "checkbox.tsx"
   },
   {
-    "name": "Checkbox",
-    "path": "animate-ui/primitives/headless/checkbox.tsx"
-  },
-  {
-    "name": "Checkbox",
-    "path": "animate-ui/primitives/base/checkbox.tsx"
-  },
-  {
-    "name": "Checkbox",
-    "path": "animate-ui/components/base/checkbox.tsx"
-  },
-  {
     "name": "Choropleth",
     "path": "ui/map/choropleth.tsx"
   },
@@ -192,10 +152,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Collapsible",
     "path": "collapsible.tsx"
-  },
-  {
-    "name": "Collapsible",
-    "path": "animate-ui/primitives/base/collapsible.tsx"
   },
   {
     "name": "Combobox",
@@ -238,24 +194,16 @@ export const componentList: ComponentEntry[] = [
     "path": "ui/map/cyclone.tsx"
   },
   {
+    "name": "Data Table",
+    "path": "ui/table.tsx"
+  },
+  {
     "name": "Date Time Picker",
     "path": "ui/date-time-picker.tsx"
   },
   {
     "name": "Dialog",
     "path": "dialog.tsx"
-  },
-  {
-    "name": "Dialog",
-    "path": "animate-ui/primitives/headless/dialog.tsx"
-  },
-  {
-    "name": "Dialog",
-    "path": "animate-ui/primitives/base/dialog.tsx"
-  },
-  {
-    "name": "Dialog",
-    "path": "animate-ui/components/base/dialog.tsx"
   },
   {
     "name": "Direction",
@@ -311,10 +259,6 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Files",
-    "path": "animate-ui/primitives/base/files.tsx"
-  },
-  {
-    "name": "Files",
     "path": "animate-ui/components/base/files.tsx"
   },
   {
@@ -344,10 +288,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Highlight",
     "path": "animate-ui/primitives/texts/highlight.tsx"
-  },
-  {
-    "name": "Highlight",
-    "path": "animate-ui/primitives/effects/highlight.tsx"
   },
   {
     "name": "Hover Card",
@@ -454,6 +394,10 @@ export const componentList: ComponentEntry[] = [
     "path": "ui/map/map-compare.tsx"
   },
   {
+    "name": "Map Marker",
+    "path": "ui/map/marker.tsx"
+  },
+  {
     "name": "Map Sync",
     "path": "ui/map/map-sync.tsx"
   },
@@ -462,16 +406,8 @@ export const componentList: ComponentEntry[] = [
     "path": "marker.tsx"
   },
   {
-    "name": "Marker",
-    "path": "ui/map/marker.tsx"
-  },
-  {
     "name": "Marker Animated",
     "path": "ui/map/marker-animated.tsx"
-  },
-  {
-    "name": "Menu",
-    "path": "animate-ui/primitives/base/menu.tsx"
   },
   {
     "name": "Menu",
@@ -562,18 +498,6 @@ export const componentList: ComponentEntry[] = [
     "path": "popover.tsx"
   },
   {
-    "name": "Popover",
-    "path": "animate-ui/primitives/headless/popover.tsx"
-  },
-  {
-    "name": "Popover",
-    "path": "animate-ui/primitives/base/popover.tsx"
-  },
-  {
-    "name": "Popover",
-    "path": "animate-ui/components/base/popover.tsx"
-  },
-  {
     "name": "Popup",
     "path": "ui/map/popup.tsx"
   },
@@ -591,15 +515,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Preview Card",
-    "path": "animate-ui/primitives/base/preview-card.tsx"
-  },
-  {
-    "name": "Preview Card",
     "path": "animate-ui/components/base/preview-card.tsx"
-  },
-  {
-    "name": "Preview Link Card",
-    "path": "animate-ui/primitives/base/preview-link-card.tsx"
   },
   {
     "name": "Preview Link Card",
@@ -612,14 +528,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Progress",
     "path": "progress.tsx"
-  },
-  {
-    "name": "Progress",
-    "path": "animate-ui/primitives/base/progress.tsx"
-  },
-  {
-    "name": "Progress",
-    "path": "animate-ui/components/base/progress.tsx"
   },
   {
     "name": "Progress Steps",
@@ -636,10 +544,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Radar",
     "path": "ui/map/radar.tsx"
-  },
-  {
-    "name": "Radio",
-    "path": "animate-ui/primitives/base/radio.tsx"
   },
   {
     "name": "Radio",
@@ -668,10 +572,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Resizable",
     "path": "resizable.tsx"
-  },
-  {
-    "name": "Ripple",
-    "path": "animate-ui/primitives/buttons/ripple.tsx"
   },
   {
     "name": "Ripple",
@@ -798,40 +698,12 @@ export const componentList: ComponentEntry[] = [
     "path": "switch.tsx"
   },
   {
-    "name": "Switch",
-    "path": "animate-ui/primitives/headless/switch.tsx"
-  },
-  {
-    "name": "Switch",
-    "path": "animate-ui/primitives/base/switch.tsx"
-  },
-  {
-    "name": "Switch",
-    "path": "animate-ui/components/base/switch.tsx"
-  },
-  {
     "name": "Table",
     "path": "table.tsx"
   },
   {
-    "name": "Table",
-    "path": "ui/table.tsx"
-  },
-  {
     "name": "Tabs",
     "path": "tabs.tsx"
-  },
-  {
-    "name": "Tabs",
-    "path": "animate-ui/primitives/animate/tabs.tsx"
-  },
-  {
-    "name": "Tabs",
-    "path": "animate-ui/primitives/base/tabs.tsx"
-  },
-  {
-    "name": "Tabs",
-    "path": "animate-ui/components/base/tabs.tsx"
   },
   {
     "name": "Tag Select",
@@ -863,10 +735,6 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Theme Toggler",
-    "path": "animate-ui/primitives/effects/theme-toggler.tsx"
-  },
-  {
-    "name": "Theme Toggler",
     "path": "animate-ui/components/buttons/theme-toggler.tsx"
   },
   {
@@ -886,40 +754,12 @@ export const componentList: ComponentEntry[] = [
     "path": "toggle.tsx"
   },
   {
-    "name": "Toggle",
-    "path": "animate-ui/primitives/base/toggle.tsx"
-  },
-  {
-    "name": "Toggle",
-    "path": "animate-ui/components/base/toggle.tsx"
-  },
-  {
     "name": "Toggle Group",
     "path": "toggle-group.tsx"
   },
   {
-    "name": "Toggle Group",
-    "path": "animate-ui/primitives/base/toggle-group.tsx"
-  },
-  {
-    "name": "Toggle Group",
-    "path": "animate-ui/components/base/toggle-group.tsx"
-  },
-  {
     "name": "Tooltip",
     "path": "tooltip.tsx"
-  },
-  {
-    "name": "Tooltip",
-    "path": "animate-ui/primitives/animate/tooltip.tsx"
-  },
-  {
-    "name": "Tooltip",
-    "path": "animate-ui/primitives/base/tooltip.tsx"
-  },
-  {
-    "name": "Tooltip",
-    "path": "animate-ui/components/base/tooltip.tsx"
   },
   {
     "name": "Tsunami",
