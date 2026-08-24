@@ -90,6 +90,10 @@ export const componentList: ComponentEntry[] = [
     "path": "bubble.tsx"
   },
   {
+    "name": "Bubble Background",
+    "path": "animate-ui/components/backgrounds/bubble.tsx"
+  },
+  {
     "name": "Bubble Brand",
     "path": "animate-ui/components/backgrounds/bubble-brand.tsx"
   },
@@ -286,7 +290,11 @@ export const componentList: ComponentEntry[] = [
     "path": "ui/hero.tsx"
   },
   {
-    "name": "Highlight",
+    "name": "Highlight (Effect)",
+    "path": "animate-ui/primitives/effects/highlight.tsx"
+  },
+  {
+    "name": "Highlight (Text)",
     "path": "animate-ui/primitives/texts/highlight.tsx"
   },
   {
