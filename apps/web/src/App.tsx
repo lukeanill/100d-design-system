@@ -8,9 +8,7 @@ import { PREVIEW_REGISTRY, getSource } from "./preview-registry"
 
 const isMapItem = (item: ComponentEntry) => item.path.startsWith("ui/map/")
 const isAnimationItem = (item: ComponentEntry) =>
-  item.path.startsWith("animate-ui/primitives/effects/") ||
-  item.path.startsWith("animate-ui/primitives/texts/") ||
-  item.path.startsWith("fancy/text/")
+  item.path.startsWith("animate-ui/primitives/") || item.path.startsWith("fancy/text/")
 const SOCIAL_POST_PATHS = new Set([
   "ui/instagram-post.tsx",
   "ui/linkedin-post.tsx",
