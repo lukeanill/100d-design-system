@@ -3,7 +3,7 @@ export type ComponentEntry = { name: string; path: string }
 export const componentList: ComponentEntry[] = [
   {
     "name": "Accordion",
-    "path": "accordion.tsx"
+    "path": "animate-ui/components/base/accordion.tsx"
   },
   {
     "name": "Alert",
@@ -11,7 +11,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Alert Dialog",
-    "path": "alert-dialog.tsx"
+    "path": "animate-ui/components/base/alert-dialog.tsx"
   },
   {
     "name": "Amount Input",
@@ -131,7 +131,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Checkbox",
-    "path": "checkbox.tsx"
+    "path": "animate-ui/components/base/checkbox.tsx"
   },
   {
     "name": "Choropleth",
@@ -207,7 +207,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Dialog",
-    "path": "dialog.tsx"
+    "path": "animate-ui/components/base/dialog.tsx"
   },
   {
     "name": "Direction",
@@ -503,7 +503,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Popover",
-    "path": "popover.tsx"
+    "path": "animate-ui/components/base/popover.tsx"
   },
   {
     "name": "Popup",
@@ -535,7 +535,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Progress",
-    "path": "progress.tsx"
+    "path": "animate-ui/components/base/progress.tsx"
   },
   {
     "name": "Progress Steps",
@@ -703,7 +703,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Switch",
-    "path": "switch.tsx"
+    "path": "animate-ui/components/base/switch.tsx"
   },
   {
     "name": "Table",
@@ -711,7 +711,7 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Tabs",
-    "path": "tabs.tsx"
+    "path": "animate-ui/components/base/tabs.tsx"
   },
   {
     "name": "Tag Select",
@@ -759,15 +759,15 @@ export const componentList: ComponentEntry[] = [
   },
   {
     "name": "Toggle",
-    "path": "toggle.tsx"
+    "path": "animate-ui/components/base/toggle.tsx"
   },
   {
     "name": "Toggle Group",
-    "path": "toggle-group.tsx"
+    "path": "animate-ui/components/base/toggle-group.tsx"
   },
   {
     "name": "Tooltip",
-    "path": "tooltip.tsx"
+    "path": "animate-ui/components/base/tooltip.tsx"
   },
   {
     "name": "Tsunami",

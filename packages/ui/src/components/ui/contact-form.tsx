@@ -16,9 +16,9 @@ import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import {
   Popover,
-  PopoverContent,
+  PopoverPanel,
   PopoverTrigger,
-} from "@workspace/ui/components/popover";
+} from "@workspace/ui/components/animate-ui/components/base/popover";
 import { cn } from "@workspace/ui/lib/utils";
 
 const COUNTRIES_URL =
@@ -237,7 +237,7 @@ export const ContactFormCountrySelect = ({
         <span>{selectedCountry.code}</span>
         <ChevronDown className="size-3.5 text-muted-foreground" />
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-[280px] p-0">
+      <PopoverPanel align="start" className="w-[280px] p-0">
         <div className="border-border border-b p-2">
           <div className="relative">
             <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -275,7 +275,7 @@ export const ContactFormCountrySelect = ({
             ))
           )}
         </div>
-      </PopoverContent>
+      </PopoverPanel>
     </Popover>
   );
 };

@@ -20,9 +20,9 @@ import {
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import {
   Tooltip,
-  TooltipContent,
+  TooltipPanel,
   TooltipTrigger,
-} from "@workspace/ui/components/tooltip"
+} from "@workspace/ui/components/animate-ui/components/base/tooltip"
 import { SidebarIcon } from "@phosphor-icons/react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
@@ -510,7 +510,7 @@ function SidebarMenuButton({
 }: useRender.ComponentProps<"button"> &
   React.ComponentProps<"button"> & {
     isActive?: boolean
-    tooltip?: string | React.ComponentProps<typeof TooltipContent>
+    tooltip?: string | React.ComponentProps<typeof TooltipPanel>
   } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const { isMobile, state } = useSidebar()
   const comp = useRender({
@@ -543,7 +543,7 @@ function SidebarMenuButton({
   return (
     <Tooltip>
       {comp}
-      <TooltipContent
+      <TooltipPanel
         side="right"
         align="center"
         hidden={state !== "collapsed" || isMobile}

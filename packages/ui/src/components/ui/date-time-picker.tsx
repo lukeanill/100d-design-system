@@ -13,9 +13,9 @@ import type { ReactNode } from "react";
 import { Button } from "@workspace/ui/components/button";
 import {
   Popover,
-  PopoverContent,
+  PopoverPanel,
   PopoverTrigger,
-} from "@workspace/ui/components/popover";
+} from "@workspace/ui/components/animate-ui/components/base/popover";
 import { cn } from "@workspace/ui/lib/utils";
 
 /** Timezone configuration using IANA timezone identifiers for correct DST handling */
@@ -469,7 +469,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                     )}
                   />
                 </PopoverTrigger>
-                <PopoverContent className="w-[320px] p-0" align="start">
+                <PopoverPanel className="w-[320px] p-0" align="start">
                   <div className="p-2 border-b">
                     <div className="relative">
                       <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
@@ -505,7 +505,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                       </div>
                     )}
                   </div>
-                </PopoverContent>
+                </PopoverPanel>
               </Popover>
             </div>
           )}

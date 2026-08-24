@@ -6,11 +6,11 @@ import { Command as CommandPrimitive } from "cmdk"
 import { cn } from "@workspace/ui/lib/utils"
 import {
   Dialog,
-  DialogContent,
+  DialogPopup,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@workspace/ui/components/dialog"
+} from "@workspace/ui/components/animate-ui/components/base/dialog"
 import {
   InputGroup,
   InputGroupAddon,
@@ -53,7 +53,7 @@ function CommandDialog({
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
-      <DialogContent
+      <DialogPopup
         className={cn(
           "top-1/3 translate-y-0 overflow-hidden rounded-4xl! p-0",
           className
@@ -61,7 +61,7 @@ function CommandDialog({
         showCloseButton={showCloseButton}
       >
         {children}
-      </DialogContent>
+      </DialogPopup>
     </Dialog>
   )
 }

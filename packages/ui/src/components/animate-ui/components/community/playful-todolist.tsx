@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { motion, type Transition } from 'motion/react';
 import { Label } from '@workspace/ui/components/label';
-import { Checkbox } from '@workspace/ui/components/checkbox';
+import { Checkbox } from '@workspace/ui/components/animate-ui/components/base/checkbox';
 
 const checkboxItems = [
   {

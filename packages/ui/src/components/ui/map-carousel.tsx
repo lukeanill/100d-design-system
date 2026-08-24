@@ -20,7 +20,7 @@ import {
 import type { ImgHTMLAttributes, ReactNode } from "react";
 
 import { Button } from "@workspace/ui/components/button";
-import { Checkbox } from "@workspace/ui/components/checkbox";
+import { Checkbox } from "@workspace/ui/components/animate-ui/components/base/checkbox";
 import { cn } from "@workspace/ui/lib/utils";
 
 const BlockImage = (props: ImgHTMLAttributes<HTMLImageElement>) =>
