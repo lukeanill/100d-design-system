@@ -17,22 +17,22 @@
 @source "../**/*.{ts,tsx}";
 
 :root {
-  --background: oklch(0.9937 0.0095 93.57);
-  --foreground: oklch(0.41 0 0);
+  --background: #FFFCFA;
+  --foreground: #494949;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.41 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.41 0 0);
   --primary: oklch(0.41 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.93 0.02 94.49);
-  --secondary-foreground: oklch(0.41 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --secondary: #F1E6DF;
+  --secondary-foreground: #8C8B8B;
+  --muted: #FFF5EF;
+  --muted-foreground: #8C8B8B;
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.41 0 0);
   --destructive: oklch(0.76 0.14 17.76);
-  --border: oklch(0.97 0.02 92.64);
+  --border: #E1D0C5;
   --input: oklch(0.93 0 0);
   --ring: oklch(0.81 0.1 67.35);
   --chart-1: #7FA4AC;
