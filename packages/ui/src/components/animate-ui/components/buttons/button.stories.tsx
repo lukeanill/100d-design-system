@@ -1,5 +1,5 @@
 import { Button as ButtonImpl } from "./button"
 
-export default { title: "Components/Buttons/Button" }
+export default { title: "Components/Button (Animated)" }
 
 export const Button = () => <ButtonImpl />

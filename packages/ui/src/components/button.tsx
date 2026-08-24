@@ -44,13 +44,21 @@ const buttonVariants = cva(
 
 type Ripple = { id: number; x: number; y: number; size: number }
 
+const MotionButtonPrimitive = motion.create(ButtonPrimitive)
+
 function Button({
   className,
   variant = "default",
   size = "default",
   onClick,
+  hoverScale = 1.05,
+  tapScale = 0.95,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    hoverScale?: number
+    tapScale?: number
+  }) {
   const [ripples, setRipples] = React.useState<Ripple[]>([])
   const rootRef = React.useRef<HTMLElement | null>(null)
 
@@ -78,11 +86,13 @@ function Button({
   )
 
   return (
-    <ButtonPrimitive
+    <MotionButtonPrimitive
       ref={rootRef as React.Ref<HTMLButtonElement>}
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       onClick={handleClick}
+      whileHover={{ scale: hoverScale }}
+      whileTap={{ scale: tapScale }}
       {...props}
     >
       {props.children}
@@ -106,7 +116,7 @@ function Button({
           ))}
         </AnimatePresence>
       </span>
-    </ButtonPrimitive>
+    </MotionButtonPrimitive>
   )
 }
 

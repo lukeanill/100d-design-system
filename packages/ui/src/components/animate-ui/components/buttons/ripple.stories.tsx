@@ -1,5 +1,5 @@
 import { RippleButton as RippleButtonImpl } from "./ripple"
 
-export default { title: "Components/Buttons/Ripple" }
+export default { title: "Components/Ripple" }
 
 export const Ripple = () => <RippleButtonImpl />
