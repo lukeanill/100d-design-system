@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react"
 import { Switch as SwitchImpl } from "./switch"
 
-export default { title: "Animation/Switch (Headless)", component: SwitchImpl }
+export default { title: "Animation/Switch Headless", component: SwitchImpl }
 
-export const Switch = (args: ComponentProps<typeof SwitchImpl>) => <SwitchImpl {...args} />
+export const SwitchHeadless = (args: ComponentProps<typeof SwitchImpl>) => <SwitchImpl {...args} />
