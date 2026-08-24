@@ -1,6 +1,24 @@
-import type { ComponentProps } from "react"
-import { ChartContainer as ChartContainerImpl } from "./chart"
+import { BarChart, Bar, XAxis } from "recharts"
+import { ChartContainer, type ChartConfig } from "./chart"
 
-export default { title: "Components/Chart", component: ChartContainerImpl }
+export default { title: "Components/Chart", component: ChartContainer }
 
-export const Chart = (args: ComponentProps<typeof ChartContainerImpl>) => <ChartContainerImpl {...args} />
+const data = [
+  { month: "Jan", value: 42 },
+  { month: "Feb", value: 68 },
+  { month: "Mar", value: 51 },
+  { month: "Apr", value: 87 },
+]
+
+const config = {
+  value: { label: "Value", color: "var(--chart-1)" },
+} satisfies ChartConfig
+
+export const Chart = () => (
+  <ChartContainer config={config} className="h-64 w-full">
+    <BarChart data={data}>
+      <XAxis dataKey="month" />
+      <Bar dataKey="value" fill="var(--color-value)" radius={4} />
+    </BarChart>
+  </ChartContainer>
+)

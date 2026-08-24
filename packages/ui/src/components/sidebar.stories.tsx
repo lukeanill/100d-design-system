@@ -1,6 +1,12 @@
-import type { ComponentProps } from "react"
-import { Sidebar as SidebarImpl } from "./sidebar"
+import { Sidebar as SidebarImpl, SidebarProvider, SidebarContent, SidebarHeader } from "./sidebar"
 
 export default { title: "Components/Sidebar", component: SidebarImpl }
 
-export const Sidebar = (args: ComponentProps<typeof SidebarImpl>) => <SidebarImpl {...args} />
+export const Sidebar = () => (
+  <SidebarProvider>
+    <SidebarImpl>
+      <SidebarHeader>Design System</SidebarHeader>
+      <SidebarContent>Sidebar content</SidebarContent>
+    </SidebarImpl>
+  </SidebarProvider>
+)

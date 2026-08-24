@@ -1,6 +1,9 @@
-import type { ComponentProps } from "react"
-import { Radio as RadioImpl } from "./radio"
+import { Radio as RadioImpl, RadioGroup } from "./radio"
 
 export default { title: "Components/Radio", component: RadioImpl }
 
-export const Radio = (args: ComponentProps<typeof RadioImpl>) => <RadioImpl {...args} />
+export const Radio = () => (
+  <RadioGroup defaultValue="a">
+    <RadioImpl value="a" />
+  </RadioGroup>
+)

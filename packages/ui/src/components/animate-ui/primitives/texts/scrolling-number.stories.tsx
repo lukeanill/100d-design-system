@@ -1,6 +1,13 @@
-import type { ComponentProps } from "react"
-import { ScrollingNumber as ScrollingNumberImpl } from "./scrolling-number"
+import {
+  ScrollingNumberContainer,
+  ScrollingNumber as ScrollingNumberImpl,
+  ScrollingNumberItems,
+} from "./scrolling-number"
 
 export default { title: "Animation/Scrolling Number Texts", component: ScrollingNumberImpl }
 
-export const ScrollingNumberTexts = (args: ComponentProps<typeof ScrollingNumberImpl>) => <ScrollingNumberImpl {...args} />
+export const ScrollingNumberTexts = () => (
+  <ScrollingNumberContainer number={42} step={1}>
+    <ScrollingNumberItems />
+  </ScrollingNumberContainer>
+)

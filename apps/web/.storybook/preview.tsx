@@ -9,6 +9,7 @@ const preview: Preview = {
         method: "alphabetical",
       },
     },
+    actions: { disable: true },
   },
   decorators: [
     (Story) => (

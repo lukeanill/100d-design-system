@@ -1,6 +1,9 @@
-import type { ComponentProps } from "react"
-import { Spring as SpringImpl } from "./spring"
+import { Spring as SpringImpl, SpringProvider } from "./spring"
 
 export default { title: "Animation/Spring Animate", component: SpringImpl }
 
-export const SpringAnimate = (args: ComponentProps<typeof SpringImpl>) => <SpringImpl {...args} />
+export const SpringAnimate = () => (
+  <SpringProvider>
+    <SpringImpl />
+  </SpringProvider>
+)
