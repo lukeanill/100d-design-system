@@ -1,10 +1,14 @@
+"use client"
+
+import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
+import { AnimatePresence, motion } from "motion/react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@workspace/ui/lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-4xl border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-4xl border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -38,18 +42,71 @@ const buttonVariants = cva(
   }
 )
 
+type Ripple = { id: number; x: number; y: number; size: number }
+
 function Button({
   className,
   variant = "default",
   size = "default",
+  onClick,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  const [ripples, setRipples] = React.useState<Ripple[]>([])
+  const rootRef = React.useRef<HTMLElement | null>(null)
+
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      const el = rootRef.current
+      if (el) {
+        const rect = el.getBoundingClientRect()
+        const size = Math.max(rect.width, rect.height) * 1.6
+        const ripple: Ripple = {
+          id: Date.now() + Math.random(),
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          size,
+        }
+        setRipples((prev) => [...prev, ripple])
+        window.setTimeout(() => {
+          setRipples((prev) => prev.filter((r) => r.id !== ripple.id))
+        }, 550)
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(onClick as any)?.(event)
+    },
+    [onClick]
+  )
+
   return (
     <ButtonPrimitive
+      ref={rootRef as React.Ref<HTMLButtonElement>}
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      onClick={handleClick}
       {...props}
-    />
+    >
+      {props.children}
+      <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
+        <AnimatePresence>
+          {ripples.map((ripple) => (
+            <motion.span
+              key={ripple.id}
+              className="absolute rounded-full bg-current opacity-25"
+              style={{
+                left: ripple.x - ripple.size / 2,
+                top: ripple.y - ripple.size / 2,
+                width: ripple.size,
+                height: ripple.size,
+              }}
+              initial={{ scale: 0, opacity: 0.35 }}
+              animate={{ scale: 1, opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            />
+          ))}
+        </AnimatePresence>
+      </span>
+    </ButtonPrimitive>
   )
 }
 
