@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+storybook-static
 *.local
 
 # env files (can opt-in for committing if needed)

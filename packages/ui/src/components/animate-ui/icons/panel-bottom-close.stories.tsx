@@ -1,6 +1,14 @@
 import type { ComponentProps } from "react"
 import { PanelBottomClose as PanelBottomCloseImpl } from "./panel-bottom-close"
 
-export default { title: "Icon/Panel Bottom Close", component: PanelBottomCloseImpl }
+export default {
+  title: "Icon/Panel Bottom Close",
+  component: PanelBottomCloseImpl,
+  argTypes: {
+    size: { control: { type: "number", min: 12, max: 96 } },
+    animate: { control: "boolean" },
+  },
+  args: { size: 28, animate: true },
+}
 
 export const PanelBottomClose = (args: ComponentProps<typeof PanelBottomCloseImpl>) => <PanelBottomCloseImpl {...args} />

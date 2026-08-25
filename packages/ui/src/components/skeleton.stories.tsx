@@ -3,4 +3,6 @@ import { Skeleton as SkeletonImpl } from "./skeleton"
 
 export default { title: "Components/Skeleton", component: SkeletonImpl }
 
-export const Skeleton = (args: ComponentProps<typeof SkeletonImpl>) => <SkeletonImpl {...args} />
+export const Skeleton = (args: ComponentProps<typeof SkeletonImpl>) => (
+  <SkeletonImpl {...args} className="h-12 w-48 rounded-lg" />
+)

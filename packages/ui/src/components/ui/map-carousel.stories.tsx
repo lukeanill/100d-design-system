@@ -1,6 +1,10 @@
 import type { ComponentProps } from "react"
-import { MapCarousel as MapCarouselImpl } from "./map-carousel"
+import { MapCarousel as MapCarouselImpl, MapCarouselContent } from "./map-carousel"
 
 export default { title: "Components/Map Carousel", component: MapCarouselImpl }
 
-export const MapCarousel = (args: ComponentProps<typeof MapCarouselImpl>) => <MapCarouselImpl {...args} />
+export const MapCarousel = (args: ComponentProps<typeof MapCarouselImpl>) => (
+  <MapCarouselImpl {...args}>
+    <MapCarouselContent />
+  </MapCarouselImpl>
+)

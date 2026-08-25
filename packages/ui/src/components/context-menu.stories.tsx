@@ -1,6 +1,24 @@
 import type { ComponentProps } from "react"
-import { ContextMenu as ContextMenuImpl } from "./context-menu"
+import {
+  ContextMenu as ContextMenuImpl,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+} from "./context-menu"
 
 export default { title: "Components/Context Menu", component: ContextMenuImpl }
 
-export const ContextMenu = (args: ComponentProps<typeof ContextMenuImpl>) => <ContextMenuImpl {...args} />
+export const ContextMenu = (args: ComponentProps<typeof ContextMenuImpl>) => (
+  <ContextMenuImpl {...args}>
+    <ContextMenuTrigger className="flex h-32 w-64 items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
+      Right click here
+    </ContextMenuTrigger>
+    <ContextMenuContent>
+      <ContextMenuItem>Back</ContextMenuItem>
+      <ContextMenuItem>Forward</ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuItem>Reload</ContextMenuItem>
+    </ContextMenuContent>
+  </ContextMenuImpl>
+)

@@ -1,6 +1,14 @@
 import type { ComponentProps } from "react"
 import { CheckLine as CheckLineImpl } from "./check-line"
 
-export default { title: "Icon/Check Line", component: CheckLineImpl }
+export default {
+  title: "Icon/Check Line",
+  component: CheckLineImpl,
+  argTypes: {
+    size: { control: { type: "number", min: 12, max: 96 } },
+    animate: { control: "boolean" },
+  },
+  args: { size: 28, animate: true },
+}
 
 export const CheckLine = (args: ComponentProps<typeof CheckLineImpl>) => <CheckLineImpl {...args} />
