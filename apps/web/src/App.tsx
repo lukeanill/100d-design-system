@@ -19,7 +19,7 @@ export function App() {
         nativeButton={false}
         className="self-start"
         render={
-          <a href="http://localhost:6006" target="_blank" rel="noopener noreferrer">
+          <a href="https://100d-design-system-jtmyxto3x-lukeai-100.vercel.app" target="_blank" rel="noopener noreferrer">
             Storybook
           </a>
         }
