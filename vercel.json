@@ -1,5 +1,5 @@
 {
   "installCommand": "pnpm install",
   "buildCommand": "pnpm --filter web run stories:build",
-  "outputDirectory": "apps/web/storybook-static"
+  "outputDirectory": "storybook-static"
 }
