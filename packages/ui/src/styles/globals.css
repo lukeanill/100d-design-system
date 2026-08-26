@@ -4,10 +4,34 @@
 @import "@fontsource-variable/fira-code";
 
 @font-face {
-  font-family: "Authentic Sans";
+  font-family: "Authentic Sans 60";
   src: url("./fonts/authentic-sans-60.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Authentic Sans 90";
+  src: url("./fonts/authentic-sans-90.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Louize Trial";
+  src: url("./fonts/LouizeTrial-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Louize Trial";
+  src: url("./fonts/LouizeTrial-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -40,6 +64,9 @@
   --chart-3: #BADBD6;
   --chart-4: #C6EAEE;
   --chart-5: #CBE5DA;
+  --gradient-downlight: linear-gradient(180deg, #FFFCFA 0%, #FFF5EF 50%, #E1D0C5 100%);
+  --gradient-rise: linear-gradient(180deg, #F1E6DF 0%, #FFF5EF 100%);
+  --gradient-set: linear-gradient(180deg, #FFFCFA 0%, #F1E6DF 100%);
   --radius: 0.875rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -166,12 +193,20 @@
 }
 
 @theme inline {
-  --font-authentic-sans: 'Authentic Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-authentic-sans-60: 'Authentic Sans 60', ui-sans-serif, system-ui, sans-serif;
+  --font-authentic-sans-90: 'Authentic Sans 90', ui-sans-serif, system-ui, sans-serif;
+  --font-louize: 'Louize Trial', Georgia, serif;
   --font-fira-code: 'Fira Code Variable', monospace;
-  --font-heading: var(--font-authentic-sans);
-  --font-body: var(--font-authentic-sans);
+  --font-heading: var(--font-authentic-sans-60);
+  --font-body: var(--font-authentic-sans-90);
+  --font-body-small: var(--font-authentic-sans-60);
+  --font-serif: var(--font-louize);
   --font-mono: var(--font-fira-code);
-  --font-sans: var(--font-authentic-sans);
+  --font-sans: var(--font-authentic-sans-60);
+
+  --background-image-gradient-downlight: var(--gradient-downlight);
+  --background-image-gradient-rise: var(--gradient-rise);
+  --background-image-gradient-set: var(--gradient-set);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -239,50 +274,50 @@
 
   h1 {
     font-family: var(--font-heading);
-    font-size: 2.25rem;
+    font-size: 17rem;
     line-height: 1.2;
-    letter-spacing: -0.025em;
-    font-weight: 700;
+    letter-spacing: 0;
+    font-weight: 400;
   }
 
   h2 {
     font-family: var(--font-heading);
-    font-size: 1.875rem;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-    font-weight: 600;
+    font-size: 11.5rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+    font-weight: 400;
   }
 
   h3 {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
-    line-height: 1.3;
-    letter-spacing: -0.015em;
-    font-weight: 600;
+    font-size: 7.5rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+    font-weight: 400;
   }
 
   h4 {
     font-family: var(--font-heading);
-    font-size: 1.25rem;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    font-weight: 500;
+    font-size: 5rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+    font-weight: 400;
   }
 
   h5 {
     font-family: var(--font-heading);
-    font-size: 1.125rem;
-    line-height: 1.5;
+    font-size: 3.5rem;
+    line-height: 1.2;
     letter-spacing: 0;
-    font-weight: 500;
+    font-weight: 400;
   }
 
   h6 {
     font-family: var(--font-heading);
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 2.25rem;
+    line-height: 1.2;
     letter-spacing: 0;
-    font-weight: 500;
+    font-weight: 400;
   }
 
   body {
@@ -292,6 +327,43 @@
   code,
   pre {
     font-family: var(--font-mono);
+  }
+
+  .text-body-small {
+    font-family: var(--font-body-small);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+
+  .text-body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+
+  .text-body-serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+
+  .text-body-lg {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  .text-body-lg-serif {
+    font-family: var(--font-serif);
+    font-style: normal;
+    font-size: 1.3125rem;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
   }
   .mapboxgl-popup-content, .maplibregl-popup-content {
     @apply bg-transparent! shadow-none! p-0! rounded-none!;

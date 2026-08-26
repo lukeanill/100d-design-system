@@ -3,12 +3,26 @@ import { Button } from "@workspace/ui/components/button"
 import { Separator } from "@workspace/ui/components/separator"
 
 const TYPE_SCALE = [
-  { tag: "h1", label: "Heading 1", size: "2.25rem", weight: 700, leading: "1.2", tracking: "-0.025em" },
-  { tag: "h2", label: "Heading 2", size: "1.875rem", weight: 600, leading: "1.25", tracking: "-0.02em" },
-  { tag: "h3", label: "Heading 3", size: "1.5rem", weight: 600, leading: "1.3", tracking: "-0.015em" },
-  { tag: "h4", label: "Heading 4", size: "1.25rem", weight: 500, leading: "1.4", tracking: "-0.01em" },
-  { tag: "h5", label: "Heading 5", size: "1.125rem", weight: 500, leading: "1.5", tracking: "0" },
-  { tag: "h6", label: "Heading 6", size: "1rem", weight: 500, leading: "1.5", tracking: "0" },
+  { tag: "h1", label: "Heading 1", size: "272px", weight: 400, leading: "120%", tracking: "0%" },
+  { tag: "h2", label: "Heading 2", size: "184px", weight: 400, leading: "120%", tracking: "0%" },
+  { tag: "h3", label: "Heading 3", size: "120px", weight: 400, leading: "120%", tracking: "0%" },
+  { tag: "h4", label: "Heading 4", size: "80px", weight: 400, leading: "120%", tracking: "0%" },
+  { tag: "h5", label: "Heading 5", size: "56px", weight: 400, leading: "120%", tracking: "0%" },
+  { tag: "h6", label: "Heading 6", size: "36px", weight: 400, leading: "120%", tracking: "0%" },
+] as const
+
+const BODY_STYLES = [
+  { className: "text-body-small", label: "Body Small", meta: "14px · Authentic Sans 60 · leading 160%" },
+  { className: "text-body", label: "Body", meta: "16px · Authentic Sans 90 · leading 160%" },
+  { className: "text-body-serif", label: "Body Serif", meta: "17px · Louize Trial Italic · leading 160%" },
+  { className: "text-body-lg", label: "Body Large", meta: "20px · Authentic Sans 90 · leading 160% · tracking 1%" },
+  { className: "text-body-lg-serif", label: "Body Large Serif", meta: "21px · Louize Trial Regular · leading 160% · tracking -1%" },
+] as const
+
+const GRADIENT_TOKENS = [
+  { name: "gradient-downlight", label: "Gradient Downlight" },
+  { name: "gradient-rise", label: "Gradient Rise" },
+  { name: "gradient-set", label: "Gradient Set" },
 ] as const
 
 const COLOR_TOKENS = [
@@ -44,6 +58,7 @@ const SHADOW_TOKENS = [
 const FONT_TOKENS = [
   { name: "font-heading", sample: "Aa Bb Cc 123" },
   { name: "font-body", sample: "Aa Bb Cc 123" },
+  { name: "font-serif", sample: "Aa Bb Cc 123" },
   { name: "font-sans", sample: "Aa Bb Cc 123" },
   { name: "font-mono", sample: "Aa Bb Cc 123" },
 ] as const
@@ -116,13 +131,15 @@ export function Tokens() {
               </div>
             </div>
           ))}
-          <div className="flex items-center justify-between gap-6 p-4">
-            <p className="text-base">Body text — the quick brown fox jumps over the lazy dog.</p>
-            <div className="shrink-0 text-right text-xs text-muted-foreground">
-              <div className="font-medium text-foreground">Body</div>
-              <div>1rem · font-body</div>
+          {BODY_STYLES.map((b) => (
+            <div key={b.className} className="flex items-center justify-between gap-6 p-4">
+              <p className={b.className}>The quick brown fox jumps over the lazy dog.</p>
+              <div className="shrink-0 text-right text-xs text-muted-foreground">
+                <div className="font-medium text-foreground">{b.label}</div>
+                <div>{b.meta}</div>
+              </div>
             </div>
-          </div>
+          ))}
           <div className="flex items-center justify-between gap-6 p-4">
             <code className="font-mono text-sm">const design = "system"</code>
             <div className="shrink-0 text-right text-xs text-muted-foreground">
@@ -130,6 +147,24 @@ export function Tokens() {
               <div>font-mono</div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <Separator />
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-lg font-semibold">Gradients</h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {GRADIENT_TOKENS.map((g) => (
+            <div key={g.name} className="flex flex-col gap-2">
+              <div
+                className="h-24 rounded-2xl border border-border/60"
+                style={{ backgroundImage: `var(--${g.name})` }}
+              />
+              <div className="text-sm font-medium">{g.label}</div>
+              <div className="text-xs text-muted-foreground">--{g.name}</div>
+            </div>
+          ))}
         </div>
       </section>
 
