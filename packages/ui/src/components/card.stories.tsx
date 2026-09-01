@@ -2,7 +2,17 @@ import type { ComponentProps } from "react"
 import { Card as CardImpl, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./card"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Card", component: CardImpl }
+export default {
+  title: "Components/Content/Card",
+  component: CardImpl,
+  argTypes: {
+    size: {
+      control: "select",
+      options: ["default", "sm"],
+    },
+  },
+  args: { size: "default" },
+}
 
 export const Card = (args: ComponentProps<typeof CardImpl>) => (
   <CardImpl {...args} className="w-80">

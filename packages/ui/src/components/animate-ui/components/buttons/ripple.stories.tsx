@@ -2,7 +2,8 @@ import type { ComponentProps } from "react"
 import { RippleButton as RippleButtonImpl } from "./ripple"
 
 export default {
-  title: "Components/Ripple",
+  title: "Components/Animate UI/Ripple",
+  tags: ["!dev"],
   component: RippleButtonImpl,
   argTypes: {
     variant: {

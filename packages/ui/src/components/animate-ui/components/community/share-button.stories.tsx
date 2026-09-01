@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { ShareButton as ShareButtonImpl } from "./share-button"
 
 export default {
-  title: "Components/Share Button",
+  title: "Components/Actions/Share Button",
   component: ShareButtonImpl,
   argTypes: {
     size: { control: "select", options: ["default", "sm", "md", "lg"] },

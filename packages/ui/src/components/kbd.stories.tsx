@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Kbd as KbdImpl } from "./kbd"
 
 export default {
-  title: "Components/Kbd",
+  title: "Components/Actions/Kbd",
   component: KbdImpl,
   args: { children: "⌘K" },
 }

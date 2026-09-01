@@ -8,7 +8,7 @@ import {
 } from "./attachment"
 
 export default {
-  title: "Components/Attachment",
+  title: "Components/Content/Attachment",
   component: AttachmentImpl,
   argTypes: {
     size: { control: "select", options: ["default", "sm", "xs"] },

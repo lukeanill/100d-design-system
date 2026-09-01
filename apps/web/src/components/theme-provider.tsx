@@ -33,13 +33,20 @@ function KeyboardThemeToggle() {
   return null
 }
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({
+  children,
+  forcedTheme,
+}: {
+  children: React.ReactNode
+  forcedTheme?: string
+}) {
   return (
     <NextThemeProvider
       attribute="class"
       defaultTheme="system"
       enableSystem
       themes={["light", "dark", "glass"]}
+      forcedTheme={forcedTheme}
     >
       <KeyboardThemeToggle />
       {children}

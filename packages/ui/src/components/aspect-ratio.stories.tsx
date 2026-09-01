@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { AspectRatio as AspectRatioImpl } from "./aspect-ratio"
 
 export default {
-  title: "Components/Aspect Ratio",
+  title: "Components/Layout/Aspect Ratio",
   component: AspectRatioImpl,
   args: { ratio: 16 / 9 },
 }

@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { IconButton as IconButtonImpl } from "./icon"
 
 export default {
-  title: "Components/Icon",
+  title: "Components/Actions/Icon",
   component: IconButtonImpl,
   argTypes: {
     variant: {

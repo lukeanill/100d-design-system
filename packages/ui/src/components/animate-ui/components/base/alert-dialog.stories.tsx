@@ -12,7 +12,12 @@ import {
 } from "./alert-dialog"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Alert Dialog", component: AlertDialogImpl }
+export default {
+  title: "Components/Animate UI/Alert Dialog",
+  tags: ["!dev"],
+  component: AlertDialogImpl,
+  args: { defaultOpen: false },
+}
 
 export const AlertDialog = (args: ComponentProps<typeof AlertDialogImpl>) => (
   <AlertDialogImpl {...args}>

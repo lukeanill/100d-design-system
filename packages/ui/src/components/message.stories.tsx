@@ -3,7 +3,7 @@ import { Message as MessageImpl, MessageAvatar, MessageContent } from "./message
 import { Avatar, AvatarImage, AvatarFallback } from "@workspace/ui/components/avatar"
 
 export default {
-  title: "Components/Message",
+  title: "Components/Content/Message",
   component: MessageImpl,
   argTypes: { align: { control: "select", options: ["start", "end"] } },
   args: { align: "start" },

@@ -9,7 +9,7 @@ import {
 } from "./dropdown-menu"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Dropdown Menu", component: DropdownMenuImpl }
+export default { title: "Components/Shadcn/Dropdown Menu", component: DropdownMenuImpl, tags: ["!dev"] }
 
 export const DropdownMenu = (args: ComponentProps<typeof DropdownMenuImpl>) => (
   <DropdownMenuImpl {...args}>

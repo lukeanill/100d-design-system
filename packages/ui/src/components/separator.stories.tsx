@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Separator as SeparatorImpl } from "./separator"
 
 export default {
-  title: "Components/Separator",
+  title: "Components/Layout/Separator",
   component: SeparatorImpl,
   argTypes: { orientation: { control: "select", options: ["horizontal", "vertical"] } },
   args: { orientation: "horizontal" },

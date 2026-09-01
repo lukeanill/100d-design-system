@@ -11,12 +11,25 @@ import {
 } from "./sheet"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Sheet", component: SheetImpl }
+export default {
+  title: "Components/Overlays/Sheet",
+  component: SheetImpl,
+  argTypes: {
+    side: {
+      control: "select",
+      options: ["top", "right", "bottom", "left"],
+    },
+  },
+  args: { side: "right" },
+}
 
-export const Sheet = (args: ComponentProps<typeof SheetImpl>) => (
+export const Sheet = ({
+  side,
+  ...args
+}: ComponentProps<typeof SheetImpl> & Pick<ComponentProps<typeof SheetContent>, "side">) => (
   <SheetImpl {...args}>
     <SheetTrigger render={<Button variant="outline">Open sheet</Button>} />
-    <SheetContent>
+    <SheetContent side={side}>
       <SheetHeader>
         <SheetTitle>Edit profile</SheetTitle>
         <SheetDescription>Make changes to your profile here.</SheetDescription>

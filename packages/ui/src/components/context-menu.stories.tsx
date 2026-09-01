@@ -7,7 +7,7 @@ import {
   ContextMenuSeparator,
 } from "./context-menu"
 
-export default { title: "Components/Context Menu", component: ContextMenuImpl }
+export default { title: "Components/Overlays/Context Menu", component: ContextMenuImpl }
 
 export const ContextMenu = (args: ComponentProps<typeof ContextMenuImpl>) => (
   <ContextMenuImpl {...args}>

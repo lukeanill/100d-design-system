@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Alert as AlertImpl, AlertTitle, AlertDescription } from "./alert"
 
 export default {
-  title: "Components/Alert",
+  title: "Components/Feedback/Alert",
   component: AlertImpl,
   argTypes: {
     variant: { control: "select", options: ["default", "destructive"] },

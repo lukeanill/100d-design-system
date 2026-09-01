@@ -1,7 +1,7 @@
 import { BarChart, Bar, XAxis } from "recharts"
 import { ChartContainer, type ChartConfig } from "./chart"
 
-export default { title: "Components/Chart", component: ChartContainer }
+export default { title: "Components/Content/Chart", component: ChartContainer }
 
 const data = [
   { month: "Jan", value: 42 },

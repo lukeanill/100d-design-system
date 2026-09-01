@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react"
 import { Table as TableImpl, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./table"
 
-export default { title: "Components/Table", component: TableImpl }
+export default { title: "Components/Layout/Table", component: TableImpl }
 
 export const Table = (args: ComponentProps<typeof TableImpl>) => (
   <TableImpl {...args}>

@@ -5,7 +5,7 @@ import {
   MessageScrollerContent,
 } from "./message-scroller"
 
-export default { title: "Components/Message Scroller", component: MessageScrollerImpl }
+export default { title: "Components/Content/Message Scroller", component: MessageScrollerImpl }
 
 export const MessageScroller = () => (
   <MessageScrollerProvider>

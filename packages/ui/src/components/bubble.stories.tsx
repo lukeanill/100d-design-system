@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Bubble as BubbleImpl, BubbleContent } from "./bubble"
 
 export default {
-  title: "Components/Bubble",
+  title: "Components/Content/Bubble",
   component: BubbleImpl,
   argTypes: {
     variant: {

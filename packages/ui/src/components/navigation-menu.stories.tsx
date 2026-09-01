@@ -8,7 +8,21 @@ import {
   NavigationMenuLink,
 } from "./navigation-menu"
 
-export default { title: "Components/Navigation Menu", component: NavigationMenuImpl }
+export default {
+  title: "Components/Navigation/Navigation Menu",
+  component: NavigationMenuImpl,
+  argTypes: {
+    align: {
+      control: "select",
+      options: ["start", "center", "end"],
+    },
+    orientation: {
+      control: "select",
+      options: ["horizontal", "vertical"],
+    },
+  },
+  args: { align: "start", orientation: "horizontal" },
+}
 
 export const NavigationMenu = (args: ComponentProps<typeof NavigationMenuImpl>) => (
   <NavigationMenuImpl {...args}>

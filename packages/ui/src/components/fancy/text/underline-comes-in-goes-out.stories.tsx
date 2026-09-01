@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import ComesInGoesOutUnderlineImpl from "./underline-comes-in-goes-out"
 
 export default {
-  title: "Animation/Underline Comes In Goes Out",
+  title: "Animation/Text/Underlines/Underline Comes In Goes Out",
   component: ComesInGoesOutUnderlineImpl,
   argTypes: { direction: { control: "select", options: ["left", "right"] } },
   args: { children: "Hover me", direction: "left" },

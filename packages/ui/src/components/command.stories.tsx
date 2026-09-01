@@ -8,7 +8,7 @@ import {
   CommandItem,
 } from "./command"
 
-export default { title: "Components/Command", component: CommandImpl }
+export default { title: "Components/Navigation/Command", component: CommandImpl }
 
 export const Command = (args: ComponentProps<typeof CommandImpl>) => (
   <CommandImpl {...args} className="w-80 rounded-lg border shadow-md">

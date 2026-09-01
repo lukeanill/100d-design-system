@@ -10,12 +10,22 @@ import {
   QuestionnaireProgress,
 } from "./questionnaire"
 
-export default { title: "Components/Questionnaire", component: QuestionnaireImpl }
+export default {
+  title: "Components/Selects/Questionnaire",
+  component: QuestionnaireImpl,
+  argTypes: {
+    shortcuts: {
+      control: "select",
+      options: ["letters", "numbers"],
+    },
+  },
+  args: { shortcuts: "letters" },
+}
 
 export const Questionnaire = (args: ComponentProps<typeof QuestionnaireImpl>) => (
   <QuestionnaireImpl {...args} className="w-96">
     <QuestionnaireProgress />
-    <QuestionnaireItem>
+    <QuestionnaireItem name="favorite-color">
       <QuestionnaireTitle>What's your favorite color?</QuestionnaireTitle>
       <QuestionnaireChoices>
         <QuestionnaireChoice value="red">Red</QuestionnaireChoice>

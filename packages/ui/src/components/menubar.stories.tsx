@@ -8,7 +8,17 @@ import {
   MenubarSeparator,
 } from "./menubar"
 
-export default { title: "Components/Menubar", component: MenubarImpl }
+export default {
+  title: "Components/Navigation/Menubar",
+  component: MenubarImpl,
+  argTypes: {
+    orientation: {
+      control: "select",
+      options: ["horizontal", "vertical"],
+    },
+  },
+  args: { orientation: "horizontal" },
+}
 
 export const Menubar = (args: ComponentProps<typeof MenubarImpl>) => (
   <MenubarImpl {...args}>

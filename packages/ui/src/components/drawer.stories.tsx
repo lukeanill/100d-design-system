@@ -11,7 +11,17 @@ import {
 } from "./drawer"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Drawer", component: DrawerImpl }
+export default {
+  title: "Components/Overlays/Drawer",
+  component: DrawerImpl,
+  argTypes: {
+    swipeDirection: {
+      control: "select",
+      options: ["up", "down", "left", "right"],
+    },
+  },
+  args: { swipeDirection: "down" },
+}
 
 export const Drawer = (args: ComponentProps<typeof DrawerImpl>) => (
   <DrawerImpl {...args}>

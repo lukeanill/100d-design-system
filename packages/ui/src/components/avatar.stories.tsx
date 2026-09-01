@@ -1,7 +1,17 @@
 import type { ComponentProps } from "react"
 import { Avatar as AvatarImpl, AvatarImage, AvatarFallback } from "./avatar"
 
-export default { title: "Components/Avatar", component: AvatarImpl }
+export default {
+  title: "Components/Content/Avatar",
+  component: AvatarImpl,
+  argTypes: {
+    size: {
+      control: "select",
+      options: ["default", "sm", "lg"],
+    },
+  },
+  args: { size: "default" },
+}
 
 export const Avatar = (args: ComponentProps<typeof AvatarImpl>) => (
   <AvatarImpl {...args}>

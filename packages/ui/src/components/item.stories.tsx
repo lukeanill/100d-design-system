@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Item as ItemImpl, ItemContent, ItemTitle, ItemDescription } from "./item"
 
 export default {
-  title: "Components/Item",
+  title: "Components/Content/Item",
   component: ItemImpl,
   argTypes: {
     variant: { control: "select", options: ["default", "outline", "muted"] },

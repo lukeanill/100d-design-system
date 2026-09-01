@@ -2,7 +2,8 @@ import type { ComponentProps } from "react"
 import { Button as ButtonImpl } from "./button"
 
 export default {
-  title: "Components/Button Animated",
+  title: "Components/Animate UI/Button Animated",
+  tags: ["!dev"],
   component: ButtonImpl,
   argTypes: {
     variant: {

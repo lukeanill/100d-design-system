@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Button as ButtonImpl } from "./button"
 
 export default {
-  title: "Components/Button",
+  title: "Components/Actions/Button",
   component: ButtonImpl,
   argTypes: {
     variant: {

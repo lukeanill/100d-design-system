@@ -208,7 +208,7 @@ const HotelCard = ({
   <button
     onClick={onClick}
     className={cn(
-      "relative flex gap-3 p-2 rounded-xl border bg-card min-w-[300px] max-w-[300px] text-left transition-all shrink-0 cursor-pointer select-none shadow-[0_4px_20px_rgba(0,0,0,0.08)]",
+      "relative flex gap-3 p-2 rounded-xl border bg-card min-w-[300px] max-w-[300px] text-left transition-all shrink-0 cursor-pointer select-none shadow-lg",
       isSelected
         ? "ring-1 ring-foreground border-foreground"
         : "hover:border-foreground/30"
@@ -216,7 +216,7 @@ const HotelCard = ({
   >
     {/* Rating badge - top right */}
     {location.rating && (
-      <div className="absolute top-2 right-2 bg-green-600 text-white text-[10px] font-bold rounded-md px-1.5 py-0.5">
+      <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-[10px] font-bold rounded-md px-1.5 py-0.5">
         {location.rating}
       </div>
     )}
@@ -315,7 +315,7 @@ const LocationListCard = ({
       )}
       {location.rating && (
         <div className="flex items-center gap-1 mt-1">
-          <span className="bg-green-600 text-white text-[10px] font-bold rounded-md px-1.5 py-0.5">
+          <span className="bg-primary text-primary-foreground text-[10px] font-bold rounded-md px-1.5 py-0.5">
             {location.rating}
           </span>
         </div>
@@ -612,9 +612,9 @@ const VanillaLeafletMap = ({
           font-size: 12px; font-weight: 600;
           font-family: system-ui, -apple-system, sans-serif;
           white-space: nowrap;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1);
+          box-shadow: var(--shadow-md);
           z-index: ${isSelected ? "1000" : "1"};
-          ${isSelected ? "background-color: #18181b; color: white;" : "background-color: white; color: #18181b;"}
+          ${isSelected ? "background-color: var(--primary); color: var(--primary-foreground);" : "background-color: var(--popover); color: var(--popover-foreground);"}
         ">${location.price === undefined ? (location.name ?? "Location") : `$${location.price}`}</div>`,
         iconAnchor: [30, 12],
         iconSize: [60, 24],

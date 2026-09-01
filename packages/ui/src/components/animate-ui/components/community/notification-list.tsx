@@ -61,7 +61,7 @@ const viewAllTextVariants = {
 function NotificationList() {
   return (
     <motion.div
-      className="bg-muted p-3 rounded-3xl w-xs space-y-3 shadow-md"
+      className="bg-muted p-3 rounded-lg w-xs space-y-3 shadow-md"
       initial="collapsed"
       whileHover="expanded"
     >

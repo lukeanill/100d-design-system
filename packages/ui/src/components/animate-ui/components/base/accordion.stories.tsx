@@ -2,9 +2,9 @@ import type { ComponentProps } from "react"
 import { Accordion as AccordionImpl, AccordionItem, AccordionTrigger, AccordionPanel } from "./accordion"
 
 export default {
-  title: "Components/Accordion",
+  title: "Components/Layout/Accordion",
   component: AccordionImpl,
-  args: { type: "single", defaultValue: "item-1" },
+  args: { multiple: false, defaultValue: ["item-1"] },
 }
 
 export const Accordion = (args: ComponentProps<typeof AccordionImpl>) => (

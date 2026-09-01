@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react"
 import { RadioGroup as RadioGroupImpl, RadioGroupItem } from "./radio-group"
 
-export default { title: "Components/Radio Group", component: RadioGroupImpl, args: { defaultValue: "default" } }
+export default { title: "Components/Selects/Radio Group", component: RadioGroupImpl, args: { defaultValue: "default" } }
 
 export const RadioGroup = (args: ComponentProps<typeof RadioGroupImpl>) => (
   <RadioGroupImpl {...args}>

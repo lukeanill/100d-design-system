@@ -9,7 +9,7 @@ import {
   PaginationEllipsis,
 } from "./pagination"
 
-export default { title: "Components/Pagination", component: PaginationImpl }
+export default { title: "Components/Navigation/Pagination", component: PaginationImpl }
 
 export const Pagination = (args: ComponentProps<typeof PaginationImpl>) => (
   <PaginationImpl {...args}>

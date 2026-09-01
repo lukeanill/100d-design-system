@@ -1,7 +1,11 @@
 import type { ComponentProps } from "react"
 import { Select as SelectImpl, SelectTrigger, SelectValue, SelectContent, SelectItem } from "./select"
 
-export default { title: "Components/Select", component: SelectImpl }
+export default {
+  title: "Components/Selects/Select",
+  component: SelectImpl,
+  args: { defaultValue: "apple" },
+}
 
 export const Select = (args: ComponentProps<typeof SelectImpl>) => (
   <SelectImpl {...args}>

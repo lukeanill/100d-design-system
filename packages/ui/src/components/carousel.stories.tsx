@@ -1,7 +1,20 @@
 import type { ComponentProps } from "react"
 import { Carousel as CarouselImpl, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "./carousel"
 
-export default { title: "Components/Carousel", component: CarouselImpl }
+export default {
+  title: "Components/Content/Carousel",
+  component: CarouselImpl,
+  argTypes: {
+    orientation: {
+      control: "select",
+      options: ["horizontal", "vertical"],
+    },
+    opts: { table: { disable: true } },
+    plugins: { table: { disable: true } },
+    setApi: { table: { disable: true } },
+  },
+  args: { orientation: "horizontal" },
+}
 
 export const Carousel = (args: ComponentProps<typeof CarouselImpl>) => (
   <CarouselImpl {...args} className="w-64">

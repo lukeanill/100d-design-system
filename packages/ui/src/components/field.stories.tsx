@@ -3,7 +3,7 @@ import { Field as FieldImpl, FieldContent, FieldLabel, FieldDescription } from "
 import { Input } from "@workspace/ui/components/input"
 
 export default {
-  title: "Components/Field",
+  title: "Components/Inputs/Field",
   component: FieldImpl,
   argTypes: {
     orientation: {

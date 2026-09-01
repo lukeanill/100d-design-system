@@ -146,7 +146,7 @@ const MessageBubbleView = ({
         {content && (
           <div
             className={cn(
-              "rounded-2xl px-4 py-2",
+              "rounded-lg px-4 py-2",
               isOwn
                 ? "bg-primary text-primary-foreground rounded-br-md"
                 : "bg-muted rounded-bl-md"
@@ -236,7 +236,7 @@ export const ImageMessageBubble = ({
         {image && (
           <div
             className={cn(
-              "rounded-2xl overflow-hidden",
+              "rounded-lg overflow-hidden",
               isOwn ? "rounded-br-md" : "rounded-bl-md"
             )}
           >
@@ -383,7 +383,7 @@ export const MessageWithReactions = ({
         {content && (
           <div
             className={cn(
-              "rounded-2xl px-4 py-2",
+              "rounded-lg px-4 py-2",
               isOwn
                 ? "bg-primary text-primary-foreground rounded-br-md"
                 : "bg-muted rounded-bl-md"
@@ -564,7 +564,7 @@ export const VoiceMessageBubble = ({
       <div className={cn("max-w-[75%]", isOwn && "items-end")}>
         <div
           className={cn(
-            "rounded-2xl px-4 py-3 flex items-center gap-3",
+            "rounded-lg px-4 py-3 flex items-center gap-3",
             isOwn
               ? "bg-primary text-primary-foreground rounded-br-md"
               : "bg-muted rounded-bl-md"

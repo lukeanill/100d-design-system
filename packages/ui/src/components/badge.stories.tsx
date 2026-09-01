@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Badge as BadgeImpl } from "./badge"
 
 export default {
-  title: "Components/Badge",
+  title: "Components/Content/Badge",
   component: BadgeImpl,
   argTypes: {
     variant: {

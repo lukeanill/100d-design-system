@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Checkbox as CheckboxImpl } from "./checkbox"
 
 export default {
-  title: "Components/Checkbox",
+  title: "Components/Selects/Checkbox",
   component: CheckboxImpl,
   argTypes: {
     variant: { control: "select", options: ["default", "accent"] },

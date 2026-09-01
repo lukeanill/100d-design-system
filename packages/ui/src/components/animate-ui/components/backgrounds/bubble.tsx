@@ -19,6 +19,15 @@ type BubbleColors = {
   sixth: string;
 };
 
+const BRAND_BUBBLE_COLORS: BubbleColors = {
+  first: '207,190,173',
+  second: '0,150,137',
+  third: '16,78,100',
+  fourth: '255,185,0',
+  fifth: '254,154,0',
+  sixth: '74,74,74',
+};
+
 type BubbleBackgroundProps = React.ComponentProps<'div'> & {
   interactive?: boolean;
   transition?: SpringOptions;
@@ -216,4 +225,4 @@ function BubbleBackground({
   );
 }
 
-export { BubbleBackground, type BubbleBackgroundProps };
+export { BubbleBackground, type BubbleBackgroundProps, BRAND_BUBBLE_COLORS };

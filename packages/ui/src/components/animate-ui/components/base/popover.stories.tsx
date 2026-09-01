@@ -2,7 +2,11 @@ import type { ComponentProps } from "react"
 import { Popover as PopoverImpl, PopoverTrigger, PopoverPanel, PopoverTitle, PopoverDescription } from "./popover"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Popover", component: PopoverImpl }
+export default {
+  title: "Components/Overlays/Popover",
+  component: PopoverImpl,
+  args: { defaultOpen: false },
+}
 
 export const Popover = (args: ComponentProps<typeof PopoverImpl>) => (
   <PopoverImpl {...args}>

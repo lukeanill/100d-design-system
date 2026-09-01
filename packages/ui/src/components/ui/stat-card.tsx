@@ -48,9 +48,9 @@ interface StatCardItemProps extends ComponentProps<"div"> {
 }
 
 const TREND_CLASSES = {
-  down: "text-red-600",
+  down: "text-destructive",
   neutral: "text-muted-foreground",
-  up: "text-green-600",
+  up: "text-primary",
 };
 
 const TREND_STATUS = {

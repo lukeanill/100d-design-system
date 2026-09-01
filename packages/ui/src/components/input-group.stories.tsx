@@ -6,7 +6,7 @@ import {
   InputGroupText,
 } from "./input-group"
 
-export default { title: "Components/Input Group", component: InputGroupImpl }
+export default { title: "Components/Inputs/Input Group", component: InputGroupImpl }
 
 export const InputGroup = (args: ComponentProps<typeof InputGroupImpl>) => (
   <InputGroupImpl {...args}>

@@ -3,7 +3,7 @@ import { ButtonGroup as ButtonGroupImpl } from "./button-group"
 import { Button } from "./button"
 
 export default {
-  title: "Components/Button Group",
+  title: "Components/Actions/Button Group",
   component: ButtonGroupImpl,
   argTypes: {
     orientation: { control: "select", options: ["horizontal", "vertical"] },

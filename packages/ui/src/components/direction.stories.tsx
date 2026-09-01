@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { DirectionProvider as DirectionProviderImpl } from "./direction"
 
 export default {
-  title: "Components/Direction",
+  title: "Components/Layout/Direction",
   component: DirectionProviderImpl,
   argTypes: { direction: { control: "select", options: ["ltr", "rtl"] } },
   args: { direction: "rtl" },

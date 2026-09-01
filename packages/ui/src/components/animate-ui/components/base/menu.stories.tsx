@@ -2,7 +2,14 @@ import type { ComponentProps } from "react"
 import { Menu as MenuImpl, MenuTrigger, MenuPortal, MenuPanel, MenuItem, MenuSeparator } from "./menu"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Menu", component: MenuImpl }
+export default {
+  title: "Components/Overlays/Menu",
+  component: MenuImpl,
+  argTypes: {
+    orientation: { control: "select", options: ["horizontal", "vertical"] },
+  },
+  args: { defaultOpen: false, orientation: "vertical", modal: true },
+}
 
 export const Menu = (args: ComponentProps<typeof MenuImpl>) => (
   <MenuImpl {...args}>

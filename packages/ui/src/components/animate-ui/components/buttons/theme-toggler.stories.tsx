@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { ThemeTogglerButton as ThemeTogglerButtonImpl } from "./theme-toggler"
 
 export default {
-  title: "Components/Theme Toggler",
+  title: "Components/Theming/Theme Toggler",
   component: ThemeTogglerButtonImpl,
   argTypes: {
     variant: { control: "select", options: ["default", "outline", "ghost"] },

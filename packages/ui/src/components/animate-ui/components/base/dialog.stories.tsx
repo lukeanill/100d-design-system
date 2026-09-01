@@ -11,7 +11,11 @@ import {
 } from "./dialog"
 import { Button } from "@workspace/ui/components/button"
 
-export default { title: "Components/Dialog", component: DialogImpl }
+export default {
+  title: "Components/Overlays/Dialog",
+  component: DialogImpl,
+  args: { defaultOpen: false },
+}
 
 export const Dialog = (args: ComponentProps<typeof DialogImpl>) => (
   <DialogImpl {...args}>

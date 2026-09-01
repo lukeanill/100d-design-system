@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { Marker as MarkerImpl, MarkerContent } from "./marker"
 
 export default {
-  title: "Components/Marker",
+  title: "Components/Content/Marker",
   component: MarkerImpl,
   argTypes: {
     variant: { control: "select", options: ["default", "separator", "border"] },

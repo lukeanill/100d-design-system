@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { CopyButton as CopyButtonImpl } from "./copy"
 
 export default {
-  title: "Components/Copy",
+  title: "Components/Actions/Copy",
   component: CopyButtonImpl,
   argTypes: {
     variant: {

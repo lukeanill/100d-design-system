@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "./breadcrumb"
 
-export default { title: "Components/Breadcrumb", component: BreadcrumbImpl }
+export default { title: "Components/Navigation/Breadcrumb", component: BreadcrumbImpl }
 
 export const Breadcrumb = (args: ComponentProps<typeof BreadcrumbImpl>) => (
   <BreadcrumbImpl {...args}>

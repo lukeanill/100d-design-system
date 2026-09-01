@@ -54,7 +54,7 @@ function ManagementBar() {
 
   return (
     <div className="@container/wrapper w-full flex justify-center">
-      <div className="flex w-fit flex-col @xl/wrapper:flex-row items-center gap-y-2 rounded-2xl border border-border bg-background p-2 shadow-lg">
+      <div className="flex w-fit flex-col @xl/wrapper:flex-row items-center gap-y-2 rounded-lg border border-border bg-background p-2 shadow-lg">
         <div className="mx-auto flex flex-col @lg/wrapper:flex-row shrink-0 items-center">
           <div className="flex h-10">
             <button
