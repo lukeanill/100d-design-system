@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "migratedAt": "2026-08-26T10:18:10.111663Z",
+  "stats": {
+    "filesScanned": 1,
+    "filesRewritten": 0,
+    "refsHealed": 0,
+    "refsCrossCanvasRepointed": 0,
+    "mastersRenamed": 0
+  },
+  "danglingRefs": []
+}

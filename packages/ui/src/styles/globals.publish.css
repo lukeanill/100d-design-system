@@ -1,0 +1,6 @@
+@import "./tokens.css";
+
+/* Published-package variant: scans this package's own compiled output for
+   Tailwind classes used inside components (e.g. rounded-4xl). Copied to
+   dist/styles/globals.css by the build script — path is relative to there. */
+@source "../**/*.{js,jsx}";

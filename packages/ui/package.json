@@ -1,17 +1,21 @@
 {
   "name": "@workspace/ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "scripts": {
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && (tsc -p tsconfig.build.json || true) && node scripts/build-publish.mjs",
+    "publish:package": "pnpm build && cd dist && npm publish"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
     "@floating-ui/react": "^0.27.20",
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource-variable/fira-code": "^5.3.0",
+    "@fontsource/oranienbaum": "^5.3.0",
     "@headlessui/react": "^2.2.10",
     "@phosphor-icons/react": "^2.1.10",
     "@shadcn/react": "^0.3.0",
