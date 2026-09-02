@@ -32,6 +32,9 @@ importers:
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      leaflet:
+        specifier: ^1.9.4
+        version: 1.9.4
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -41,9 +44,15 @@ importers:
       react-dom:
         specifier: ^19.2.6
         version: 19.2.6(react@19.2.6)
+      react-leaflet:
+        specifier: ^5.0.0
+        version: 5.0.0(leaflet@1.9.4)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       react-router:
         specifier: ^8.3.0
         version: 8.3.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      recharts:
+        specifier: 3.8.0
+        version: 3.8.0(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react-is@19.2.8)(react@19.2.6)(redux@5.0.1)
     devDependencies:
       '@eslint/js':
         specifier: ^10
@@ -123,7 +132,37 @@ importers:
       '@fontsource-variable/fira-code':
         specifier: ^5.3.0
         version: 5.3.0
+      '@fontsource/geist':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/geist-mono':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/grenze':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/grenze-gotisch':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/gudea':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/inter':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/koulen':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/lora':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@fontsource/oranienbaum':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/playfair-display':
         specifier: ^5.3.0
         version: 5.3.0
       '@phosphor-icons/react':
@@ -198,6 +237,9 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
+      vaul:
+        specifier: 1.1.2
+        version: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -840,8 +882,38 @@ packages:
   '@fontsource-variable/fira-code@5.3.0':
     resolution: {integrity: sha512-ZhvHeknlicraKVSJBa1NrJnXDVByUkC407zwgELYfmnx3p9g8vwIPfQCxx8YD3K7dAeCdLuHJOHlpMfRsIcApQ==}
 
+  '@fontsource/geist-mono@5.3.0':
+    resolution: {integrity: sha512-UtJ1BBBCVpMYdIcW7nEB45UAoAw5M53ZXs2t0ciPW+IokuAAIc56M8+kW5tXbRJCTpDw4XTtU7proT6NdQAHTg==}
+
+  '@fontsource/geist@5.3.0':
+    resolution: {integrity: sha512-u03ftlfVwb05uijq2jGDJ03/HKGqMKaNFk7KOhkpBUex8+BhrAOfMs/XciJ2UUNUX9fEsZbZQld/RWMA2oFU7g==}
+
+  '@fontsource/grenze-gotisch@5.3.0':
+    resolution: {integrity: sha512-hIgb3TJWnwjiaf8FWMYfPe5PvHHnSv+VYUJI40Fj0KhjWhBhBl4LTsGrkr4MSjo6mG+znR2tBz5L++4wkEgI1A==}
+
+  '@fontsource/grenze@5.3.0':
+    resolution: {integrity: sha512-fq8Xyrvs/wQrtIhTjJbWHbz0Ed9TzWKYEmN7E4Qd0ie3OhMreRCMHYS0P1tP+lQ7Dbql3eL84IojdCcy+Wm+oA==}
+
+  '@fontsource/gudea@5.3.0':
+    resolution: {integrity: sha512-zQ+KAa/wJy3CA/bN+yynyCeK3VHZHohKAXG4+5GeQ3CKP0bFXZFg7+StMnU9NIOHgyDpxUmiy0LPkaSxCGMgxQ==}
+
+  '@fontsource/ibm-plex-mono@5.3.0':
+    resolution: {integrity: sha512-eTgnZjZEGk1QtD3ZstF+Vclo2HLAni8YMy34/DxllwZvyz1lR/1RF/xTiAquOBO7MvqBx8D2Ig2WCPMVfdZu7Q==}
+
+  '@fontsource/inter@5.3.0':
+    resolution: {integrity: sha512-RofMylZmjlJEfELXeNHFWBRcSs75rGU/6bV2S2jfnvv/3rPXPGe0LgUJTklcHZ9lM4OZmAVFhcJPnACfb91A3g==}
+
+  '@fontsource/koulen@5.3.0':
+    resolution: {integrity: sha512-WdCv4Sam+CDG7xx0FmNaWyEAGBT8P9tFISlGsaHE0LOpvg2OJ94c06eFTk5hSSdkn3P/bjDcsVvwuoXiCsfh8A==}
+
+  '@fontsource/lora@5.3.0':
+    resolution: {integrity: sha512-OK1g1z01rHVPqO5aw/FOIoDqc46KKYZdgL3NOLkxLWDk6QhDHhdr/h2BV1cke6gTvR1tzpDfdKyUkGsC+sQLeQ==}
+
   '@fontsource/oranienbaum@5.3.0':
     resolution: {integrity: sha512-AB9D7JTbWUceEExPfGMn4gaJ3a9wb4F60ijNQIB2xPILgSjXlyonCHGqCmjfxRZmuK5yaF0blFmU3sNrIx82Qg==}
+
+  '@fontsource/playfair-display@5.3.0':
+    resolution: {integrity: sha512-uJSABalvdWc10fEPppQjQocamT21LEyRfzzWfRfqbkPz+sRv+kKpYDKyluBUskvJREkJTos9epj1WjQROGu99Q==}
 
   '@hono/node-server@2.1.1':
     resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
@@ -4266,6 +4338,12 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
+  vaul@1.1.2:
+    resolution: {integrity: sha512-ZFkClGpWyI2WUQjdLJ/BaGuV6AVQiJ3uELGk3OYtP+B6yCO7Cmn9vPFXVJkRaGkOJu3m8bQMgtyzNHixULceQA==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc
+
   vfile-message@4.0.3:
     resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
 
@@ -4961,7 +5039,27 @@ snapshots:
 
   '@fontsource-variable/fira-code@5.3.0': {}
 
+  '@fontsource/geist-mono@5.3.0': {}
+
+  '@fontsource/geist@5.3.0': {}
+
+  '@fontsource/grenze-gotisch@5.3.0': {}
+
+  '@fontsource/grenze@5.3.0': {}
+
+  '@fontsource/gudea@5.3.0': {}
+
+  '@fontsource/ibm-plex-mono@5.3.0': {}
+
+  '@fontsource/inter@5.3.0': {}
+
+  '@fontsource/koulen@5.3.0': {}
+
+  '@fontsource/lora@5.3.0': {}
+
   '@fontsource/oranienbaum@5.3.0': {}
+
+  '@fontsource/playfair-display@5.3.0': {}
 
   '@hono/node-server@2.1.1(hono@4.13.4)':
     dependencies:
@@ -8186,6 +8284,15 @@ snapshots:
   validate-npm-package-name@7.0.2: {}
 
   vary@1.1.2: {}
+
+  vaul@1.1.2(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
+    dependencies:
+      '@radix-ui/react-dialog': 1.1.23(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
 
   vfile-message@4.0.3:
     dependencies:

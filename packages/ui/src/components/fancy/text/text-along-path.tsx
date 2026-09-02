@@ -1,5 +1,7 @@
-import { RefObject, useEffect, useRef } from "react"
-import { useScroll, UseScrollOptions, useTransform } from "motion/react"
+import { useEffect, useRef } from "react"
+import type { RefObject } from "react"
+import { useScroll, useTransform } from "motion/react"
+import type { UseScrollOptions } from "motion/react"
 
 type PreserveAspectRatioAlign =
   | "none"
@@ -104,7 +106,7 @@ const AnimatedPathText = ({
 
   useEffect(() => {
     // Re-initialize scroll handler when container ref changes
-    const handleChange = (e: number) => {
+    const handleChange = () => {
       textPathRefs.current.forEach((textPath) => {
         if (textPath) {
           textPath.setAttribute("startOffset", `${t.get()}%`)

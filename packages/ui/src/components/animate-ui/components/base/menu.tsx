@@ -239,7 +239,7 @@ function MenuShortcut({ className, ...props }: MenuShortcutProps) {
   return (
     <MenuShortcutPrimitive
       className={cn(
-        'text-muted-foreground ml-auto text-xs tracking-widest',
+        'text-secondary-foreground ml-auto text-xs tracking-widest',
         className,
       )}
       {...props}

@@ -7,7 +7,15 @@ import {
   ComboboxItem,
 } from "./combobox"
 
-export default { title: "Components/Selects/Combobox", component: ComboboxImpl, args: { items: ["Apple", "Banana", "Cherry"] } }
+export default {
+  title: "Components/Selects/Combobox",
+  component: ComboboxImpl,
+  argTypes: {
+    disabled: { control: "boolean" },
+    multiple: { control: "boolean" },
+  },
+  args: { items: ["Apple", "Banana", "Cherry"], disabled: false, multiple: false },
+}
 
 export const Combobox = (args: ComponentProps<typeof ComboboxImpl>) => (
   <ComboboxImpl {...args}>

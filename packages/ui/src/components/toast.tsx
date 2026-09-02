@@ -87,7 +87,7 @@ function ToastDescription({
   return (
     <ToastPrimitive.Description
       data-slot="toast-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-sm text-foreground", className)}
       {...props}
     />
   )
@@ -137,7 +137,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
 
   if (type === "success") {
     icon = (
-      <CheckCircleIcon aria-hidden="true" />
+      <CheckCircleIcon className="text-affirmative" aria-hidden="true" />
     )
   }
 

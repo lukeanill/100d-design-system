@@ -140,7 +140,7 @@ export const TagSelectActions = ({
         <>
           {showClear && selected.length > 0 ? (
             <button
-              className="inline-flex cursor-pointer items-center gap-1 text-muted-foreground text-xs transition-colors hover:text-foreground"
+              className="inline-flex cursor-pointer items-center gap-1 text-secondary-foreground text-xs transition-colors hover:text-foreground"
               onClick={clear}
               type="button"
             >

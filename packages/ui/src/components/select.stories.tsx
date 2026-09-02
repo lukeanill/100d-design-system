@@ -4,7 +4,10 @@ import { Select as SelectImpl, SelectTrigger, SelectValue, SelectContent, Select
 export default {
   title: "Components/Selects/Select",
   component: SelectImpl,
-  args: { defaultValue: "apple" },
+  argTypes: {
+    disabled: { control: "boolean" },
+  },
+  args: { defaultValue: "apple", disabled: false },
 }
 
 export const Select = (args: ComponentProps<typeof SelectImpl>) => (
@@ -16,6 +19,7 @@ export const Select = (args: ComponentProps<typeof SelectImpl>) => (
       <SelectItem value="apple">Apple</SelectItem>
       <SelectItem value="banana">Banana</SelectItem>
       <SelectItem value="cherry">Cherry</SelectItem>
+      <SelectItem value="date" disabled>Date (out of stock)</SelectItem>
     </SelectContent>
   </SelectImpl>
 )

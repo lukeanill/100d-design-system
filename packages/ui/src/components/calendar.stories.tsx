@@ -17,12 +17,18 @@ export default {
       control: "select",
       options: ["default", "outline", "secondary", "ghost", "destructive", "link"],
     },
+    numberOfMonths: { control: { type: "number", min: 1, max: 3 } },
+    showOutsideDays: { control: "boolean" },
+    disabled: { control: "boolean" },
   },
   args: {
     mode: "single",
     captionLayout: "label",
     buttonVariant: "ghost",
     selected: new Date(2026, 8, 1),
+    numberOfMonths: 1,
+    showOutsideDays: true,
+    disabled: false,
   },
 }
 

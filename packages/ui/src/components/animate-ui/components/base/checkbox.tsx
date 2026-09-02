@@ -13,13 +13,13 @@ const checkboxVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-background border',
+        default: 'bg-transparent border border-foreground',
         accent: 'bg-input',
       },
       size: {
         default: 'size-5 rounded-sm',
-        sm: 'size-4.5 rounded-[5px]',
-        lg: 'size-6 rounded-[7px]',
+        sm: 'size-4.5 rounded-sm',
+        lg: 'size-6 rounded-md',
       },
     },
     defaultVariants: {

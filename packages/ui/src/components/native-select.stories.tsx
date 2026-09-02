@@ -9,8 +9,9 @@ export default {
       control: "select",
       options: ["default", "sm"],
     },
+    disabled: { control: "boolean" },
   },
-  args: { size: "default", defaultValue: "banana" },
+  args: { size: "default", defaultValue: "banana", disabled: false },
 }
 
 export const NativeSelect = (args: ComponentProps<typeof NativeSelectImpl>) => (

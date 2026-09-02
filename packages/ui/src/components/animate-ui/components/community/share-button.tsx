@@ -8,12 +8,12 @@ import { HTMLMotionProps, motion, AnimatePresence } from 'motion/react';
 import { cn } from '@workspace/ui/lib/utils';
 
 const buttonVariants = cva(
-  "relative overflow-hidden cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "relative overflow-hidden cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       size: {
         default: 'min-w-28 h-10 px-4 py-2',
-        sm: 'min-w-24 h-9 rounded-md gap-1.5 px-3',
+        sm: 'min-w-24 h-9 gap-1.5 px-3',
         md: 'min-w-28 h-10 px-4 py-2',
         lg: 'min-w-32 h-11 px-8',
       },
@@ -104,10 +104,10 @@ function ShareButton({
 const shareIconGroupVariants = cva('flex items-center justify-center gap-3', {
   variants: {
     size: {
-      default: 'text-[16px]',
-      sm: 'text-[16px]',
-      md: 'text-[20px]',
-      lg: 'text-[28px]',
+      default: '',
+      sm: '',
+      md: '',
+      lg: '',
     },
   },
   defaultVariants: {

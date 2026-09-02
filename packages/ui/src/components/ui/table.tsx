@@ -362,7 +362,7 @@ export const TableGrid = ({ className, ...props }: ComponentProps<"div">) => {
               return (
                 <th
                   className={cn(
-                    "px-3 py-2 font-medium text-muted-foreground",
+                    "px-3 py-2 font-medium text-secondary-foreground",
                     column.align === "center" && "text-center",
                     column.align === "right" && "text-right",
                     column.align !== "center" &&
@@ -394,7 +394,7 @@ export const TableGrid = ({ className, ...props }: ComponentProps<"div">) => {
           {!loading && visibleRows.length === 0 && (
             <tr>
               <td
-                className="px-3 py-8 text-center text-muted-foreground"
+                className="px-3 py-8 text-center text-foreground"
                 colSpan={columnCount}
               >
                 {emptyMessage}
@@ -464,7 +464,7 @@ export const TableFooter = ({
   return (
     <footer
       className={cn(
-        "flex items-center justify-between border-t px-3 py-2 text-muted-foreground text-xs",
+        "flex items-center justify-between border-t px-3 py-2 text-secondary-foreground text-xs",
         className
       )}
       {...props}

@@ -1,5 +1,8 @@
 {
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm --filter web run stories:build",
-  "outputDirectory": "storybook-static"
+  "buildCommand": "pnpm --filter web run build && pnpm --filter web run stories:build && rm -rf dist/storybook && mkdir -p dist/storybook && cp -r storybook-static/. dist/storybook/",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/((?!storybook).*)", "destination": "/index.html" }
+  ]
 }

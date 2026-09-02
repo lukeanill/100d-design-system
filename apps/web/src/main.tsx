@@ -3,21 +3,24 @@ import { createRoot } from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router"
 
 import "@workspace/ui/globals.css"
-import { App } from "./App.tsx"
 import { History } from "./History.tsx"
 import { Tokens } from "./Tokens.tsx"
-import { ThemeProvider } from "@/components/theme-provider.tsx"
+import { Showcase } from "./Showcase.tsx"
+import { ThemeProvider } from "@workspace/ui/components/theme-provider"
+import { FontThemeProvider } from "@workspace/ui/components/font-theme-provider"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/tokens" element={<Tokens />} />
-        </Routes>
-      </BrowserRouter>
+      <FontThemeProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Showcase />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/tokens" element={<Tokens />} />
+          </Routes>
+        </BrowserRouter>
+      </FontThemeProvider>
     </ThemeProvider>
   </StrictMode>
 )

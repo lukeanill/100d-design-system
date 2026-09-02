@@ -4,6 +4,9 @@ import { AspectRatio as AspectRatioImpl } from "./aspect-ratio"
 export default {
   title: "Components/Layout/Aspect Ratio",
   component: AspectRatioImpl,
+  argTypes: {
+    ratio: { control: { type: "number", step: 0.01 } },
+  },
   args: { ratio: 16 / 9 },
 }
 

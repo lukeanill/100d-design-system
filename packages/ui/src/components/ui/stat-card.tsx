@@ -50,7 +50,7 @@ interface StatCardItemProps extends ComponentProps<"div"> {
 const TREND_CLASSES = {
   down: "text-destructive",
   neutral: "text-muted-foreground",
-  up: "text-primary",
+  up: "text-affirmative",
 };
 
 const TREND_STATUS = {
@@ -92,7 +92,7 @@ export const StatCardItem = ({
           {(stat.label || stat.icon) && (
             <div className="flex items-center justify-between">
               {stat.label && (
-                <span className="text-[10px] text-muted-foreground sm:text-xs">
+                <span className="text-body-lg text-foreground">
                   {stat.label}
                 </span>
               )}
@@ -110,7 +110,7 @@ export const StatCardItem = ({
                 <span
                   data-apps-sdk-status={TREND_STATUS[trend]}
                   className={cn(
-                    "flex shrink-0 items-center gap-0.5 font-medium text-[10px] sm:text-xs",
+                    "flex shrink-0 items-center gap-0.5 font-medium text-xs",
                     TREND_CLASSES[trend]
                   )}
                 >
@@ -121,7 +121,7 @@ export const StatCardItem = ({
             </div>
           )}
           {stat.changeLabel && (
-            <span className="text-[10px] text-muted-foreground sm:text-xs">
+            <span className="text-xs text-foreground">
               {stat.changeLabel}
             </span>
           )}

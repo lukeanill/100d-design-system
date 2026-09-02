@@ -11,7 +11,7 @@ export default {
     },
     size: { control: "select", options: ["default", "xs", "sm", "lg"] },
   },
-  args: { variant: "outline", size: "default", content: "npm install @workspace/ui" },
+  args: { variant: "default", size: "default", content: "npm install @workspace/ui" },
 }
 
 export const Copy = (args: ComponentProps<typeof CopyButtonImpl>) => <CopyButtonImpl {...args} />

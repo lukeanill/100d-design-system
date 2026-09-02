@@ -1,6 +1,13 @@
 import type { Preview } from "@storybook/react-vite"
-import { ThemeProvider } from "../src/components/theme-provider"
+import { ThemeProvider } from "@workspace/ui/components/theme-provider"
+import { FontThemeProvider } from "@workspace/ui/components/font-theme-provider"
+import { colorThemes } from "@workspace/ui/lib/theme-registry"
 import "@workspace/ui/globals.css"
+
+const COLOR_ICONS: Record<string, string> = {
+  light: "sun",
+  dark: "moon",
+}
 
 const preview: Preview = {
   parameters: {
@@ -20,15 +27,15 @@ const preview: Preview = {
   },
   globalTypes: {
     theme: {
-      description: "Design system theme",
+      description: "Theme (color + font pairing)",
       toolbar: {
         title: "Theme",
         icon: "circlehollow",
-        items: [
-          { value: "light", icon: "sun", title: "Light" },
-          { value: "dark", icon: "moon", title: "Dark" },
-          { value: "glass", icon: "mirror", title: "Glass" },
-        ],
+        items: colorThemes.map((t) => ({
+          value: t.id,
+          icon: COLOR_ICONS[t.id] ?? "circle",
+          title: t.label,
+        })),
         dynamicTitle: true,
       },
     },
@@ -39,9 +46,11 @@ const preview: Preview = {
   decorators: [
     (Story, context) => (
       <ThemeProvider forcedTheme={context.globals.theme}>
-        <div className="bg-background text-foreground min-h-screen p-6">
-          <Story />
-        </div>
+        <FontThemeProvider>
+          <div className="bg-background text-foreground min-h-screen p-6">
+            <Story />
+          </div>
+        </FontThemeProvider>
       </ThemeProvider>
     ),
   ],

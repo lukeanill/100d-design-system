@@ -60,7 +60,7 @@ export const QuickReplyItem = ({
   return (
     <button
       className={cn(
-        "inline-flex cursor-pointer items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-xs text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-sm",
+        "inline-flex cursor-pointer items-center gap-1 rounded-full border border-foreground bg-transparent px-2.5 py-1 text-xs text-foreground transition-colors hover:bg-muted sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-sm",
         className
       )}
       onClick={() => onSelectReply?.(reply)}

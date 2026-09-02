@@ -31,7 +31,7 @@ interface StatusConfig {
 
 const STATUS_CONFIG: Record<StatusType, StatusConfig> = {
   cancelled: {
-    className: "border-border bg-muted text-muted-foreground",
+    className: "border-border bg-muted text-secondary-foreground",
     defaultLabel: "Cancelled",
     icon: XCircle,
   },
@@ -46,7 +46,7 @@ const STATUS_CONFIG: Record<StatusType, StatusConfig> = {
     icon: XCircle,
   },
   pending: {
-    className: "border-border bg-muted text-muted-foreground",
+    className: "border-border bg-muted text-secondary-foreground",
     defaultLabel: "Pending",
     icon: Clock,
   },
@@ -61,7 +61,7 @@ const STATUS_CONFIG: Record<StatusType, StatusConfig> = {
     icon: Truck,
   },
   success: {
-    className: "border-border bg-muted text-foreground",
+    className: "border-affirmative/20 bg-affirmative/10 text-affirmative",
     defaultLabel: "Success",
     icon: Check,
   },

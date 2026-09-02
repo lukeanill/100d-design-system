@@ -1,5 +1,6 @@
 import * as React from "react"
 import { ThemeProvider as NextThemeProvider, useTheme } from "next-themes"
+import { colorThemeIds } from "@workspace/ui/lib/theme-registry"
 
 function isEditableTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
@@ -45,7 +46,7 @@ export function ThemeProvider({
       attribute="class"
       defaultTheme="system"
       enableSystem
-      themes={["light", "dark", "glass"]}
+      themes={colorThemeIds}
       forcedTheme={forcedTheme}
     >
       <KeyboardThemeToggle />

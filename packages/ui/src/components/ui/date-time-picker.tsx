@@ -392,7 +392,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             {orderedDays.map((day) => (
               <div
                 key={day}
-                className="text-center text-xs font-medium text-muted-foreground py-2"
+                className="text-center text-xs font-medium text-secondary-foreground py-2"
               >
                 {day}
               </div>
@@ -453,7 +453,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                   render={
                     <button
                       aria-label="Select timezone"
-                      className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      className="flex items-center gap-2 text-sm text-secondary-foreground hover:text-foreground transition-colors"
                     />
                   }
                 >
@@ -494,13 +494,13 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                         )}
                       >
                         <span className="text-foreground">{tz.name}</span>
-                        <span className="text-muted-foreground text-xs">
+                        <span className="text-secondary-foreground text-xs">
                           {getTimeForTimezone(tz.iana)}
                         </span>
                       </button>
                     ))}
                     {filteredTimezones.length === 0 && (
-                      <div className="px-3 py-6 text-center text-sm text-muted-foreground">
+                      <div className="px-3 py-6 text-center text-sm text-foreground">
                         No timezone found
                       </div>
                     )}
@@ -527,7 +527,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             {/* Back button - Mobile only */}
             <button
               onClick={handleBackToCalendar}
-              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4 md:hidden"
+              className="flex items-center gap-2 text-sm text-secondary-foreground hover:text-foreground mb-4 md:hidden"
             >
               <ArrowLeft className="size-4" />
               <span>Back to calendar</span>

@@ -94,7 +94,7 @@ export const OptionListItem = ({
         "inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors sm:gap-2 sm:px-3 sm:py-1.5 sm:text-sm",
         selected
           ? "border-foreground bg-foreground text-background"
-          : "border-border bg-background hover:bg-muted",
+          : "border-foreground bg-transparent hover:bg-muted",
         option.disabled && "!cursor-not-allowed opacity-50",
         className
       )}
@@ -110,8 +110,8 @@ export const OptionListItem = ({
           {option.description && (
             <span
               className={cn(
-                "text-[10px] sm:text-xs",
-                selected ? "text-background/70" : "text-muted-foreground"
+                "text-xs",
+                selected ? "text-background/70" : "text-secondary-foreground"
               )}
             >
               · {option.description}

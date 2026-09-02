@@ -102,10 +102,8 @@ function SheetTitle({ className, ...props }: SheetPrimitive.Title.Props) {
   return (
     <SheetPrimitive.Title
       data-slot="sheet-title"
-      className={cn(
-        "font-heading text-base font-medium text-foreground",
-        className
-      )}
+      render={<h6 />}
+      className={cn("font-medium text-foreground", className)}
       {...props}
     />
   )
@@ -118,7 +116,7 @@ function SheetDescription({
   return (
     <SheetPrimitive.Description
       data-slot="sheet-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-sm text-foreground", className)}
       {...props}
     />
   )

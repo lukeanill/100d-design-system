@@ -1,7 +1,14 @@
 import type { ComponentProps } from "react"
 import { RadioGroup as RadioGroupImpl, RadioGroupItem } from "./radio-group"
 
-export default { title: "Components/Selects/Radio Group", component: RadioGroupImpl, args: { defaultValue: "default" } }
+export default {
+  title: "Components/Selects/Radio Group",
+  component: RadioGroupImpl,
+  argTypes: {
+    disabled: { control: "boolean" },
+  },
+  args: { defaultValue: "default", disabled: false },
+}
 
 export const RadioGroup = (args: ComponentProps<typeof RadioGroupImpl>) => (
   <RadioGroupImpl {...args}>
@@ -12,6 +19,10 @@ export const RadioGroup = (args: ComponentProps<typeof RadioGroupImpl>) => (
     <div className="flex items-center gap-2">
       <RadioGroupItem value="comfortable" id="r2" />
       <label htmlFor="r2" className="text-sm">Comfortable</label>
+    </div>
+    <div className="flex items-center gap-2">
+      <RadioGroupItem value="disabled-option" id="r3" disabled />
+      <label htmlFor="r3" className="text-sm">Disabled option</label>
     </div>
   </RadioGroupImpl>
 )

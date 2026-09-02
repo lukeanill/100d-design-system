@@ -1,99 +1,103 @@
+const FONT_FAMILIES = [
+  { name: "Sans serif", family: "Authentic Sans", token: "font-sans" },
+  { name: "Serif", family: "Oranienbaum", token: "font-serif" },
+  { name: "Code", family: "Fira Code", token: "font-mono" },
+] as const
+
 const TYPE_SCALE = [
-  { tag: "h1", label: "Heading 1", size: "80px", weight: 400, leading: "120%", tracking: "0%" },
-  { tag: "h2", label: "Heading 2", size: "74px", weight: 400, leading: "120%", tracking: "0%" },
-  { tag: "h3", label: "Heading 3", size: "68px", weight: 400, leading: "120%", tracking: "0%" },
-  { tag: "h4", label: "Heading 4", size: "62px", weight: 400, leading: "120%", tracking: "0%" },
-  { tag: "h5", label: "Heading 5", size: "56px", weight: 400, leading: "120%", tracking: "0%" },
-  { tag: "h6", label: "Heading 6", size: "36px", weight: 400, leading: "120%", tracking: "0%" },
+  { tag: "h1", label: "Heading 1", size: "80px" },
+  { tag: "h2", label: "Heading 2", size: "74px" },
+  { tag: "h3", label: "Heading 3", size: "68px" },
+  { tag: "h4", label: "Heading 4", size: "62px" },
+  { tag: "h5", label: "Heading 5", size: "56px" },
+  { tag: "h6", label: "Heading 6", size: "36px" },
 ] as const
 
 const BODY_STYLES = [
-  { className: "text-body-small", label: "Body Small", meta: "14px · Authentic Sans 60 · leading 160%" },
-  { className: "text-body", label: "Body", meta: "16px · Authentic Sans 90 · leading 160%" },
-  { className: "text-body-serif", label: "Body Serif", meta: "17px · Oranienbaum · leading 160%" },
-  { className: "text-body-lg", label: "Body Large", meta: "20px · Authentic Sans 90 · leading 160% · tracking 1%" },
-  { className: "text-body-lg-serif", label: "Body Large Serif", meta: "21px · Oranienbaum · leading 160% · tracking -1%" },
+  { sans: "text-body-small", serif: null, label: "Body Small", size: "14px" },
+  { sans: "text-body", serif: "text-body-serif", label: "Body", size: "16px / 17px" },
+  { sans: "text-body-lg", serif: "text-body-lg-serif", label: "Body Large", size: "20px / 21px" },
 ] as const
 
-const FONT_TOKENS = [
-  { name: "font-heading", sample: "Aa Bb Cc 123" },
-  { name: "font-body", sample: "Aa Bb Cc 123" },
-  { name: "font-serif", sample: "Aa Bb Cc 123" },
-  { name: "font-sans", sample: "Aa Bb Cc 123" },
-  { name: "font-mono", sample: "Aa Bb Cc 123" },
-] as const
-
-export default { title: "Tokens/Typography" }
+export default { title: "Tokens/Typography", parameters: { layout: "fullscreen" } }
 
 export const Typography = () => (
-  <div className="mx-auto flex max-w-4xl flex-col gap-12 p-8">
-    <section className="flex flex-col gap-4">
-      <h2 className="text-lg font-semibold">Font families</h2>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {FONT_TOKENS.map((font) => (
-          <div key={font.name} className="rounded-2xl border p-4">
-            <div className="mb-2 text-xs text-muted-foreground">--{font.name}</div>
-            <div className="text-2xl" style={{ fontFamily: `var(--${font.name})` }}>
-              {font.sample}
+  <div className="min-h-screen w-full bg-card">
+   <div className="mx-auto flex max-w-5xl flex-col gap-16 p-10">
+    <header className="flex flex-col gap-3 border-b border-muted pb-8">
+      <p className="font-sans text-xs font-medium tracking-wide text-muted-foreground uppercase">
+        Tokens &middot; Typography
+      </p>
+      <h1 className="font-heading text-4xl font-normal text-foreground">Typography</h1>
+    </header>
+
+    <section className="flex flex-col gap-6">
+      <h2 className="font-heading text-xl font-normal text-foreground">Font families</h2>
+      <div className="grid gap-4 sm:grid-cols-3">
+        {FONT_FAMILIES.map((fam) => (
+          <div key={fam.name} className="flex flex-col gap-4 rounded-xl border border-muted bg-card p-6 shadow-xs">
+            <div className="text-5xl text-foreground" style={{ fontFamily: `var(--${fam.token})` }}>
+              Ag
+            </div>
+            <div>
+              <div className="text-sm font-medium text-foreground">{fam.name}</div>
+              <div className="text-xs text-muted-foreground">{fam.family}</div>
             </div>
           </div>
         ))}
       </div>
     </section>
 
-    <section className="flex flex-col gap-4">
-      <h2 className="text-lg font-semibold">Type scale</h2>
-      <div className="flex flex-col divide-y divide-border rounded-2xl border">
+    <section className="flex flex-col gap-6">
+      <h2 className="font-heading text-xl font-normal text-foreground">Type scale</h2>
+      <div className="flex flex-col divide-y divide-muted rounded-xl border border-muted bg-card shadow-xs">
         {TYPE_SCALE.map((t) => (
-          <div key={t.tag} className="flex items-center justify-between gap-6 p-4">
-            <div className="min-w-0 flex flex-col gap-1">
+          <div key={t.tag} className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 flex-col gap-2">
               <div>
-                {t.tag === "h1" && <h1>The quick brown fox</h1>}
-                {t.tag === "h2" && <h2>The quick brown fox</h2>}
-                {t.tag === "h3" && <h3>The quick brown fox</h3>}
-                {t.tag === "h4" && <h4>The quick brown fox</h4>}
-                {t.tag === "h5" && <h5>The quick brown fox</h5>}
-                {t.tag === "h6" && <h6>The quick brown fox</h6>}
+                {t.tag === "h1" && <h1 className="truncate">Design, distilled</h1>}
+                {t.tag === "h2" && <h2 className="truncate">Design, distilled</h2>}
+                {t.tag === "h3" && <h3 className="truncate">Design, distilled</h3>}
+                {t.tag === "h4" && <h4 className="truncate">Design, distilled</h4>}
+                {t.tag === "h5" && <h5 className="truncate">Design, distilled</h5>}
+                {t.tag === "h6" && <h6 className="truncate">Design, distilled</h6>}
               </div>
               <div
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: t.size,
-                  lineHeight: t.leading,
-                  letterSpacing: t.tracking,
-                }}
+                className="truncate text-foreground"
+                style={{ fontFamily: "var(--font-serif)", fontSize: t.size, lineHeight: 1.2 }}
               >
-                The quick brown fox
+                Design, distilled
               </div>
             </div>
-            <div className="shrink-0 text-right text-xs text-muted-foreground">
+            <div className="shrink-0 text-xs text-muted-foreground sm:text-right">
               <div className="font-medium text-foreground">{t.label}</div>
-              <div>{t.size} · weight {t.weight}</div>
-              <div>leading {t.leading} · tracking {t.tracking}</div>
-              <div className="mt-1 flex justify-end gap-2">
-                <span className="rounded bg-muted px-1.5 py-0.5">sans</span>
-                <span className="rounded bg-muted px-1.5 py-0.5">serif</span>
-              </div>
+              <div>{t.size}</div>
             </div>
           </div>
         ))}
         {BODY_STYLES.map((b) => (
-          <div key={b.className} className="flex items-center justify-between gap-6 p-4">
-            <p className={b.className}>The quick brown fox jumps over the lazy dog.</p>
-            <div className="shrink-0 text-right text-xs text-muted-foreground">
+          <div key={b.label} className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 flex-col gap-2">
+              <p className={`${b.sans} max-w-md truncate`}>The quick brown fox jumps over the lazy dog.</p>
+              {b.serif && <p className={`${b.serif} max-w-md truncate`}>The quick brown fox jumps over the lazy dog.</p>}
+            </div>
+            <div className="shrink-0 text-xs text-muted-foreground sm:text-right">
               <div className="font-medium text-foreground">{b.label}</div>
-              <div>{b.meta}</div>
+              <div>{b.size}</div>
             </div>
           </div>
         ))}
-        <div className="flex items-center justify-between gap-6 p-4">
-          <code className="font-mono text-sm">const design = "system"</code>
-          <div className="shrink-0 text-right text-xs text-muted-foreground">
+        <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <code className="w-fit rounded-md bg-muted px-3 py-2 font-mono text-sm text-foreground">
+            const design = &quot;system&quot;
+          </code>
+          <div className="shrink-0 text-xs text-muted-foreground sm:text-right">
             <div className="font-medium text-foreground">Mono</div>
-            <div>font-mono</div>
+            <div>--font-mono</div>
           </div>
         </div>
       </div>
     </section>
+   </div>
   </div>
 )

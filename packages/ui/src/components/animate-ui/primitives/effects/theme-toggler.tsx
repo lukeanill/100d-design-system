@@ -2,9 +2,10 @@
 
 import * as React from 'react';
 import { flushSync } from 'react-dom';
+import type { ColorThemeId } from '@workspace/ui/lib/theme-registry';
 
-type ThemeSelection = 'light' | 'dark' | 'glass' | 'system';
-type Resolved = 'light' | 'dark' | 'glass';
+type ThemeSelection = ColorThemeId | 'system';
+type Resolved = ColorThemeId;
 type Direction = 'btt' | 'ttb' | 'ltr' | 'rtl';
 
 type ChildrenRender =

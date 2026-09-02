@@ -70,7 +70,7 @@ function ManagementBar() {
                 padStart
                 number={currentPage}
               />
-              <span className="text-muted-foreground">/ {TOTAL_PAGES}</span>
+              <span className="text-secondary-foreground">/ {TOTAL_PAGES}</span>
             </div>
             <button
               disabled={currentPage === TOTAL_PAGES}
@@ -89,7 +89,7 @@ function ManagementBar() {
           >
             <motion.button
               {...BUTTON_MOTION_CONFIG}
-              className="flex h-10 items-center space-x-2 overflow-hidden whitespace-nowrap rounded-lg bg-secondary px-2.5 py-2 text-secondary-foreground"
+              className="flex h-10 items-center space-x-2 overflow-hidden whitespace-nowrap rounded-full bg-secondary px-2.5 py-2 text-secondary-foreground"
               aria-label="Blacklist"
             >
               <Ban size={20} className="shrink-0" />
@@ -104,7 +104,7 @@ function ManagementBar() {
 
             <motion.button
               {...BUTTON_MOTION_CONFIG}
-              className="flex h-10 items-center space-x-2 overflow-hidden whitespace-nowrap rounded-lg bg-destructive/15 px-2.5 py-2 text-destructive"
+              className="flex h-10 items-center space-x-2 overflow-hidden whitespace-nowrap rounded-full bg-destructive/15 px-2.5 py-2 text-destructive"
               aria-label="Reject"
             >
               <X size={20} className="shrink-0" />
@@ -119,7 +119,7 @@ function ManagementBar() {
 
             <motion.button
               {...BUTTON_MOTION_CONFIG}
-              className="flex h-10 items-center space-x-2 overflow-hidden whitespace-nowrap rounded-lg bg-primary/10 px-2.5 py-2 text-primary"
+              className="flex h-10 items-center space-x-2 overflow-hidden whitespace-nowrap rounded-full bg-primary/10 px-2.5 py-2 text-primary"
               aria-label="Hire"
             >
               <IdCard size={20} className="shrink-0" />
@@ -138,7 +138,7 @@ function ManagementBar() {
 
         <motion.button
           whileTap={{ scale: 0.975 }}
-          className="flex h-10 text-sm cursor-pointer items-center justify-center rounded-lg bg-primary px-3 py-2 text-primary-foreground transition-colors duration-300 hover:bg-primary/90 w-full @xl/wrapper:w-auto"
+          className="flex h-10 text-sm cursor-pointer items-center justify-center rounded-full bg-primary px-3 py-2 text-primary-foreground transition-colors duration-300 hover:bg-primary/90 w-full @xl/wrapper:w-auto"
         >
           <span className="mr-1 text-primary-foreground/70">Move to:</span>
           <span>Interview I</span>

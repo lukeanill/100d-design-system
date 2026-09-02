@@ -216,7 +216,7 @@ const HotelCard = ({
   >
     {/* Rating badge - top right */}
     {location.rating && (
-      <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-[10px] font-bold rounded-md px-1.5 py-0.5">
+      <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs font-bold rounded-md px-1.5 py-0.5">
         {location.rating}
       </div>
     )}
@@ -241,7 +241,7 @@ const HotelCard = ({
         </h3>
       )}
       {location.subtitle && (
-        <p className="text-xs text-muted-foreground truncate">
+        <p className="text-xs text-secondary-foreground truncate">
           {location.subtitle}
         </p>
       )}
@@ -256,7 +256,7 @@ const HotelCard = ({
           </p>
         )}
         {location.priceSubtext && (
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-xs text-secondary-foreground">
             {location.priceSubtext}
           </p>
         )}
@@ -303,19 +303,19 @@ const LocationListCard = ({
         <p className="font-semibold text-sm">${location.price} total</p>
       )}
       {location.priceSubtext && (
-        <p className="text-xs text-muted-foreground">{location.priceSubtext}</p>
+        <p className="text-xs text-secondary-foreground">{location.priceSubtext}</p>
       )}
       {location.name && (
         <p className="text-sm font-medium mt-1 line-clamp-1">{location.name}</p>
       )}
       {location.subtitle && (
-        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+        <p className="text-xs text-secondary-foreground mt-0.5 line-clamp-1">
           {location.subtitle}
         </p>
       )}
       {location.rating && (
         <div className="flex items-center gap-1 mt-1">
-          <span className="bg-primary text-primary-foreground text-[10px] font-bold rounded-md px-1.5 py-0.5">
+          <span className="bg-primary text-primary-foreground text-xs font-bold rounded-md px-1.5 py-0.5">
             {location.rating}
           </span>
         </div>
@@ -384,7 +384,7 @@ const FilterSection = ({
                   onCheckedChange={() => toggleOption(option)}
                   className="size-4"
                 />
-                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                <span className="text-sm text-secondary-foreground group-hover:text-foreground transition-colors">
                   {option}
                 </span>
               </label>
@@ -492,7 +492,7 @@ const FilterPanel = ({
           {activeFiltersCount > 0 && (
             <Button
               variant="ghost"
-              className="w-full text-muted-foreground hover:text-foreground"
+              className="w-full text-secondary-foreground hover:text-foreground"
               onClick={onReset}
             >
               Reset all filters
@@ -508,7 +508,7 @@ const MapPlaceholder = ({ height }: { height?: string }) => (
     className="bg-muted/30 flex items-center justify-center"
     style={{ height: height || "100%" }}
   >
-    <div className="flex flex-col items-center gap-2 text-muted-foreground">
+    <div className="flex flex-col items-center gap-2 text-secondary-foreground">
       <MapPin className="size-8" />
       <span className="text-sm">Loading map...</span>
     </div>
@@ -610,7 +610,7 @@ const VanillaLeafletMap = ({
           transform: translate(-50%, -50%);
           display: inline-block; padding: 4px 8px; border-radius: 8px;
           font-size: 12px; font-weight: 600;
-          font-family: system-ui, -apple-system, sans-serif;
+          font-family: var(--font-sans);
           white-space: nowrap;
           box-shadow: var(--shadow-md);
           z-index: ${isSelected ? "1000" : "1"};
@@ -894,7 +894,7 @@ const MapCarouselView = ({ data, actions, appearance }: MapCarouselProps) => {
           <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
             <div className="flex items-center gap-2 min-w-0">
               {title && <span className="font-semibold truncate">{title}</span>}
-              <span className="text-muted-foreground text-xs whitespace-nowrap">
+              <span className="text-secondary-foreground text-xs whitespace-nowrap">
                 | {filteredLocations.length}
               </span>
             </div>
@@ -920,7 +920,7 @@ const MapCarouselView = ({ data, actions, appearance }: MapCarouselProps) => {
           <div ref={listContainerRef} className="flex-1 overflow-y-auto">
             {filteredLocations.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-                <p className="text-muted-foreground">
+                <p className="text-secondary-foreground">
                   No locations match your filters
                 </p>
                 <Button

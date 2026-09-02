@@ -105,7 +105,7 @@ const Logo = ({ logo }: { logo: HeroLogo }) => {
   if (logo.text) {
     return (
       <div className="flex size-16 items-center justify-center rounded-xl border bg-background p-3 sm:size-20">
-        <span className="font-bold text-foreground text-xl tracking-tight sm:text-2xl">
+        <span className="font-heading font-bold text-foreground text-xl tracking-tight sm:text-2xl">
           {logo.text}
         </span>
       </div>
@@ -142,7 +142,7 @@ export const HeroLogos = ({
         <>
           {hasLogo1 && logo1 && <Logo logo={logo1} />}
           {hasLogo1 && hasLogo2 && (
-            <span className="font-medium text-lg text-muted-foreground sm:text-xl">
+            <span className="font-medium text-lg text-foreground sm:text-xl">
               {data.logoSeparator ?? "x"}
             </span>
           )}
@@ -191,7 +191,7 @@ export const HeroDescription = ({
   return (
     <p
       className={cn(
-        "mb-8 max-w-2xl text-center text-base text-muted-foreground sm:mb-10 sm:text-lg",
+        "mb-8 max-w-2xl text-center text-base text-foreground sm:mb-10 sm:text-lg",
         className
       )}
       {...props}
@@ -277,7 +277,7 @@ export const HeroTechLogos = ({
       {children ?? (
         <>
           {data.techLogosLabel && (
-            <p className="mb-4 text-muted-foreground text-sm">
+            <p className="mb-4 text-foreground text-sm">
               {data.techLogosLabel}
             </p>
           )}

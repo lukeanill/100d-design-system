@@ -9,8 +9,19 @@ export default {
       control: "select",
       options: ["horizontal", "vertical"],
     },
+    min: { control: { type: "number" } },
+    max: { control: { type: "number" } },
+    step: { control: { type: "number" } },
+    disabled: { control: "boolean" },
   },
-  args: { defaultValue: [50], max: 100, step: 1, orientation: "horizontal" },
+  args: {
+    defaultValue: [50],
+    min: 0,
+    max: 100,
+    step: 1,
+    orientation: "horizontal",
+    disabled: false,
+  },
 }
 
 export const Slider = (args: ComponentProps<typeof SliderImpl>) => <SliderImpl {...args} className="w-64" />

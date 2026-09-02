@@ -72,7 +72,7 @@ function CommandInput({
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
     <div data-slot="command-input-wrapper" className="p-1 pb-0">
-      <InputGroup className="h-9 bg-input/30">
+      <InputGroup className="h-9">
         <CommandPrimitive.Input
           data-slot="command-input"
           className={cn(
@@ -126,7 +126,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "overflow-hidden p-1 text-foreground **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-muted-foreground",
+        "overflow-hidden p-1 text-foreground **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-secondary-foreground",
         className
       )}
       {...props}
@@ -175,7 +175,7 @@ function CommandShortcut({
     <span
       data-slot="command-shortcut"
       className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground group-data-selected/command-item:text-foreground",
+        "ml-auto text-xs tracking-widest text-secondary-foreground group-data-selected/command-item:text-foreground",
         className
       )}
       {...props}

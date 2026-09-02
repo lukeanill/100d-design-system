@@ -13,8 +13,8 @@ export default {
 
 export const ButtonGroup = (args: ComponentProps<typeof ButtonGroupImpl>) => (
   <ButtonGroupImpl {...args}>
-    <Button variant="outline">One</Button>
-    <Button variant="outline">Two</Button>
-    <Button variant="outline">Three</Button>
+    <Button variant="default">One</Button>
+    <Button variant="default">Two</Button>
+    <Button variant="default">Three</Button>
   </ButtonGroupImpl>
 )

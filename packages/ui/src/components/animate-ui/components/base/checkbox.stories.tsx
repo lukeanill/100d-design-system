@@ -7,8 +7,16 @@ export default {
   argTypes: {
     variant: { control: "select", options: ["default", "accent"] },
     size: { control: "select", options: ["default", "sm", "lg"] },
+    disabled: { control: "boolean" },
+    indeterminate: { control: "boolean" },
   },
-  args: { variant: "default", size: "default", defaultChecked: true },
+  args: {
+    variant: "default",
+    size: "default",
+    defaultChecked: true,
+    disabled: false,
+    indeterminate: false,
+  },
 }
 
 export const Checkbox = (args: ComponentProps<typeof CheckboxImpl>) => <CheckboxImpl {...args} />

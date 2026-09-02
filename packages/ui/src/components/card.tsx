@@ -33,11 +33,11 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({ className, ...props }: React.ComponentProps<"h6">) {
   return (
-    <div
+    <h6
       data-slot="card-title"
-      className={cn("font-heading text-base font-medium", className)}
+      className={cn("font-medium", className)}
       {...props}
     />
   )
@@ -47,7 +47,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-sm text-foreground", className)}
       {...props}
     />
   )
