@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "./ai-keyframes.css";
 @import "@fontsource-variable/fira-code";
 @import "@fontsource-variable/bricolage-grotesque";
 @import "@fontsource/oranienbaum";

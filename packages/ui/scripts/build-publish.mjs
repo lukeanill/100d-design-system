@@ -38,6 +38,7 @@ function walk(dir, exts, out = []) {
 // 2. copy styles assets (tsc doesn't emit non-ts files)
 mkdirSync(join(distDir, "styles"), { recursive: true })
 cpSync(join(root, "src/styles/tokens.css"), join(distDir, "styles/tokens.css"))
+cpSync(join(root, "src/styles/ai-keyframes.css"), join(distDir, "styles/ai-keyframes.css"))
 cpSync(join(root, "src/styles/fonts"), join(distDir, "styles/fonts"), { recursive: true })
 
 // 3. publish variant of globals.css
