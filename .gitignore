@@ -19,6 +19,9 @@ storybook-static
 # turbo
 .turbo
 
+# vercel
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
