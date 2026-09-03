@@ -13,6 +13,10 @@ const config: StorybookConfig = {
     }
     return viteConfig
   },
+  managerHead: (head) => {
+    if (!process.env.STORYBOOK_BASE_PATH) return head
+    return `<base href="${process.env.STORYBOOK_BASE_PATH}" />\n${head}`
+  },
 }
 
 export default config
