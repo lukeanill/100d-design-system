@@ -23,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from "@workspace/ui/components/radio-group
 import { Badge } from "@workspace/ui/components/badge"
 import { Tooltip, TooltipTrigger, TooltipPanel } from "@workspace/ui/components/animate-ui/components/base/tooltip"
 import AnimatedPathText from "@workspace/ui/components/fancy/text/text-along-path"
+import { GradientText } from "@workspace/ui/components/animate-ui/primitives/texts/gradient"
 import {
   Item,
   ItemGroup,
@@ -374,7 +375,13 @@ export function Showcase() {
             <Badge variant="outline">9 demo themes</Badge>
           </div>
 
-          <h1 className="bg-gradient-headline bg-clip-text text-balance text-transparent">100D Design System</h1>
+          <h1 className="text-balance">
+            <GradientText
+              text="100D Design System"
+              neon
+              gradient="linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%)"
+            />
+          </h1>
 
           <RichScrambleText className="max-w-xl min-h-11 text-body-small text-foreground" segments={CREDITS_SEGMENTS} />
 
