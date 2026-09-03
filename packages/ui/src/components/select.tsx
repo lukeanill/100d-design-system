@@ -49,7 +49,7 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <CaretDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+          <CaretDownIcon className="pointer-events-none size-4 text-secondary-foreground" />
         }
       />
     </SelectPrimitive.Trigger>

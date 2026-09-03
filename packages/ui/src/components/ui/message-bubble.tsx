@@ -69,7 +69,7 @@ const MessageMetadata = ({ isOwn, status, time }: MessageMetadataProps) => (
   <div className={cn("mt-1 flex items-center gap-1", isOwn && "justify-end")}>
     {time && <span className="text-xs text-secondary-foreground">{time}</span>}
     {isOwn && status && (
-      <span className="text-muted-foreground">
+      <span className="text-secondary-foreground">
         {status === "sent" && <Check className="size-3" />}
         {status === "delivered" && <CheckCheck className="size-3" />}
         {status === "read" && <CheckCheck className="size-3 text-foreground" />}
@@ -435,7 +435,7 @@ export const MessageWithReactions = ({
                 />
               }
             >
-              <Smile className="size-3.5 text-muted-foreground" />
+              <Smile className="size-3.5 text-secondary-foreground" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="p-2">
               <div className="grid grid-cols-5 gap-1">

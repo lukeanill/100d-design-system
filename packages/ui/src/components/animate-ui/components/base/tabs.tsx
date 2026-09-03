@@ -34,7 +34,7 @@ function TabsList({ className, ...props }: TabsListProps) {
     <TabsHighlightPrimitive className="absolute z-0 inset-0 border border-transparent rounded-full bg-foreground shadow-sm">
       <TabsListPrimitive
         className={cn(
-          'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-full p-[3px]',
+          'bg-muted text-secondary-foreground inline-flex h-9 w-fit items-center justify-center rounded-full p-[3px]',
           className,
         )}
         {...props}
@@ -50,7 +50,7 @@ function TabsTab({ className, ...props }: TabsTabProps) {
     <TabsHighlightItemPrimitive value={props.value} className="flex-1">
       <TabsTabPrimitive
         className={cn(
-          "data-[selected]:text-background focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-full w-full px-2 py-1 text-sm font-medium whitespace-nowrap transition-colors duration-500 ease-in-out focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          "data-[selected]:text-background focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-secondary-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-full w-full px-2 py-1 text-sm font-medium whitespace-nowrap transition-colors duration-500 ease-in-out focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
           className,
         )}
         {...props}

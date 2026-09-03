@@ -49,7 +49,7 @@ interface StatCardItemProps extends ComponentProps<"div"> {
 
 const TREND_CLASSES = {
   down: "text-destructive",
-  neutral: "text-muted-foreground",
+  neutral: "text-secondary-foreground",
   up: "text-affirmative",
 };
 

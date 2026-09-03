@@ -265,7 +265,7 @@ export const TableHeader = ({
           <div className="flex items-center gap-2">
             {displayMode === "fullscreen" && (
               <div className="relative min-w-52">
-                <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-secondary-foreground" />
                 <Input
                   className="pl-8"
                   onChange={(event) => setQuery(event.target.value)}

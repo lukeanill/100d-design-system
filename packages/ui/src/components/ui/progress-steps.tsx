@@ -81,7 +81,7 @@ export const ProgressStep = ({
                 className={cn(
                   "text-xs sm:text-sm",
                   status === "current" && "font-medium",
-                  status === "pending" && "text-muted-foreground"
+                  status === "pending" && "text-secondary-foreground"
                 )}
               >
                 {step.label}

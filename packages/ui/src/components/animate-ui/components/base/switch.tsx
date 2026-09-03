@@ -41,7 +41,7 @@ function Switch({
         {thumbIcon && (
           <SwitchIconPrimitive
             position="thumb"
-            className="absolute [&_svg]:size-[9px] left-1/2 top-1/2 -translate-1/2 text-muted-foreground"
+            className="absolute [&_svg]:size-[9px] left-1/2 top-1/2 -translate-1/2 text-secondary-foreground"
           >
             {thumbIcon}
           </SwitchIconPrimitive>
@@ -51,7 +51,7 @@ function Switch({
       {startIcon && (
         <SwitchIconPrimitive
           position="left"
-          className="absolute [&_svg]:size-[9px] left-0.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+          className="absolute [&_svg]:size-[9px] left-0.5 top-1/2 -translate-y-1/2 text-secondary-foreground"
         >
           {startIcon}
         </SwitchIconPrimitive>
@@ -59,7 +59,7 @@ function Switch({
       {endIcon && (
         <SwitchIconPrimitive
           position="right"
-          className="absolute [&_svg]:size-[9px] right-0.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+          className="absolute [&_svg]:size-[9px] right-0.5 top-1/2 -translate-y-1/2 text-secondary-foreground"
         >
           {endIcon}
         </SwitchIconPrimitive>
