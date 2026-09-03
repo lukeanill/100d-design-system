@@ -378,7 +378,6 @@ export function Showcase() {
           <h1 className="text-balance">
             <GradientText
               text="100D Design System"
-              neon
               gradient="linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%)"
             />
           </h1>
