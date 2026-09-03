@@ -90,6 +90,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "MRK Maston";
+  src: url("./fonts/mrk-maston-regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MRK Maston";
+  src: url("./fonts/mrk-maston-bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -623,6 +639,7 @@
   --font-spline-sans: 'Spline Sans', ui-sans-serif, system-ui, sans-serif;
   --font-google-sans: 'Google Sans', -apple-system, ui-sans-serif, system-ui, sans-serif;
   --font-made-gentle: 'MADE Gentle', ui-sans-serif, system-ui, sans-serif;
+  --font-mrk-maston: 'MRK Maston', Georgia, serif;
   --font-heading: var(--font-authentic-sans-60);
   --font-body-token: var(--font-authentic-sans-60);
   --font-body: var(--font-body-token);
@@ -860,7 +877,7 @@
 [data-font-theme="acid-forest"] {
   --font-authentic-sans-60: var(--font-migra);
   --font-authentic-sans-90: var(--font-migra);
-  --font-oranienbaum: var(--font-koulen);
+  --font-oranienbaum: var(--font-mrk-maston);
   --font-body-token: var(--font-mulish);
   --font-body-weight: 300;
 }
