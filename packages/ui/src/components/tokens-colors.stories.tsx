@@ -67,7 +67,7 @@ function ColorSwatch({ token }: { token: string }) {
       />
       <div className="flex flex-col gap-0.5 px-4 pb-4">
         <div className="text-sm font-medium text-foreground">{token}</div>
-        <div className="truncate font-mono text-xs text-muted-foreground">{value || "…"}</div>
+        <div className="truncate font-mono text-xs text-secondary-foreground">{value || "…"}</div>
       </div>
     </div>
   )
@@ -79,7 +79,7 @@ export const Colors = () => (
   <div className="min-h-screen w-full bg-card">
    <div className="mx-auto flex max-w-5xl flex-col gap-16 p-10">
     <header className="flex flex-col gap-3 border-b border-muted pb-8">
-      <p className="font-sans text-xs font-medium tracking-wide text-muted-foreground uppercase">
+      <p className="font-sans text-xs font-medium tracking-wide text-secondary-foreground uppercase">
         Tokens &middot; Colors
       </p>
       <h1 className="font-heading text-4xl font-normal text-foreground">Color</h1>
@@ -104,7 +104,7 @@ export const Colors = () => (
             <div className="h-24 w-full" style={{ backgroundImage: `var(--${g.name})` }} />
             <div className="flex flex-col gap-0.5 px-4 pb-4">
               <div className="text-sm font-medium text-foreground">{g.label}</div>
-              <div className="font-mono text-xs text-muted-foreground">--{g.name}</div>
+              <div className="font-mono text-xs text-secondary-foreground">--{g.name}</div>
             </div>
           </div>
         ))}

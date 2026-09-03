@@ -53,7 +53,7 @@ export function History() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">History</h1>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-secondary-foreground text-sm">
             Every component, style, and theme change made to this design system.
           </p>
         </div>
@@ -94,9 +94,9 @@ export function History() {
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">{entry.kind}</span>
-                  <span className="text-muted-foreground text-xs"> · {entry.change}</span>
+                  <span className="text-secondary-foreground text-xs"> · {entry.change}</span>
                 </TableCell>
-                <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
+                <TableCell className="text-sm text-secondary-foreground whitespace-nowrap">
                   {formatDate(entry.date)}
                 </TableCell>
                 <TableCell>
@@ -118,7 +118,7 @@ export function History() {
                       Link
                     </a>
                   ) : (
-                    <span className="text-muted-foreground text-sm">—</span>
+                    <span className="text-secondary-foreground text-sm">—</span>
                   )}
                 </TableCell>
               </TableRow>

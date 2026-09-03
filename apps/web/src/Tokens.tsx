@@ -72,7 +72,7 @@ function ColorSwatch({ token }: { token: string }) {
       />
       <div className="min-w-0">
         <div className="truncate text-sm font-medium">{token}</div>
-        <div className="truncate text-xs text-muted-foreground">--{token}</div>
+        <div className="truncate text-xs text-secondary-foreground">--{token}</div>
       </div>
     </div>
   )
@@ -84,7 +84,7 @@ export function Tokens() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Typography &amp; Tokens</h1>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-secondary-foreground text-sm">
             Every text style and design token in the system, with live values from the
             current theme.
           </p>
@@ -97,7 +97,7 @@ export function Tokens() {
         <div className="grid gap-4 sm:grid-cols-2">
           {FONT_TOKENS.map((font) => (
             <div key={font.name} className="rounded-2xl border p-4">
-              <div className="mb-2 text-xs text-muted-foreground">--{font.name}</div>
+              <div className="mb-2 text-xs text-secondary-foreground">--{font.name}</div>
               <div
                 className="text-2xl"
                 style={{ fontFamily: `var(--${font.name})` }}
@@ -124,7 +124,7 @@ export function Tokens() {
                 {t.tag === "h5" && <h5>The quick brown fox</h5>}
                 {t.tag === "h6" && <h6>The quick brown fox</h6>}
               </div>
-              <div className="shrink-0 text-right text-xs text-muted-foreground">
+              <div className="shrink-0 text-right text-xs text-secondary-foreground">
                 <div className="font-medium text-foreground">{t.label}</div>
                 <div>{t.size} · weight {t.weight}</div>
                 <div>leading {t.leading} · tracking {t.tracking}</div>
@@ -134,7 +134,7 @@ export function Tokens() {
           {BODY_STYLES.map((b) => (
             <div key={b.className} className="flex items-center justify-between gap-6 p-4">
               <p className={b.className}>The quick brown fox jumps over the lazy dog.</p>
-              <div className="shrink-0 text-right text-xs text-muted-foreground">
+              <div className="shrink-0 text-right text-xs text-secondary-foreground">
                 <div className="font-medium text-foreground">{b.label}</div>
                 <div>{b.meta}</div>
               </div>
@@ -142,7 +142,7 @@ export function Tokens() {
           ))}
           <div className="flex items-center justify-between gap-6 p-4">
             <code className="font-mono text-sm">const design = "system"</code>
-            <div className="shrink-0 text-right text-xs text-muted-foreground">
+            <div className="shrink-0 text-right text-xs text-secondary-foreground">
               <div className="font-medium text-foreground">Mono</div>
               <div>font-mono</div>
             </div>
@@ -162,7 +162,7 @@ export function Tokens() {
                 style={{ backgroundImage: `var(--${g.name})` }}
               />
               <div className="text-sm font-medium">{g.label}</div>
-              <div className="text-xs text-muted-foreground">--{g.name}</div>
+              <div className="text-xs text-secondary-foreground">--{g.name}</div>
             </div>
           ))}
         </div>
@@ -174,7 +174,7 @@ export function Tokens() {
         <h2 className="text-lg font-semibold">Color tokens</h2>
         {COLOR_TOKENS.map((group) => (
           <div key={group.group} className="flex flex-col gap-3">
-            <h3 className="text-sm font-medium text-muted-foreground">{group.group}</h3>
+            <h3 className="text-sm font-medium text-secondary-foreground">{group.group}</h3>
             <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
               {group.tokens.map((token) => (
                 <ColorSwatch key={token} token={token} />
@@ -195,7 +195,7 @@ export function Tokens() {
                 className="size-16 border-2 border-primary/60 bg-muted"
                 style={{ borderRadius: `var(--${r.name})` }}
               />
-              <div className="text-xs text-muted-foreground">{r.label}</div>
+              <div className="text-xs text-secondary-foreground">{r.label}</div>
             </div>
           ))}
         </div>
@@ -212,7 +212,7 @@ export function Tokens() {
                 className="size-16 rounded-xl bg-card"
                 style={{ boxShadow: `var(--${s})` }}
               />
-              <div className="text-xs text-muted-foreground">--{s}</div>
+              <div className="text-xs text-secondary-foreground">--{s}</div>
             </div>
           ))}
         </div>

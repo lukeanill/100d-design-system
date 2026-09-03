@@ -21,7 +21,7 @@ export const Card = (args: ComponentProps<typeof CardImpl>) => (
       <CardDescription>A short card description.</CardDescription>
     </CardHeader>
     <CardContent>
-      <p className="text-sm text-muted-foreground">Card body content goes here.</p>
+      <p className="text-sm text-secondary-foreground">Card body content goes here.</p>
     </CardContent>
     <CardFooter>
       <Button>Action</Button>
