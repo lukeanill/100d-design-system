@@ -825,6 +825,14 @@
     letter-spacing: -0.01em;
   }
 
+  .text-title-serif {
+    font-family: var(--font-serif);
+    text-transform: uppercase;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.013em;
+  }
+
   /*
     Font Body applies to every text size 20px and under, without exception —
     this covers Tailwind's own text-xs..text-xl utilities (12/14/16/18/20px),
