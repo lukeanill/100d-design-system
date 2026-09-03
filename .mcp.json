@@ -6,6 +6,10 @@
         "shadcn@latest",
         "mcp"
       ]
+    },
+    "supernova": {
+      "type": "http",
+      "url": "https://mcp.supernova.io/mcp/c/334225"
     }
   }
 }
