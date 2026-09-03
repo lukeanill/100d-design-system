@@ -650,7 +650,29 @@ const VanillaLeafletMap = ({
  * @param {MapStyle} style - The map style to use
  * @returns {{ url: string; attribution: string }} The tile URL and attribution
  */
+const MAPBOX_TOKEN: string | undefined = (
+  import.meta as unknown as { env?: Record<string, string | undefined> }
+).env?.VITE_MAPBOX_ACCESS_TOKEN;
+
+const MAPBOX_STYLE_BY_MAP_STYLE: Record<MapStyle, string> = {
+  "dark-matter": "dark-v11",
+  positron: "light-v11",
+  voyager: "streets-v12",
+  "voyager-smooth": "streets-v12",
+  openstreetmap: "streets-v12",
+};
+
+const MAPBOX_ATTRIBUTION =
+  '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+
 const getTileConfig = (style: MapStyle) => {
+  if (MAPBOX_TOKEN) {
+    return {
+      attribution: MAPBOX_ATTRIBUTION,
+      url: `https://api.mapbox.com/styles/v1/mapbox/${MAPBOX_STYLE_BY_MAP_STYLE[style]}/tiles/256/{z}/{x}/{y}{r}?access_token=${MAPBOX_TOKEN}`,
+    };
+  }
+
   const configs: Record<MapStyle, { url: string; attribution: string }> = {
     "dark-matter": {
       attribution:
