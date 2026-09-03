@@ -20,6 +20,8 @@ export default {
     numberOfMonths: { control: { type: "number", min: 1, max: 3 } },
     showOutsideDays: { control: "boolean" },
     disabled: { control: "boolean" },
+    selected: { table: { disable: true } },
+    onSelect: { table: { disable: true } },
   },
   args: {
     mode: "single",

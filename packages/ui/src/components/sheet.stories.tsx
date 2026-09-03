@@ -19,8 +19,14 @@ export default {
       control: "select",
       options: ["top", "right", "bottom", "left"],
     },
+    defaultOpen: { control: "boolean" },
+    modal: { control: "boolean" },
+    onOpenChange: { table: { disable: true } },
+    onOpenChangeComplete: { table: { disable: true } },
+    actionsRef: { table: { disable: true } },
+    children: { table: { disable: true } },
   },
-  args: { side: "right" },
+  args: { side: "right", defaultOpen: false, modal: true },
 }
 
 export const Sheet = ({

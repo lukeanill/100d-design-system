@@ -7,7 +7,14 @@ import {
   ContextMenuSeparator,
 } from "./context-menu"
 
-export default { title: "Components/Overlays/Context Menu", component: ContextMenuImpl }
+export default {
+  title: "Components/Overlays/Context Menu",
+  component: ContextMenuImpl,
+  argTypes: {
+    children: { table: { disable: true } },
+    onOpenChange: { table: { disable: true } },
+  },
+}
 
 export const ContextMenu = (args: ComponentProps<typeof ContextMenuImpl>) => (
   <ContextMenuImpl {...args}>

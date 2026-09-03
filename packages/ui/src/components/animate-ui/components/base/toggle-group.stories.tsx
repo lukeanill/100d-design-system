@@ -6,6 +6,8 @@ export default {
   component: ToggleGroupImpl,
   argTypes: {
     orientation: { control: "select", options: ["horizontal", "vertical"] },
+    multiple: { control: "boolean" },
+    defaultValue: { table: { disable: true } },
   },
   args: { defaultValue: ["bold"], multiple: true, orientation: "horizontal" },
 }

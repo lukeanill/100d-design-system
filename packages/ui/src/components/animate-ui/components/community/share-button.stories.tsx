@@ -7,6 +7,7 @@ export default {
   argTypes: {
     size: { control: "select", options: ["default", "sm", "md", "lg"] },
     icon: { control: "select", options: ["suffix", "prefix"] },
+    onIconClick: { table: { disable: true } },
   },
   args: { size: "default", icon: "suffix", children: "Share" },
 }

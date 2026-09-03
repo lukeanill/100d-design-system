@@ -1,7 +1,15 @@
 import { BarChart, Bar, XAxis } from "recharts"
 import { ChartContainer, type ChartConfig } from "./chart"
 
-export default { title: "Components/Content/Chart", component: ChartContainer }
+export default {
+  title: "Components/Content/Chart",
+  component: ChartContainer,
+  argTypes: {
+    config: { table: { disable: true } },
+    children: { table: { disable: true } },
+    initialDimension: { table: { disable: true } },
+  },
+}
 
 const data = [
   { month: "Jan", value: 42 },

@@ -28,6 +28,7 @@ export default {
       control: "select",
       options: ["offcanvas", "icon", "none"],
     },
+    children: { table: { disable: true } },
   },
   args: { side: "left", variant: "sidebar", collapsible: "offcanvas" },
 }

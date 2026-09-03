@@ -10,6 +10,7 @@ export default {
       options: ["default", "sm"],
     },
     disabled: { control: "boolean" },
+    defaultValue: { control: "select", options: ["apple", "banana", "cherry"] },
   },
   args: { size: "default", defaultValue: "banana", disabled: false },
 }

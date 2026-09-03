@@ -13,8 +13,12 @@ export default {
   argTypes: {
     size: { control: "select", options: ["default", "sm", "xs"] },
     orientation: { control: "select", options: ["horizontal", "vertical"] },
+    state: {
+      control: "select",
+      options: ["idle", "uploading", "processing", "error", "done"],
+    },
   },
-  args: { size: "default", orientation: "horizontal" },
+  args: { size: "default", orientation: "horizontal", state: "done" },
 }
 
 export const Attachment = (args: ComponentProps<typeof AttachmentImpl>) => (

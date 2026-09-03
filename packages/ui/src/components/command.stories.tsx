@@ -8,7 +8,18 @@ import {
   CommandItem,
 } from "./command"
 
-export default { title: "Components/Navigation/Command", component: CommandImpl }
+export default {
+  title: "Components/Navigation/Command",
+  component: CommandImpl,
+  argTypes: {
+    children: { table: { disable: true } },
+    className: { table: { disable: true } },
+    onValueChange: { table: { disable: true } },
+    filter: { table: { disable: true } },
+    shouldFilter: { table: { disable: true } },
+    loop: { table: { disable: true } },
+  },
+}
 
 export const Command = (args: ComponentProps<typeof CommandImpl>) => (
   <CommandImpl {...args} className="w-80 rounded-lg border shadow-md">

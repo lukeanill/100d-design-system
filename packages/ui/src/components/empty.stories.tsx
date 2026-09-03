@@ -7,7 +7,13 @@ import {
   EmptyDescription,
 } from "./empty"
 
-export default { title: "Components/Feedback/Empty", component: EmptyImpl }
+export default {
+  title: "Components/Feedback/Empty",
+  component: EmptyImpl,
+  argTypes: {
+    children: { table: { disable: true } },
+  },
+}
 
 export const Empty = (args: ComponentProps<typeof EmptyImpl>) => (
   <EmptyImpl {...args}>

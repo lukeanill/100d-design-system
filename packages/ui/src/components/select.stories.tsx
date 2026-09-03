@@ -6,6 +6,7 @@ export default {
   component: SelectImpl,
   argTypes: {
     disabled: { control: "boolean" },
+    defaultValue: { control: "select", options: ["apple", "banana", "cherry", "date"] },
   },
   args: { defaultValue: "apple", disabled: false },
 }

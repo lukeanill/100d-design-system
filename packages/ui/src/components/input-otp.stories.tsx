@@ -13,8 +13,12 @@ export default {
       control: "select",
       options: ["increase-width", "none"],
     },
+    maxLength: { control: { type: "number", min: 1, max: 12 } },
+    disabled: { control: "boolean" },
+    onChange: { table: { disable: true } },
+    onComplete: { table: { disable: true } },
   },
-  args: { maxLength: 6, textAlign: "center" },
+  args: { maxLength: 6, textAlign: "center", disabled: false },
 }
 
 type Args = Omit<ComponentProps<typeof InputOTPImpl>, "children" | "render">

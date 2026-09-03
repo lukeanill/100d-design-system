@@ -13,6 +13,7 @@ export default {
     max: { control: { type: "number" } },
     step: { control: { type: "number" } },
     disabled: { control: "boolean" },
+    defaultValue: { table: { disable: true } },
   },
   args: {
     defaultValue: [50],

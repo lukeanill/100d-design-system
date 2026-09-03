@@ -10,6 +10,7 @@ export default {
       options: ["default", "accent", "destructive", "outline", "secondary", "ghost", "link"],
     },
     size: { control: "select", options: ["default", "xs", "sm", "lg"] },
+    children: { table: { disable: true } },
   },
   args: { variant: "default", size: "default" },
 }

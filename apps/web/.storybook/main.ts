@@ -7,6 +7,9 @@ const config: StorybookConfig = {
     options: {},
   },
   addons: ["@storybook/addon-vitest"],
+  typescript: {
+    reactDocgen: "react-docgen-typescript",
+  },
   viteFinal: async (viteConfig) => {
     if (process.env.STORYBOOK_BASE_PATH) {
       viteConfig.base = process.env.STORYBOOK_BASE_PATH

@@ -11,6 +11,8 @@ export default {
     },
     title: { control: "text" },
     description: { control: "text" },
+    children: { table: { disable: true } },
+    toastManager: { table: { disable: true } },
   },
   args: {
     title: "Update available",

@@ -18,6 +18,9 @@ export default {
       control: "select",
       options: ["letters", "numbers"],
     },
+    onItemChange: { table: { disable: true } },
+    onReset: { table: { disable: true } },
+    onSubmit: { table: { disable: true } },
   },
   args: { shortcuts: "letters" },
 }

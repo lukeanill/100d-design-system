@@ -4,6 +4,9 @@ import { ChatConversation as ChatConversationImpl, ChatConversationMessages } fr
 export default {
   title: "Components/Content/Chat Conversation",
   component: ChatConversationImpl,
+  argTypes: {
+    "data.messages": { table: { disable: true } },
+  },
   args: {
     data: {
       messages: [

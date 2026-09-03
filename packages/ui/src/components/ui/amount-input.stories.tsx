@@ -12,6 +12,7 @@ export default {
     "appearance.step": { control: "number" },
     "control.value": { control: "number" },
     actions: { table: { disable: true } },
+    "data.presets": { table: { disable: true } },
   },
   args: {
     appearance: { currency: "USD", label: "Tip amount", max: 500, min: 0, step: 5 },

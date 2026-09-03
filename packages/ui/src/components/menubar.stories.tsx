@@ -16,6 +16,7 @@ export default {
       control: "select",
       options: ["horizontal", "vertical"],
     },
+    children: { table: { disable: true } },
   },
   args: { orientation: "horizontal" },
 }

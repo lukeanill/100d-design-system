@@ -26,6 +26,12 @@ export default {
     modal: { control: "boolean" },
     shouldScaleBackground: { control: "boolean" },
     showHandle: { control: "boolean" },
+    onOpenChange: { table: { disable: true } },
+    onClose: { table: { disable: true } },
+    onAnimationEnd: { table: { disable: true } },
+    onDrag: { table: { disable: true } },
+    onRelease: { table: { disable: true } },
+    children: { table: { disable: true } },
   },
   args: {
     direction: "bottom",

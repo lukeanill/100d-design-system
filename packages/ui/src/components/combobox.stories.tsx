@@ -13,6 +13,7 @@ export default {
   argTypes: {
     disabled: { control: "boolean" },
     multiple: { control: "boolean" },
+    items: { control: "object" },
   },
   args: { items: ["Apple", "Banana", "Cherry"], disabled: false, multiple: false },
 }

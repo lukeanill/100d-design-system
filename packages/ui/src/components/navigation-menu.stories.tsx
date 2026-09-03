@@ -20,6 +20,7 @@ export default {
       control: "select",
       options: ["horizontal", "vertical"],
     },
+    children: { table: { disable: true } },
   },
   args: { align: "start", orientation: "horizontal" },
 }

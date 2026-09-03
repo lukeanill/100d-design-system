@@ -9,6 +9,7 @@ export default {
     size: { control: "select", options: ["default", "sm", "lg"] },
     disabled: { control: "boolean" },
     indeterminate: { control: "boolean" },
+    defaultChecked: { control: "boolean" },
   },
   args: {
     variant: "default",

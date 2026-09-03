@@ -8,7 +8,14 @@ import {
   BreadcrumbSeparator,
 } from "./breadcrumb"
 
-export default { title: "Components/Navigation/Breadcrumb", component: BreadcrumbImpl }
+export default {
+  title: "Components/Navigation/Breadcrumb",
+  component: BreadcrumbImpl,
+  argTypes: {
+    children: { table: { disable: true } },
+    className: { table: { disable: true } },
+  },
+}
 
 export const Breadcrumb = (args: ComponentProps<typeof BreadcrumbImpl>) => (
   <BreadcrumbImpl {...args}>

@@ -4,6 +4,9 @@ import { Kbd as KbdImpl } from "./kbd"
 export default {
   title: "Components/Actions/Kbd",
   component: KbdImpl,
+  argTypes: {
+    children: { control: "text" },
+  },
   args: { children: "⌘K" },
 }
 

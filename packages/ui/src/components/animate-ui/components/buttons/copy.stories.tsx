@@ -10,8 +10,17 @@ export default {
       options: ["default", "accent", "destructive", "outline", "secondary", "ghost", "link"],
     },
     size: { control: "select", options: ["default", "xs", "sm", "lg"] },
+    copied: { control: "boolean" },
+    delay: { control: { type: "number", min: 500, max: 8000, step: 500 } },
+    onCopiedChange: { table: { disable: true } },
   },
-  args: { variant: "default", size: "default", content: "npm install @workspace/ui" },
+  args: {
+    variant: "default",
+    size: "default",
+    content: "npm install @workspace/ui",
+    copied: false,
+    delay: 3000,
+  },
 }
 
 export const Copy = (args: ComponentProps<typeof CopyButtonImpl>) => <CopyButtonImpl {...args} />

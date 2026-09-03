@@ -9,8 +9,14 @@ export default {
       control: "select",
       options: ["text", "email", "password", "number", "tel", "url", "search", "date"],
     },
+    disabled: { control: "boolean" },
+    defaultValue: { control: "text" },
+    onChange: { table: { disable: true } },
+    onFocus: { table: { disable: true } },
+    onBlur: { table: { disable: true } },
+    style: { table: { disable: true } },
   },
-  args: { placeholder: "Email address", type: "email" },
+  args: { placeholder: "Email address", type: "email", disabled: false },
 }
 
 export const Input = (args: ComponentProps<typeof InputImpl>) => <InputImpl {...args} />

@@ -9,8 +9,9 @@ export default {
       control: "select",
       options: ["default", "secondary", "muted", "tinted", "outline", "ghost", "destructive"],
     },
+    align: { control: "radio", options: ["start", "end"] },
   },
-  args: { variant: "default" },
+  args: { variant: "default", align: "start" },
 }
 
 export const Bubble = (args: ComponentProps<typeof BubbleImpl>) => (
