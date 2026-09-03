@@ -33,7 +33,7 @@ function Checkbox({
   onCheckedChange,
   indeterminate,
   value,
-  nativeButton,
+  nativeButton = true,
   parent,
   disabled,
   readOnly,
