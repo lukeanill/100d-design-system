@@ -4,10 +4,7 @@ import { Tabs as TabsImpl, TabsList, TabsTab, TabsPanels, TabsPanel } from "./ta
 export default {
   title: "Components/Navigation/Tabs",
   component: TabsImpl,
-  argTypes: {
-    orientation: { control: "select", options: ["horizontal", "vertical"] },
-  },
-  args: { defaultValue: "tab1", orientation: "horizontal" },
+  args: { defaultValue: "tab1" },
 }
 
 export const Tabs = (args: ComponentProps<typeof TabsImpl>) => (

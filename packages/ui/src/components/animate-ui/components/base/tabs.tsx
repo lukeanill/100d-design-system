@@ -1,90 +1,132 @@
-import * as React from 'react';
+"use client"
 
-import {
-  Tabs as TabsPrimitive,
-  TabsList as TabsListPrimitive,
-  TabsTab as TabsTabPrimitive,
-  TabsPanel as TabsPanelPrimitive,
-  TabsPanels as TabsPanelsPrimitive,
-  TabsHighlight as TabsHighlightPrimitive,
-  TabsHighlightItem as TabsHighlightItemPrimitive,
-  type TabsProps as TabsPrimitiveProps,
-  type TabsListProps as TabsListPrimitiveProps,
-  type TabsTabProps as TabsTabPrimitiveProps,
-  type TabsPanelProps as TabsPanelPrimitiveProps,
-  type TabsPanelsProps as TabsPanelsPrimitiveProps,
-} from '@workspace/ui/components/animate-ui/primitives/base/tabs';
-import { cn } from '@workspace/ui/lib/utils';
+import { createContext, useContext, useId, useState } from "react"
+import type { ComponentProps, ReactNode } from "react"
+import { LayoutGroup, motion } from "motion/react"
 
-type TabsProps = TabsPrimitiveProps;
+import { cn } from "@workspace/ui/lib/utils"
 
-function Tabs({ className, ...props }: TabsProps) {
-  return (
-    <TabsPrimitive
-      className={cn('flex flex-col gap-2', className)}
-      {...props}
-    />
-  );
+/* Sliding-pill tabs — ported from Watermelon UI's "Continuous Tabs"
+ * (ui.watermelon.sh/animated-components/category/tabs), restyled onto our
+ * tokens and wrapped in the same Tabs/TabsList/TabsTab/TabsPanels/TabsPanel
+ * shape the previous Base-UI-backed implementation used, so existing usage
+ * doesn't change. This version is a plain motion/react layoutId morph, not
+ * Base UI: it renders `role="tablist"`/`role="tab"` but does not implement
+ * roving-tabindex arrow-key navigation or ARIA-linked tabpanels. */
+
+type TabsContextValue = {
+  value: string | undefined
+  setValue: (value: string) => void
+  groupId: string
 }
 
-type TabsListProps = TabsListPrimitiveProps;
+const TabsContext = createContext<TabsContextValue | null>(null)
 
-function TabsList({ className, ...props }: TabsListProps) {
+function useTabsContext() {
+  const context = useContext(TabsContext)
+  if (!context) throw new Error("Tabs components must be used within Tabs")
+  return context
+}
+
+export interface TabsProps extends Omit<ComponentProps<"div">, "defaultValue" | "onChange"> {
+  defaultValue?: string
+  value?: string
+  onValueChange?: (value: string) => void
+  children: ReactNode
+}
+
+function Tabs({ className, defaultValue, value, onValueChange, children, ...props }: TabsProps) {
+  const groupId = useId()
+  const [internalValue, setInternalValue] = useState(defaultValue)
+  const isControlled = value !== undefined
+  const activeValue = isControlled ? value : internalValue
+
+  const setValue = (next: string) => {
+    if (!isControlled) setInternalValue(next)
+    onValueChange?.(next)
+  }
+
   return (
-    <TabsHighlightPrimitive className="absolute z-0 inset-0 border border-transparent rounded-full bg-foreground shadow-sm">
-      <TabsListPrimitive
-        className={cn(
-          'bg-muted text-secondary-foreground inline-flex h-9 w-fit items-center justify-center rounded-full p-[3px]',
-          className,
-        )}
+    <TabsContext.Provider value={{ groupId, setValue, value: activeValue }}>
+      <div data-slot="tabs" className={cn("flex flex-col gap-2", className)} {...props}>
+        {children}
+      </div>
+    </TabsContext.Provider>
+  )
+}
+
+export type TabsListProps = ComponentProps<"div">
+
+function TabsList({ className, children, ...props }: TabsListProps) {
+  const { groupId } = useTabsContext()
+  return (
+    <LayoutGroup id={groupId}>
+      <div
+        role="tablist"
+        data-slot="tabs-list"
+        className={cn("relative inline-flex w-fit items-center gap-1 rounded-full border border-border bg-muted p-1.5 shadow-xs", className)}
         {...props}
-      />
-    </TabsHighlightPrimitive>
-  );
+      >
+        {children}
+      </div>
+    </LayoutGroup>
+  )
 }
 
-type TabsTabProps = TabsTabPrimitiveProps;
+export interface TabsTabProps extends Omit<ComponentProps<"button">, "value"> {
+  value: string
+}
 
-function TabsTab({ className, ...props }: TabsTabProps) {
+function TabsTab({ className, value, children, onClick, ...props }: TabsTabProps) {
+  const { value: activeValue, setValue } = useTabsContext()
+  const isActive = activeValue === value
+
   return (
-    <TabsHighlightItemPrimitive value={props.value} className="flex-1">
-      <TabsTabPrimitive
-        className={cn(
-          "data-[selected]:text-background focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-secondary-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-full w-full px-2 py-1 text-sm font-medium whitespace-nowrap transition-colors duration-500 ease-in-out focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-          className,
-        )}
-        {...props}
-      />
-    </TabsHighlightItemPrimitive>
-  );
-}
-
-type TabsPanelsProps = TabsPanelsPrimitiveProps;
-
-function TabsPanels(props: TabsPanelsProps) {
-  return <TabsPanelsPrimitive {...props} />;
-}
-
-type TabsPanelProps = TabsPanelPrimitiveProps;
-
-function TabsPanel({ className, ...props }: TabsPanelProps) {
-  return (
-    <TabsPanelPrimitive
-      className={cn('flex-1 outline-none', className)}
+    <button
+      type="button"
+      role="tab"
+      aria-selected={isActive}
+      data-slot="tabs-tab"
+      data-state={isActive ? "active" : "inactive"}
+      onClick={(event) => {
+        setValue(value)
+        onClick?.(event)
+      }}
+      className={cn(
+        "focus-visible:border-ring focus-visible:ring-ring/50 relative inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
       {...props}
-    />
-  );
+    >
+      {isActive && (
+        <motion.span
+          layoutId="tabs-active-pill"
+          transition={{ damping: 30, mass: 0.9, stiffness: 380, type: "spring" }}
+          className="absolute inset-0 rounded-full bg-foreground shadow-xs"
+        />
+      )}
+      <motion.span layout="position" className={cn("relative z-10", isActive ? "text-background" : "text-secondary-foreground")}>
+        {children}
+      </motion.span>
+    </button>
+  )
 }
 
-export {
-  Tabs,
-  TabsList,
-  TabsTab,
-  TabsPanels,
-  TabsPanel,
-  type TabsProps,
-  type TabsListProps,
-  type TabsTabProps,
-  type TabsPanelsProps,
-  type TabsPanelProps,
-};
+export type TabsPanelsProps = ComponentProps<"div">
+
+function TabsPanels({ className, ...props }: TabsPanelsProps) {
+  return <div data-slot="tabs-panels" className={cn("flex-1", className)} {...props} />
+}
+
+export interface TabsPanelProps extends Omit<ComponentProps<"div">, "value"> {
+  value: string
+}
+
+function TabsPanel({ className, value, ...props }: TabsPanelProps) {
+  const { value: activeValue } = useTabsContext()
+  if (activeValue !== value) return null
+
+  return <div role="tabpanel" data-slot="tabs-panel" className={cn("outline-none", className)} {...props} />
+}
+
+export { Tabs, TabsList, TabsTab, TabsPanels, TabsPanel }
