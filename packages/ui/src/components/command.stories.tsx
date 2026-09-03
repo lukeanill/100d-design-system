@@ -11,14 +11,7 @@ import {
 export default {
   title: "Components/Navigation/Command",
   component: CommandImpl,
-  argTypes: {
-    children: { table: { disable: true } },
-    className: { table: { disable: true } },
-    onValueChange: { table: { disable: true } },
-    filter: { table: { disable: true } },
-    shouldFilter: { table: { disable: true } },
-    loop: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 export const Command = (args: ComponentProps<typeof CommandImpl>) => (

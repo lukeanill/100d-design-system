@@ -4,9 +4,7 @@ import { ScrollArea as ScrollAreaImpl } from "./scroll-area"
 export default {
   title: "Components/Layout/Scroll Area",
   component: ScrollAreaImpl,
-  argTypes: {
-    children: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 export const ScrollArea = (args: ComponentProps<typeof ScrollAreaImpl>) => (

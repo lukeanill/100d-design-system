@@ -11,10 +11,7 @@ import {
 export default {
   title: "Components/Navigation/Breadcrumb",
   component: BreadcrumbImpl,
-  argTypes: {
-    children: { table: { disable: true } },
-    className: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 export const Breadcrumb = (args: ComponentProps<typeof BreadcrumbImpl>) => (

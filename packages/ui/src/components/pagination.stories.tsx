@@ -12,9 +12,7 @@ import {
 export default {
   title: "Components/Navigation/Pagination",
   component: PaginationImpl,
-  argTypes: {
-    children: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 export const Pagination = (args: ComponentProps<typeof PaginationImpl>) => (

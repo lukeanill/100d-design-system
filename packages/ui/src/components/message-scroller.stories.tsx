@@ -5,7 +5,11 @@ import {
   MessageScrollerContent,
 } from "./message-scroller"
 
-export default { title: "Components/Content/Message Scroller", component: MessageScrollerImpl }
+export default {
+  title: "Components/Content/Message Scroller",
+  component: MessageScrollerImpl,
+  parameters: { controls: { disable: true } },
+}
 
 export const MessageScroller = () => (
   <MessageScrollerProvider>

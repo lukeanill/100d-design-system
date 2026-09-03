@@ -10,10 +10,7 @@ import {
 export default {
   title: "Components/Overlays/Context Menu",
   component: ContextMenuImpl,
-  argTypes: {
-    children: { table: { disable: true } },
-    onOpenChange: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 export const ContextMenu = (args: ComponentProps<typeof ContextMenuImpl>) => (

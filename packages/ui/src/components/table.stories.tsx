@@ -4,9 +4,7 @@ import { Table as TableImpl, TableHeader, TableBody, TableRow, TableHead, TableC
 export default {
   title: "Components/Layout/Table",
   component: TableImpl,
-  argTypes: {
-    children: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 export const Table = (args: ComponentProps<typeof TableImpl>) => (

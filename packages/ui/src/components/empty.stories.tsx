@@ -10,9 +10,7 @@ import {
 export default {
   title: "Components/Feedback/Empty",
   component: EmptyImpl,
-  argTypes: {
-    children: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 export const Empty = (args: ComponentProps<typeof EmptyImpl>) => (

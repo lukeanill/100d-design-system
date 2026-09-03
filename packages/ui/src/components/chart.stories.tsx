@@ -4,11 +4,7 @@ import { ChartContainer, type ChartConfig } from "./chart"
 export default {
   title: "Components/Content/Chart",
   component: ChartContainer,
-  argTypes: {
-    config: { table: { disable: true } },
-    children: { table: { disable: true } },
-    initialDimension: { table: { disable: true } },
-  },
+  parameters: { controls: { disable: true } },
 }
 
 const data = [
