@@ -54,7 +54,7 @@ export const Typography = () => {
   <div className="min-h-screen w-full bg-card">
    <div className="mx-auto flex max-w-5xl flex-col gap-16 p-10">
     <header className="flex flex-col gap-3 border-b border-muted pb-8">
-      <p className="font-sans text-xs font-medium tracking-wide text-muted-foreground uppercase">
+      <p className="font-sans text-xs font-medium tracking-wide text-secondary-foreground uppercase">
         Tokens &middot; Typography
       </p>
       <h1 className="font-heading text-4xl font-normal text-foreground">Typography</h1>
@@ -70,8 +70,8 @@ export const Typography = () => {
             </div>
             <div>
               <div className="text-sm font-medium text-foreground">{fam.name}</div>
-              <div className="text-xs text-muted-foreground">{resolvedNames[fam.token] || "—"}</div>
-              <div className="text-xs text-muted-foreground">--{fam.token}</div>
+              <div className="text-xs text-secondary-foreground">{resolvedNames[fam.token] || "—"}</div>
+              <div className="text-xs text-secondary-foreground">--{fam.token}</div>
             </div>
           </div>
         ))}
@@ -91,7 +91,7 @@ export const Typography = () => {
               {t.tag === "h5" && <h5 className="truncate">Design, distilled</h5>}
               {t.tag === "h6" && <h6 className="truncate">Design, distilled</h6>}
             </div>
-            <div className="shrink-0 text-xs text-muted-foreground sm:text-right">
+            <div className="shrink-0 text-xs text-secondary-foreground sm:text-right">
               <div className="font-medium text-foreground">{t.label}</div>
               <div>{t.size}</div>
             </div>
@@ -103,7 +103,7 @@ export const Typography = () => {
               <p className={`${b.sans} max-w-md truncate`}>The quick brown fox jumps over the lazy dog.</p>
               {b.serif && <p className={`${b.serif} max-w-md truncate`}>The quick brown fox jumps over the lazy dog.</p>}
             </div>
-            <div className="shrink-0 text-xs text-muted-foreground sm:text-right">
+            <div className="shrink-0 text-xs text-secondary-foreground sm:text-right">
               <div className="font-medium text-foreground">{b.label}</div>
               <div>{b.size}</div>
             </div>
@@ -113,7 +113,7 @@ export const Typography = () => {
           <code className="w-fit rounded-md bg-muted px-3 py-2 font-mono text-sm text-foreground">
             const design = &quot;system&quot;
           </code>
-          <div className="shrink-0 text-xs text-muted-foreground sm:text-right">
+          <div className="shrink-0 text-xs text-secondary-foreground sm:text-right">
             <div className="font-medium text-foreground">Mono</div>
             <div>--font-mono</div>
           </div>
