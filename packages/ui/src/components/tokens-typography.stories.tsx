@@ -1,9 +1,33 @@
+import { useEffect, useState } from "react"
+
 const FONT_FAMILIES = [
   { name: "Heading", token: "font-heading" },
   { name: "Body (20px and under)", token: "font-body" },
   { name: "Serif", token: "font-serif" },
   { name: "Code", token: "font-mono" },
 ] as const
+
+function resolvedFontName(token: string) {
+  if (typeof window === "undefined") return ""
+  const stack = getComputedStyle(document.documentElement).getPropertyValue(`--${token}`)
+  return stack.split(",")[0]?.trim().replace(/^["']|["']$/g, "") ?? ""
+}
+
+function useResolvedFontNames() {
+  const [names, setNames] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    const update = () => {
+      setNames(Object.fromEntries(FONT_FAMILIES.map((fam) => [fam.token, resolvedFontName(fam.token)])))
+    }
+    update()
+    const observer = new MutationObserver(update)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-font-theme"] })
+    return () => observer.disconnect()
+  }, [])
+
+  return names
+}
 
 const TYPE_SCALE = [
   { tag: "h1", label: "Heading 1", size: "96px" },
@@ -23,7 +47,10 @@ const BODY_STYLES = [
 
 export default { title: "Tokens/Typography", parameters: { layout: "fullscreen" } }
 
-export const Typography = () => (
+export const Typography = () => {
+  const resolvedNames = useResolvedFontNames()
+
+  return (
   <div className="min-h-screen w-full bg-card">
    <div className="mx-auto flex max-w-5xl flex-col gap-16 p-10">
     <header className="flex flex-col gap-3 border-b border-muted pb-8">
@@ -43,6 +70,7 @@ export const Typography = () => (
             </div>
             <div>
               <div className="text-sm font-medium text-foreground">{fam.name}</div>
+              <div className="text-xs text-muted-foreground">{resolvedNames[fam.token] || "—"}</div>
               <div className="text-xs text-muted-foreground">--{fam.token}</div>
             </div>
           </div>
@@ -94,4 +122,5 @@ export const Typography = () => (
     </section>
    </div>
   </div>
-)
+  )
+}
