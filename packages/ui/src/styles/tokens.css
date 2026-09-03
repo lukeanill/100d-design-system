@@ -82,6 +82,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "MADE Gentle";
+  src: url("./fonts/made-gentle.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -605,8 +613,9 @@
   --font-mulish: 'Mulish', ui-sans-serif, system-ui, sans-serif;
   --font-spline-sans: 'Spline Sans', ui-sans-serif, system-ui, sans-serif;
   --font-google-sans: 'Google Sans', -apple-system, ui-sans-serif, system-ui, sans-serif;
+  --font-made-gentle: 'MADE Gentle', ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-authentic-sans-60);
-  --font-body-token: var(--font-instrument-serif);
+  --font-body-token: var(--font-authentic-sans-60);
   --font-body: var(--font-body-token);
   --font-body-small: var(--font-authentic-sans-60);
   --font-serif: var(--font-oranienbaum);
@@ -861,8 +870,8 @@
 }
 
 [data-font-theme="strawberry-matcha"] {
-  --font-authentic-sans-60: var(--font-sf-pro-text);
-  --font-authentic-sans-90: var(--font-sf-pro-text);
+  --font-authentic-sans-60: var(--font-made-gentle);
+  --font-authentic-sans-90: var(--font-made-gentle);
   --font-oranienbaum: var(--font-playfair-display);
   --font-body-token: var(--font-google-sans);
   --font-body-weight: 400;
