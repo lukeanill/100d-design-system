@@ -374,7 +374,7 @@ export function Showcase() {
             <Badge variant="outline">9 demo themes</Badge>
           </div>
 
-          <h1 className="text-balance">100D Design System</h1>
+          <h1 className="bg-gradient-headline bg-clip-text text-balance text-transparent">100D Design System</h1>
 
           <RichScrambleText className="max-w-xl min-h-11 text-body-small text-foreground" segments={CREDITS_SEGMENTS} />
 

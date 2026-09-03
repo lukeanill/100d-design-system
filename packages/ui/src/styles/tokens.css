@@ -122,6 +122,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --radius: 0.875rem;
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
@@ -171,6 +172,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -219,6 +221,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -267,6 +270,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -315,6 +319,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -363,6 +368,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -411,6 +417,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -459,6 +466,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -507,6 +515,7 @@
   --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -627,6 +636,7 @@
   --background-image-gradient-downlight: var(--gradient-downlight);
   --background-image-gradient-rise: var(--gradient-rise);
   --background-image-gradient-set: var(--gradient-set);
+  --background-image-gradient-headline: var(--gradient-headline);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
