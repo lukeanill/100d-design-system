@@ -272,9 +272,9 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                   onClick={() => pick(row)}
                   className="relative z-10 flex h-9 w-full items-center gap-2.5 rounded-md px-2 text-left"
                 >
-                  {source && <span className="flex size-5.5 shrink-0 items-center justify-center text-secondary-foreground">{GLYPHS[source.glyph ?? "clip"]}</span>}
+                  {source && <span className="flex size-5.5 shrink-0 items-center justify-center text-foreground/75">{GLYPHS[source.glyph ?? "clip"]}</span>}
                   <span className="shrink-0 text-[12.5px] font-medium text-foreground">{row.name}</span>
-                  <span className="min-w-0 flex-1 truncate text-[12px] text-secondary-foreground">{row.desc}</span>
+                  <span className="min-w-0 flex-1 truncate text-[12px] text-foreground/75">{row.desc}</span>
                   {source?.connect && (
                     <span
                       role="button"
@@ -291,8 +291,8 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 </button>
               )
             })}
-            {rows.length === 0 && <div className="flex h-9 items-center px-2 text-[12px] text-secondary-foreground">No matches for "{query}"</div>}
-            <div className="mt-1 border-t border-border px-2 pt-1.5 pb-1 text-[11px] text-secondary-foreground">{menu === "at" ? "Type to search sources & files" : "Type to search commands"}</div>
+            {rows.length === 0 && <div className="flex h-9 items-center px-2 text-[12px] text-foreground/75">No matches for "{query}"</div>}
+            <div className="mt-1 border-t border-border px-2 pt-1.5 pb-1 text-[11px] text-foreground/75">{menu === "at" ? "Type to search sources & files" : "Type to search commands"}</div>
           </div>
         )}
 
@@ -315,7 +315,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 className={cn("relative z-10 flex h-7.5 w-full items-center gap-2 rounded-md px-2 text-left", modelHovered === i && "bg-muted")}
               >
                 <span className="min-w-0 flex-1 truncate text-[12.5px] font-medium text-foreground">{m.name}</span>
-                <span className="shrink-0 text-[11px] text-secondary-foreground">{m.tag}</span>
+                <span className="shrink-0 text-[11px] text-foreground/75">{m.tag}</span>
                 <span className={cn("shrink-0 text-foreground", m.key === model.key ? "" : "invisible")}>
                   <Check className="size-3" strokeWidth={2.5} />
                 </span>
@@ -340,7 +340,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               {attachments.map((file, i) => (
                 <span
                   key={`${file}-${i}`}
-                  className={cn("flex h-6.5 items-center gap-1.5 bg-muted py-1 pr-1 pl-1.5 text-[11.5px] text-secondary-foreground ring-1 ring-foreground/10", pill ? "rounded-full" : "rounded-md")}
+                  className={cn("flex h-6.5 items-center gap-1.5 bg-muted py-1 pr-1 pl-1.5 text-[11.5px] text-foreground/75 ring-1 ring-foreground/10", pill ? "rounded-full" : "rounded-md")}
                   style={{ animation: "pop-in 200ms cubic-bezier(0.23,1,0.32,1) both" }}
                 >
                   <File className="size-3" strokeWidth={1.8} />
@@ -349,7 +349,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                     type="button"
                     aria-label={`Remove ${file}`}
                     onClick={() => setAttachments((current) => current.filter((_, j) => j !== i))}
-                    className={cn("-my-1 flex size-6 items-center justify-center text-secondary-foreground transition-colors duration-100 hover:bg-border hover:text-foreground", pill ? "rounded-full" : "rounded-[5px]")}
+                    className={cn("-my-1 flex size-6 items-center justify-center text-foreground/75 transition-colors duration-100 hover:bg-border hover:text-foreground", pill ? "rounded-full" : "rounded-[5px]")}
                   >
                     <X className="size-2.5" strokeWidth={2.5} />
                   </button>
@@ -369,7 +369,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 inputRef.current?.focus()
               }}
               className={cn(
-                "flex size-7 shrink-0 items-center justify-center justify-self-start text-secondary-foreground transition-[background-color,color,transform] duration-150 hover:bg-muted hover:text-foreground active:scale-[0.94]",
+                "flex size-7 shrink-0 items-center justify-center justify-self-start text-foreground/75 transition-[background-color,color,transform] duration-150 hover:bg-muted hover:text-foreground active:scale-[0.94]",
                 pill ? "rounded-full" : "rounded-md",
                 plusOpen && "bg-muted text-foreground",
                 wide ? "col-start-1 row-start-2" : "col-start-1 row-start-1"
@@ -414,7 +414,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               placeholder={listening ? "Listening…" : (placeholder ?? "Write a message…")}
               aria-label="Prompt"
               className={cn(
-                "w-full min-w-0 resize-none bg-transparent text-foreground outline-none [overflow-wrap:anywhere] placeholder:text-secondary-foreground",
+                "w-full min-w-0 resize-none bg-transparent text-foreground outline-none [overflow-wrap:anywhere] placeholder:text-foreground/75",
                 tall ? "min-h-[68px] px-2 py-2 text-[14px] leading-5" : "min-h-7 px-1 py-[5px] text-[13px] leading-[18px]",
                 wide ? "col-span-full col-start-1 row-start-1" : "col-start-2 row-start-1"
               )}
@@ -430,13 +430,13 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 setModelOpen((current) => !current)
               }}
               className={cn(
-                "flex h-7 shrink-0 items-center gap-1 px-1.5 text-[12px] font-medium text-secondary-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground",
+                "flex h-7 shrink-0 items-center gap-1 px-1.5 text-[12px] font-medium text-foreground/75 transition-colors duration-150 hover:bg-muted hover:text-foreground",
                 pill ? "rounded-full" : "rounded-md",
                 wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
               )}
             >
               {model.name}
-              <ChevronDown className="size-2.5 text-secondary-foreground" strokeWidth={2.4} />
+              <ChevronDown className="size-2.5 text-foreground/75" strokeWidth={2.4} />
             </button>
 
             <button
@@ -447,7 +447,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               className={cn(
                 "flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-150 active:scale-[0.94]",
                 pill ? "rounded-full" : "rounded-md",
-                listening ? "bg-primary/14 text-primary" : "text-secondary-foreground hover:bg-muted hover:text-foreground",
+                listening ? "bg-primary/14 text-primary" : "text-foreground/75 hover:bg-muted hover:text-foreground",
                 wide ? "col-start-4 row-start-2" : "col-start-4 row-start-1"
               )}
             >
@@ -470,7 +470,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               className={cn(
                 "flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.94]",
                 pill ? "rounded-full" : "rounded-md",
-                canSend ? "bg-foreground text-background" : "bg-border text-secondary-foreground",
+                canSend ? "bg-foreground text-background" : "bg-border text-foreground/75",
                 wide ? "col-start-5 row-start-2" : "col-start-5 row-start-1"
               )}
             >

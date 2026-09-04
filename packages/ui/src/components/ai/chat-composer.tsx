@@ -49,7 +49,7 @@ function Section({ label, sub, time, body, resolving }: { label: string; sub: st
     >
       <div className="flex items-center gap-1 text-[12px] leading-[1.3]">
         <span className="font-medium text-foreground">{label}</span>
-        <span className="text-secondary-foreground">{sub}</span>
+        <span className="text-foreground/75">{sub}</span>
         <span className="text-foreground">for {time}</span>
       </div>
       <p className="text-[13px] leading-normal text-foreground">{body}</p>
@@ -118,7 +118,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
         </div>
         <div className="flex items-center gap-1">
           {[Plus, Clock, Ellipsis].map((Icon, i) => (
-            <button key={i} type="button" aria-label="Action" className="flex size-6 items-center justify-center rounded-md text-secondary-foreground transition-colors duration-100 hover:bg-muted hover:text-foreground">
+            <button key={i} type="button" aria-label="Action" className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-colors duration-100 hover:bg-muted hover:text-foreground">
               <Icon className="size-3.5" strokeWidth={2} />
             </button>
           ))}
@@ -158,7 +158,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
             }}
             placeholder={l.placeholder}
             aria-label="Chat prompt"
-            className="min-h-4.5 bg-transparent text-[13px] leading-[1.4] text-foreground outline-none placeholder:text-secondary-foreground"
+            className="min-h-4.5 bg-transparent text-[13px] leading-[1.4] text-foreground outline-none placeholder:text-foreground/75"
           />
           <div className="flex items-center justify-end">
             <button
@@ -168,7 +168,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
               onClick={send}
               className={cn(
                 "flex size-7 items-center justify-center rounded-md transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.96]",
-                canSend ? "bg-foreground text-background" : "bg-border text-secondary-foreground"
+                canSend ? "bg-foreground text-background" : "bg-border text-foreground/75"
               )}
             >
               <ArrowUp className="size-4" strokeWidth={2.4} />

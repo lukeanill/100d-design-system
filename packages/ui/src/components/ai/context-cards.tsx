@@ -68,7 +68,7 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
     <div className={cn("flex w-full max-w-95 flex-col gap-2", className)}>
       <div className="flex items-center gap-2 px-0.5" style={{ animation: "fade-in 400ms ease-out both" }}>
         <span className="text-[13px] font-semibold text-foreground">{copy.header}</span>
-        <span className="inline-flex h-5 items-center rounded-md bg-muted px-1.5 text-[11.5px] font-medium text-secondary-foreground ring-1 ring-foreground/10 tabular-nums">{copy.count}</span>
+        <span className="inline-flex h-5 items-center rounded-md bg-muted px-1.5 text-[11.5px] font-medium text-foreground/75 ring-1 ring-foreground/10 tabular-nums">{copy.count}</span>
       </div>
 
       {chunks.map((chunk, i) => (
@@ -78,12 +78,12 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
               <List className="size-3" strokeWidth={2.5} />
               <span className="truncate">{chunk.title}</span>
             </span>
-            <span className="ml-auto shrink-0 text-[12px] text-secondary-foreground tabular-nums">{chunk.chars}</span>
+            <span className="ml-auto shrink-0 text-[12px] text-foreground/75 tabular-nums">{chunk.chars}</span>
           </div>
-          <p className="px-3 pt-2 pb-1 text-[12.5px] leading-relaxed text-secondary-foreground">{chunk.body}</p>
+          <p className="px-3 pt-2 pb-1 text-[12.5px] leading-relaxed text-foreground/75">{chunk.body}</p>
           <div className="px-3 pb-3">
             <span
-              className="inline-flex h-6 items-center gap-1.5 rounded-full bg-muted px-2 text-[12px] font-medium text-secondary-foreground shadow-xs transition-[opacity,transform,background-color] duration-300 hover:bg-muted/70"
+              className="inline-flex h-6 items-center gap-1.5 rounded-full bg-muted px-2 text-[12px] font-medium text-foreground/75 shadow-xs transition-[opacity,transform,background-color] duration-300 hover:bg-muted/70"
               style={{
                 opacity: chipsShown ? 1 : 0,
                 transform: chipsShown ? "scale(1)" : "scale(0.95)",

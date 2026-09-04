@@ -59,7 +59,7 @@ function ManagementBar() {
           <div className="flex h-10">
             <button
               disabled={currentPage === 1}
-              className="p-1 text-secondary-foreground transition-colors hover:text-foreground disabled:text-secondary-foreground/30 disabled:hover:text-secondary-foreground/30"
+              className="p-1 text-foreground/75 transition-colors hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
               onClick={handlePrevPage}
             >
               <ChevronLeft size={20} />
@@ -70,11 +70,11 @@ function ManagementBar() {
                 padStart
                 number={currentPage}
               />
-              <span className="text-secondary-foreground">/ {TOTAL_PAGES}</span>
+              <span className="text-foreground/75">/ {TOTAL_PAGES}</span>
             </div>
             <button
               disabled={currentPage === TOTAL_PAGES}
-              className="p-1 text-secondary-foreground transition-colors hover:text-foreground disabled:text-secondary-foreground/30 disabled:hover:text-secondary-foreground/30"
+              className="p-1 text-foreground/75 transition-colors hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
               onClick={handleNextPage}
             >
               <ChevronRight size={20} />

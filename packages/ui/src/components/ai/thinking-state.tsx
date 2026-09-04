@@ -146,7 +146,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
             </span>
           ) : (
             <span
-              className="text-[13px] font-medium whitespace-nowrap text-secondary-foreground"
+              className="text-[13px] font-medium whitespace-nowrap text-foreground/75"
               style={{ animation: "fade-in 350ms ease-out both" }}
             >
               {v.done}
@@ -154,7 +154,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
           )}
         </span>
         <ChevronDown
-          className="size-3.5 text-secondary-foreground transition-transform duration-300"
+          className="size-3.5 text-foreground/75 transition-transform duration-300"
           style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)" }}
         />
       </button>
@@ -180,8 +180,8 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                   className="flex h-6 items-center gap-2 px-1.5"
                   style={{ animation: expanded ? "fade-up 300ms cubic-bezier(0.23,1,0.32,1) both" : undefined }}
                 >
-                  <Search className="size-3.5 shrink-0 text-secondary-foreground" strokeWidth={2} />
-                  <span className="text-[12.5px] text-secondary-foreground">{v.query}</span>
+                  <Search className="size-3.5 shrink-0 text-foreground/75" strokeWidth={2} />
+                  <span className="text-[12.5px] text-foreground/75">{v.query}</span>
                 </div>
               )}
               {v.rows.slice(0, visible).map((row, i) => {
@@ -190,7 +190,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                     {variant === "Search" && <Dot tone={TONES[i % 3]} />}
                     {variant === "Steps" &&
                       (i < visible - 1 || !working ? (
-                        <Check className="size-3.5 shrink-0 text-secondary-foreground" strokeWidth={2.5} />
+                        <Check className="size-3.5 shrink-0 text-foreground/75" strokeWidth={2.5} />
                       ) : (
                         <span
                           className="size-3 shrink-0 rounded-full border-[1.5px] border-border border-t-secondary-foreground"
@@ -200,14 +200,14 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                     <span
                       className={cn(
                         "min-w-0 truncate text-[12.5px]",
-                        variant === "Reasoning" ? "whitespace-normal leading-relaxed text-secondary-foreground" : "font-medium text-foreground",
+                        variant === "Reasoning" ? "whitespace-normal leading-relaxed text-foreground/75" : "font-medium text-foreground",
                         variant === "Search" && "animated-underline"
                       )}
                     >
                       {row.primary}
                     </span>
                     {row.secondary && (
-                      <span className={cn("shrink-0 text-[11.5px] text-secondary-foreground", row.mono && "font-mono")}>{row.secondary}</span>
+                      <span className={cn("shrink-0 text-[11.5px] text-foreground/75", row.mono && "font-mono")}>{row.secondary}</span>
                     )}
                     {row.add !== undefined && (
                       <span className="shrink-0 font-mono text-[11px] tabular-nums">
@@ -250,7 +250,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                 )
               })}
               {variant === "Search" && stage >= 3 && (
-                <span className="text-[12px] text-secondary-foreground" style={{ animation: "fade-in 300ms ease-out both" }}>
+                <span className="text-[12px] text-foreground/75" style={{ animation: "fade-in 300ms ease-out both" }}>
                   +7 more
                 </span>
               )}

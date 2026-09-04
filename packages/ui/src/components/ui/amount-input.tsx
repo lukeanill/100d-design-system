@@ -106,7 +106,7 @@ export const AmountInputDisplay = ({
     >
       {children ?? (
         <>
-          <span className="text-secondary-foreground text-xs sm:text-sm">
+          <span className="text-foreground/75 text-xs sm:text-sm">
             {label}
           </span>
           <div className="flex items-center justify-center gap-2">
@@ -121,7 +121,7 @@ export const AmountInputDisplay = ({
             <div className="min-w-24 text-center sm:min-w-28">
               {editing ? (
                 <div className="flex items-center justify-center gap-1">
-                  <span className="font-bold text-secondary-foreground text-xl sm:text-2xl">
+                  <span className="font-bold text-foreground/75 text-xl sm:text-2xl">
                     {currencySymbol}
                   </span>
                   <input

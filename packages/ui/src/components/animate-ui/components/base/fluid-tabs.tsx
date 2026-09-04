@@ -54,7 +54,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
             <motion.div
               transition={{ duration: 0.3, ease: "easeOut" }}
               animate={{ filter: isActive ? ["blur(0px)", "blur(4px)", "blur(0px)"] : "blur(0px)" }}
-              className={`relative z-10 flex items-center gap-1.5 transition-colors duration-200 sm:gap-3 ${isActive ? "font-bold text-foreground" : "font-semibold text-secondary-foreground"}`}
+              className={`relative z-10 flex items-center gap-1.5 transition-colors duration-200 sm:gap-3 ${isActive ? "font-bold text-foreground" : "font-semibold text-foreground/75"}`}
             >
               <motion.div
                 animate={{ scale: isActive ? 1.03 : 1 }}

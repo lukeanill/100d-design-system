@@ -38,7 +38,7 @@ function SourceChip({ source }: { source?: StreamingSource }) {
       href={source.href}
       target="_blank"
       rel="noreferrer"
-      className="mr-1 ml-0 inline-flex h-4.5 translate-y-[-1px] items-center gap-1 rounded-[5px] bg-muted pr-[3px] pl-[3px] align-middle font-mono text-[10.5px] text-secondary-foreground ring-1 ring-foreground/10 transition-colors duration-150 hover:bg-muted/70 hover:text-foreground"
+      className="mr-1 ml-0 inline-flex h-4.5 translate-y-[-1px] items-center gap-1 rounded-[5px] bg-muted pr-[3px] pl-[3px] align-middle font-mono text-[10.5px] text-foreground/75 ring-1 ring-foreground/10 transition-colors duration-150 hover:bg-muted/70 hover:text-foreground"
       style={{ animation: "pop-in 250ms cubic-bezier(0.23,1,0.32,1) both" }}
     >
       <span className="size-3 rounded-[3px] bg-primary" />
@@ -122,7 +122,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
             key={i}
             type="button"
             aria-label="Action"
-            className="flex size-6 items-center justify-center rounded-md text-secondary-foreground transition-colors duration-100 hover:bg-muted hover:text-foreground"
+            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-colors duration-100 hover:bg-muted hover:text-foreground"
           >
             <Icon className="size-3.5" strokeWidth={1.8} />
           </button>
@@ -138,7 +138,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
               <span key={source.domain} className="size-3.5 rounded-full bg-primary ring-2 ring-background" />
             ))}
           </span>
-          <span className="text-[12px] text-secondary-foreground">{l.sources}</span>
+          <span className="text-[12px] text-foreground/75">{l.sources}</span>
         </button>
       </div>
 
@@ -158,11 +158,11 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
                 href={source.href}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 rounded-md px-1.5 py-1 text-[12px] text-secondary-foreground transition-colors duration-150 hover:bg-muted/70 hover:text-foreground"
+                className="flex items-center gap-2 rounded-md px-1.5 py-1 text-[12px] text-foreground/75 transition-colors duration-150 hover:bg-muted/70 hover:text-foreground"
               >
                 <span className="size-4 rounded-[4px] bg-primary" />
                 <span className="animated-underline">{source.name}</span>
-                <span className="ml-auto font-mono text-[10.5px] text-secondary-foreground">{source.domain}</span>
+                <span className="ml-auto font-mono text-[10.5px] text-foreground/75">{source.domain}</span>
               </a>
             ))}
           </div>
@@ -170,7 +170,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
       </div>
 
       <div className="mt-2.5 transition-opacity duration-400" style={{ opacity: done ? 1 : 0, pointerEvents: done ? "auto" : "none" }}>
-        <p className="text-[12px] font-medium text-secondary-foreground">{l.followUps}</p>
+        <p className="text-[12px] font-medium text-foreground/75">{l.followUps}</p>
         <div className="mt-0.5 flex flex-col">
           {followUps.map((text, i) => (
             <button
@@ -179,7 +179,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
               className="-mx-1.5 flex items-center gap-2 rounded-md border-b border-border px-1.5 py-1.5 text-left text-[12.5px] text-foreground transition-colors duration-100 hover:bg-muted"
               style={done ? { animation: `fade-up 350ms cubic-bezier(0.23,1,0.32,1) ${i * 90}ms both` } : { opacity: 0 }}
             >
-              <CornerDownRight className="size-2.5 shrink-0 text-secondary-foreground" strokeWidth={2} />
+              <CornerDownRight className="size-2.5 shrink-0 text-foreground/75" strokeWidth={2} />
               {text}
             </button>
           ))}

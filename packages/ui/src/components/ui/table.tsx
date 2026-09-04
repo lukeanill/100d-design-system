@@ -265,7 +265,7 @@ export const TableHeader = ({
           <div className="flex items-center gap-2">
             {displayMode === "fullscreen" && (
               <div className="relative min-w-52">
-                <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-secondary-foreground" />
+                <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-foreground/75" />
                 <Input
                   className="pl-8"
                   onChange={(event) => setQuery(event.target.value)}
@@ -362,7 +362,7 @@ export const TableGrid = ({ className, ...props }: ComponentProps<"div">) => {
               return (
                 <th
                   className={cn(
-                    "px-3 py-2 font-medium text-secondary-foreground",
+                    "px-3 py-2 font-medium text-foreground/75",
                     column.align === "center" && "text-center",
                     column.align === "right" && "text-right",
                     column.align !== "center" &&
@@ -464,7 +464,7 @@ export const TableFooter = ({
   return (
     <footer
       className={cn(
-        "flex items-center justify-between border-t px-3 py-2 text-secondary-foreground text-xs",
+        "flex items-center justify-between border-t px-3 py-2 text-foreground/75 text-xs",
         className
       )}
       {...props}

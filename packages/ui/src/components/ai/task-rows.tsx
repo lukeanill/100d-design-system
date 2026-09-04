@@ -189,9 +189,9 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
             >
               <span className="flex size-6 shrink-0 items-center justify-center">{badgeFor(row)}</span>
               <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-foreground">{row.label}</span>
-              <span className="text-[12.5px] text-secondary-foreground tabular-nums">{row.amount}</span>
+              <span className="text-[12.5px] text-foreground/75 tabular-nums">{row.amount}</span>
               {pillFor(row)}
-              <span aria-hidden="true" className="-ml-2 flex size-7 shrink-0 items-center justify-center rounded-full text-secondary-foreground">
+              <span aria-hidden="true" className="-ml-2 flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75">
                 <ChevronDown className="size-3.5 transition-transform duration-300" style={{ transform: open ? "rotate(180deg)" : "rotate(0)" }} />
               </span>
             </button>
@@ -206,8 +206,8 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
                   <div className="flex flex-col gap-1.5">
                     {row.details.map((d, j) => (
                       <div key={d.label} className="flex items-center justify-between" style={open ? { animation: `fade-up 300ms cubic-bezier(0.23,1,0.32,1) ${120 + j * 100}ms both` } : undefined}>
-                        <span className="text-[12px] text-secondary-foreground">{d.label}</span>
-                        <span className="font-mono text-[11.5px] text-secondary-foreground tabular-nums">{d.meta}</span>
+                        <span className="text-[12px] text-foreground/75">{d.label}</span>
+                        <span className="font-mono text-[11.5px] text-foreground/75 tabular-nums">{d.meta}</span>
                       </div>
                     ))}
                   </div>

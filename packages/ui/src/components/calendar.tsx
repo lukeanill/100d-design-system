@@ -84,13 +84,13 @@ function Calendar({
           "font-medium select-none",
           captionLayout === "label"
             ? "text-sm"
-            : "flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-secondary-foreground",
+            : "flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-foreground/75",
           defaultClassNames.caption_label
         ),
         month_grid: cn("w-full border-collapse", defaultClassNames.month_grid),
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
-          "flex-1 rounded-(--cell-radius) text-xs font-normal text-secondary-foreground select-none",
+          "flex-1 rounded-(--cell-radius) text-xs font-normal text-foreground/75 select-none",
           defaultClassNames.weekday
         ),
         week: cn("mt-2 flex w-full", defaultClassNames.week),
@@ -99,7 +99,7 @@ function Calendar({
           defaultClassNames.week_number_header
         ),
         week_number: cn(
-          "text-xs text-secondary-foreground select-none",
+          "text-xs text-foreground/75 select-none",
           defaultClassNames.week_number
         ),
         day: cn(
@@ -123,11 +123,11 @@ function Calendar({
           defaultClassNames.today
         ),
         outside: cn(
-          "text-secondary-foreground aria-selected:text-secondary-foreground",
+          "text-foreground/75 aria-selected:text-foreground/75",
           defaultClassNames.outside
         ),
         disabled: cn(
-          "text-secondary-foreground opacity-50",
+          "text-foreground/75 opacity-50",
           defaultClassNames.disabled
         ),
         hidden: cn("invisible", defaultClassNames.hidden),

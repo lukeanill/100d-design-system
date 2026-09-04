@@ -67,7 +67,7 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
       <div className="flex items-center gap-4">
         {series.map((s) => (
           <div key={s.name} className="flex-1">
-            <span className="flex items-center gap-1.5 text-[11.5px] text-secondary-foreground">
+            <span className="flex items-center gap-1.5 text-[11.5px] text-foreground/75">
               <span className={cn("size-2 rounded-full", s.dot)} />
               {s.name}
             </span>
@@ -78,8 +78,8 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
       </div>
       <div className="mt-2 overflow-hidden rounded-md bg-muted ring-1 ring-foreground/10">
         <div className="flex items-center justify-between border-b border-border px-2.5 py-1.5">
-          <span className="text-[11px] text-secondary-foreground tabular-nums">Trend snapshot</span>
-          <span className="rounded-full bg-card px-2 py-0.5 text-[10.5px] font-medium text-secondary-foreground">Snapshot</span>
+          <span className="text-[11px] text-foreground/75 tabular-nums">Trend snapshot</span>
+          <span className="rounded-full bg-card px-2 py-0.5 text-[10.5px] font-medium text-foreground/75">Snapshot</span>
         </div>
         <div className="h-[166px] pt-2">
           <ResponsiveContainer width="100%" height="100%">
@@ -115,11 +115,11 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
           <TrendingUp className="size-3 text-destructive" strokeWidth={2.5} />
           High freezer spend
         </span>
-        <span className="rounded-full bg-muted px-2 py-0.5 text-[10.5px] font-medium text-secondary-foreground">Snapshot</span>
+        <span className="rounded-full bg-muted px-2 py-0.5 text-[10.5px] font-medium text-foreground/75">Snapshot</span>
       </div>
       <div className="mt-2 overflow-hidden rounded-md bg-muted ring-1 ring-foreground/10">
         <div className="flex items-center justify-between border-b border-border px-2.5 py-1.5">
-          <span className="text-[11px] text-secondary-foreground tabular-nums">{metric === "spend" ? `${moneyLabel} threshold` : "82 kWh threshold"}</span>
+          <span className="text-[11px] text-foreground/75 tabular-nums">{metric === "spend" ? `${moneyLabel} threshold` : "82 kWh threshold"}</span>
           <span className="flex rounded-full bg-card p-0.5">
             {(["spend", "usage"] as const).map((item) => (
               <button
@@ -129,7 +129,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
                 onClick={() => setMetric(item)}
                 className={cn(
                   "rounded-full px-2 py-0.5 text-[10.5px] font-medium transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.96]",
-                  metric === item ? "bg-muted text-foreground shadow-xs" : "text-secondary-foreground hover:text-foreground"
+                  metric === item ? "bg-muted text-foreground shadow-xs" : "text-foreground/75 hover:text-foreground"
                 )}
               >
                 {item === "spend" ? "Spend" : "Usage"}
@@ -150,7 +150,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
       <div className="mt-1.5 flex items-baseline gap-2">
         <span className="text-[17px] font-semibold tracking-[-0.01em] text-foreground tabular-nums">{moneyLabel} spent</span>
         <Mono tone="red">+$1,834.66</Mono>
-        <span className="text-[11px] text-secondary-foreground">vs 3 months</span>
+        <span className="text-[11px] text-foreground/75">vs 3 months</span>
       </div>
     </CardChrome>
   )
@@ -160,8 +160,8 @@ export type AllocationSegment = { name: string; label: string; pct: number; amou
 
 const ALLOCATION_SEGMENTS: AllocationSegment[] = [
   { amount: "$51,785", cls: "bg-amber-500", label: "Vanilla", name: "VAN", pct: 72.5, tone: "text-amber-600 dark:text-amber-400" },
-  { amount: "$16,278", cls: "bg-border", label: "Chocolate", name: "CHOC", pct: 22.8, tone: "text-secondary-foreground" },
-  { amount: "$3,357", cls: "bg-muted", label: "Mint", name: "MINT", pct: 4.7, tone: "text-secondary-foreground" },
+  { amount: "$16,278", cls: "bg-border", label: "Chocolate", name: "CHOC", pct: 22.8, tone: "text-foreground/75" },
+  { amount: "$3,357", cls: "bg-muted", label: "Mint", name: "MINT", pct: 4.7, tone: "text-foreground/75" },
 ]
 
 function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: AllocationSegment[] }) {
@@ -197,7 +197,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
             onClick={() => setSelected(s.name)}
             className={cn(
               "flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] transition-[background-color,color,transform] duration-150 active:scale-[0.96]",
-              selected === s.name ? "bg-muted text-foreground" : "text-secondary-foreground hover:bg-muted hover:text-foreground"
+              selected === s.name ? "bg-muted text-foreground" : "text-foreground/75 hover:bg-muted hover:text-foreground"
             )}
           >
             <span className={cn("size-1.5 rounded-full", s.cls)} />
@@ -207,7 +207,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
       </div>
       <div className="mt-3 min-h-16 rounded-md bg-muted px-2.5 py-2 ring-1 ring-foreground/10">
         <span className={cn("block text-[11.5px] font-medium", active.tone)}>{active.label}</span>
-        <span className="mt-1 block text-[11px] leading-relaxed text-secondary-foreground">Contribution snapshot across current inventory value. Segment selection changes the inspected group without moving the card.</span>
+        <span className="mt-1 block text-[11px] leading-relaxed text-foreground/75">Contribution snapshot across current inventory value. Segment selection changes the inspected group without moving the card.</span>
       </div>
     </CardChrome>
   )
@@ -276,20 +276,20 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
       <div className="flex items-center justify-between">
         <span className="flex items-baseline gap-1.5">
           <span className="text-[13px] font-semibold text-foreground">{l.title}</span>
-          <span className="text-[13px] text-secondary-foreground tabular-nums">{pages.length}</span>
+          <span className="text-[13px] text-foreground/75 tabular-nums">{pages.length}</span>
         </span>
         <span className="flex items-center gap-0.5">
           <button
             aria-label="Previous insight"
             onClick={() => move(-1)}
-            className="flex size-6 items-center justify-center rounded-md text-secondary-foreground transition-[background-color,color,transform] duration-100 hover:bg-muted hover:text-foreground active:scale-[0.96]"
+            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-100 hover:bg-muted hover:text-foreground active:scale-[0.96]"
           >
             <ChevronLeft className="size-3.5" strokeWidth={2.2} />
           </button>
           <button
             aria-label="Next insight"
             onClick={() => move(1)}
-            className="flex size-6 items-center justify-center rounded-md text-secondary-foreground transition-[background-color,color,transform] duration-100 hover:bg-muted hover:text-foreground active:scale-[0.96]"
+            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-100 hover:bg-muted hover:text-foreground active:scale-[0.96]"
           >
             <ChevronRight className="size-3.5" strokeWidth={2.2} />
           </button>
@@ -297,7 +297,7 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
       </div>
 
       <div>
-        <p className="mt-1.5 text-[12.5px] leading-relaxed text-secondary-foreground">{prose}</p>
+        <p className="mt-1.5 text-[12.5px] leading-relaxed text-foreground/75">{prose}</p>
         <div className="mt-2">
           <Card />
         </div>

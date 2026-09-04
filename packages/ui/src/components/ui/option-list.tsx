@@ -111,7 +111,7 @@ export const OptionListItem = ({
             <span
               className={cn(
                 "text-xs",
-                selected ? "text-background/70" : "text-secondary-foreground"
+                selected ? "text-background/70" : "text-foreground/75"
               )}
             >
               · {option.description}

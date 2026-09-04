@@ -67,9 +67,9 @@ interface MessageMetadataProps {
 
 const MessageMetadata = ({ isOwn, status, time }: MessageMetadataProps) => (
   <div className={cn("mt-1 flex items-center gap-1", isOwn && "justify-end")}>
-    {time && <span className="text-xs text-secondary-foreground">{time}</span>}
+    {time && <span className="text-xs text-foreground/75">{time}</span>}
     {isOwn && status && (
-      <span className="text-secondary-foreground">
+      <span className="text-foreground/75">
         {status === "sent" && <Check className="size-3" />}
         {status === "delivered" && <CheckCheck className="size-3" />}
         {status === "read" && <CheckCheck className="size-3 text-foreground" />}
@@ -417,7 +417,7 @@ export const MessageWithReactions = ({
                     className={cn(
                       userReactions.has(reaction.emoji)
                         ? "text-primary"
-                        : "text-secondary-foreground"
+                        : "text-foreground/75"
                     )}
                   >
                     {reaction.count}
@@ -435,7 +435,7 @@ export const MessageWithReactions = ({
                 />
               }
             >
-              <Smile className="size-3.5 text-secondary-foreground" />
+              <Smile className="size-3.5 text-foreground/75" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="p-2">
               <div className="grid grid-cols-5 gap-1">
@@ -457,7 +457,7 @@ export const MessageWithReactions = ({
           className={cn("flex items-center gap-1 mt-1", isOwn && "justify-end")}
         >
           {time && (
-            <span className="text-xs text-secondary-foreground">{time}</span>
+            <span className="text-xs text-foreground/75">{time}</span>
           )}
         </div>
       </div>

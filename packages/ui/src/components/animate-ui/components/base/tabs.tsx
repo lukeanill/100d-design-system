@@ -105,7 +105,7 @@ function TabsTab({ className, value, children, onClick, ...props }: TabsTabProps
           className="absolute inset-0 rounded-full bg-foreground shadow-xs"
         />
       )}
-      <motion.span layout="position" className={cn("relative z-10", isActive ? "text-background" : "text-secondary-foreground")}>
+      <motion.span layout="position" className={cn("relative z-10", isActive ? "text-background" : "text-foreground/75")}>
         {children}
       </motion.span>
     </button>

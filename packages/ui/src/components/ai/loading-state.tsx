@@ -84,7 +84,7 @@ export const LoadingState = ({ appearance, data, className }: LoadingStateProps 
       >
         {label}
       </span>
-      <span className="font-mono text-[12px] text-secondary-foreground tabular-nums">{elapsed}</span>
+      <span className="font-mono text-[12px] text-foreground/75 tabular-nums">{elapsed}</span>
     </div>
   )
 }

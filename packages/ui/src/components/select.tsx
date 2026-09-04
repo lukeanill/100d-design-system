@@ -49,7 +49,7 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <CaretDownIcon className="pointer-events-none size-4 text-secondary-foreground" />
+          <CaretDownIcon className="pointer-events-none size-4 text-foreground/75" />
         }
       />
     </SelectPrimitive.Trigger>
@@ -102,7 +102,7 @@ function SelectLabel({
   return (
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
-      className={cn("px-3 py-2.5 text-xs text-secondary-foreground", className)}
+      className={cn("px-3 py-2.5 text-xs text-foreground/75", className)}
       {...props}
     />
   )

@@ -373,7 +373,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
               aria-label="Previous month"
               className="p-1 hover:bg-muted rounded transition-colors"
             >
-              <ChevronLeft className="size-5 text-secondary-foreground" />
+              <ChevronLeft className="size-5 text-foreground/75" />
             </button>
             <span className="text-base font-medium text-foreground min-w-[140px] text-center">
               {MONTHS[month]} {year}
@@ -383,7 +383,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
               aria-label="Next month"
               className="p-1 hover:bg-muted rounded transition-colors"
             >
-              <ChevronRight className="size-5 text-secondary-foreground" />
+              <ChevronRight className="size-5 text-foreground/75" />
             </button>
           </div>
 
@@ -392,7 +392,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             {orderedDays.map((day) => (
               <div
                 key={day}
-                className="text-center text-xs font-medium text-secondary-foreground py-2"
+                className="text-center text-xs font-medium text-foreground/75 py-2"
               >
                 {day}
               </div>
@@ -417,10 +417,10 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                   disabled={!item.isCurrentMonth || !isAvailable}
                   className={cn(
                     "relative size-10 rounded-full text-sm transition-all duration-200 flex items-center justify-center mx-auto",
-                    !item.isCurrentMonth && "text-secondary-foreground/30",
+                    !item.isCurrentMonth && "text-foreground/30",
                     item.isCurrentMonth &&
                       !isAvailable &&
-                      "text-secondary-foreground cursor-default",
+                      "text-foreground/75 cursor-default",
                     item.isCurrentMonth &&
                       isAvailable &&
                       !isSelected &&
@@ -453,7 +453,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                   render={
                     <button
                       aria-label="Select timezone"
-                      className="flex items-center gap-2 text-sm text-secondary-foreground hover:text-foreground transition-colors"
+                      className="flex items-center gap-2 text-sm text-foreground/75 hover:text-foreground transition-colors"
                     />
                   }
                 >
@@ -472,7 +472,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                 <PopoverPanel className="w-[320px] p-0" align="start">
                   <div className="p-2 border-b">
                     <div className="relative">
-                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-secondary-foreground" />
+                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-foreground/75" />
                       <input
                         ref={timezoneSearchRef}
                         type="text"
@@ -494,7 +494,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                         )}
                       >
                         <span className="text-foreground">{tz.name}</span>
-                        <span className="text-secondary-foreground text-xs">
+                        <span className="text-foreground/75 text-xs">
                           {getTimeForTimezone(tz.iana)}
                         </span>
                       </button>
@@ -527,7 +527,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             {/* Back button - Mobile only */}
             <button
               onClick={handleBackToCalendar}
-              className="flex items-center gap-2 text-sm text-secondary-foreground hover:text-foreground mb-4 md:hidden"
+              className="flex items-center gap-2 text-sm text-foreground/75 hover:text-foreground mb-4 md:hidden"
             >
               <ArrowLeft className="size-4" />
               <span>Back to calendar</span>

@@ -293,7 +293,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
           >
             <div ref={contentRef} className="flex w-fit shrink-0 items-center justify-center gap-0.5" style={{ width: mode === "idle" && hasPrompt && typingWidth ? typingWidth - 8 : undefined }}>
               {busy && (
-                <span className="inline-flex h-7 items-center gap-1.5 px-2.5 text-[12.5px] font-normal whitespace-nowrap text-secondary-foreground">
+                <span className="inline-flex h-7 items-center gap-1.5 px-2.5 text-[12.5px] font-normal whitespace-nowrap text-foreground/75">
                   <span className="size-3 shrink-0 rounded-full border-[1.5px] border-border border-t-secondary-foreground" style={{ animation: "spin 700ms linear infinite" }} />
                   {mode === "thinking" ? <Shimmer className="text-[12.5px] font-normal">{busyLabel}…</Shimmer> : <span>{busyLabel}…</span>}
                 </span>
@@ -318,7 +318,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                     type="button"
                     aria-label="Try again"
                     onClick={() => run(action)}
-                    className="flex size-7 shrink-0 items-center justify-center rounded-full text-secondary-foreground transition-[background-color,color,transform] duration-150 hover:bg-muted hover:text-foreground active:scale-[0.96]"
+                    className="flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75 transition-[background-color,color,transform] duration-150 hover:bg-muted hover:text-foreground active:scale-[0.96]"
                   >
                     {icons.retry}
                   </button>
@@ -357,7 +357,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                         }}
                         aria-label={copy.placeholder}
                         placeholder={copy.placeholder}
-                        className="h-7 w-full bg-transparent pr-2.5 pl-3 text-[12.5px] text-foreground placeholder:text-secondary-foreground"
+                        className="h-7 w-full bg-transparent pr-2.5 pl-3 text-[12.5px] text-foreground placeholder:text-foreground/75"
                       />
                     </form>
                   </div>

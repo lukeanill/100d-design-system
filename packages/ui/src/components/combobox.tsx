@@ -29,7 +29,7 @@ function ComboboxTrigger({
       {...props}
     >
       {children}
-      <CaretDownIcon className="pointer-events-none size-4 text-secondary-foreground" />
+      <CaretDownIcon className="pointer-events-none size-4 text-foreground/75" />
     </ComboboxPrimitive.Trigger>
   )
 }
@@ -172,7 +172,7 @@ function ComboboxLabel({
   return (
     <ComboboxPrimitive.GroupLabel
       data-slot="combobox-label"
-      className={cn("px-3.5 py-2.5 text-xs text-secondary-foreground", className)}
+      className={cn("px-3.5 py-2.5 text-xs text-foreground/75", className)}
       {...props}
     />
   )

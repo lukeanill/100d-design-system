@@ -79,13 +79,13 @@ function NotificationList() {
             <div className="flex justify-between items-center">
               <h1 className="text-sm font-medium">{notification.title}</h1>
               {notification.count && (
-                <div className="flex items-center text-xs gap-0.5 font-medium text-secondary-foreground">
+                <div className="flex items-center text-xs gap-0.5 font-medium text-foreground/75">
                   <RotateCcw className="size-3" />
                   <span>{notification.count}</span>
                 </div>
               )}
             </div>
-            <div className="text-xs text-secondary-foreground font-medium">
+            <div className="text-xs text-foreground/75 font-medium">
               <span>{notification.time}</span>
               &nbsp;•&nbsp;
               <span>{notification.subtitle}</span>

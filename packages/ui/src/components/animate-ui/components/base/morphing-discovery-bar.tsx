@@ -69,7 +69,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                       exit={{ opacity: 0, x: -5 }}
                       transition={{ duration: 0.15 }}
                       placeholder="Search"
-                      className="ml-2 w-full border-none bg-transparent text-sm font-medium text-foreground outline-none placeholder:text-secondary-foreground sm:text-base"
+                      className="ml-2 w-full border-none bg-transparent text-sm font-medium text-foreground outline-none placeholder:text-foreground/75 sm:text-base"
                       value={searchValue}
                       onChange={(event) => setSearchValue(event.target.value)}
                     />
@@ -111,7 +111,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                           />
                         )}
                         <span className="relative z-10 scale-90 sm:scale-100">{cat.icon}</span>
-                        <span className={`relative z-10 ${!isActive ? "text-secondary-foreground" : ""}`}>{cat.label}</span>
+                        <span className={`relative z-10 ${!isActive ? "text-foreground/75" : ""}`}>{cat.label}</span>
                       </motion.button>
                     )
                   })}
