@@ -5,7 +5,13 @@ import { MorphingDiscoveryBar as MorphingDiscoveryBarImpl } from "./morphing-dis
 export default {
   title: "Components/Navigation/Morphing Discovery Bar",
   component: MorphingDiscoveryBarImpl,
-  parameters: { controls: { disable: true } },
+  argTypes: {
+    defaultActive: { control: "select", options: ["new", "popular", "favorites"] },
+    categories: { table: { disable: true } },
+  },
+  args: {
+    defaultActive: "new",
+  },
 }
 
 const categories = [

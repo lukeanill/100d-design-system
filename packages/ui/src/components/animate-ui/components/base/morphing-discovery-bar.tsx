@@ -21,14 +21,15 @@ export interface DiscoveryCategory {
 
 export interface MorphingDiscoveryBarProps {
   categories: DiscoveryCategory[]
+  defaultActive?: string
   className?: string
 }
 
 const transition = { damping: 32, mass: 1, stiffness: 520, type: "spring" } as const
 
-export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories, className = "" }) => {
+export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories, defaultActive, className = "" }) => {
   const [isSearching, setIsSearching] = useState(false)
-  const [activeTab, setActiveTab] = useState(categories[0]?.id)
+  const [activeTab, setActiveTab] = useState(defaultActive ?? categories[0]?.id)
   const [searchValue, setSearchValue] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
 

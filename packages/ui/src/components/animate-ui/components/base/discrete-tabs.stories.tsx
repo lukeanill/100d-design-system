@@ -6,7 +6,14 @@ import { DiscreteTabs as DiscreteTabsImpl } from "./discrete-tabs"
 export default {
   title: "Components/Navigation/Discrete Tabs",
   component: DiscreteTabsImpl,
-  parameters: { controls: { disable: true } },
+  argTypes: {
+    defaultTab: { control: "select", options: ["mail", "planner", "alerts"] },
+    tabs: { table: { disable: true } },
+    onTabChange: { table: { disable: true } },
+  },
+  args: {
+    defaultTab: "planner",
+  },
 }
 
 const tabs = [
@@ -15,4 +22,4 @@ const tabs = [
   { icon: <Bell size={16} />, id: "alerts", label: "Alerts" },
 ]
 
-export const DiscreteTabs = (args: ComponentProps<typeof DiscreteTabsImpl>) => <DiscreteTabsImpl {...args} tabs={tabs} defaultTab="planner" />
+export const DiscreteTabs = (args: ComponentProps<typeof DiscreteTabsImpl>) => <DiscreteTabsImpl {...args} tabs={tabs} />
