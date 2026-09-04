@@ -41,33 +41,28 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
   }, [activeTab])
 
   return (
-    <div className="mx-auto flex w-fit items-center justify-center gap-2 overflow-hidden rounded-full py-6">
+    <div className="mx-auto flex h-11 w-fit items-center gap-1 rounded-full border border-border bg-muted p-1">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab
         return (
-          <button key={tab.id} type="button" onClick={() => handleTabClick(tab.id)} className="relative focus:outline-none">
+          <button key={tab.id} type="button" onClick={() => handleTabClick(tab.id)} className="relative h-full focus:outline-none">
             <motion.div
               layout="position"
               transition={{ damping: 18, mass: 1, stiffness: 210, type: "spring" }}
-              className={`relative flex h-16 ${isActive ? "w-40" : "w-full"} items-center justify-center`}
+              className={`relative flex h-full ${isActive ? "w-28" : "w-9"} items-center justify-center`}
             >
               {isActive && (
                 <motion.div
                   layoutId="discrete-tabs-active-bg"
-                  className="absolute inset-0 rounded-full bg-foreground shadow-md"
+                  className="absolute inset-0 rounded-full bg-foreground shadow-xs"
                   transition={{ damping: 26, stiffness: 220, type: "spring" }}
                 />
               )}
-              <div className="relative z-10 flex cursor-pointer items-center gap-1 pr-3">
-                <motion.div
-                  animate={{ scale: isActive ? 1.08 : 1 }}
-                  className={`flex h-14 w-14 items-center justify-center rounded-full ${isActive ? "text-background" : "bg-muted text-foreground/75"}`}
-                >
-                  {tab.icon}
-                </motion.div>
+              <div className="relative z-10 flex h-full cursor-pointer items-center gap-1.5 px-3">
+                <div className={`flex shrink-0 items-center justify-center ${isActive ? "text-background" : "text-foreground/75"}`}>{tab.icon}</div>
                 <motion.span
                   animate={{ opacity: isActive ? 1 : 0, width: isActive ? "auto" : 0 }}
-                  className={`relative overflow-hidden text-xl font-semibold whitespace-nowrap ${isActive ? "text-background" : "text-foreground"}`}
+                  className="relative overflow-hidden text-sm font-bold whitespace-nowrap text-background"
                 >
                   {tab.label}
                   <AnimatePresence>

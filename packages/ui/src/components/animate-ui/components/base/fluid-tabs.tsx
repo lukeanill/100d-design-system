@@ -37,24 +37,24 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
   }
 
   return (
-    <div className="relative flex w-fit items-center gap-1 rounded-full border border-border bg-muted p-1 transition-colors">
+    <div className="relative flex h-11 w-fit items-center gap-1 rounded-full border border-border bg-muted p-1 transition-colors">
       {tabs.map((tab) => {
         const isActive = active === tab.id
 
         return (
-          <button key={tab.id} type="button" onClick={() => handleChange(tab.id)} className="group relative rounded-full px-3 py-2 outline-none">
+          <button key={tab.id} type="button" onClick={() => handleChange(tab.id)} className="group relative h-full rounded-full px-3 outline-none">
             {isActive && (
               <motion.div
                 layoutId="fluid-tabs-active-pill"
                 transition={{ damping: 25, mass: 0.8, stiffness: 280, type: "spring" }}
-                className="absolute inset-0 rounded-full border border-border bg-card shadow-xs"
+                className="absolute inset-0 rounded-full bg-foreground shadow-xs"
               />
             )}
 
             <motion.div
               transition={{ duration: 0.3, ease: "easeOut" }}
               animate={{ filter: isActive ? ["blur(0px)", "blur(4px)", "blur(0px)"] : "blur(0px)" }}
-              className={`relative z-10 flex items-center gap-1.5 transition-colors duration-200 ${isActive ? "font-bold text-foreground" : "font-semibold text-foreground/75"}`}
+              className={`relative z-10 flex h-full items-center gap-1.5 font-bold transition-colors duration-200 ${isActive ? "text-background" : "text-foreground/75"}`}
             >
               <motion.div
                 animate={{ scale: isActive ? 1.03 : 1 }}
