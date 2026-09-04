@@ -1,25 +1,22 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { CSSProperties, FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 import { AnimatePresence, LayoutGroup, motion } from "motion/react"
 import { Search, X } from "lucide-react"
 
 /* A search icon that expands into a search field, paired with a separate
- * tab group whose active tab can carry its own accent color. Ported from
- * Watermelon UI's Morphing Discovery Bar
+ * tab group. Ported from Watermelon UI's Morphing Discovery Bar
  * (ui.watermelon.sh/animated-components/category/tabs), restyled onto our
- * tokens; each category's active color stays consumer-supplied since that's
- * the point of the pattern. */
+ * tokens. The active category always uses the same bg-foreground/
+ * text-background pair the base Tabs component uses, rather than a
+ * per-category accent color, so it reads consistently across all 9 themes
+ * instead of shifting hue. */
 
 export interface DiscoveryCategory {
   id: string
   label: string
   icon: ReactNode
-  /** Background applied to the active pill, e.g. "var(--color-primary)" or "var(--color-destructive)". */
-  activeColor: string
-  /** Text color applied to the active label, e.g. "var(--color-primary-foreground)". */
-  activeTextColor: string
 }
 
 export interface MorphingDiscoveryBarProps {
@@ -99,19 +96,17 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                         key={cat.id}
                         layout
                         onClick={() => setActiveTab(cat.id)}
-                        className="relative z-0 flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold tracking-tight whitespace-nowrap transition-colors sm:gap-2 sm:px-6 sm:py-3 sm:text-lg"
-                        style={{ color: isActive ? cat.activeTextColor : undefined }}
+                        className={`relative z-0 flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold tracking-tight whitespace-nowrap transition-colors sm:gap-2 sm:px-6 sm:py-3 sm:text-lg ${isActive ? "text-background" : "text-foreground/75"}`}
                       >
                         {isActive && (
                           <motion.div
                             layoutId="discovery-pill-bg"
-                            className="absolute inset-0 z-[-1] rounded-full shadow-xs"
-                            style={{ background: cat.activeColor } as CSSProperties}
+                            className="absolute inset-0 z-[-1] rounded-full bg-foreground shadow-xs"
                             transition={transition}
                           />
                         )}
                         <span className="relative z-10 scale-90 sm:scale-100">{cat.icon}</span>
-                        <span className={`relative z-10 ${!isActive ? "text-foreground/75" : ""}`}>{cat.label}</span>
+                        <span className="relative z-10">{cat.label}</span>
                       </motion.button>
                     )
                   })}

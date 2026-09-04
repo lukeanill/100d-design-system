@@ -9,9 +9,9 @@ export default {
 }
 
 const categories = [
-  { activeColor: "var(--color-primary)", activeTextColor: "var(--color-primary-foreground)", icon: <Sparkles size={16} />, id: "new", label: "New" },
-  { activeColor: "var(--color-muted)", activeTextColor: "var(--color-foreground)", icon: <Flame size={16} />, id: "popular", label: "Popular" },
-  { activeColor: "var(--color-destructive)", activeTextColor: "white", icon: <Heart size={16} />, id: "favorites", label: "Favorites" },
+  { icon: <Sparkles size={16} />, id: "new", label: "New" },
+  { icon: <Flame size={16} />, id: "popular", label: "Popular" },
+  { icon: <Heart size={16} />, id: "favorites", label: "Favorites" },
 ]
 
 export const MorphingDiscoveryBar = (args: ComponentProps<typeof MorphingDiscoveryBarImpl>) => <MorphingDiscoveryBarImpl {...args} categories={categories} />

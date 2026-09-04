@@ -10,9 +10,9 @@ export default {
 }
 
 const tabs = [
-  { activeColor: "text-primary", icon: <Mail size={22} />, id: "mail", label: "Mail" },
-  { activeColor: "text-primary", icon: <CalendarDays size={22} />, id: "planner", label: "Planner" },
-  { activeColor: "text-primary", icon: <Bell size={22} />, id: "alerts", label: "Alerts" },
+  { icon: <Mail size={22} />, id: "mail", label: "Mail" },
+  { icon: <CalendarDays size={22} />, id: "planner", label: "Planner" },
+  { icon: <Bell size={22} />, id: "alerts", label: "Alerts" },
 ]
 
 export const DiscreteTabs = (args: ComponentProps<typeof DiscreteTabsImpl>) => <DiscreteTabsImpl {...args} tabs={tabs} defaultTab="planner" />

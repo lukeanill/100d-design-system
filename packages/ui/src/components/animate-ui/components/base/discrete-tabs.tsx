@@ -7,15 +7,14 @@ import { AnimatePresence, motion } from "motion/react"
 /* Icon-only tabs that expand into a labeled pill when active, others
  * collapse to icon-only circles. Ported from Watermelon UI's Discrete Tabs
  * (ui.watermelon.sh/animated-components/category/tabs), restyled onto our
- * tokens; each tab's active color stays consumer-supplied since that's the
- * point of the pattern (a distinct accent per destination). */
+ * tokens. The active tab always uses the same bg-foreground/text-background
+ * pair the base Tabs component uses, rather than a per-tab accent color, so
+ * it reads consistently across all 9 themes instead of shifting hue. */
 
 export interface DiscreteTabItem {
   id: string
   icon: ReactNode
   label: string
-  /** Text-color class applied to the icon and label when this tab is active, e.g. "text-primary". */
-  activeColor: string
 }
 
 export interface DiscreteTabsProps {
@@ -55,20 +54,20 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
               {isActive && (
                 <motion.div
                   layoutId="discrete-tabs-active-bg"
-                  className="absolute inset-0 rounded-full bg-card shadow-md"
+                  className="absolute inset-0 rounded-full bg-foreground shadow-md"
                   transition={{ damping: 26, stiffness: 220, type: "spring" }}
                 />
               )}
               <div className="relative z-10 flex cursor-pointer items-center gap-1 pr-3">
                 <motion.div
                   animate={{ scale: isActive ? 1.08 : 1 }}
-                  className={`flex h-14 w-14 items-center justify-center rounded-full ${isActive ? tab.activeColor : "bg-muted text-foreground"}`}
+                  className={`flex h-14 w-14 items-center justify-center rounded-full ${isActive ? "text-background" : "bg-muted text-foreground/75"}`}
                 >
                   {tab.icon}
                 </motion.div>
                 <motion.span
                   animate={{ opacity: isActive ? 1 : 0, width: isActive ? "auto" : 0 }}
-                  className={`relative overflow-hidden text-xl font-semibold whitespace-nowrap ${isActive ? tab.activeColor : "text-foreground"}`}
+                  className={`relative overflow-hidden text-xl font-semibold whitespace-nowrap ${isActive ? "text-background" : "text-foreground"}`}
                 >
                   {tab.label}
                   <AnimatePresence>
