@@ -41,7 +41,7 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
   }, [activeTab])
 
   return (
-    <div className="mx-auto flex h-11 w-fit items-center gap-1 rounded-full border border-border bg-muted p-1">
+    <div className="mx-auto flex h-11 w-fit items-center gap-1 rounded-full border border-border bg-card p-1">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab
         return (

@@ -37,7 +37,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
   }
 
   return (
-    <div className="relative flex h-11 w-fit items-center gap-1 rounded-full border border-border bg-muted p-1 transition-colors">
+    <div className="relative flex h-11 w-fit items-center gap-1 rounded-full border border-border bg-card p-1 transition-colors">
       {tabs.map((tab) => {
         const isActive = active === tab.id
 

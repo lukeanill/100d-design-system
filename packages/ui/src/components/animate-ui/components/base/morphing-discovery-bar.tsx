@@ -87,7 +87,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
                   exit={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
                   transition={transition}
-                  className="flex h-11 items-center gap-1 overflow-hidden rounded-full border border-border bg-muted p-1"
+                  className="flex h-11 items-center gap-1 overflow-hidden rounded-full border border-border bg-card p-1"
                 >
                   {categories.map((cat) => {
                     const isActive = activeTab === cat.id
