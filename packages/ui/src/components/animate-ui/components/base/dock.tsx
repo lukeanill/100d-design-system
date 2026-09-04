@@ -45,7 +45,7 @@ export const Dock: FC<DockProps> = ({ items = DEFAULT_DOCK_ITEMS }) => {
     <motion.div
       layout
       transition={dockSpring}
-      className="relative flex items-center gap-1 rounded-full border border-border bg-card px-2.5 py-1.5 shadow-xl"
+      className="relative flex w-fit items-center gap-1 rounded-full border border-border bg-card px-2.5 py-1.5 shadow-xl"
     >
       {items.map((item) => (
         <motion.div
