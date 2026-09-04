@@ -45,7 +45,7 @@ export const Dock: FC<DockProps> = ({ items = DEFAULT_DOCK_ITEMS }) => {
     <motion.div
       layout
       transition={dockSpring}
-      className="relative flex items-end gap-3.5 rounded-3xl border border-border bg-card px-3 py-2 shadow-xs"
+      className="relative flex items-center gap-1 rounded-full border border-border bg-card px-2.5 py-1.5 shadow-xl"
     >
       {items.map((item) => (
         <motion.div
@@ -58,9 +58,7 @@ export const Dock: FC<DockProps> = ({ items = DEFAULT_DOCK_ITEMS }) => {
           animate={{ scale: animateSelected === item.id ? 1.3 : 1, y: animateSelected === item.id ? -6 : 0 }}
           transition={{ damping: 15, mass: 1.1, stiffness: 550, type: "spring" }}
         >
-          <div className="cursor-pointer rounded-md bg-muted p-2">
-            <div className={cn("flex items-center justify-center transition-colors duration-200", selected === item.id ? "text-foreground" : "text-foreground/75")}>{item.icon}</div>
-          </div>
+          <div className={cn("flex cursor-pointer items-center justify-center p-2 transition-colors duration-200", selected === item.id ? "text-foreground" : "text-foreground/75")}>{item.icon}</div>
 
           <div className={cn("mt-px flex w-full items-center justify-center opacity-0 transition-opacity duration-400", selected === item.id && "opacity-100")}>
             <div className="size-1 rounded-full bg-foreground/40" />
