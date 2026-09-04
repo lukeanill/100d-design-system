@@ -23,9 +23,9 @@ export interface FluidTabsProps {
 }
 
 const DEFAULT_TABS: FluidTabItem[] = [
-  { icon: <Landmark size={22} />, id: "accounts", label: "Accounts" },
-  { icon: <Inbox size={22} />, id: "deposits", label: "Deposits" },
-  { icon: <PieChart size={22} />, id: "funds", label: "Funds" },
+  { icon: <Landmark size={16} />, id: "accounts", label: "Accounts" },
+  { icon: <Inbox size={16} />, id: "deposits", label: "Deposits" },
+  { icon: <PieChart size={16} />, id: "funds", label: "Funds" },
 ]
 
 export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActive = tabs[0]?.id, onChange }) => {
@@ -37,12 +37,12 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
   }
 
   return (
-    <div className="relative flex items-center gap-1 rounded-full border border-border bg-muted px-1 py-1 transition-colors sm:gap-2">
+    <div className="relative flex w-fit items-center gap-1 rounded-full border border-border bg-muted p-1 transition-colors">
       {tabs.map((tab) => {
         const isActive = active === tab.id
 
         return (
-          <button key={tab.id} type="button" onClick={() => handleChange(tab.id)} className="group relative rounded-full px-3 py-2.5 outline-none sm:px-4 sm:py-3.5">
+          <button key={tab.id} type="button" onClick={() => handleChange(tab.id)} className="group relative rounded-full px-3 py-2 outline-none">
             {isActive && (
               <motion.div
                 layoutId="fluid-tabs-active-pill"
@@ -54,7 +54,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
             <motion.div
               transition={{ duration: 0.3, ease: "easeOut" }}
               animate={{ filter: isActive ? ["blur(0px)", "blur(4px)", "blur(0px)"] : "blur(0px)" }}
-              className={`relative z-10 flex items-center gap-1.5 transition-colors duration-200 sm:gap-3 ${isActive ? "font-bold text-foreground" : "font-semibold text-foreground/75"}`}
+              className={`relative z-10 flex items-center gap-1.5 transition-colors duration-200 ${isActive ? "font-bold text-foreground" : "font-semibold text-foreground/75"}`}
             >
               <motion.div
                 animate={{ scale: isActive ? 1.03 : 1 }}
@@ -64,7 +64,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
                 {tab.icon}
               </motion.div>
 
-              <span className="text-sm tracking-tight whitespace-nowrap sm:text-base">{tab.label}</span>
+              <span className="text-sm tracking-tight whitespace-nowrap">{tab.label}</span>
             </motion.div>
           </button>
         )
