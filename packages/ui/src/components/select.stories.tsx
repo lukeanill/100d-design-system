@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, screen, userEvent, within } from "storybook/test"
 import { Select as SelectImpl, SelectTrigger, SelectValue, SelectContent, SelectItem } from "./select"
 
 export default {
@@ -13,7 +15,7 @@ export default {
 
 export const Select = (args: ComponentProps<typeof SelectImpl>) => (
   <SelectImpl {...args}>
-    <SelectTrigger className="w-48">
+    <SelectTrigger className="w-48" aria-label="Fruit">
       <SelectValue placeholder="Select a fruit" />
     </SelectTrigger>
     <SelectContent>
@@ -24,3 +26,12 @@ export const Select = (args: ComponentProps<typeof SelectImpl>) => (
     </SelectContent>
   </SelectImpl>
 )
+
+Select.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const trigger = canvas.getByRole("combobox", { name: "Fruit" })
+
+  await userEvent.click(trigger)
+  await userEvent.click(await screen.findByRole("option", { name: "Banana" }))
+  await expect(trigger).toHaveTextContent("Banana")
+}

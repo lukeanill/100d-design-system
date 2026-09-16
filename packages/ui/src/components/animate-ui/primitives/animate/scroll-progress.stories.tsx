@@ -30,6 +30,7 @@ export const ScrollProgressAnimate = (args: ComponentProps<typeof ScrollProgress
         }}
       />
       <ScrollProgressContainer
+        tabIndex={0}
         style={{
           height: 200,
           overflowY: "auto",

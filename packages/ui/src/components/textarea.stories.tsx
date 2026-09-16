@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, within } from "storybook/test"
 import { Textarea as TextareaImpl } from "./textarea"
 
 export default {
@@ -14,3 +16,11 @@ export default {
 }
 
 export const Textarea = (args: ComponentProps<typeof TextareaImpl>) => <TextareaImpl {...args} />
+
+Textarea.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const textarea = canvas.getByPlaceholderText("Type your message here.")
+
+  await userEvent.type(textarea, "Hello there")
+  await expect(textarea).toHaveValue("Hello there")
+}

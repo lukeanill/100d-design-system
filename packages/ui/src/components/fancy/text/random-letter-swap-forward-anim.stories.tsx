@@ -12,4 +12,15 @@ export default {
   args: { label: "Hover me", staggerDuration: 0.02, reverse: true },
 }
 
-export const RandomLetterSwapForwardAnim = (args: ComponentProps<typeof RandomLetterSwapForwardImpl>) => <RandomLetterSwapForwardImpl {...args} />
+export const RandomLetterSwapForwardAnim = (args: ComponentProps<typeof RandomLetterSwapForwardImpl>) => (
+  <div
+    style={{
+      fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+      fontSize: 40,
+      fontWeight: 400,
+      lineHeight: 1.2,
+    }}
+  >
+    <RandomLetterSwapForwardImpl {...args} />
+  </div>
+)

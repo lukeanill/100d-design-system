@@ -3,6 +3,7 @@ import NumberTickerImpl from "./basic-number-ticker"
 
 export default {
   title: "Animation/Text/Numbers/Basic Number Ticker",
+  tags: ["!dev"],
   component: NumberTickerImpl,
   argTypes: {
     from: { control: "number" },

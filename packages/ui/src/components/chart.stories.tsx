@@ -22,7 +22,7 @@ export const Chart = () => (
   <ChartContainer config={config} className="h-64 w-full">
     <BarChart data={data}>
       <XAxis dataKey="month" />
-      <Bar dataKey="value" fill="var(--color-value)" radius={4} />
+      <Bar dataKey="value" fill="var(--color-value)" radius={[4, 4, 4, 4]} />
     </BarChart>
   </ChartContainer>
 )

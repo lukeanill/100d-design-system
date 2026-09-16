@@ -13,4 +13,15 @@ export default {
   args: { children: "Hover me", staggerFrom: "first", staggerDuration: 0.05, rotateDirection: "right" },
 }
 
-export const Letter3dSwap = (args: ComponentProps<typeof Letter3DSwapImpl>) => <Letter3DSwapImpl {...args} />
+export const Letter3dSwap = (args: ComponentProps<typeof Letter3DSwapImpl>) => (
+  <div
+    style={{
+      fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+      fontSize: 40,
+      fontWeight: 400,
+      lineHeight: 1.2,
+    }}
+  >
+    <Letter3DSwapImpl {...args} />
+  </div>
+)

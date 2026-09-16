@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, within } from "storybook/test"
 import { RadioGroup as RadioGroupImpl, RadioGroupItem } from "./radio-group"
 
 export default {
@@ -26,3 +28,12 @@ export const RadioGroup = (args: ComponentProps<typeof RadioGroupImpl>) => (
     </div>
   </RadioGroupImpl>
 )
+
+RadioGroup.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const comfortable = canvas.getByRole("radio", { name: "Comfortable" })
+
+  await userEvent.click(comfortable)
+  await expect(comfortable).toHaveAttribute("aria-checked", "true")
+  await expect(canvas.getByRole("radio", { name: "Default" })).toHaveAttribute("aria-checked", "false")
+}

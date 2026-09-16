@@ -126,7 +126,6 @@ export function ImageZoom({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      role="img"
       {...props}
     >
       <motion.div

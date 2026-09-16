@@ -1,6 +1,6 @@
 {
   "name": "@workspace/ui",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10",
+    "@storybook/react": "^10.5.10",
     "@tailwindcss/vite": "^4",
     "@turbo/gen": "^2.9.15",
     "@types/leaflet": "^1.9.22",
@@ -69,6 +70,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17",
+    "storybook": "^10.5.10",
     "tailwindcss": "^4",
     "typescript": "~6",
     "typescript-eslint": "^8"

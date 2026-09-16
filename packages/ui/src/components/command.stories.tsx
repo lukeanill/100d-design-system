@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, waitFor, within } from "storybook/test"
 import {
   Command as CommandImpl,
   CommandInput,
@@ -27,3 +29,12 @@ export const Command = (args: ComponentProps<typeof CommandImpl>) => (
     </CommandList>
   </CommandImpl>
 )
+
+Command.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+
+  await userEvent.type(canvas.getByPlaceholderText("Type a command..."), "cal")
+  await waitFor(() => expect(canvas.queryByText("Search Emoji")).not.toBeInTheDocument())
+  await expect(canvas.getByText("Calendar")).toBeVisible()
+  await expect(canvas.getByText("Calculator")).toBeVisible()
+}

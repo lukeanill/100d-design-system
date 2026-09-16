@@ -6,7 +6,47 @@ import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { cn } from "@workspace/ui/lib/utils"
 import { CaretDownIcon, CheckIcon, CaretUpIcon } from "@phosphor-icons/react"
 
-const Select = SelectPrimitive.Root
+type SelectItems = NonNullable<SelectPrimitive.Root.Props<unknown>["items"]>
+
+/* Base UI renders the raw value in the trigger unless the root is given an
+ * `items` map, which is easy to forget and shows "banana" where the item said
+ * "Banana". We walk the children for SelectItem elements and build that map
+ * automatically, so the trigger echoes the item you picked. Pass `items`
+ * yourself, or give SelectValue a function child, to override this. */
+function collectSelectItems(children: React.ReactNode): SelectItems | undefined {
+  const items: { label: React.ReactNode; value: unknown }[] = []
+
+  const walk = (node: React.ReactNode) => {
+    React.Children.forEach(node, (child) => {
+      if (!React.isValidElement(child)) return
+      const props = child.props as { value?: unknown; children?: React.ReactNode }
+      if (child.type === SelectItem && props.value !== undefined) {
+        items.push({ label: props.children, value: props.value })
+      }
+      if (props.children) walk(props.children)
+    })
+  }
+
+  walk(children)
+  return items.length ? (items as SelectItems) : undefined
+}
+
+function Select<Value, Multiple extends boolean | undefined = false>({
+  items,
+  children,
+  ...props
+}: SelectPrimitive.Root.Props<Value, Multiple>) {
+  const derivedItems = React.useMemo(
+    () => items ?? (collectSelectItems(children) as typeof items),
+    [items, children]
+  )
+
+  return (
+    <SelectPrimitive.Root items={derivedItems} {...props}>
+      {children}
+    </SelectPrimitive.Root>
+  )
+}
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (

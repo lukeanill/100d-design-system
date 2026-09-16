@@ -122,8 +122,8 @@
   --primary-foreground: oklch(1.000 0.000 0.00);
   --secondary: oklch(0.932 0.015 54.92);
   --secondary-foreground: oklch(0.688 0.059 52.40);
-  --muted: oklch(0.976 0.013 53.36);
-  --muted-foreground: oklch(0.827 0.041 56.23);
+  --muted: oklch(0.950 0.009 52.10);
+  --muted-foreground: oklch(0.565 0.041 56.23);
   --accent: oklch(0.932 0.015 54.92);
   --accent-foreground: oklch(0.688 0.059 52.40);
   --destructive: oklch(0.760 0.139 18.18);
@@ -315,7 +315,7 @@
   --card-foreground: oklch(0.345 0.000 0.00);
   --popover: oklch(1.000 0.000 0.00);
   --popover-foreground: oklch(0.345 0.000 0.00);
-  --primary: oklch(0.888 0.181 167.58);
+  --primary: oklch(0.520 0.053 174.97);
   --primary-foreground: oklch(1.000 0.000 0.00);
   --secondary: oklch(0.318 0.012 214.48);
   --secondary-foreground: oklch(0.776 0.103 174.64);
@@ -413,8 +413,8 @@
   --card-foreground: oklch(1.000 0.000 0.00);
   --popover: oklch(0.206 0.087 305.13);
   --popover-foreground: oklch(1.000 0.000 0.00);
-  --primary: oklch(0.476 0.297 264.19);
-  --primary-foreground: oklch(0.206 0.087 305.13);
+  --primary: oklch(0.541 0.241 267.63);
+  --primary-foreground: oklch(1.000 0.000 0.00);
   --secondary: oklch(0.507 0.283 279.26);
   --secondary-foreground: oklch(0.846 0.138 210.82);
   --muted: oklch(0.457 0.000 0.00);
@@ -462,7 +462,7 @@
   --card-foreground: oklch(0.281 0.000 0.00);
   --popover: oklch(1.000 0.000 0.00);
   --popover-foreground: oklch(0.281 0.000 0.00);
-  --primary: oklch(0.753 0.151 13.79);
+  --primary: oklch(0.551 0.155 14.40);
   --primary-foreground: oklch(1.000 0.000 0.00);
   --secondary: oklch(0.916 0.073 131.58);
   --secondary-foreground: oklch(0.648 0.134 126.69);
@@ -511,7 +511,7 @@
   --card-foreground: oklch(0.248 0.059 268.05);
   --popover: oklch(1.000 0.000 0.00);
   --popover-foreground: oklch(0.248 0.059 268.05);
-  --primary: oklch(0.500 0.141 266.09);
+  --primary: oklch(0.538 0.228 276.05);
   --primary-foreground: oklch(1.000 0.000 0.00);
   --secondary: oklch(0.768 0.086 262.29);
   --secondary-foreground: oklch(0.571 0.132 268.87);

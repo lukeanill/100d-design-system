@@ -11,7 +11,7 @@ export default {
     style: { table: { disable: true } },
   },
   args: {
-    maxTilt: 10,
+    maxTilt: 18,
     perspective: 800,
   },
 }

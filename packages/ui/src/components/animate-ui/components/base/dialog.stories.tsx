@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 import {
   Dialog as DialogImpl,
   DialogTrigger,
@@ -32,3 +34,14 @@ export const Dialog = (args: ComponentProps<typeof DialogImpl>) => (
     </DialogPopup>
   </DialogImpl>
 )
+
+Dialog.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+
+  await userEvent.click(canvas.getByRole("button", { name: "Open dialog" }))
+  const dialog = await screen.findByRole("dialog")
+  await waitFor(() => expect(within(dialog).getByText("Edit profile")).toBeVisible())
+
+  await userEvent.click(within(dialog).getByRole("button", { name: "Cancel" }))
+  await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+}

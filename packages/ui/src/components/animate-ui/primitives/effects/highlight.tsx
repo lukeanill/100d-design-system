@@ -483,7 +483,6 @@ function HighlightItem<T extends React.ElementType>({
 
   const dataAttributes = {
     'data-active': isActive ? 'true' : 'false',
-    'aria-selected': isActive,
     'data-disabled': isDisabled,
     'data-value': childValue,
     'data-highlight': true,
@@ -532,6 +531,7 @@ function HighlightItem<T extends React.ElementType>({
                 data-slot="motion-highlight"
                 style={{
                   position: 'absolute',
+                  inset: 0,
                   zIndex: 0,
                   ...contextStyle,
                   ...style,
@@ -594,6 +594,7 @@ function HighlightItem<T extends React.ElementType>({
               data-slot="motion-highlight"
               style={{
                 position: 'absolute',
+                inset: 0,
                 zIndex: 0,
                 ...contextStyle,
                 ...style,

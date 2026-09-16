@@ -20,4 +20,15 @@ export default {
   },
 }
 
-export const VariableFontHoverByLetter = (args: ComponentProps<typeof VariableFontHoverByLetterImpl>) => <VariableFontHoverByLetterImpl {...args} />
+export const VariableFontHoverByLetter = (args: ComponentProps<typeof VariableFontHoverByLetterImpl>) => (
+  <div
+    style={{
+      fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+      fontSize: 40,
+      fontWeight: 400,
+      lineHeight: 1.2,
+    }}
+  >
+    <VariableFontHoverByLetterImpl {...args} />
+  </div>
+)

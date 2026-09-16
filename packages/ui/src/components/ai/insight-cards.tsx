@@ -24,7 +24,7 @@ function Entity({ name }: { name: string }) {
 }
 
 function Mono({ children, tone }: { children: ReactNode; tone: "red" | "green" }) {
-  return <code className={cn("font-mono text-[11.5px]", tone === "red" ? "text-destructive" : "text-affirmative")}>{children}</code>
+  return <code className={cn("font-mono text-[11.5px]", tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{children}</code>
 }
 
 function CardChrome({ children }: { children: ReactNode }) {
@@ -71,7 +71,7 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
               <span className={cn("size-2 rounded-full", s.dot)} />
               {s.name}
             </span>
-            <span className={cn("block text-[17px] font-semibold tracking-[-0.01em] tabular-nums", s.tone === "red" ? "text-destructive" : "text-affirmative")}>{formatPercent(s.values.at(-1) ?? 0)}</span>
+            <span className={cn("block text-[17px] font-semibold tracking-[-0.01em] tabular-nums", s.tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{formatPercent(s.values.at(-1) ?? 0)}</span>
             <Mono tone={s.tone}>{s.sub}</Mono>
           </div>
         ))}

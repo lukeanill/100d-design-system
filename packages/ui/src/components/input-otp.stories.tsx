@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, within } from "storybook/test"
 import { InputOTP as InputOTPImpl, InputOTPGroup, InputOTPSlot } from "./input-otp"
 
 export default {
@@ -24,7 +26,7 @@ export default {
 type Args = Omit<ComponentProps<typeof InputOTPImpl>, "children" | "render">
 
 export const InputOtp = (args: Args) => (
-  <InputOTPImpl {...args}>
+  <InputOTPImpl aria-label="One-time code" {...args}>
     <InputOTPGroup>
       {Array.from({ length: 6 }).map((_, i) => (
         <InputOTPSlot key={i} index={i} />
@@ -32,3 +34,12 @@ export const InputOtp = (args: Args) => (
     </InputOTPGroup>
   </InputOTPImpl>
 )
+
+InputOtp.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const input = canvas.getByRole("textbox", { name: "One-time code" })
+
+  await userEvent.type(input, "123456")
+  await expect(input).toHaveValue("123456")
+  await expect(canvas.getByText("6")).toBeVisible()
+}

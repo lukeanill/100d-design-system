@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, within } from "storybook/test"
 import { Slider as SliderImpl } from "./slider"
 
 export default {
@@ -25,4 +27,14 @@ export default {
   },
 }
 
-export const Slider = (args: ComponentProps<typeof SliderImpl>) => <SliderImpl {...args} className="w-64" />
+export const Slider = (args: ComponentProps<typeof SliderImpl>) => <SliderImpl {...args} className="w-64" aria-label="Volume" />
+
+Slider.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const slider = canvas.getByRole("slider", { name: "Volume" })
+
+  await expect(slider).toHaveAttribute("aria-valuenow", "50")
+  await userEvent.click(slider)
+  await userEvent.keyboard("{ArrowRight}")
+  await expect(slider).toHaveAttribute("aria-valuenow", "51")
+}

@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, waitFor, within } from "storybook/test"
 import { Table as TableImpl, TableContent, TableHeader, TableGrid, TableFooter } from "./table"
 
 export default {
@@ -73,3 +75,12 @@ export const DataTable = (args: ComponentProps<typeof TableImpl>) => (
     </TableContent>
   </TableImpl>
 )
+
+DataTable.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const firstRow = () => canvas.getAllByRole("row")[1]?.textContent
+
+  await expect(firstRow()).toContain("Sarah Chen")
+  await userEvent.click(canvas.getByRole("button", { name: /Name/ }))
+  await waitFor(() => expect(firstRow()).toContain("Aisha Johnson"))
+}

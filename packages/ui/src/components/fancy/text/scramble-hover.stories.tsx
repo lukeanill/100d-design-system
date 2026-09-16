@@ -22,4 +22,15 @@ export default {
   },
 }
 
-export const ScrambleHover = (args: ComponentProps<typeof ScrambleHoverImpl>) => <ScrambleHoverImpl {...args} />
+export const ScrambleHover = (args: ComponentProps<typeof ScrambleHoverImpl>) => (
+  <div
+    style={{
+      fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+      fontSize: 40,
+      fontWeight: 400,
+      lineHeight: 1.2,
+    }}
+  >
+    <ScrambleHoverImpl {...args} />
+  </div>
+)

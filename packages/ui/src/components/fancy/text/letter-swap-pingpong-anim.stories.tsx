@@ -13,4 +13,15 @@ export default {
   args: { label: "Hover me", staggerFrom: "first", staggerDuration: 0.03, reverse: true },
 }
 
-export const LetterSwapPingpongAnim = (args: ComponentProps<typeof LetterSwapPingPongImpl>) => <LetterSwapPingPongImpl {...args} />
+export const LetterSwapPingpongAnim = (args: ComponentProps<typeof LetterSwapPingPongImpl>) => (
+  <div
+    style={{
+      fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+      fontSize: 40,
+      fontWeight: 400,
+      lineHeight: 1.2,
+    }}
+  >
+    <LetterSwapPingPongImpl {...args} />
+  </div>
+)

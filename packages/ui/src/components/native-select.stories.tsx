@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, within } from "storybook/test"
 import { NativeSelect as NativeSelectImpl } from "./native-select"
 
 export default {
@@ -16,9 +18,17 @@ export default {
 }
 
 export const NativeSelect = (args: ComponentProps<typeof NativeSelectImpl>) => (
-  <NativeSelectImpl {...args}>
+  <NativeSelectImpl aria-label="Fruit" {...args}>
     <option value="apple">Apple</option>
     <option value="banana">Banana</option>
     <option value="cherry">Cherry</option>
   </NativeSelectImpl>
 )
+
+NativeSelect.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const select = canvas.getByRole("combobox", { name: "Fruit" })
+
+  await userEvent.selectOptions(select, "cherry")
+  await expect(select).toHaveValue("cherry")
+}

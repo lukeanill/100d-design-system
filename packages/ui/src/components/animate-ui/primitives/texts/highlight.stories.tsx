@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { HighlightText as HighlightTextImpl } from "./highlight"
 
 export default {
-  title: "Animation/Text/Loops/Highlight",
+  title: "Animation/Text/Reveal/Highlight",
   component: HighlightTextImpl,
   argTypes: {
     delay: { control: { type: "range", min: 0, max: 2000, step: 100 } },

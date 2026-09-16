@@ -12,4 +12,15 @@ export default {
   args: { label: "Hover me", staggerDuration: 0.02, reverse: true },
 }
 
-export const RandomLetterSwapPingpongAnim = (args: ComponentProps<typeof RandomLetterSwapPingPongImpl>) => <RandomLetterSwapPingPongImpl {...args} />
+export const RandomLetterSwapPingpongAnim = (args: ComponentProps<typeof RandomLetterSwapPingPongImpl>) => (
+  <div
+    style={{
+      fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+      fontSize: 40,
+      fontWeight: 400,
+      lineHeight: 1.2,
+    }}
+  >
+    <RandomLetterSwapPingPongImpl {...args} />
+  </div>
+)

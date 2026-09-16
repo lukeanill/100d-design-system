@@ -6,7 +6,7 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
-  addons: ["@storybook/addon-vitest"],
+  addons: ["@storybook/addon-vitest", "@storybook/addon-a11y"],
   typescript: {
     reactDocgen: "react-docgen-typescript",
   },

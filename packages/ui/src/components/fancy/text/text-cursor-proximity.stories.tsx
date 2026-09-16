@@ -19,7 +19,14 @@ export default {
 export const TextCursorProximity = (args: ComponentProps<typeof TextCursorProximityImpl>) => {
   const containerRef = useRef<HTMLDivElement>(null)
   return (
-    <div ref={containerRef} className="p-8">
+    <div ref={containerRef} className="p-8"
+      style={{
+        fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+        fontSize: 40,
+        fontWeight: 400,
+        lineHeight: 1.2,
+      }}
+    >
       <TextCursorProximityImpl
         {...args}
         containerRef={containerRef}

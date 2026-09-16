@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, screen, userEvent, within } from "storybook/test"
 import {
   Combobox as ComboboxImpl,
   ComboboxInput,
@@ -32,3 +34,12 @@ export const Combobox = (args: ComponentProps<typeof ComboboxImpl>) => (
     </ComboboxContent>
   </ComboboxImpl>
 )
+
+Combobox.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const input = canvas.getByPlaceholderText("Select a fruit...")
+
+  await userEvent.type(input, "Ban")
+  await userEvent.click(await screen.findByRole("option", { name: "Banana" }))
+  await expect(input).toHaveValue("Banana")
+}

@@ -58,6 +58,7 @@ function ManagementBar() {
         <div className="mx-auto flex flex-col @lg/wrapper:flex-row shrink-0 items-center">
           <div className="flex h-10">
             <button
+              aria-label="Previous page"
               disabled={currentPage === 1}
               className="p-1 text-foreground/75 transition-colors hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
               onClick={handlePrevPage}
@@ -73,6 +74,7 @@ function ManagementBar() {
               <span className="text-foreground/75">/ {TOTAL_PAGES}</span>
             </div>
             <button
+              aria-label="Next page"
               disabled={currentPage === TOTAL_PAGES}
               className="p-1 text-foreground/75 transition-colors hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
               onClick={handleNextPage}

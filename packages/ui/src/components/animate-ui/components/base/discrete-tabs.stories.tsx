@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, fn, userEvent, within } from "storybook/test"
 import { Mail, Bell } from "lucide-react"
 import { CalendarDays } from "lucide-react"
 import { DiscreteTabs as DiscreteTabsImpl } from "./discrete-tabs"
@@ -13,6 +15,7 @@ export default {
   },
   args: {
     defaultTab: "planner",
+    onTabChange: fn(),
   },
 }
 
@@ -23,3 +26,10 @@ const tabs = [
 ]
 
 export const DiscreteTabs = (args: ComponentProps<typeof DiscreteTabsImpl>) => <DiscreteTabsImpl {...args} tabs={tabs} />
+
+DiscreteTabs.play = async ({ args, canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+
+  await userEvent.click(canvas.getByRole("button", { name: "Alerts" }))
+  await expect(args.onTabChange).toHaveBeenCalledWith("alerts")
+}

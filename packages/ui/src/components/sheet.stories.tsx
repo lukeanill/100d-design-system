@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 import {
   Sheet as SheetImpl,
   SheetTrigger,
@@ -47,3 +49,14 @@ export const Sheet = ({
     </SheetContent>
   </SheetImpl>
 )
+
+Sheet.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+
+  await userEvent.click(canvas.getByRole("button", { name: "Open sheet" }))
+  const sheet = await screen.findByRole("dialog")
+  await waitFor(() => expect(within(sheet).getByText("Edit profile")).toBeVisible())
+
+  await userEvent.click(within(sheet).getByRole("button", { name: "Cancel" }))
+  await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+}

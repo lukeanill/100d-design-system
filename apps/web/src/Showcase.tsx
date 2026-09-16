@@ -7,7 +7,6 @@ import { cn } from "@workspace/ui/lib/utils"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@workspace/ui/components/select"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@workspace/ui/components/card"
 import { StatCard, StatCardList } from "@workspace/ui/components/ui/stat-card"
-import { StatusBadge, StatusBadgeIcon, StatusBadgeLabel, type StatusType } from "@workspace/ui/components/ui/status-badge"
 import { Progress, ProgressTrack, ProgressLabel, ProgressValue } from "@workspace/ui/components/animate-ui/components/base/progress"
 import { Checkbox } from "@workspace/ui/components/animate-ui/components/base/checkbox"
 import { Switch } from "@workspace/ui/components/animate-ui/components/base/switch"
@@ -44,6 +43,12 @@ import {
   DrawerFooter,
   DrawerClose,
 } from "@workspace/ui/components/drawer"
+
+const SHIPMENT_STATUS = {
+  cancelled: { label: "Cancelled", variant: "outline" },
+  delivered: { label: "Delivered", variant: "default" },
+  shipped: { label: "Shipped", variant: "secondary" },
+} as const
 
 function ThemeSelect() {
   const { theme, setTheme } = useTheme()
@@ -257,7 +262,7 @@ interface Shipment {
   route: string
   carrier: string
   eta: string
-  status: StatusType
+  status: "shipped" | "delivered" | "cancelled"
   image: string
   notes: string
 }
@@ -306,10 +311,9 @@ function ShipmentDrawer({ shipment, open, onOpenChange }: { shipment: Shipment |
               <DrawerDescription>
                 {shipment.id} &middot; {shipment.carrier} &middot; {shipment.eta}
               </DrawerDescription>
-              <StatusBadge data={{ status: shipment.status }} className="mt-1 w-fit">
-                <StatusBadgeIcon />
-                <StatusBadgeLabel />
-              </StatusBadge>
+              <Badge variant={SHIPMENT_STATUS[shipment.status].variant} className="mt-1 w-fit">
+                {SHIPMENT_STATUS[shipment.status].label}
+              </Badge>
             </DrawerHeader>
 
             <div className="flex flex-col gap-4 overflow-y-auto px-6">
@@ -652,10 +656,9 @@ export function Showcase() {
                     </ItemDescription>
                   </ItemContent>
                   <ItemActions className="gap-2">
-                    <StatusBadge data={{ status: shipment.status }}>
-                      <StatusBadgeIcon />
-                      <StatusBadgeLabel />
-                    </StatusBadge>
+                    <Badge variant={SHIPMENT_STATUS[shipment.status].variant}>
+                      {SHIPMENT_STATUS[shipment.status].label}
+                    </Badge>
                     <Button variant="outline" size="sm" onClick={() => openShipment(shipment)}>
                       View details
                     </Button>

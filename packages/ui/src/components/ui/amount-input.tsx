@@ -112,6 +112,7 @@ export const AmountInputDisplay = ({
           <div className="flex items-center justify-center gap-2">
             <button
               className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              aria-label={`Decrease ${label}`}
               disabled={amount <= min}
               onClick={() => setAmount(amount - step)}
               type="button"
@@ -147,6 +148,7 @@ export const AmountInputDisplay = ({
             </div>
             <button
               className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              aria-label={`Increase ${label}`}
               disabled={amount >= max}
               onClick={() => setAmount(amount + step)}
               type="button"

@@ -16,7 +16,14 @@ export default {
 export const VariableFontAndCursor = (args: ComponentProps<typeof VariableFontAndCursorImpl>) => {
   const containerRef = useRef<HTMLDivElement>(null)
   return (
-    <div ref={containerRef} className="p-8">
+    <div ref={containerRef} className="p-8"
+      style={{
+        fontFamily: "'Bricolage Grotesque Variable', sans-serif",
+        fontSize: 40,
+        fontWeight: 400,
+        lineHeight: 1.2,
+      }}
+    >
       <VariableFontAndCursorImpl
         {...args}
         containerRef={containerRef}

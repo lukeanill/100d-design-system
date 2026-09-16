@@ -128,3 +128,12 @@ a:focus-visible .animated-underline::after {
     mask-image: none !important;
   }
 }
+
+@keyframes skeleton-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

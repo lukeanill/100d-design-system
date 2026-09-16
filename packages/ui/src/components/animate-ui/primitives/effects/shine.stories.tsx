@@ -18,7 +18,7 @@ export default {
     style: { table: { disable: true } },
   },
   args: {
-    color: "#ffffff",
+    color: "var(--foreground)",
     opacity: 0.5,
     delay: 0,
     duration: 1200,
@@ -37,10 +37,11 @@ export const ShineEffects = (args: any) => (
       display: "inline-block",
       padding: 24,
       borderRadius: 8,
-      background: "#18181b",
+      border: "1px solid var(--border)",
+      background: "var(--card)",
     }}
   >
-    <ShineImpl {...args} style={{ padding: "8px 16px", color: "#fff" }}>
+    <ShineImpl {...args} style={{ padding: "8px 16px", color: "var(--foreground)" }}>
       Shine effect
     </ShineImpl>
   </div>

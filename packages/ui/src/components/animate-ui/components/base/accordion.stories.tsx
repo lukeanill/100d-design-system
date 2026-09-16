@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, userEvent, waitFor, within } from "storybook/test"
 import { Accordion as AccordionImpl, AccordionItem, AccordionTrigger, AccordionPanel } from "./accordion"
 
 export default {
@@ -19,3 +21,10 @@ export const Accordion = (args: ComponentProps<typeof AccordionImpl>) => (
     </AccordionItem>
   </AccordionImpl>
 )
+
+Accordion.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+
+  await userEvent.click(canvas.getByRole("button", { name: "Another item" }))
+  await waitFor(() => expect(canvas.getByText("More content revealed here.")).toBeVisible())
+}

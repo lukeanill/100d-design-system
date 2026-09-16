@@ -18,7 +18,9 @@ export default {
   args: {
     direction: "up",
     offset: 100,
-    delay: 0,
+    delay: 600,
+    transition: { type: "spring", stiffness: 60, damping: 18 },
+
     inView: false,
     inViewOnce: true,
   },

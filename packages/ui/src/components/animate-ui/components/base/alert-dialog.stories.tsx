@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 import {
   AlertDialog as AlertDialogImpl,
   AlertDialogTrigger,
@@ -34,3 +36,14 @@ export const AlertDialog = (args: ComponentProps<typeof AlertDialogImpl>) => (
     </AlertDialogPopup>
   </AlertDialogImpl>
 )
+
+AlertDialog.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+
+  await userEvent.click(canvas.getByRole("button", { name: "Delete account" }))
+  const dialog = await screen.findByRole("alertdialog")
+  await waitFor(() => expect(within(dialog).getByText("Are you absolutely sure?")).toBeVisible())
+
+  await userEvent.click(within(dialog).getByRole("button", { name: "Cancel" }))
+  await waitFor(() => expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument())
+}

@@ -96,6 +96,7 @@ function CopyButton({
   return (
     <ButtonPrimitive
       data-slot="copy-button"
+      aria-label={isCopied ? 'Copied' : 'Copy'}
       className={cn(buttonVariants({ variant, size, className }))}
       onClick={handleCopy}
       {...props}

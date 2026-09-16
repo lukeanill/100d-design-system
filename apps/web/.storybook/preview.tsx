@@ -18,12 +18,30 @@ const preview: Preview = {
           "Tokens",
           ["Colors", "Typography", "Radius", "Shadows"],
           "Components",
-          ["Actions", "Inputs", "Selects", "Navigation", "Overlays", "Feedback", "Content", "Layout", "Theming"],
+          [
+            "Actions",
+            "Inputs",
+            "Selects",
+            "Navigation",
+            "Overlays",
+            "Feedback",
+            "Content",
+            "Layout",
+            "Theming",
+          ],
           "Animation",
         ],
       },
     },
+
     actions: { disable: true },
+
+    a11y: {
+      // 'todo' - show a11y violations in the test UI only
+      // 'error' - fail CI on a11y violations
+      // 'off' - skip a11y checks entirely
+      test: "todo",
+    },
   },
   globalTypes: {
     theme: {
@@ -47,7 +65,7 @@ const preview: Preview = {
     (Story, context) => (
       <ThemeProvider forcedTheme={context.globals.theme}>
         <FontThemeProvider>
-          <div className="bg-background text-foreground min-h-screen p-6">
+          <div className="min-h-screen bg-background p-6 text-foreground">
             <Story />
           </div>
         </FontThemeProvider>

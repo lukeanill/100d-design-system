@@ -104,6 +104,7 @@ function Radio({
         value={valueProps}
         disabled={disabled}
         required={required}
+        nativeButton
         render={
           <motion.button
             data-slot="radio-group-item"

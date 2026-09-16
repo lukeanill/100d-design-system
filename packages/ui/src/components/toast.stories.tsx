@@ -1,3 +1,5 @@
+import type { StoryContext } from "@storybook/react"
+import { expect, screen, userEvent, within } from "storybook/test"
 import { Toaster, toast } from "./toast"
 import { Button } from "@workspace/ui/components/button"
 
@@ -37,3 +39,10 @@ export const Toast = (args: { title: string; description: string; type: string }
     </Button>
   </Toaster>
 )
+
+Toast.play = async ({ canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+
+  await userEvent.click(canvas.getByRole("button", { name: "Show toast" }))
+  await expect(await screen.findByText("Update available")).toBeVisible()
+}

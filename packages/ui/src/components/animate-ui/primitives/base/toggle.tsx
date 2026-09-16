@@ -68,7 +68,6 @@ function ToggleHighlight({ style, ...props }: ToggleHighlightProps) {
       {isPressed && (
         <motion.div
           data-slot="toggle-highlight"
-          aria-pressed={isPressed}
           {...(isPressed && { 'data-pressed': true })}
           {...(disabled && { 'data-disabled': true })}
           style={{ position: 'absolute', zIndex: 0, inset: 0, ...style }}
@@ -90,7 +89,6 @@ function ToggleItem({ style, ...props }: ToggleItemProps) {
   return (
     <motion.div
       data-slot="toggle-item"
-      aria-pressed={isPressed}
       {...(isPressed && { 'data-pressed': true })}
       {...(disabled && { 'data-disabled': true })}
       style={{ position: 'relative', zIndex: 1, ...style }}

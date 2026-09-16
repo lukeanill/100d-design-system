@@ -32,7 +32,7 @@ export const PinnedListAnimate = () => {
     padding: "8px 12px",
     marginBottom: 6,
     borderRadius: 6,
-    backgroundColor: "#f3f4f6",
+    backgroundColor: "var(--muted)",
     cursor: "pointer",
     fontSize: 14,
   }
@@ -40,7 +40,7 @@ export const PinnedListAnimate = () => {
   return (
     <PinnedListImpl onPinnedChange={togglePin} style={{ width: 280 }}>
       <PinnedListPinned>
-        <PinnedListLabel hide={pinned.length === 0} style={{ fontSize: 12, fontWeight: 600, color: "#6b7280", marginBottom: 6 }}>
+        <PinnedListLabel hide={pinned.length === 0} style={{ fontSize: 12, fontWeight: 600, color: "var(--muted-foreground)", marginBottom: 6 }}>
           Pinned
         </PinnedListLabel>
         <PinnedListItems>
@@ -53,7 +53,7 @@ export const PinnedListAnimate = () => {
       </PinnedListPinned>
 
       <PinnedListUnpinned>
-        <PinnedListLabel hide={pinned.length === ALL_ITEMS.length} style={{ fontSize: 12, fontWeight: 600, color: "#6b7280", margin: "12px 0 6px" }}>
+        <PinnedListLabel hide={pinned.length === ALL_ITEMS.length} style={{ fontSize: 12, fontWeight: 600, color: "var(--muted-foreground)", margin: "12px 0 6px" }}>
           Other
         </PinnedListLabel>
         <PinnedListItems>

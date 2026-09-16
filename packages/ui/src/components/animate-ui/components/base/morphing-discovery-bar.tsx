@@ -74,7 +74,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   )}
                 </AnimatePresence>
 
-                {!isSearching && <motion.button layoutId="discovery-search-click-overlay" className="absolute inset-0 z-10 h-full w-full" onClick={() => setIsSearching(true)} />}
+                {!isSearching && <motion.button layoutId="discovery-search-click-overlay" aria-label="Open search" className="absolute inset-0 z-10 h-full w-full" onClick={() => setIsSearching(true)} />}
               </div>
             </motion.div>
 

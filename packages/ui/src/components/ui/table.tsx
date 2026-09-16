@@ -346,6 +346,7 @@ export const TableGrid = ({ className, ...props }: ComponentProps<"div">) => {
           <tr>
             {selectable !== "none" && (
               <th className="w-10 px-3 py-2 text-left">
+                <span className="sr-only">Select</span>
                 {selectable === "multi" && (
                   <button
                     aria-label="Select all rows"

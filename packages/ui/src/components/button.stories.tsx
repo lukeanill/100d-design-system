@@ -1,4 +1,6 @@
 import type { ComponentProps } from "react"
+import type { StoryContext } from "@storybook/react"
+import { expect, fn, userEvent, within } from "storybook/test"
 import { Button as ButtonImpl } from "./button"
 
 export default {
@@ -17,7 +19,22 @@ export default {
     tapScale: { control: { type: "number", min: 0.8, max: 1, step: 0.01 } },
     onClick: { table: { disable: true } },
   },
-  args: { variant: "default", size: "default", children: "Button", disabled: false, tapScale: 0.95 },
+  args: {
+    variant: "default",
+    size: "default",
+    children: "Button",
+    disabled: false,
+    tapScale: 0.95,
+    onClick: fn(),
+  },
 }
 
 export const Button = (args: ComponentProps<typeof ButtonImpl>) => <ButtonImpl {...args} />
+
+Button.play = async ({ args, canvasElement }: StoryContext) => {
+  const canvas = within(canvasElement)
+  const button = canvas.getByRole("button", { name: /button/i })
+
+  await userEvent.click(button)
+  await expect(args.onClick).toHaveBeenCalled()
+}

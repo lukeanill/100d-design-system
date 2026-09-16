@@ -58,10 +58,6 @@ export const componentList: ComponentEntry[] = [
     "path": "breadcrumb.tsx"
   },
   {
-    "name": "Breathing Text",
-    "path": "fancy/text/breathing-text.tsx"
-  },
-  {
     "name": "Bubble",
     "path": "bubble.tsx"
   },
@@ -206,10 +202,6 @@ export const componentList: ComponentEntry[] = [
     "path": "animate-ui/primitives/texts/highlight.tsx"
   },
   {
-    "name": "Hover Card",
-    "path": "hover-card.tsx"
-  },
-  {
     "name": "Icon",
     "path": "animate-ui/components/buttons/icon.tsx"
   },
@@ -270,10 +262,6 @@ export const componentList: ComponentEntry[] = [
     "path": "ui/map-carousel.tsx"
   },
   {
-    "name": "Marker",
-    "path": "marker.tsx"
-  },
-  {
     "name": "Menu",
     "path": "animate-ui/components/base/menu.tsx"
   },
@@ -288,10 +276,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Message Bubble",
     "path": "ui/message-bubble.tsx"
-  },
-  {
-    "name": "Message Scroller",
-    "path": "message-scroller.tsx"
   },
   {
     "name": "Morphing",
@@ -322,10 +306,6 @@ export const componentList: ComponentEntry[] = [
     "path": "pagination.tsx"
   },
   {
-    "name": "Particles",
-    "path": "animate-ui/primitives/effects/particles.tsx"
-  },
-  {
     "name": "Pinned List",
     "path": "animate-ui/primitives/animate/pinned-list.tsx"
   },
@@ -336,10 +316,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Popover",
     "path": "animate-ui/components/base/popover.tsx"
-  },
-  {
-    "name": "Preview Card",
-    "path": "animate-ui/components/base/preview-card.tsx"
   },
   {
     "name": "Preview Link Card",
@@ -482,10 +458,6 @@ export const componentList: ComponentEntry[] = [
     "path": "ui/stat-card.tsx"
   },
   {
-    "name": "Status Badge",
-    "path": "ui/status-badge.tsx"
-  },
-  {
     "name": "Switch",
     "path": "animate-ui/components/base/switch.tsx"
   },
@@ -508,10 +480,6 @@ export const componentList: ComponentEntry[] = [
   {
     "name": "Text Cursor Proximity",
     "path": "fancy/text/text-cursor-proximity.tsx"
-  },
-  {
-    "name": "Text Highlighter",
-    "path": "fancy/text/text-highlighter.tsx"
   },
   {
     "name": "Text Rotate",

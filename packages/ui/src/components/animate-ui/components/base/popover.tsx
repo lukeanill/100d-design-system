@@ -84,14 +84,24 @@ function PopoverBackdrop(props: PopoverBackdropProps) {
 
 type PopoverTitleProps = PopoverTitlePrimitiveProps;
 
-function PopoverTitle(props: PopoverTitleProps) {
-  return <PopoverTitlePrimitive {...props} />;
+function PopoverTitle({ className, ...props }: PopoverTitleProps) {
+  return (
+    <PopoverTitlePrimitive
+      className={cn('text-sm leading-5 font-medium', className)}
+      {...props}
+    />
+  );
 }
 
 type PopoverDescriptionProps = PopoverDescriptionPrimitiveProps;
 
-function PopoverDescription(props: PopoverDescriptionProps) {
-  return <PopoverDescriptionPrimitive {...props} />;
+function PopoverDescription({ className, ...props }: PopoverDescriptionProps) {
+  return (
+    <PopoverDescriptionPrimitive
+      className={cn('text-sm text-foreground', className)}
+      {...props}
+    />
+  );
 }
 
 export {

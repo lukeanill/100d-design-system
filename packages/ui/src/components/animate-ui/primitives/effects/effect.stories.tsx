@@ -18,7 +18,9 @@ export default {
     ref: { table: { disable: true } },
   },
   args: {
-    delay: 0,
+    delay: 600,
+    transition: { type: "spring", stiffness: 60, damping: 18 },
+
     fade: true,
     slide: true,
     zoom: false,

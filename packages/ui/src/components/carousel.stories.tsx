@@ -17,7 +17,7 @@ export default {
 }
 
 export const Carousel = (args: ComponentProps<typeof CarouselImpl>) => (
-  <CarouselImpl {...args} className="w-64">
+  <CarouselImpl {...args} className="mx-14 w-64">
     <CarouselContent>
       {[1, 2, 3].map((i) => (
         <CarouselItem key={i}>

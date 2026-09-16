@@ -107,7 +107,7 @@ function MorphingText({
   }, [started, loop, text, holdDelay]);
 
   return (
-    <motion.span ref={localRef} aria-label={currentText} {...props}>
+    <motion.span ref={localRef} role="img" aria-label={currentText} {...props}>
       <AnimatePresence mode="popLayout" initial={false}>
         {chars.map((char) => (
           <motion.span

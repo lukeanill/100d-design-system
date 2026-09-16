@@ -12,9 +12,9 @@ export default {
 
 export const Radio = (args: ComponentProps<typeof RadioImpl>) => (
   <RadioGroup defaultValue="a">
-    <RadioImpl {...args} value="a" />
-    <RadioImpl {...args} value="b" />
-    <RadioImpl {...args} value="c" />
-    <RadioImpl {...args} value="d" disabled />
+    <RadioImpl {...args} value="a" aria-label="Option A" />
+    <RadioImpl {...args} value="b" aria-label="Option B" />
+    <RadioImpl {...args} value="c" aria-label="Option C" />
+    <RadioImpl {...args} value="d" aria-label="Option D" disabled />
   </RadioGroup>
 )
