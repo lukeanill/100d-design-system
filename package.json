@@ -7,7 +7,9 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "turbo format",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "tokens:build": "pnpm --filter @workspace/ui tokens:build",
+    "tokens:check": "pnpm --filter @workspace/ui tokens:check"
   },
   "devDependencies": {
     "prettier": "^3.8.3",

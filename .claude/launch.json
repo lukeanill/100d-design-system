@@ -4,13 +4,22 @@
     {
       "name": "web",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "web", "dev"],
-      "port": 5173
+      "runtimeArgs": [
+        "--filter",
+        "web",
+        "dev"
+      ],
+      "port": 5173,
+      "autoPort": true
     },
     {
       "name": "stories",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "web", "stories"],
+      "runtimeArgs": [
+        "--filter",
+        "web",
+        "stories"
+      ],
       "port": 6006
     }
   ]

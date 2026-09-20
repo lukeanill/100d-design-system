@@ -1,0 +1,46 @@
+{
+  "arctic-aurora": {
+    "secondary-foreground|secondary": 4.38,
+    "accent-foreground|accent": 4.38
+  },
+  "carbon-mint": {
+    "muted-foreground|card": 1.94
+  },
+  "dark": {
+    "secondary-foreground|secondary": 1.66,
+    "accent-foreground|accent": 1.66
+  },
+  "electric-pulse": {
+    "muted-foreground|card": 2.43,
+    "secondary-foreground|secondary": 2.96,
+    "accent-foreground|accent": 2.96,
+    "destructive|background": 2.93
+  },
+  "glass": {
+    "muted-foreground|card": 3.39,
+    "secondary-foreground|secondary": 2.77,
+    "destructive|background": 2.23
+  },
+  "metallic-mist": {
+    "secondary-foreground|secondary": 2.17,
+    "accent-foreground|accent": 2.17
+  },
+  "solar-violet": {
+    "muted-foreground|card": 2.25,
+    "primary-foreground|primary": 4.22,
+    "secondary-foreground|secondary": 1.17,
+    "accent-foreground|accent": 1.17,
+    "destructive|background": 2.77
+  },
+  "strawberry-matcha": {
+    "muted-foreground|card": 2.18,
+    "secondary-foreground|secondary": 2.5,
+    "accent-foreground|accent": 2.5,
+    "destructive|background": 1.64
+  },
+  "system": {
+    "secondary-foreground|secondary": 2.32,
+    "accent-foreground|accent": 2.32,
+    "destructive|background": 2.23
+  }
+}

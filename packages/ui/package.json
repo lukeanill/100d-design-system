@@ -8,7 +8,9 @@
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "build": "rm -rf dist && (tsc -p tsconfig.build.json || true) && node scripts/build-publish.mjs",
-    "publish:package": "pnpm build && cd dist && npm publish"
+    "publish:package": "pnpm build && cd dist && npm publish",
+    "tokens:build": "node scripts/build-tokens.mjs",
+    "tokens:check": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
@@ -85,6 +87,9 @@
     "./hooks/use-auto-height": "./src/hooks/use-auto-height.tsx",
     "./hooks/use-data-state": "./src/hooks/use-data-state.tsx",
     "./hooks/use-is-in-view": "./src/hooks/use-is-in-view.tsx",
-    "./hooks/*": "./src/hooks/*.ts"
+    "./hooks/*": "./src/hooks/*.ts",
+    "./tokens/color": "./tokens/lib/color.mjs",
+    "./scripts/*": "./scripts/*.mjs",
+    "./tokens/*": "./tokens/*.json"
   }
 }
