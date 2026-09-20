@@ -1,6 +1,20 @@
 {
   "name": "solar-violet",
+  "label": "Solar Violet",
+  "order": 5,
   "selector": ".solar-violet",
+  "seeds": {
+    "background": "#f2efe8",
+    "foreground": "#393939",
+    "primary": "#706fd3",
+    "secondary": "#706fd3"
+  },
+  "fonts": {
+    "primary": "Gudea",
+    "emphasis": "IBM Plex Mono"
+  },
+  "edges": "custom",
+  "overrides": {},
   "tokens": {
     "background": "oklch(0.953 0.010 87.47)",
     "foreground": "oklch(0.345 0.000 0.00)",
@@ -47,5 +61,7 @@
     "shadow-lg": "0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%)",
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
-  }
+  },
+  "fontTheme": "solar-violet",
+  "fontSource": "bundled"
 }

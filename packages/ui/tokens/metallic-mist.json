@@ -1,6 +1,20 @@
 {
   "name": "metallic-mist",
+  "label": "Metallic Mist",
+  "order": 8,
   "selector": ".metallic-mist",
+  "seeds": {
+    "background": "#ededed",
+    "foreground": "#151f3d",
+    "primary": "#5351ee",
+    "secondary": "#96b4eb"
+  },
+  "fonts": {
+    "primary": "AUTHENTIC Sans 90",
+    "emphasis": "Lora"
+  },
+  "edges": "custom",
+  "overrides": {},
   "tokens": {
     "background": "oklch(0.946 0.000 0.00)",
     "foreground": "oklch(0.248 0.059 268.05)",
@@ -47,5 +61,7 @@
     "shadow-lg": "0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%)",
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
-  }
+  },
+  "fontTheme": "metallic-mist",
+  "fontSource": "bundled"
 }

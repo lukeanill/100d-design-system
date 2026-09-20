@@ -97,11 +97,38 @@ const mix = (a, b, t) => ({
   H: a.H,
 })
 
+/** The four edge presets the studio offers, in the order the designs show them. */
+export const EDGES = {
+  square: "0",
+  subtle: "0.5rem",
+  strong: "1rem",
+  round: "9999px",
+}
+
+/** Nearest preset for an existing radius, or "custom" when it matches none. */
+export const edgesFor = (radius) =>
+  Object.entries(EDGES).find(([, value]) => value === String(radius).trim())?.[0] ?? "custom"
+
 /**
- * Builds a full theme from three seeds. Every foreground is solved against the
+ * Builds a full theme from four seeds. Every foreground is solved against the
  * surface it actually sits on, so a derived theme cannot ship below 4.5:1.
+ *
+ * `secondary` is a seed rather than a tint of primary: the designs let you set
+ * it directly. Omit it and it falls back to the old derived tint.
+ *
+ * `overrides` are tokens a person set by hand in the studio. They are applied
+ * last and deliberately escape the contrast solver — `checkContrast` will
+ * report them instead of silently correcting them.
  */
-export function derivePalette({ background, foreground, primary, radius = "0.875rem" }) {
+export function derivePalette({
+  background,
+  foreground,
+  primary,
+  secondary: secondarySeed,
+  edges,
+  radius = "0.875rem",
+  overrides = {},
+}) {
   const bg = typeof background === "string" ? hexToOklch(background) : background
   const fg = typeof foreground === "string" ? hexToOklch(foreground) : foreground
   const pr = typeof primary === "string" ? hexToOklch(primary) : primary
@@ -110,7 +137,11 @@ export function derivePalette({ background, foreground, primary, radius = "0.875
   const card = { ...bg, L: isLight ? Math.min(1, bg.L + 0.012) : Math.min(1, bg.L + 0.05), C: bg.C * 0.5 }
   const muted = mix(bg, fg, isLight ? 0.06 : 0.1)
   const mutedFg = ensureContrast(mix(fg, bg, 0.35), card, 4.6)
-  const secondary = { ...mix(bg, pr, isLight ? 0.12 : 0.2), C: Math.min(pr.C, 0.06) }
+  const secondary = secondarySeed
+    ? typeof secondarySeed === "string"
+      ? hexToOklch(secondarySeed)
+      : secondarySeed
+    : { ...mix(bg, pr, isLight ? 0.12 : 0.2), C: Math.min(pr.C, 0.06) }
   const secondaryFg = ensureContrast({ ...pr, L: pr.L }, secondary, 4.5)
   const destructive = ensureContrast({ L: 0.62, C: 0.19, H: 25 }, bg, 4.5)
   const affirmative = ensureContrast({ L: 0.62, C: 0.15, H: 145 }, bg, 4.5)
@@ -152,7 +183,7 @@ export function derivePalette({ background, foreground, primary, radius = "0.875
     "gradient-rise": "linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)",
     "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
-    radius,
+    radius: edges ? (EDGES[edges] ?? radius) : radius,
     sidebar: "var(--card)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",
@@ -171,8 +202,30 @@ export function derivePalette({ background, foreground, primary, radius = "0.875
       "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl":
       "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)",
+    ...Object.fromEntries(
+      Object.entries(overrides).map(([token, value]) => [
+        token,
+        /^#|^[0-9a-fA-F]{6}$/.test(String(value).trim()) ? fmt(hexToOklch(value)) : value,
+      ])
+    ),
   }
 }
+
+/** The twelve derived tokens the studio shows as editable swatches. */
+export const DERIVED_SWATCHES = [
+  { token: "primary-foreground", label: "On Primary" },
+  { token: "secondary-foreground", label: "On Secondary" },
+  { token: "border", label: "Border" },
+  { token: "input", label: "Input" },
+  { token: "card", label: "Card" },
+  { token: "card-foreground", label: "On Foreground" },
+  { token: "muted", label: "Muted" },
+  { token: "muted-foreground", label: "On Muted" },
+  { token: "accent", label: "Accent" },
+  { token: "accent-foreground", label: "On Accent" },
+  { token: "destructive", label: "Destructive" },
+  { token: "affirmative", label: "Affirmative" },
+]
 
 /** Pairs that must stay legible; the studio and CI both read this list. */
 export const CONTRAST_RULES = [

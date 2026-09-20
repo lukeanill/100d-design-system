@@ -1,6 +1,20 @@
 {
   "name": "dark",
+  "label": "Dark Mood",
+  "order": 1,
   "selector": ".dark",
+  "seeds": {
+    "background": "#010101",
+    "foreground": "#ffffff",
+    "primary": "#fffcfa",
+    "secondary": "#808080"
+  },
+  "fonts": {
+    "primary": "AUTHENTIC Sans 60",
+    "emphasis": "Oranienbaum"
+  },
+  "edges": "custom",
+  "overrides": {},
   "tokens": {
     "background": "oklch(0.067 0.000 0.00)",
     "foreground": "oklch(1.000 0.000 0.00)",
@@ -47,5 +61,7 @@
     "shadow-lg": "0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%)",
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
-  }
+  },
+  "fontTheme": "dark-mode",
+  "fontSource": "bundled"
 }

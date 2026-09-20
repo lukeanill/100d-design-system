@@ -1,6 +1,20 @@
 {
   "name": "arctic-aurora",
+  "label": "Arctic Aurora",
+  "order": 6,
   "selector": ".arctic-aurora",
+  "seeds": {
+    "background": "#160132",
+    "foreground": "#ffffff",
+    "primary": "#3557f8",
+    "secondary": "#5626ff"
+  },
+  "fonts": {
+    "primary": "Grenze",
+    "emphasis": "Grenze Gotisch"
+  },
+  "edges": "custom",
+  "overrides": {},
   "tokens": {
     "background": "oklch(0.174 0.091 296.44)",
     "foreground": "oklch(1.000 0.000 0.00)",
@@ -47,5 +61,7 @@
     "shadow-lg": "0px 2px 2px oklch(0 0 0 / 32%), 0px 8px 16px -4px oklch(0 0 0 / 16%)",
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 8%), 0px 4px 8px -4px oklch(0 0 0 / 16%), 0px 16px 24px -8px oklch(0 0 0 / 24%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 8%), 0px 8px 16px -4px oklch(0 0 0 / 16%), 0px 24px 32px -8px oklch(0 0 0 / 24%)"
-  }
+  },
+  "fontTheme": "arctic-aurora",
+  "fontSource": "bundled"
 }

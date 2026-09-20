@@ -1,6 +1,20 @@
 {
   "name": "electric-pulse",
+  "label": "Electric Pulse",
+  "order": 2,
   "selector": ".electric-pulse",
+  "seeds": {
+    "background": "#f5f5ff",
+    "foreground": "#393939",
+    "primary": "#635cff",
+    "secondary": "#08e5e4"
+  },
+  "fonts": {
+    "primary": "Geist Mono",
+    "emphasis": "Geist"
+  },
+  "edges": "custom",
+  "overrides": {},
   "tokens": {
     "background": "oklch(0.973 0.013 286.15)",
     "foreground": "oklch(0.345 0.000 0.00)",
@@ -47,5 +61,7 @@
     "shadow-lg": "0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%)",
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
-  }
+  },
+  "fontTheme": "electric-pulse",
+  "fontSource": "bundled"
 }

@@ -22,8 +22,8 @@ const FONTS_END = "/* @tokens:fonts:end */"
 
 // Themes appear in the CSS in this order; anything else is appended alphabetically.
 const ORDER = [
-  "system", "dark", "electric-pulse", "acid-forest", "carbon-mint",
-  "solar-violet", "arctic-aurora", "strawberry-matcha", "metallic-mist", "glass",
+  "light", "dark", "electric-pulse", "acid-forest", "carbon-mint",
+  "solar-violet", "arctic-aurora", "strawberry-matcha", "metallic-mist",
 ]
 
 // "#BA4255", "#fff" or a bare "BA4255" — but never a plain number like "400",
@@ -54,9 +54,11 @@ const FALLBACK = {
   serif: "Georgia, serif",
 }
 
-function block({ selector, tokens, extra = [], fonts }) {
+function block({ selector, tokens, extra = [], fonts, fontSource }) {
   const lines = []
-  if (fonts) {
+  // Themes paired to bundled faces are styled by their [data-font-theme] block,
+  // so their `fonts` are studio metadata only. Google themes declare theirs here.
+  if (fonts && fontSource === "google") {
     for (const [role, family] of Object.entries(fonts)) {
       if (!family) continue
       const name = role === "body" ? "font-body-token" : `font-${role}`
@@ -83,6 +85,7 @@ const FONT_END = "/* @tokens:fonts:end */"
 function fontImports(themes) {
   const families = new Set()
   for (const theme of themes) {
+    if (theme.fontSource !== "google") continue
     for (const family of Object.values(theme.fonts ?? {})) {
       if (family) families.add(family)
     }
