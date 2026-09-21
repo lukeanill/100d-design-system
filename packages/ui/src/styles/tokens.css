@@ -534,7 +534,7 @@
   --font-body-weight: 400;
   --background: oklch(0.925 0.190 105.03);
   --foreground: oklch(0.000 0.000 0.00);
-  --card: oklch(0.961 0.000 0.00);
+  --card: oklch(0.970 0.000 0.00);
   --card-foreground: oklch(0.000 0.000 0.00);
   --popover: oklch(0.937 0.095 105.03);
   --popover-foreground: oklch(0.000 0.000 0.00);
@@ -548,7 +548,7 @@
   --accent-foreground: oklch(0.000 0.000 0.00);
   --destructive: oklch(0.542 0.190 25.00);
   --affirmative: oklch(0.504 0.150 145.00);
-  --border: var(--muted);
+  --border: oklch(0.000 0.000 0.00);
   --input: oklch(0.981 0.004 106.47);
   --ring: var(--accent);
   --affirmative-foreground: oklch(1.000 0.000 0.00);
