@@ -7,7 +7,7 @@
     "background": "#faec24",
     "foreground": "#000000",
     "primary": "#000000",
-    "secondary": "#cec66f"
+    "secondary": "#efeee6"
   },
   "fonts": {
     "primary": "Work Sans",
@@ -20,7 +20,8 @@
     "card": "#faec24",
     "accent-foreground": "#000000",
     "muted": "#beb319",
-    "accent": "#faec25"
+    "accent": "#faec25",
+    "input": "#f9f9f6"
   },
   "fontSource": "google",
   "tokens": {
@@ -33,7 +34,7 @@
     "popover-foreground": "oklch(0.000 0.000 0.00)",
     "primary": "oklch(0.000 0.000 0.00)",
     "primary-foreground": "oklch(1.000 0.000 0.00)",
-    "secondary": "oklch(0.000 0.000 0.00)",
+    "secondary": "oklch(0.814 0.110 103.90)",
     "secondary-foreground": "oklch(0.000 0.000 0.00)",
     "muted": "oklch(0.752 0.155 104.94)",
     "muted-foreground": "oklch(0.324 0.067 0.00)",
@@ -42,7 +43,7 @@
     "destructive": "oklch(0.542 0.190 25.00)",
     "affirmative": "oklch(0.504 0.150 145.00)",
     "border": "var(--muted)",
-    "input": "var(--card)",
+    "input": "oklch(0.981 0.004 106.47)",
     "ring": "var(--accent)",
     "affirmative-foreground": "oklch(1.000 0.000 0.00)",
     "chart-1": "oklch(0.680 0.080 0.00)",
@@ -73,5 +74,5 @@
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
   },
-  "updatedAt": "2026-09-21T19:58:28.781Z"
+  "updatedAt": "2026-09-21T20:04:01.070Z"
 }
