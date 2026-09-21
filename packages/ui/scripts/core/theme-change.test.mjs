@@ -150,6 +150,26 @@ test("a shortfall is recorded with the theme, so the save survives CI", () => {
   assert.ok(saved.contrast.failures.length > 0, "the caller still sees the numbers")
 })
 
+test("updatedAt moves only when the theme actually changed", () => {
+  const ws = workspace()
+  const theme = ws.themes["carbon-mint"]
+  const NOW = "2030-01-01T00:00:00.000Z"
+
+  // an untouched re-save keeps the old date: a list you scan by recency must
+  // not put a theme at the top because someone opened and closed it
+  const untouched = applyThemeChange(ws, { type: "save", theme, now: NOW })
+  const kept = JSON.parse(untouched.files[`packages/ui/tokens/${theme.name}.json`])
+  assert.equal(kept.updatedAt, theme.updatedAt, "an untouched save must not bump the date")
+
+  const edited = applyThemeChange(ws, {
+    type: "save",
+    theme: { ...theme, label: "Carbon Mint II" },
+    now: NOW,
+  })
+  const saved = JSON.parse(edited.files[`packages/ui/tokens/${theme.name}.json`])
+  assert.equal(saved.updatedAt, NOW, "a real edit stamps the date")
+})
+
 test("a clean save never touches the baseline", () => {
   const ws = workspace()
   // every committed theme is either clean or already held at baseline

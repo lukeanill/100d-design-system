@@ -31,6 +31,8 @@ export type Theme = {
   overrides: Record<string, string>
   tokens: Record<string, string>
   swatches?: string[]
+  /** ISO timestamp, set on save — and only when something actually changed. */
+  updatedAt?: string
 }
 
 export type ThemesResponse = {

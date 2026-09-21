@@ -65,5 +65,6 @@
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
   },
   "fontTheme": "strawberry-matcha",
-  "fontSource": "bundled"
+  "fontSource": "bundled",
+  "updatedAt": "2026-09-21T14:48:21+00:00"
 }

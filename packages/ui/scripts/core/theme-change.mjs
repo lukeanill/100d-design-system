@@ -26,8 +26,10 @@ export const themePath = (name) => `${TOKENS_DIR}/${name}.json`
 export const slug = (name) =>
   String(name ?? "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
 
-// the six circles each list row shows, resolved for convenience
-const SWATCHES = ["background", "foreground", "primary", "secondary", "muted", "accent"]
+// The circles each list row shows, in the order the design annotates them.
+// `background` carries a border in the UI because it is often the same colour
+// as the row it sits on, and an unbordered circle would simply vanish.
+const SWATCHES = ["background", "foreground", "card", "primary", "secondary"]
 
 /** Studio display order, with the swatches each row needs. */
 export function listThemes(themes) {
@@ -104,6 +106,15 @@ export function applyThemeChange(workspace, change) {
     if (!theme.tokens || !Object.keys(theme.tokens).length) {
       throw new Error("A theme needs a generated palette before it can be saved.")
     }
+
+    // "Last modified" has to mean modified. Stamping every save would bump the
+    // date on a no-op — reopening a theme and pressing save without touching
+    // anything would make it look like the freshest thing in the list, which is
+    // exactly backwards for a list you sort and scan by recency.
+    const existing = themes[name]
+    const same = existing && serialize({ ...existing, updatedAt: null }) === serialize({ ...theme, updatedAt: null })
+    theme.updatedAt = same ? existing.updatedAt : (change.now ?? new Date().toISOString())
+    if (!theme.updatedAt) delete theme.updatedAt
 
     themes[name] = theme
     files[themePath(name)] = serialize(theme)
