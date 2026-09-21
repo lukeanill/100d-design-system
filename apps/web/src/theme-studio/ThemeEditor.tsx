@@ -3,6 +3,7 @@ import { useMemo, useState } from "react"
 import { Button } from "@workspace/ui/components/button"
 import { derivePalette } from "@workspace/ui/tokens/color"
 import { ColorSeed, EdgePicker, FontField } from "./ColorSeed"
+import { SiteImport } from "./SiteImport"
 import { DerivedPalette } from "./DerivedPalette"
 import { ThemePreview } from "./ThemePreview"
 import type { Fonts, Seeds, Theme } from "./api"
@@ -95,6 +96,22 @@ export function ThemeEditor({
           </button>
         </div>
       </header>
+
+      {/* Only offered on a new theme. Pulling a site over one that already
+          exists would overwrite a palette someone chose, and the Reset here
+          clears the panel, not the edits it made. */}
+      {!theme && (
+        <SiteImport
+          onPulled={(pulled) => {
+            setSeeds((current) => ({ ...current, ...pulled.seeds }))
+            setFonts((current) => ({ ...current, ...pulled.fonts }))
+            // the pulled seeds are the point, so show the palette they make
+            if (SEED_FIELDS.every(({ key }) => Boolean(pulled.seeds[key]))) {
+              setTokens(derivePalette({ ...pulled.seeds, edges, overrides }))
+            }
+          }}
+        />
+      )}
 
       <div className="grid gap-10 md:grid-cols-3">
         <section className="flex flex-col gap-4">
