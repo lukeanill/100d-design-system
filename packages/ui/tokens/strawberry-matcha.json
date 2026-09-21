@@ -1,7 +1,7 @@
 {
   "name": "strawberry-matcha",
   "label": "Strawberry Matcha",
-  "order": 7,
+  "order": 5,
   "selector": ".strawberry-matcha",
   "seeds": {
     "background": "#fffafb",

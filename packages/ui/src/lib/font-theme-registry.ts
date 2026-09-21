@@ -8,6 +8,8 @@ export type FontThemeId =
   | "arctic-aurora"
   | "strawberry-matcha"
   | "metallic-mist"
+  | "bumblebee"
+  | "night-violet"
 
 export interface FontTheme {
   id: FontThemeId
@@ -26,6 +28,8 @@ export const fontThemes: FontTheme[] = [
   { id: "arctic-aurora", label: "Arctic Aurora", primaryFont: "Grenze", secondaryFont: "Grenze Gotisch" },
   { id: "strawberry-matcha", label: "Strawberry Matcha", primaryFont: "SF Pro Text", secondaryFont: "Playfair Display" },
   { id: "metallic-mist", label: "Metallic Mist", primaryFont: "AUTHENTIC Sans 90", secondaryFont: "Lora" },
+  { id: "bumblebee", label: "Bumblebee", primaryFont: "Supreme", secondaryFont: "Supreme" },
+  { id: "night-violet", label: "Night Violet", primaryFont: "Eczar", secondaryFont: "Eczar" },
 ]
 
 export const fontThemeIds = fontThemes.map((t) => t.id) as [FontThemeId, ...FontThemeId[]]

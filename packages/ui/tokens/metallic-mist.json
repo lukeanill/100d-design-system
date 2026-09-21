@@ -1,7 +1,7 @@
 {
   "name": "metallic-mist",
   "label": "Metallic Mist",
-  "order": 8,
+  "order": 10,
   "selector": ".metallic-mist",
   "seeds": {
     "background": "#ededed",

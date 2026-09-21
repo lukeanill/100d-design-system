@@ -1,7 +1,7 @@
 {
   "name": "acid-forest",
   "label": "Acid Forest",
-  "order": 3,
+  "order": 2,
   "selector": ".acid-forest",
   "seeds": {
     "background": "#212121",
