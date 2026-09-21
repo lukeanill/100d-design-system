@@ -91,7 +91,7 @@ pnpm --filter @workspace/ui tokens:check
                        │
         ┌──────────────┴──────────────┐
    dev server                   /api/themes
-   (theme-studio-plugin.ts)     (api/themes.mjs)
+   (theme-studio-plugin.ts)     (apps/web/api/themes.mjs)
         │                             │
         └────────────┬────────────────┘
                      │
@@ -121,17 +121,20 @@ erroring, which is why `/tokens` and `/history` used to 404 in production while
 { "source": "/:path((?!api/|storybook).*)", "destination": "/index.html" }
 ```
 
-This file also carries the build settings. It genuinely is in effect — removing
-it falls back to the dashboard's settings, which point at a different output
-directory and fail the build.
+This file lives in `apps/web`, not at the repo root, because that is the
+directory Vercel builds this project from — the build command's relative paths
+(`cp -r storybook-static/. dist/storybook/`) only resolve from there. It has to
+carry the build settings as well as the rewrite: a `vercel.json` holding only
+rewrites drops the rest to the dashboard's settings, which point at a different
+output directory and fail the build.
 
 ## Files
 
 | Path | What it does |
 | --- | --- |
 | `apps/web/src/theme-studio/` | The editor UI |
-| `api/themes.mjs` | Deployed API — commits to the repo |
-| `vercel.json` | Build settings and the SPA rewrite |
+| `apps/web/api/themes.mjs` | Deployed API — commits to the repo |
+| `apps/web/vercel.json` | Build settings and the SPA rewrite |
 | `apps/web/theme-studio-plugin.ts` | Local dev API — writes to your working copy |
 | `packages/ui/scripts/core/` | The shared logic both APIs call |
 | `packages/ui/tokens/*.json` | One file per theme; the source of truth |

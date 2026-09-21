@@ -14,9 +14,9 @@
 //   THEME_BRANCH  branch to commit to (defaults to the production branch)
 
 import { timingSafeEqual } from "node:crypto"
-// Relative imports: this function sits at the repo root, where @workspace/ui
-// is not linked into node_modules (it is a dependency of apps/web, not of the
-// workspace root). A file path always resolves and the bundler traces it.
+// Imported through the workspace package: Vercel builds this project from
+// apps/web, and @workspace/ui is a real dependency of it, so these resolve the
+// same way the app's own imports do.
 import {
   applyThemeChange,
   listThemes,
@@ -25,8 +25,8 @@ import {
   FONT_REGISTRY,
   TOKENS_CSS,
   TOKENS_DIR,
-} from "../packages/ui/scripts/core/theme-change.mjs"
-import { formatContrast } from "../packages/ui/scripts/core/contrast-core.mjs"
+} from "@workspace/ui/scripts/core/theme-change"
+import { formatContrast } from "@workspace/ui/scripts/core/contrast-core"
 
 const API = "https://api.github.com"
 
