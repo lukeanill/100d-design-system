@@ -10,7 +10,8 @@
     "build": "rm -rf dist && (tsc -p tsconfig.build.json || true) && node scripts/build-publish.mjs",
     "publish:package": "pnpm build && cd dist && npm publish",
     "tokens:build": "node scripts/build-tokens.mjs",
-    "tokens:check": "node scripts/check-contrast.mjs"
+    "tokens:check": "node scripts/check-contrast.mjs",
+    "test": "node --test scripts/core/*.test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

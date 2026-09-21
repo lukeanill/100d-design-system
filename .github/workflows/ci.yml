@@ -25,6 +25,11 @@ jobs:
       - name: Tokens are legible
         run: pnpm --filter @workspace/ui tokens:check
 
+      # the theme studio's shared core — the hosted studio commits through this
+      # without a human reading the diff, so it is covered here
+      - name: Theme core tests
+        run: pnpm --filter @workspace/ui test
+
       - name: Typecheck
         run: pnpm typecheck
 

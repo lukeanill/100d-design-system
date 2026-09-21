@@ -19,8 +19,9 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<Showcase />} />
             <Route path="/history" element={<History />} />
             <Route path="/tokens" element={<Tokens />} />
-            {/* dev only: the API behind it is a serve-time Vite plugin */}
-            {import.meta.env.DEV && <Route path="/themes" element={<ThemeStudio />} />}
+            {/* Available in both: in dev it writes to your working copy, on the
+                deployed site it commits to the repo. Both are password-gated. */}
+            <Route path="/themes" element={<ThemeStudio />} />
           </Routes>
         </BrowserRouter>
       </FontThemeProvider>

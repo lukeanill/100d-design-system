@@ -1,24 +1,27 @@
 import { timingSafeEqual } from "node:crypto"
-import { execFile } from "node:child_process"
-import { existsSync, readdirSync, readFileSync, writeFileSync, unlinkSync } from "node:fs"
-import { promisify } from "node:util"
 import path from "path"
+import { pathToFileURL } from "node:url"
 import { loadEnv, type Plugin } from "vite"
 
 /**
- * Dev-only API behind the /themes studio. Never registered in a build
- * (`apply: "serve"`), so this cannot ship to production.
+ * Local API behind the /themes studio when you run `pnpm dev`.
+ *
+ * It is the localhost twin of api/themes.ts: both read a workspace, hand it to
+ * applyThemeChange, and persist whatever files come back. The difference is
+ * only where those files go — here, straight to your working copy; there, to a
+ * commit on the repo. Saving a theme locally still needs a commit and push to
+ * reach the site; saving it on the deployed studio does not.
+ *
+ * Registered with `apply: "serve"`, so this never ships in a build.
  *
  * Auth: set THEME_STUDIO_PASSWORD in apps/web/.env.local. With no password
  * set the endpoint refuses every request — it fails closed rather than
  * leaving an unauthenticated file writer on your network.
  */
-const UI_DIR = path.resolve(__dirname, "../../packages/ui")
-// the two registries the site renders from — a theme that is not in them is
-// invisible to the app, however good its CSS is
-const REGISTRY = path.join(UI_DIR, "scripts/registry.mjs")
-const TOKENS_DIR = path.join(UI_DIR, "tokens")
-const run = promisify(execFile)
+const ROOT = path.resolve(__dirname, "../..")
+const CORE = path.join(ROOT, "packages/ui/scripts/core")
+
+const load = (file: string) => import(/* @vite-ignore */ pathToFileURL(path.join(CORE, file)).href)
 
 const authorized = (header: string | undefined, password: string) => {
   if (!header) return false
@@ -26,22 +29,6 @@ const authorized = (header: string | undefined, password: string) => {
   const b = Buffer.from(password)
   return a.length === b.length && timingSafeEqual(a, b)
 }
-
-const SWATCHES = ["background", "foreground", "primary", "secondary", "muted", "accent"]
-
-const readThemes = () =>
-  readdirSync(TOKENS_DIR)
-    .filter((f) => f.endsWith(".json") && !f.startsWith("."))
-    .map((f) => JSON.parse(readFileSync(path.join(TOKENS_DIR, f), "utf8")))
-    .map((theme) => ({
-      ...theme,
-      // the six circles each list row shows, resolved for convenience
-      swatches: SWATCHES.map((token) => theme.tokens?.[token]).filter(Boolean),
-    }))
-    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99))
-
-const slug = (name: string) =>
-  name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
 
 export function themeStudio(): Plugin {
   return {
@@ -70,85 +57,35 @@ export function themeStudio(): Plugin {
         }
 
         try {
-          if (req.method === "GET") return send(200, { themes: readThemes() })
+          const change = await load("theme-change.mjs")
+          const fs = await load("workspace-fs.mjs")
+          const contrastCore = await load("contrast-core.mjs")
+
+          const workspace = fs.readWorkspace(ROOT)
+          if (req.method === "GET") {
+            return send(200, { themes: change.listThemes(workspace.themes), target: "local" })
+          }
 
           const chunks: Buffer[] = []
           for await (const c of req) chunks.push(c as Buffer)
           const body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString()) : {}
 
-          if (req.method === "PUT") {
-            const name = slug(body.name ?? "")
-            if (!name) return send(400, { error: "A theme needs a name." })
-            const existingPath = path.join(TOKENS_DIR, `${name}.json`)
-            const existing = existsSync(existingPath)
-              ? JSON.parse(readFileSync(existingPath, "utf8"))
-              : {}
-            const theme = {
-              name,
-              label: body.label ?? existing.label ?? body.name ?? name,
-              order: body.order ?? existing.order ?? readThemes().length,
-              selector: name === "system" ? ":root" : `.${name}`,
-              seeds: body.seeds ?? existing.seeds ?? {},
-              fonts: body.fonts ?? existing.fonts ?? {},
-              edges: body.edges ?? existing.edges ?? "custom",
-              overrides: body.overrides ?? existing.overrides ?? {},
-              fontSource: body.fontSource ?? existing.fontSource ?? "google",
-              ...(body.fontTheme ?? existing.fontTheme
-                ? { fontTheme: body.fontTheme ?? existing.fontTheme }
-                : {}),
-              tokens: body.tokens ?? existing.tokens,
-              ...(body.extra ?? existing.extra ? { extra: body.extra ?? existing.extra } : {}),
-            }
-            writeFileSync(
-              path.join(TOKENS_DIR, `${name}.json`),
-              JSON.stringify(theme, null, 2) + "\n"
-            )
+          let request
+          if (req.method === "PUT") request = { type: "save", theme: body }
+          else if (req.method === "DELETE") request = { type: "delete", name: body.name }
+          else if (req.method === "POST") request = { type: "reorder", order: body.order }
+          else return send(405, { error: "Method not allowed." })
 
-            const registry = await import(/* @vite-ignore */ REGISTRY)
-            if (theme.fontSource === "google") {
-              // a Google-font theme brings its own pairing along
-              registry.upsertFontTheme({
-                id: name,
-                label: theme.label,
-                primaryFont: theme.fonts?.primary ?? "",
-                secondaryFont: theme.fonts?.emphasis ?? "",
-              })
-            }
-            registry.upsertColorTheme({
-              id: name,
-              label: theme.label,
-              fontTheme: theme.fontTheme ?? (theme.fontSource === "google" ? name : undefined),
-            })
-          } else if (req.method === "POST") {
-            const order: string[] = Array.isArray(body.order) ? body.order : []
-            if (!order.length) return send(400, { error: "Send an ordered list of theme names." })
-            order.forEach((themeName, index) => {
-              const file = path.join(TOKENS_DIR, `${slug(themeName)}.json`)
-              if (!existsSync(file)) return
-              const theme = JSON.parse(readFileSync(file, "utf8"))
-              if (theme.order === index) return
-              writeFileSync(file, JSON.stringify({ ...theme, order: index }, null, 2) + "\n")
-            })
-            // order is metadata only — no CSS regeneration needed
-            return send(200, { themes: readThemes() })
-          } else if (req.method === "DELETE") {
-            const name = slug(body.name ?? "")
-            if (!name || name === "system") return send(400, { error: "Cannot delete that theme." })
-            const removing = JSON.parse(readFileSync(path.join(TOKENS_DIR, `${name}.json`), "utf8"))
-            unlinkSync(path.join(TOKENS_DIR, `${name}.json`))
-            const reg = await import(/* @vite-ignore */ REGISTRY)
-            reg.removeColorTheme(name)
-            if (removing.fontSource === "google") reg.removeFontTheme(name)
-          } else {
-            return send(405, { error: "Method not allowed." })
-          }
+          const result = change.applyThemeChange(workspace, request)
+          fs.writeFiles(ROOT, result.files)
 
-          // regenerate tokens.css so the change is live and diffable
-          await run("node", ["scripts/build-tokens.mjs"], { cwd: UI_DIR })
-          const { stdout } = await run("node", ["scripts/check-contrast.mjs", "--warn"], {
-            cwd: UI_DIR,
+          // locally, contrast problems are reported but never block the write
+          return send(200, {
+            themes: result.themes,
+            target: "local",
+            contrast: contrastCore.formatContrast(result.contrast),
+            blocking: result.contrast?.failures?.length ?? 0,
           })
-          return send(200, { themes: readThemes(), contrast: stdout })
         } catch (error) {
           return send(500, { error: error instanceof Error ? error.message : String(error) })
         }

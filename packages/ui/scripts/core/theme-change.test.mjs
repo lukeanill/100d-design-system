@@ -1,0 +1,154 @@
+// Guards the code shared by the CLI, the dev studio and the hosted studio.
+//
+// The hosted studio commits straight to the repo, so a mistake here ships
+// without anyone reading a diff first. These tests check the properties that
+// keep that safe: saving an untouched theme changes nothing, a theme's stored
+// selector is never re-derived, delete undoes create exactly, and a new
+// contrast failure is visible to the caller that has to block on it.
+//
+//   node --test packages/ui/scripts/core/
+
+import { strict as assert } from "node:assert"
+import { readFileSync } from "node:fs"
+import { join, dirname } from "node:path"
+import { fileURLToPath } from "node:url"
+import test from "node:test"
+
+import { applyThemeChange, listThemes } from "./theme-change.mjs"
+import { readWorkspace } from "./workspace-fs.mjs"
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..")
+const read = (rel) => readFileSync(join(ROOT, rel), "utf8")
+const workspace = () => readWorkspace(ROOT)
+
+/** The workspace you get by applying a change, without re-reading the disk. */
+const advance = (ws, result) => ({
+  ...ws,
+  themes: Object.fromEntries(
+    result.themes.map(({ swatches: _swatches, ...theme }) => [theme.name, theme])
+  ),
+  tokensCss: result.files["packages/ui/src/styles/tokens.css"] ?? ws.tokensCss,
+  colorRegistry: result.files["packages/ui/src/lib/theme-registry.ts"] ?? ws.colorRegistry,
+  fontRegistry: result.files["packages/ui/src/lib/font-theme-registry.ts"] ?? ws.fontRegistry,
+})
+
+test("re-saving an unchanged theme rewrites nothing", () => {
+  const ws = workspace()
+  for (const [name, theme] of Object.entries(ws.themes)) {
+    const { files } = applyThemeChange(ws, { type: "save", theme })
+    for (const [path, content] of Object.entries(files)) {
+      assert.equal(content, read(path), `${name} rewrote ${path}`)
+    }
+  }
+})
+
+test("the light theme keeps its :root selector", () => {
+  const ws = workspace()
+  assert.equal(ws.themes.light.selector, ":root", "fixture assumption")
+  const { files } = applyThemeChange(ws, { type: "save", theme: ws.themes.light })
+  const saved = JSON.parse(files["packages/ui/tokens/light.json"] ?? read("packages/ui/tokens/light.json"))
+  // deriving this would move the default theme off :root and unstyle the site
+  assert.equal(saved.selector, ":root")
+})
+
+test("a new theme reaches every file the app reads from", () => {
+  const ws = workspace()
+  const base = ws.themes["carbon-mint"]
+  const { files, themes } = applyThemeChange(ws, {
+    type: "save",
+    theme: {
+      name: "Test Sunset",
+      label: "Test Sunset",
+      seeds: base.seeds,
+      fonts: { primary: "Inter", emphasis: "Lora" },
+      fontSource: "google",
+      tokens: base.tokens,
+    },
+  })
+
+  assert.ok(themes.some((t) => t.name === "test-sunset"), "slugged into the list")
+  assert.ok(files["packages/ui/tokens/test-sunset.json"], "theme file written")
+  assert.match(files["packages/ui/src/lib/theme-registry.ts"], /id: "test-sunset"/)
+  assert.match(files["packages/ui/src/lib/font-theme-registry.ts"], /id: "test-sunset"/)
+  // the union type has to grow alongside the array or typecheck fails
+  assert.match(files["packages/ui/src/lib/font-theme-registry.ts"], /\| "test-sunset"/)
+  assert.match(files["packages/ui/src/styles/tokens.css"], /\.test-sunset \{/)
+  assert.match(files["packages/ui/src/styles/tokens.css"], /family=Lora/)
+})
+
+test("deleting a theme restores every file exactly", () => {
+  const ws = workspace()
+  const base = ws.themes["carbon-mint"]
+  const created = applyThemeChange(ws, {
+    type: "save",
+    theme: {
+      name: "Test Sunset",
+      label: "Test Sunset",
+      seeds: base.seeds,
+      fonts: { primary: "Inter", emphasis: "Lora" },
+      fontSource: "google",
+      tokens: base.tokens,
+    },
+  })
+
+  const removed = applyThemeChange(advance(ws, created), { type: "delete", name: "test-sunset" })
+
+  assert.equal(removed.files["packages/ui/tokens/test-sunset.json"], null, "theme file deleted")
+  for (const path of [
+    "packages/ui/src/styles/tokens.css",
+    "packages/ui/src/lib/theme-registry.ts",
+    "packages/ui/src/lib/font-theme-registry.ts",
+  ]) {
+    assert.equal(removed.files[path], read(path), `${path} not restored`)
+  }
+})
+
+test("a new contrast failure is reported to the caller", () => {
+  const ws = workspace()
+  const base = ws.themes["carbon-mint"]
+  const clean = applyThemeChange(ws, { type: "save", theme: base })
+  assert.equal(clean.contrast.failures.length, 0, "the committed palette is clean")
+
+  // grey on grey: nothing in CONTRAST_RULES can pass
+  const grey = Object.fromEntries(
+    Object.entries(base.tokens).map(([token, value]) =>
+      /color|shadow|radius|font|spacing|tracking/.test(token) ? [token, value] : [token, "oklch(0.55 0 0)"]
+    )
+  )
+  const bad = applyThemeChange(ws, {
+    type: "save",
+    theme: { name: "Test Mud", label: "Test Mud", seeds: base.seeds, fonts: base.fonts, tokens: grey },
+  })
+  assert.ok(bad.contrast.failures.length > 0, "unreadable theme must fail the gate")
+  assert.ok(bad.contrast.failures.every((f) => f.kind === "new" || f.kind === "worse"))
+})
+
+test("reordering only changes order, never the palette", () => {
+  const ws = workspace()
+  const names = listThemes(ws.themes).map((t) => t.name)
+  const reordered = [...names].reverse()
+  const { files } = applyThemeChange(ws, { type: "reorder", order: reordered })
+
+  for (const path of Object.keys(files)) {
+    assert.match(path, /^packages\/ui\/tokens\/.+\.json$/, `reorder touched ${path}`)
+  }
+  for (const [path, content] of Object.entries(files)) {
+    const before = JSON.parse(read(path))
+    const after = JSON.parse(content)
+    assert.deepEqual({ ...after, order: 0 }, { ...before, order: 0 }, `${path} changed beyond order`)
+  }
+})
+
+test("a theme without a generated palette is refused", () => {
+  const ws = workspace()
+  assert.throws(
+    () => applyThemeChange(ws, { type: "save", theme: { name: "Empty", tokens: {} } }),
+    /generated palette/
+  )
+})
+
+test("the light theme cannot be deleted into a broken site", () => {
+  const ws = workspace()
+  assert.throws(() => applyThemeChange(ws, { type: "delete", name: "system" }), /Cannot delete/)
+  assert.throws(() => applyThemeChange(ws, { type: "delete", name: "nope" }), /No theme called/)
+})

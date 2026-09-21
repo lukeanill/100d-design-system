@@ -1,4 +1,13 @@
-/** Client for the dev-only theme API in apps/web/theme-studio-plugin.ts. */
+/**
+ * Client for the theme API.
+ *
+ * Two implementations sit behind this, chosen by where the studio is running:
+ *   dev  → /__themes   (apps/web/theme-studio-plugin.ts) writes to your working copy
+ *   prod → /api/themes (api/themes.mjs) commits to the repo, which redeploys the site
+ *
+ * The request and response shapes are identical, so nothing above this file
+ * needs to know which one it is talking to.
+ */
 
 export type Seeds = {
   background?: string
@@ -24,6 +33,38 @@ export type Theme = {
   swatches?: string[]
 }
 
+export type ContrastFailure = {
+  theme: string
+  pair: string
+  ratio: number
+  min?: number
+  label?: string
+  baseline?: number
+  kind: "new" | "worse"
+}
+
+export type ThemesResponse = {
+  themes: Theme[]
+  /** "local" writes to your working copy; "repo" commits and redeploys the site. */
+  target?: "local" | "repo"
+  branch?: string
+  commit?: string
+  deploying?: boolean
+  contrast?: string | null
+}
+
+/** Thrown when a save would fail the contrast gate; the save can be retried with force. */
+export class ContrastBlocked extends Error {
+  failures: ContrastFailure[]
+  constructor(message: string, failures: ContrastFailure[]) {
+    super(message)
+    this.name = "ContrastBlocked"
+    this.failures = failures
+  }
+}
+
+const ENDPOINT = import.meta.env.DEV ? "/__themes" : "/api/themes"
+
 const KEY = "theme-studio-key"
 
 export const getKey = () => sessionStorage.getItem(KEY) ?? ""
@@ -31,20 +72,24 @@ export const setKey = (value: string) => sessionStorage.setItem(KEY, value)
 export const clearKey = () => sessionStorage.removeItem(KEY)
 
 async function request<T>(method: string, body?: unknown): Promise<T> {
-  const res = await fetch("/__themes", {
+  const res = await fetch(ENDPOINT, {
     method,
     headers: { "content-type": "application/json", "x-theme-studio-key": getKey() },
     body: body ? JSON.stringify(body) : undefined,
   })
   const data = await res.json().catch(() => ({}))
+  if (res.status === 422 && data.failures) {
+    throw new ContrastBlocked(data.error ?? "Contrast gate failed.", data.failures)
+  }
   if (!res.ok) throw new Error(data.error ?? `Request failed (${res.status})`)
   return data as T
 }
 
-type ThemesResponse = { themes: Theme[]; contrast?: string }
-
 export const listThemes = () => request<ThemesResponse>("GET")
-export const saveTheme = (theme: Partial<Theme> & { name: string }) =>
-  request<ThemesResponse>("PUT", theme)
+
+export const saveTheme = (theme: Partial<Theme> & { name: string }, force = false) =>
+  request<ThemesResponse>("PUT", force ? { ...theme, force: true } : theme)
+
 export const deleteTheme = (name: string) => request<ThemesResponse>("DELETE", { name })
+
 export const reorderThemes = (order: string[]) => request<ThemesResponse>("POST", { order })

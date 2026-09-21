@@ -1,0 +1,122 @@
+# Theme studio
+
+The theme studio is the visual editor for this design system's colour themes.
+Pick four seed colours and three fonts, and it derives the full token palette,
+writes the theme, regenerates `tokens.css` and updates the registries the app
+renders from.
+
+It runs in two places.
+
+| | Where it saves | How the site updates |
+| --- | --- | --- |
+| **Deployed** — `https://www.lukeai.space/themes` | A commit on `master` | Vercel redeploys automatically, ~1–2 minutes |
+| **Local** — `http://localhost:5173/themes` | Your working copy | You commit and push |
+
+Both are password-gated and both refuse every request until a password is set.
+
+## Using the deployed studio
+
+Open `/themes` on the site, enter the password, edit, save. The save becomes a
+commit, Vercel builds it, and the site picks it up a minute or two later. The
+studio says so when it saves rather than implying the site has already changed.
+
+Nothing to install, and it works from any browser.
+
+### One-time setup
+
+The deployed studio needs two environment variables in the Vercel project
+(**Settings → Environment Variables**, Production scope):
+
+| Variable | What it is |
+| --- | --- |
+| `THEME_STUDIO_PASSWORD` | Any password you choose. Without it the studio refuses everything. |
+| `THEME_STUDIO_GH_TOKEN` | A GitHub token so it can commit. Without it you can browse themes but not save. |
+
+For the token, create a **fine-grained personal access token** at
+<https://github.com/settings/personal-access-tokens/new>:
+
+- **Repository access** → only `lukeanill/100d-design-system`
+- **Permissions → Repository permissions → Contents** → **Read and write**
+
+That is the only permission it needs. Nothing else is required, and the token is
+only ever read on the server — it never reaches the browser.
+
+Two optional variables exist if you ever need them: `THEME_REPO` (defaults to the
+repo the deployment came from) and `THEME_BRANCH` (defaults to the production
+branch).
+
+## Using the local studio
+
+```bash
+cp apps/web/.env.example apps/web/.env.local   # then set THEME_STUDIO_PASSWORD
+pnpm install
+pnpm --filter web dev
+```
+
+Open <http://localhost:5173/themes>. Saves land in your working copy — run
+`git status` to see them, then commit and push to get them onto the site.
+
+Use the local studio when you want to explore, since nothing you try is
+published until you push. Use the deployed one when you know what you want.
+
+## The contrast gate
+
+CI fails on any theme that introduces a **new** contrast shortfall, so a theme
+that trips the gate would produce a red build and a site that silently keeps
+showing the old themes.
+
+The two studios therefore treat contrast differently, on purpose:
+
+- **Deployed** — a save that would fail the gate is **refused before it commits**,
+  and the studio lists the exact failing pairs. There is a *Save anyway* escape
+  hatch, but taking it means the build goes red until you fix it.
+- **Local** — contrast problems are reported but never block the write, because
+  nothing is published until you push.
+
+Existing shortfalls are recorded in `packages/ui/tokens/.contrast-baseline.json`
+and only fail if they get worse. A **new** theme has no baseline, so it has to
+pass all the rules outright — including a theme copied from an older one that
+carries baselined shortfalls of its own.
+
+To check locally before pushing:
+
+```bash
+pnpm --filter @workspace/ui tokens:check
+```
+
+## How it fits together
+
+```
+        studio UI (browser, derives the palette)
+                       │
+        ┌──────────────┴──────────────┐
+   dev server                   /api/themes
+   (theme-studio-plugin.ts)     (apps/web/api/themes.mjs)
+        │                             │
+        └────────────┬────────────────┘
+                     │
+            applyThemeChange()          packages/ui/scripts/core/
+                     │
+   tokens/<name>.json · tokens.css · theme-registry.ts · font-theme-registry.ts
+                     │
+        working copy          one commit → Vercel build → site
+```
+
+Both APIs are thin: they read a workspace, hand it to `applyThemeChange`, and
+persist whatever files come back. Only the storage differs. That is what keeps a
+local save and an online save producing identical results.
+
+`packages/ui/scripts/core/` is covered by `pnpm --filter @workspace/ui test`,
+which CI runs — the hosted studio commits through this code without a human
+reading the diff first, so it is tested rather than trusted.
+
+## Files
+
+| Path | What it does |
+| --- | --- |
+| `apps/web/src/theme-studio/` | The editor UI |
+| `apps/web/api/themes.mjs` | Deployed API — commits to the repo |
+| `apps/web/theme-studio-plugin.ts` | Local dev API — writes to your working copy |
+| `packages/ui/scripts/core/` | The shared logic both APIs call |
+| `packages/ui/tokens/*.json` | One file per theme; the source of truth |
+| `packages/ui/src/styles/tokens.css` | Generated — never hand-edit it |
