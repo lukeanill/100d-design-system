@@ -16,14 +16,17 @@
   },
   "edges": "square",
   "overrides": {
-    "secondary-foreground": "#ffffff"
+    "secondary-foreground": "#ffffff",
+    "card": "#faec24",
+    "accent-foreground": "#ffffff",
+    "muted": "#beb319"
   },
   "fontSource": "google",
   "tokens": {
     "font-body-weight": "400",
     "background": "oklch(0.925 0.190 105.03)",
     "foreground": "oklch(0.000 0.000 0.00)",
-    "card": "oklch(0.937 0.095 105.03)",
+    "card": "oklch(0.925 0.190 105.03)",
     "card-foreground": "oklch(0.000 0.000 0.00)",
     "popover": "oklch(0.937 0.095 105.03)",
     "popover-foreground": "oklch(0.000 0.000 0.00)",
@@ -31,10 +34,10 @@
     "primary-foreground": "oklch(1.000 0.000 0.00)",
     "secondary": "oklch(0.000 0.000 0.00)",
     "secondary-foreground": "oklch(1.000 0.000 0.00)",
-    "muted": "oklch(0.870 0.179 105.03)",
+    "muted": "oklch(0.752 0.155 104.94)",
     "muted-foreground": "oklch(0.324 0.067 0.00)",
     "accent": "oklch(0.000 0.000 0.00)",
-    "accent-foreground": "oklch(0.559 0.000 0.00)",
+    "accent-foreground": "oklch(1.000 0.000 0.00)",
     "destructive": "oklch(0.542 0.190 25.00)",
     "affirmative": "oklch(0.504 0.150 145.00)",
     "border": "var(--muted)",
@@ -69,5 +72,5 @@
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
   },
-  "updatedAt": "2026-09-21T14:48:21+00:00"
+  "updatedAt": "2026-09-21T16:04:26.745Z"
 }
