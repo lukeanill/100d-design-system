@@ -124,6 +124,15 @@ export function SplitToEdit({
   const cancel = () => setIsExpanded(false)
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Closed, the field keeps focus after Escape or a save, so let the keys
+    // that open a button open it too.
+    if (!isExpanded) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault()
+        open()
+      }
+      return
+    }
     if (e.key === "Enter") {
       e.preventDefault()
       save()
@@ -140,7 +149,7 @@ export function SplitToEdit({
   const segmentClass = cn(
     "flex items-center justify-end gap-1 bg-muted px-1",
     disabled ? "cursor-not-allowed" : "cursor-pointer",
-    isExpanded && "gap-5 px-3"
+    isExpanded && "gap-2 px-2.5"
   )
   const inputClass =
     "h-10 w-[2ch] bg-transparent text-center font-mono text-xl font-semibold text-foreground outline-none"
@@ -157,7 +166,7 @@ export function SplitToEdit({
         aria-disabled={disabled || undefined}
         className={cn(
           "flex items-center font-mono",
-          isExpanded && "gap-4",
+          isExpanded && "gap-2",
           disabled && "opacity-40",
           className
         )}
