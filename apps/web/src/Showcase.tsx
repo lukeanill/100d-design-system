@@ -62,7 +62,7 @@ function ThemeSelect() {
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {colorThemes.map((t) => (
+        {orderedThemes.map((t) => (
           <SelectItem key={t.id} value={t.id}>
             {t.label}
           </SelectItem>
@@ -72,24 +72,19 @@ function ThemeSelect() {
   )
 }
 
-const THEME_SWATCH_COLORS: Record<string, string> = {
-  light: "#212121",
-  dark: "#FFFCFA",
-  "electric-pulse": "#635CFF",
-  "acid-forest": "#DFFF05",
-  "carbon-mint": "#01FFC2",
-  "solar-violet": "#706FD3",
-  "arctic-aurora": "#002BFF",
-  "strawberry-matcha": "#FF8392",
-  "metallic-mist": "#3D5DB3",
-}
+/**
+ * Themes in the order the studio put them, which is what `order` is for.
+ * Array order in the registry is just the sequence entries were written in, so
+ * reordering in the studio never reached the site while the app read that.
+ */
+const orderedThemes = [...colorThemes].sort((a, b) => a.order - b.order)
 
 function ThemeSwatches({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme()
 
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
-      {colorThemes.map((t) => (
+      {orderedThemes.map((t) => (
         <Tooltip key={t.id}>
           <TooltipTrigger
             render={
@@ -98,9 +93,12 @@ function ThemeSwatches({ className }: { className?: string }) {
                 onClick={() => setTheme(t.id)}
                 aria-label={`Switch to ${t.label} theme`}
                 aria-pressed={theme === t.id}
-                className="size-6 shrink-0 rounded-full border border-foreground/15 transition-transform hover:scale-110"
+                // a theme whose primary matches the page — Bumblebee's black
+                // on a black background — would be an invisible hole without
+                // a border that does not depend on the fill
+                className="size-6 shrink-0 rounded-full border border-foreground/30 transition-transform hover:scale-110"
                 style={{
-                  backgroundColor: THEME_SWATCH_COLORS[t.id],
+                  backgroundColor: t.primary,
                   outline: theme === t.id ? "2px solid var(--foreground)" : "none",
                   outlineOffset: 2,
                 }}

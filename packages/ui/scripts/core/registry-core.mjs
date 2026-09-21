@@ -9,7 +9,11 @@ const entries = (source, arrayName) => {
   const body = new RegExp(`${arrayName}[^=]*=\\s*\\[([\\s\\S]*?)\\n\\]`).exec(source)?.[1] ?? ""
   return [...body.matchAll(/\{([^}]*)\}/g)].map((m) => {
     const fields = {}
-    for (const [, key, value] of m[1].matchAll(/(\w+)\s*:\s*"([^"]*)"/g)) fields[key] = value
+    // quoted strings and bare numbers — `order` is a number, and reading it
+    // back as undefined would silently reset every theme's position on save
+    for (const [, key, quoted, bare] of m[1].matchAll(/(\w+)\s*:\s*(?:"([^"]*)"|([\d.]+))/g)) {
+      fields[key] = quoted !== undefined ? quoted : Number(bare)
+    }
     return fields
   })
 }
@@ -17,8 +21,11 @@ const entries = (source, arrayName) => {
 export const readColorThemesFrom = (source) => entries(source, "colorThemes")
 export const readFontThemesFrom = (source) => entries(source, "fontThemes")
 
-const colorLine = ({ id, label, fontTheme }) =>
-  `  { id: "${id}", label: "${label}", fontTheme: "${fontTheme}" },`
+// `primary` and `order` are here so the app can draw a theme picker without a
+// hand-kept copy of either. The old picker carried a hardcoded colour map that
+// went stale the moment a theme was added, renamed or reordered.
+const colorLine = ({ id, label, fontTheme, primary, order }) =>
+  `  { id: "${id}", label: "${label}", fontTheme: "${fontTheme}", primary: "${primary ?? ""}", order: ${order ?? 99} },`
 
 const fontLine = ({ id, label, primaryFont, secondaryFont }) =>
   `  { id: "${id}", label: "${label}", primaryFont: "${primaryFont}", secondaryFont: "${secondaryFont}" },`
@@ -30,10 +37,16 @@ const rewrite = (source, arrayName, lines) => {
 }
 
 /** Add or update a colour theme, preserving registry order for existing ids. */
-export function upsertColorThemeIn(source, { id, label, fontTheme }) {
+export function upsertColorThemeIn(source, { id, label, fontTheme, primary, order }) {
   const themes = readColorThemesFrom(source)
   const index = themes.findIndex((t) => t.id === id)
-  const entry = { id, label, fontTheme: fontTheme ?? themes[index]?.fontTheme ?? id }
+  const entry = {
+    id,
+    label,
+    fontTheme: fontTheme ?? themes[index]?.fontTheme ?? id,
+    primary: primary ?? themes[index]?.primary ?? "",
+    order: order ?? themes[index]?.order ?? themes.length,
+  }
   if (index === -1) themes.push(entry)
   else themes[index] = { ...themes[index], ...entry }
   return { source: rewrite(source, "colorThemes", themes.map(colorLine)), entry }

@@ -133,6 +133,10 @@ export function applyThemeChange(workspace, change) {
       id: name,
       label: theme.label,
       fontTheme: theme.fontTheme ?? (theme.fontSource === "google" ? name : undefined),
+      // the app draws its theme picker from these two rather than keeping its
+      // own copy, which is how the old one came to be missing three themes
+      primary: theme.tokens?.primary,
+      order: theme.order,
     })
     colorRegistry = nextColor.source
   } else if (change.type === "delete") {
@@ -154,8 +158,19 @@ export function applyThemeChange(workspace, change) {
       if (!theme || theme.order === index) return
       themes[name] = { ...theme, order: index }
       files[themePath(name)] = serialize(themes[name])
+      // The registry carries `order` too, because the app's theme picker sorts
+      // by it. Skipping this here is how a reorder in the studio would leave
+      // the site showing the old sequence.
+      colorRegistry = upsertColorThemeIn(colorRegistry, {
+        id: name,
+        label: theme.label,
+        fontTheme: theme.fontTheme,
+        primary: theme.tokens?.primary,
+        order: index,
+      }).source
     })
-    // order is metadata only — no CSS or registry regeneration needed
+    if (colorRegistry !== workspace.colorRegistry) files[COLOR_REGISTRY] = colorRegistry
+    // order changes no colours, so there is no CSS to regenerate
     return { files, themes: listThemes(themes), contrast: null }
   } else {
     throw new Error(`Unknown change type: ${change.type}`)

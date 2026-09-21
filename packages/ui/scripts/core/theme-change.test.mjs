@@ -183,20 +183,35 @@ test("a clean save never touches the baseline", () => {
   }
 })
 
-test("reordering only changes order, never the palette", () => {
+test("reordering changes order everywhere, and nothing else", () => {
   const ws = workspace()
   const names = listThemes(ws.themes).map((t) => t.name)
   const reordered = [...names].reverse()
   const { files } = applyThemeChange(ws, { type: "reorder", order: reordered })
+  const REGISTRY = "packages/ui/src/lib/theme-registry.ts"
 
+  // themes and the registry, and no palette regeneration
   for (const path of Object.keys(files)) {
+    if (path === REGISTRY) continue
     assert.match(path, /^packages\/ui\/tokens\/.+\.json$/, `reorder touched ${path}`)
   }
   for (const [path, content] of Object.entries(files)) {
+    if (path === REGISTRY) continue
     const before = JSON.parse(read(path))
     const after = JSON.parse(content)
     assert.deepEqual({ ...after, order: 0 }, { ...before, order: 0 }, `${path} changed beyond order`)
   }
+
+  // The registry carries `order` because the app's theme picker sorts by it.
+  // Leaving it behind is how a reorder in the studio fails to reach the site.
+  const registry = files[REGISTRY]
+  assert.ok(registry, "a reorder must rewrite the registry")
+  const first = reordered[0]
+  assert.match(
+    registry,
+    new RegExp(`id: "${first}"[^}]*order: 0`),
+    `${first} moved to the top but the registry still says otherwise`
+  )
 })
 
 test("a theme without a generated palette is refused", () => {

@@ -1,12 +1,20 @@
 import { Button } from "@workspace/ui/components/button"
-import { DERIVED_SWATCHES, checkContrast, oklchToHex, parseOklch } from "@workspace/ui/tokens/color"
+import { DERIVED_SWATCHES, checkContrast, fmt, oklchToHex, resolve } from "@workspace/ui/tokens/color"
 
 type Check = { fg: string; bg: string; label: string; ratio: number; pass: boolean }
 
-const toHex = (value?: string) => {
-  if (!value) return undefined
-  const parsed = parseOklch(value)
-  return parsed ? oklchToHex(parsed) : undefined
+/**
+ * Resolve a token to a real colour, following `var(--x)` aliases.
+ *
+ * `border` is `var(--muted)` and `input` is `var(--card)` in every theme, so
+ * reading the raw value gave no colour: the well rendered empty and the picker
+ * was disabled. Following the alias gives both a colour to show and a value to
+ * edit — and editing one writes a literal, which is what overriding an alias
+ * means.
+ */
+const swatchOf = (tokens: Record<string, string>, token: string) => {
+  const resolved = resolve(tokens, token)
+  return resolved ? { hex: oklchToHex(resolved), css: fmt(resolved) } : null
 }
 
 /**
@@ -40,7 +48,7 @@ export function DerivedPalette({
       {generated ? (
         <div className="mt-6 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
           {DERIVED_SWATCHES.map(({ token, label }: { token: string; label: string }) => {
-            const hex = toHex(tokens[token])
+            const swatch = swatchOf(tokens, token)
             const failure = failureFor(token)
             return (
               <div key={token} className="flex items-center justify-end gap-3">
@@ -62,16 +70,16 @@ export function DerivedPalette({
                 >
                   <span
                     className="block size-full rounded-full border border-white/70"
-                    style={{ background: tokens[token] }}
+                    style={{ background: swatch?.css ?? tokens[token] }}
                   />
                   <input
                     type="color"
                     aria-label={label}
-                    value={hex ?? "#ffffff"}
+                    value={swatch?.hex ?? "#ffffff"}
                     onChange={(e) => onOverride(token, e.target.value)}
                     className="absolute inset-0 cursor-pointer opacity-0"
-                    // aliases like var(--muted) have no hex to show
-                    disabled={!hex}
+                    // only a token that resolves to nothing at all stays uneditable
+                    disabled={!swatch}
                   />
                 </label>
               </div>
