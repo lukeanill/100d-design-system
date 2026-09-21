@@ -65,21 +65,30 @@ CI fails on any theme that introduces a **new** contrast shortfall, so a theme
 that trips the gate would produce a red build and a site that silently keeps
 showing the old themes.
 
-Contrast is a warning, not a veto. It is your design system; some pairs cannot
-even be fixed by lightness, because the foreground is already at 100%.
+**Contrast never stops a save, in either studio.** It is your design system and
+you are the one judging legibility; some pairs cannot be fixed by lightness at
+all, because the foreground is already at 100%. Being unable to save a theme you
+meant to make is worse than a pair sitting at 4.03 rather than 4.5.
 
-- **Deployed** — a save that drops below a rule shows you the exact failing
-  pairs and asks once. Choosing *Keep them and save* records those numbers in
-  `.contrast-baseline.json` in the same commit, so the build stays green and the
-  theme actually deploys. It has to ask before committing rather than after: a
-  commit without those numbers goes red in CI and never reaches the site, so the
-  save would report success and change nothing.
-- **Local** — nothing blocks, because nothing is published until you push. The
-  studio tells you to run `tokens:check --update-baseline` before pushing;
-  skipping that is what makes CI reject the branch later.
+A save that drops below a rule goes through and reports the failing pairs next
+to the confirmation. The numbers are also recorded in
+`packages/ui/tokens/.contrast-baseline.json` in the same commit — that part is
+not cosmetic. Commit the theme without them and CI goes red and the theme never
+reaches the site, so the studio would report success having changed nothing.
 
-Accepting a shortfall is never silent. The numbers stay in the baseline file and
-in the diff, and the gate still fails on its own if a recorded pair gets worse.
+Nothing is hidden: the shortfalls are in the studio's report, in the baseline
+file, and in the commit's diff.
+
+**The trade-off, stated plainly:** because every save re-records, the CI check no
+longer catches a studio save that makes a recorded pair *worse*. It still guards
+hand-edits and anything else that does not go through the studio. That is a
+deliberate choice in favour of not blocking the designer.
+
+To see where every theme stands at any time:
+
+```bash
+pnpm --filter @workspace/ui tokens:check
+```
 
 Existing shortfalls are recorded in `packages/ui/tokens/.contrast-baseline.json`
 and only fail if they get worse. A **new** theme has no baseline, so it has to

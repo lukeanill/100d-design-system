@@ -33,16 +33,6 @@ export type Theme = {
   swatches?: string[]
 }
 
-export type ContrastFailure = {
-  theme: string
-  pair: string
-  ratio: number
-  min?: number
-  label?: string
-  baseline?: number
-  kind: "new" | "worse"
-}
-
 export type ThemesResponse = {
   themes: Theme[]
   /** "local" writes to your working copy; "repo" commits and redeploys the site. */
@@ -50,17 +40,10 @@ export type ThemesResponse = {
   branch?: string
   commit?: string
   deploying?: boolean
+  /** Human-readable contrast report. Always a note, never a reason the save failed. */
   contrast?: string | null
-}
-
-/** Thrown when a save would fail the contrast gate; the save can be retried with force. */
-export class ContrastBlocked extends Error {
-  failures: ContrastFailure[]
-  constructor(message: string, failures: ContrastFailure[]) {
-    super(message)
-    this.name = "ContrastBlocked"
-    this.failures = failures
-  }
+  /** How many pairs sit below the rules after this save. */
+  belowContrast?: number
 }
 
 const ENDPOINT = import.meta.env.DEV ? "/__themes" : "/api/themes"
@@ -78,17 +61,14 @@ async function request<T>(method: string, body?: unknown): Promise<T> {
     body: body ? JSON.stringify(body) : undefined,
   })
   const data = await res.json().catch(() => ({}))
-  if (res.status === 422 && data.failures) {
-    throw new ContrastBlocked(data.error ?? "Contrast gate failed.", data.failures)
-  }
   if (!res.ok) throw new Error(data.error ?? `Request failed (${res.status})`)
   return data as T
 }
 
 export const listThemes = () => request<ThemesResponse>("GET")
 
-export const saveTheme = (theme: Partial<Theme> & { name: string }, force = false) =>
-  request<ThemesResponse>("PUT", force ? { ...theme, force: true } : theme)
+export const saveTheme = (theme: Partial<Theme> & { name: string }) =>
+  request<ThemesResponse>("PUT", theme)
 
 export const deleteTheme = (name: string) => request<ThemesResponse>("DELETE", { name })
 

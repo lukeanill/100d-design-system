@@ -123,7 +123,7 @@ test("a new contrast failure is reported to the caller", () => {
   assert.ok(bad.contrast.failures.every((f) => f.kind === "new" || f.kind === "worse"))
 })
 
-test("shortfalls reach the baseline only once the designer accepts them", () => {
+test("a shortfall is recorded with the theme, so the save survives CI", () => {
   const ws = workspace()
   const base = ws.themes["carbon-mint"]
   const grey = Object.fromEntries(
@@ -131,27 +131,30 @@ test("shortfalls reach the baseline only once the designer accepts them", () => 
       /color|shadow|radius|font|spacing|tracking/.test(token) ? [token, value] : [token, "oklch(0.55 0 0)"]
     )
   )
-  const theme = { name: "Test Mud", label: "Test Mud", seeds: base.seeds, fonts: base.fonts, tokens: grey }
   const BASELINE_PATH = "packages/ui/tokens/.contrast-baseline.json"
 
-  // not accepted: the gate stays able to catch this
-  const asked = applyThemeChange(ws, { type: "save", theme })
-  assert.equal(asked.files[BASELINE_PATH], undefined, "baseline rewritten without consent")
-
-  // accepted: recorded in the same commit, or CI rejects it and it never deploys
-  const accepted = applyThemeChange(ws, { type: "save", theme, acceptContrast: true })
-  assert.ok(accepted.files[BASELINE_PATH], "accepted shortfalls must be recorded")
+  // Contrast never refuses a save. The shortfalls have to land in the same
+  // commit as the theme: without them CI rejects it and it never deploys, so
+  // the studio would report success having changed nothing.
+  const saved = applyThemeChange(ws, {
+    type: "save",
+    theme: { name: "Test Mud", label: "Test Mud", seeds: base.seeds, fonts: base.fonts, tokens: grey },
+  })
+  assert.ok(saved.files["packages/ui/tokens/test-mud.json"], "the theme is still saved")
+  assert.ok(saved.files[BASELINE_PATH], "its shortfalls are recorded alongside it")
   assert.ok(
-    JSON.parse(accepted.files[BASELINE_PATH])["test-mud"],
-    "the accepted theme's shortfalls must be in the baseline"
+    JSON.parse(saved.files[BASELINE_PATH])["test-mud"],
+    "the saved theme's shortfalls must be in the baseline"
   )
+  // reported either way — recorded is not the same as hidden
+  assert.ok(saved.contrast.failures.length > 0, "the caller still sees the numbers")
 })
 
 test("a clean save never touches the baseline", () => {
   const ws = workspace()
   // every committed theme is either clean or already held at baseline
   for (const theme of Object.values(ws.themes)) {
-    const { files } = applyThemeChange(ws, { type: "save", theme, acceptContrast: true })
+    const { files } = applyThemeChange(ws, { type: "save", theme })
     assert.equal(
       files["packages/ui/tokens/.contrast-baseline.json"],
       undefined,

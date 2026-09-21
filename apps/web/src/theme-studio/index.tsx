@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import {
-  ContrastBlocked,
   clearKey,
   deleteTheme,
   listThemes,
@@ -73,7 +72,6 @@ export function ThemeStudio() {
   const [themes, setThemes] = useState<Theme[]>([])
   const [editing, setEditing] = useState<Theme | null | "new">(null)
   const [status, setStatus] = useState<string | null>(null)
-  const [blocked, setBlocked] = useState<{ message: string; retry: () => void } | null>(null)
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
@@ -85,27 +83,27 @@ export function ThemeStudio() {
 
   /* A save on the deployed studio is not finished when the request returns —
    * it is a commit, and the site catches up when the build does. Say so, rather
-   * than letting "Saved" imply the site already changed. */
-  const outcome = (data: ThemesResponse, message: string) =>
-    data.deploying
+   * than letting "Saved" imply the site already changed.
+   *
+   * Contrast rides along as a note. It never stops a save, but the numbers are
+   * worth seeing, so they are appended rather than hidden. */
+  const outcome = (data: ThemesResponse, message: string) => {
+    const saved = data.deploying
       ? `${message} Committed to ${data.branch ?? "the repo"} — the site rebuilds in a minute or two.`
       : message
+    return data.belowContrast && data.contrast ? `${saved}\n\n${data.contrast}` : saved
+  }
 
   const run = async (action: () => Promise<ThemesResponse>, message: string) => {
     setBusy(true)
     setStatus(null)
-    setBlocked(null)
     try {
       const data = await action()
       setThemes(data.themes)
       setStatus(outcome(data, message))
       return true
     } catch (e) {
-      if (e instanceof ContrastBlocked) {
-        setBlocked({ message: e.message, retry: () => void run(() => action(), message) })
-      } else {
-        setStatus(e instanceof Error ? e.message : "Something went wrong.")
-      }
+      setStatus(e instanceof Error ? e.message : "Something went wrong.")
       return false
     } finally {
       setBusy(false)
@@ -130,32 +128,11 @@ export function ThemeStudio() {
           busy={busy}
           onCancel={() => setEditing(null)}
           onSave={async (theme) => {
-            const save = (force: boolean) => () => saveTheme(theme, force)
-            const label = theme.label ?? theme.name
-            setBusy(true)
-            setStatus(null)
-            setBlocked(null)
-            try {
-              const data = await saveTheme(theme)
-              setThemes(data.themes)
-              setStatus(outcome(data, `Saved ${label}.`))
-              setEditing(null)
-            } catch (e) {
-              if (e instanceof ContrastBlocked) {
-                setBlocked({
-                  message: e.message,
-                  retry: () => {
-                    void run(save(true), `Saved ${label} despite the contrast warning.`).then(
-                      (ok) => ok && setEditing(null)
-                    )
-                  },
-                })
-              } else {
-                setStatus(e instanceof Error ? e.message : "Something went wrong.")
-              }
-            } finally {
-              setBusy(false)
-            }
+            const ok = await run(
+              () => saveTheme(theme),
+              `Saved ${theme.label ?? theme.name}.`
+            )
+            if (ok) setEditing(null)
           }}
         />
       ) : (
@@ -172,33 +149,8 @@ export function ThemeStudio() {
         />
       )}
 
-      {blocked && (
-        <div
-          role="alert"
-          className="mx-auto mb-10 max-w-2xl rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm"
-        >
-          <p className="mb-3 font-medium">Some pairs fall below the contrast rules.</p>
-          <pre className="mb-3 overflow-x-auto whitespace-pre-wrap font-mono text-xs text-muted-foreground">
-            {blocked.message}
-          </pre>
-          <p className="mb-3 text-muted-foreground">
-            Your call — this is a warning, not a veto. Keeping them records the numbers
-            alongside the theme, so the save still deploys and nothing goes red. They stay
-            listed here, and you will be warned again if they get worse.
-          </p>
-          <div className="flex gap-2">
-            <Button size="sm" disabled={busy} onClick={blocked.retry}>
-              Keep them and save
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => setBlocked(null)}>
-              Go back and adjust
-            </Button>
-          </div>
-        </div>
-      )}
-
       {status && (
-        <p className="pb-10 text-center text-sm text-muted-foreground" role="status">
+        <p className="mx-auto max-w-2xl whitespace-pre-line pb-10 text-center text-sm text-muted-foreground" role="status">
           {status}
         </p>
       )}

@@ -184,10 +184,7 @@ export default async function handler(req, res) {
     let change
     let message
     if (req.method === "PUT") {
-      // `force` carries the designer's answer to the contrast warning through
-      // to the core, which then records the shortfalls alongside the theme so
-      // the commit is one CI will accept.
-      change = { type: "save", theme: body, acceptContrast: Boolean(body.force) }
+      change = { type: "save", theme: body }
       message = `Theme: save ${body.label ?? body.name}`
     } else if (req.method === "DELETE") {
       change = { type: "delete", name: body.name }
@@ -201,20 +198,8 @@ export default async function handler(req, res) {
 
     const result = applyThemeChange(workspace, change)
 
-    // A contrast shortfall is shown once and then it is the designer's call, so
-    // this asks rather than refuses. It has to ask before committing rather
-    // than after: the accepted shortfalls are recorded in the same commit as
-    // the theme, and a commit without them goes red in CI and never deploys —
-    // the save would report success and change nothing.
-    const failures = result.contrast?.failures ?? []
-    if (failures.length && !body.force) {
-      return send(422, {
-        error: `This drops below the contrast rules:\n${formatContrast(result.contrast)}`,
-        contrast: formatContrast(result.contrast),
-        failures,
-      })
-    }
-
+    // A contrast shortfall is reported, never refused — applyThemeChange
+    // records it alongside the theme so the commit is one CI accepts.
     const sha = await commitFiles({ token, files: result.files, head, baseTree, message })
 
     return send(200, {
@@ -224,6 +209,8 @@ export default async function handler(req, res) {
       commit: sha,
       deploying: Boolean(sha),
       contrast: formatContrast(result.contrast),
+      // the studio surfaces this next to the save; it is a note, not a refusal
+      belowContrast: result.contrast?.failures?.length ?? 0,
     })
   } catch (error) {
     const status = error?.status === 409 || error?.status === 422 ? 409 : 500

@@ -160,15 +160,20 @@ export function applyThemeChange(workspace, change) {
 
   const contrast = evaluateContrast(Object.values(themes), workspace.baseline ?? {})
 
-  // `acceptContrast` is set only when the designer has been shown the failing
-  // pairs and chosen to keep them. Recording them in the baseline is part of
-  // that same decision: without it the commit lands, CI goes red, and the theme
-  // never reaches the site — the save would look successful and do nothing.
+  // Contrast never stops a save. That is the design system owner's standing
+  // decision, not an oversight: they are the one judging legibility, some pairs
+  // cannot be fixed by lightness at all, and being unable to save a theme you
+  // meant to make is worse than a pair sitting at 4.03 rather than 4.5.
   //
-  // This is deliberately not automatic. The gate exists to make a drop in
-  // legibility something a person decides rather than something nobody notices,
-  // and it still fails on its own if a recorded pair later gets worse.
-  if (change.acceptContrast && contrast.failures.length) {
+  // Recording the shortfalls here is what makes the save mean anything —
+  // commit the theme without them and CI goes red and it never deploys, so the
+  // studio would report success having changed nothing.
+  //
+  // The cost, stated plainly: the gate no longer catches a studio save that
+  // makes a recorded pair worse, because that save re-records it. It still
+  // guards hand-edits and anything else that does not come through here. The
+  // numbers stay visible in this file, in the diff, and in the studio's report.
+  if (contrast.failures.length) {
     files[BASELINE] = JSON.stringify(contrast.nextBaseline, null, 2) + "\n"
   }
 

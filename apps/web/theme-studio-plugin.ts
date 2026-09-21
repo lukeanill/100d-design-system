@@ -79,19 +79,14 @@ export function themeStudio(): Plugin {
           const result = change.applyThemeChange(workspace, request)
           fs.writeFiles(ROOT, result.files)
 
-          // Locally a contrast shortfall never blocks the write — nothing is
-          // published until you push. It does have to be recorded before it is
-          // pushed, though, or CI rejects the branch, so say so here rather
-          // than letting it surface as a failed build later.
-          const failures = result.contrast?.failures ?? []
-          const contrast = contrastCore.formatContrast(result.contrast)
+          // A contrast shortfall is reported, never refused. applyThemeChange
+          // records it in the baseline alongside the theme, here as on the
+          // deployed studio, so the change you commit is one CI accepts.
           return send(200, {
             themes: result.themes,
             target: "local",
-            contrast: failures.length
-              ? `${contrast}\n\nSaved anyway. To keep these, run:\n  pnpm --filter @workspace/ui tokens:check --update-baseline`
-              : contrast,
-            blocking: failures.length,
+            contrast: contrastCore.formatContrast(result.contrast),
+            belowContrast: result.contrast?.failures?.length ?? 0,
           })
         } catch (error) {
           return send(500, { error: error instanceof Error ? error.message : String(error) })
