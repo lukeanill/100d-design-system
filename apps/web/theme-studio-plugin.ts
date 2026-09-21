@@ -39,6 +39,46 @@ export function themeStudio(): Plugin {
       const env = loadEnv(server.config.mode, server.config.root, "")
       const password = env.THEME_STUDIO_PASSWORD ?? process.env.THEME_STUDIO_PASSWORD ?? ""
 
+      const send = (res: import("node:http").ServerResponse, code: number, body: unknown) => {
+        res.statusCode = code
+        res.setHeader("content-type", "application/json")
+        res.end(JSON.stringify(body))
+      }
+
+      const guard = (req: import("node:http").IncomingMessage, res: import("node:http").ServerResponse) => {
+        if (!password) {
+          send(res, 503, {
+            error:
+              "THEME_STUDIO_PASSWORD is not set. Add it to apps/web/.env.local and restart the dev server.",
+          })
+          return false
+        }
+        if (!authorized(req.headers["x-theme-studio-key"] as string, password)) {
+          send(res, 401, { error: "Wrong password." })
+          return false
+        }
+        return true
+      }
+
+      // The localhost twin of api/pull-theme.mjs. Reads a site and guesses a
+      // theme from it; writes nothing, so it needs no credentials of its own.
+      server.middlewares.use("/__pull-theme", async (req, res) => {
+        if (!guard(req, res)) return
+        if (req.method !== "POST") return send(res, 405, { error: "Method not allowed." })
+        try {
+          const { fetchSiteTheme } = await load("site-fetch.mjs")
+          const chunks: Buffer[] = []
+          for await (const c of req) chunks.push(c as Buffer)
+          const { url } = chunks.length ? JSON.parse(Buffer.concat(chunks).toString()) : {}
+          if (!url?.trim()) return send(res, 400, { error: "Enter a web address first." })
+          return send(res, 200, await fetchSiteTheme(url))
+        } catch (error) {
+          return send(res, 422, {
+            error: error instanceof Error ? error.message : String(error),
+          })
+        }
+      })
+
       server.middlewares.use("/__themes", async (req, res) => {
         const send = (code: number, body: unknown) => {
           res.statusCode = code
