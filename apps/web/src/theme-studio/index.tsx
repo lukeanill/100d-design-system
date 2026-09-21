@@ -17,13 +17,14 @@ import { ThemeEditor } from "./ThemeEditor"
 import { ThemeList } from "./ThemeList"
 
 /* Theme manager. Seeds in, full palette out: four colours, three fonts and an
- * edge preset, with every other token derived so a theme cannot land below the
- * contrast the CI gate enforces.
+ * edge preset, with every other token derived. Derivation aims at the contrast
+ * rules but does not enforce them: a pair that lands below is shown and then
+ * left to the designer.
  *
  * Runs in two places. On localhost it writes to your working copy, and the
  * change reaches the site when you commit and push. On the deployed site it
  * commits for you, and Vercel redeploys — which is the whole reason it is
- * hosted. `target` in the API response says which one you are looking at. */
+ * hosted. The save message says which of the two you just wrote to. */
 
 function Lock({ onUnlock }: { onUnlock: () => void }) {
   const [value, setValue] = useState("")
@@ -70,7 +71,6 @@ function Lock({ onUnlock }: { onUnlock: () => void }) {
 export function ThemeStudio() {
   const [unlocked, setUnlocked] = useState(false)
   const [themes, setThemes] = useState<Theme[]>([])
-  const [target, setTarget] = useState<ThemesResponse["target"]>(undefined)
   const [editing, setEditing] = useState<Theme | null | "new">(null)
   const [status, setStatus] = useState<string | null>(null)
   const [blocked, setBlocked] = useState<{ message: string; retry: () => void } | null>(null)
@@ -79,10 +79,7 @@ export function ThemeStudio() {
   useEffect(() => {
     if (!unlocked) return
     listThemes()
-      .then((d) => {
-        setThemes(d.themes)
-        setTarget(d.target)
-      })
+      .then((d) => setThemes(d.themes))
       .catch((e) => setStatus(e.message))
   }, [unlocked])
 
@@ -101,7 +98,6 @@ export function ThemeStudio() {
     try {
       const data = await action()
       setThemes(data.themes)
-      if (data.target) setTarget(data.target)
       setStatus(outcome(data, message))
       return true
     } catch (e) {
@@ -142,7 +138,6 @@ export function ThemeStudio() {
             try {
               const data = await saveTheme(theme)
               setThemes(data.themes)
-              if (data.target) setTarget(data.target)
               setStatus(outcome(data, `Saved ${label}.`))
               setEditing(null)
             } catch (e) {
@@ -182,21 +177,21 @@ export function ThemeStudio() {
           role="alert"
           className="mx-auto mb-10 max-w-2xl rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm"
         >
-          <p className="mb-3 font-medium">Not saved — this would fail the contrast check.</p>
+          <p className="mb-3 font-medium">Some pairs fall below the contrast rules.</p>
           <pre className="mb-3 overflow-x-auto whitespace-pre-wrap font-mono text-xs text-muted-foreground">
             {blocked.message}
           </pre>
           <p className="mb-3 text-muted-foreground">
-            {target === "repo"
-              ? "Saving it anyway would turn the build red, and the site would keep showing the old themes until it is fixed."
-              : "Saving it anyway is fine locally, but CI will reject it when you push."}
+            Your call — this is a warning, not a veto. Keeping them records the numbers
+            alongside the theme, so the save still deploys and nothing goes red. They stay
+            listed here, and you will be warned again if they get worse.
           </p>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => setBlocked(null)}>
-              Go back and fix it
+            <Button size="sm" disabled={busy} onClick={blocked.retry}>
+              Keep them and save
             </Button>
-            <Button variant="ghost" size="sm" disabled={busy} onClick={blocked.retry}>
-              Save anyway
+            <Button variant="outline" size="sm" onClick={() => setBlocked(null)}>
+              Go back and adjust
             </Button>
           </div>
         </div>

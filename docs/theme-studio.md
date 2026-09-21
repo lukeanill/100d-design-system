@@ -65,13 +65,21 @@ CI fails on any theme that introduces a **new** contrast shortfall, so a theme
 that trips the gate would produce a red build and a site that silently keeps
 showing the old themes.
 
-The two studios therefore treat contrast differently, on purpose:
+Contrast is a warning, not a veto. It is your design system; some pairs cannot
+even be fixed by lightness, because the foreground is already at 100%.
 
-- **Deployed** — a save that would fail the gate is **refused before it commits**,
-  and the studio lists the exact failing pairs. There is a *Save anyway* escape
-  hatch, but taking it means the build goes red until you fix it.
-- **Local** — contrast problems are reported but never block the write, because
-  nothing is published until you push.
+- **Deployed** — a save that drops below a rule shows you the exact failing
+  pairs and asks once. Choosing *Keep them and save* records those numbers in
+  `.contrast-baseline.json` in the same commit, so the build stays green and the
+  theme actually deploys. It has to ask before committing rather than after: a
+  commit without those numbers goes red in CI and never reaches the site, so the
+  save would report success and change nothing.
+- **Local** — nothing blocks, because nothing is published until you push. The
+  studio tells you to run `tokens:check --update-baseline` before pushing;
+  skipping that is what makes CI reject the branch later.
+
+Accepting a shortfall is never silent. The numbers stay in the baseline file and
+in the diff, and the gate still fails on its own if a recorded pair gets worse.
 
 Existing shortfalls are recorded in `packages/ui/tokens/.contrast-baseline.json`
 and only fail if they get worse. A **new** theme has no baseline, so it has to

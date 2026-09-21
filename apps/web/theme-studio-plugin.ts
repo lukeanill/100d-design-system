@@ -79,12 +79,19 @@ export function themeStudio(): Plugin {
           const result = change.applyThemeChange(workspace, request)
           fs.writeFiles(ROOT, result.files)
 
-          // locally, contrast problems are reported but never block the write
+          // Locally a contrast shortfall never blocks the write — nothing is
+          // published until you push. It does have to be recorded before it is
+          // pushed, though, or CI rejects the branch, so say so here rather
+          // than letting it surface as a failed build later.
+          const failures = result.contrast?.failures ?? []
+          const contrast = contrastCore.formatContrast(result.contrast)
           return send(200, {
             themes: result.themes,
             target: "local",
-            contrast: contrastCore.formatContrast(result.contrast),
-            blocking: result.contrast?.failures?.length ?? 0,
+            contrast: failures.length
+              ? `${contrast}\n\nSaved anyway. To keep these, run:\n  pnpm --filter @workspace/ui tokens:check --update-baseline`
+              : contrast,
+            blocking: failures.length,
           })
         } catch (error) {
           return send(500, { error: error instanceof Error ? error.message : String(error) })

@@ -159,5 +159,18 @@ export function applyThemeChange(workspace, change) {
   if (tokensCss !== workspace.tokensCss) files[TOKENS_CSS] = tokensCss
 
   const contrast = evaluateContrast(Object.values(themes), workspace.baseline ?? {})
+
+  // `acceptContrast` is set only when the designer has been shown the failing
+  // pairs and chosen to keep them. Recording them in the baseline is part of
+  // that same decision: without it the commit lands, CI goes red, and the theme
+  // never reaches the site — the save would look successful and do nothing.
+  //
+  // This is deliberately not automatic. The gate exists to make a drop in
+  // legibility something a person decides rather than something nobody notices,
+  // and it still fails on its own if a recorded pair later gets worse.
+  if (change.acceptContrast && contrast.failures.length) {
+    files[BASELINE] = JSON.stringify(contrast.nextBaseline, null, 2) + "\n"
+  }
+
   return { files, themes: listThemes(themes), contrast }
 }
