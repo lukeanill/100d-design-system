@@ -17,13 +17,14 @@
   "overrides": {
     "primary-foreground": "#ffffff",
     "secondary-foreground": "#ffffff",
-    "card": "#f1f1f4",
+    "card": "#f3f3f4",
     "border": "#ece8df",
     "muted": "#a5aeca",
     "muted-foreground": "#344e8d",
     "affirmative": "#537958",
     "destructive": "#ce4043",
-    "input": "#ffffff"
+    "input": "#ffffff",
+    "accent-foreground": "#ffffff"
   },
   "fontSource": "bundled",
   "fontTheme": "solar-violet",
@@ -31,7 +32,7 @@
     "font-body-weight": "400",
     "background": "oklch(0.953 0.010 87.47)",
     "foreground": "oklch(0.568 0.221 265.35)",
-    "card": "oklch(0.959 0.004 286.32)",
+    "card": "oklch(0.964 0.001 286.38)",
     "card-foreground": "oklch(0.556 0.221 265.35)",
     "popover": "oklch(0.965 0.005 87.47)",
     "popover-foreground": "oklch(0.556 0.221 265.35)",
@@ -42,7 +43,7 @@
     "muted": "oklch(0.753 0.041 271.30)",
     "muted-foreground": "oklch(0.437 0.109 265.30)",
     "accent": "oklch(0.568 0.221 265.35)",
-    "accent-foreground": "oklch(1.000 0.221 265.35)",
+    "accent-foreground": "oklch(1.000 0.000 0.00)",
     "destructive": "oklch(0.578 0.179 23.59)",
     "affirmative": "oklch(0.538 0.067 147.95)",
     "border": "oklch(0.932 0.013 86.83)",
@@ -77,5 +78,5 @@
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
   },
-  "updatedAt": "2026-09-21T21:29:22.818Z"
+  "updatedAt": "2026-09-21T21:30:07.102Z"
 }
