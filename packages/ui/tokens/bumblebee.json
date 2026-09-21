@@ -14,7 +14,7 @@
     "emphasis": "Plus Jakarta Sans",
     "body": "Work Sans"
   },
-  "edges": "subtle",
+  "edges": "strong",
   "overrides": {
     "secondary-foreground": "#ffffff",
     "card": "#faec24",
@@ -73,5 +73,5 @@
     "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
   },
-  "updatedAt": "2026-09-21T19:57:36.268Z"
+  "updatedAt": "2026-09-21T19:57:43.586Z"
 }
