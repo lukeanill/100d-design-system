@@ -47,6 +47,9 @@ function Mark({ category, surface }: { category: number; surface: ActivitySurfac
 const ROW = 24
 const ROW_WITH_REPEAT = 40
 
+/** Width of the gutter the leader lines are drawn in. */
+const LEADER = 28
+
 /**
  * A day as a vertical time axis: hours down the side, one mark per event at the
  * time it happened, and the event's name level with its mark.
@@ -67,7 +70,10 @@ const ROW_WITH_REPEAT = 40
  * Labels sit at their event's height rather than in a plain list, because the
  * pairing is the information. Where events collide they stack downward from
  * their true position, nearest-first, so the order is always right even when an
- * exact height cannot be.
+ * exact height cannot be — and a leader line runs from the mark to the label it
+ * belongs to, so a label pushed down by a busy few minutes still says which
+ * moment it came from rather than appearing to belong to a later hour. A label
+ * that did not have to move needs no leader, so quiet stretches stay clean.
  */
 function DayTimeline({
   events,
@@ -110,9 +116,9 @@ function DayTimeline({
   })
 
   return (
-    <div className={cn("flex gap-4 text-sm", className)} {...props}>
+    <div className={cn("flex text-sm", className)} {...props}>
       {/* hour axis */}
-      <div className="relative w-14 shrink-0" style={{ height }}>
+      <div className="relative mr-4 w-14 shrink-0" style={{ height }}>
         {hours.map((h, i) =>
           i % labelEvery === 0 ? (
             <span
@@ -151,6 +157,33 @@ function DayTimeline({
           </div>
         ))}
       </div>
+
+      {/* Leaders, drawn only for the labels that had to move. The elbow leaves
+          the mark horizontally before it drops, so the eye picks up the thread
+          at the mark rather than at an angle that could point anywhere. */}
+      <svg
+        width={LEADER}
+        height={height}
+        className="shrink-0"
+        aria-hidden="true"
+        focusable="false"
+      >
+        {labels.map((e) =>
+          e.top - y(e.min) > 1 ? (
+            <path
+              key={e.id}
+              d={`M0 ${y(e.min)} H${LEADER * 0.3} L${LEADER * 0.7} ${e.top} H${LEADER}`}
+              fill="none"
+              strokeWidth={1}
+              // Muted ink rather than the border token: a leader is the thing
+              // that resolves which mark a moved label belongs to, so it has to
+              // stay visible on the pale surfaces where --border all but
+              // disappears. Still recessive — it is a thread, not a mark.
+              style={{ stroke: "var(--muted-foreground)", strokeOpacity: 0.45 }}
+            />
+          ) : null
+        )}
+      </svg>
 
       {/* The readable copy of the same data. It is what makes the marks legible
           to anyone the colours and shapes do not reach, and the only place the
