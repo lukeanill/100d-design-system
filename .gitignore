@@ -42,3 +42,7 @@ Styles/.gen/
 .design-sync/node_modules
 .ds-sync/
 ds-bundle/
+
+# the font sources live in a separate repo; the build uses
+# packages/ui/src/styles/fonts/ instead
+assets/

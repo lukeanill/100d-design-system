@@ -17,7 +17,7 @@ export const colorThemes: ColorTheme[] = [
   { id: "strawberry-matcha", label: "Strawberry Matcha", fontTheme: "strawberry-matcha" },
   { id: "metallic-mist", label: "Metallic Mist", fontTheme: "metallic-mist" },
   { id: "bumblebee", label: "Bumblebee", fontTheme: "bumblebee" },
-  { id: "lighten-up", label: "Lighten Up", fontTheme: "chill-light" },
+  { id: "light", label: "Lighten Up", fontTheme: "chill-light" },
   { id: "solar-azul", label: "Solar Azul", fontTheme: "solar-violet" },
   { id: "night-violet", label: "Night Violet", fontTheme: "night-violet" },
 ]

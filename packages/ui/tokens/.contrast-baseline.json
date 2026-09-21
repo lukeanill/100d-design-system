@@ -3,6 +3,9 @@
     "secondary-foreground|secondary": 4.38,
     "accent-foreground|accent": 4.38
   },
+  "bumblebee": {
+    "accent-foreground|accent": 4.49
+  },
   "carbon-mint": {
     "muted-foreground|card": 1.94
   },
@@ -20,22 +23,16 @@
     "secondary-foreground|secondary": 2.17,
     "accent-foreground|accent": 2.17
   },
-  "solar-violet": {
-    "muted-foreground|card": 2.25,
-    "primary-foreground|primary": 4.22,
-    "secondary-foreground|secondary": 1.17,
-    "accent-foreground|accent": 1.17,
-    "destructive|background": 2.77
+  "solar-azul": {
+    "foreground|background": 4.14,
+    "card-foreground|card": 4.25,
+    "muted-foreground|card": 4.33,
+    "accent-foreground|accent": 4.03
   },
   "strawberry-matcha": {
     "muted-foreground|card": 2.18,
     "secondary-foreground|secondary": 2.5,
     "accent-foreground|accent": 2.5,
     "destructive|background": 1.64
-  },
-  "light": {
-    "secondary-foreground|secondary": 2.32,
-    "accent-foreground|accent": 2.32,
-    "destructive|background": 2.23
   }
 }
