@@ -98,16 +98,48 @@ const mix = (a, b, t) => ({
 })
 
 /** The four edge presets the studio offers, in the order the designs show them. */
+/** The control radius each preset sets — buttons, inputs, tags. */
 export const EDGES = {
   square: "0",
   subtle: "0.5rem",
-  strong: "1rem",
+  strong: "0.75rem",
   round: "9999px",
 }
 
 /** Nearest preset for an existing radius, or "custom" when it matches none. */
 export const edgesFor = (radius) =>
   Object.entries(EDGES).find(([, value]) => value === String(radius).trim())?.[0] ?? "custom"
+
+const REM = 16
+const CONTAINER_CAP = 32
+
+const toPx = (value) => {
+  const s = String(value).trim()
+  if (s === "0") return 0
+  const m = /^([\d.]+)(rem|px)?$/.exec(s)
+  if (!m) return null
+  return m[2] === "px" ? Number(m[1]) : Number(m[1]) * REM
+}
+
+/**
+ * The container radius that goes with a control radius: twice it, capped at
+ * 32px. Cards, menus and drawers follow the theme's edges, but not to the same
+ * number — a surface the size of a card taken to the control's radius reads as
+ * a pill, and at `round` there is no sane container value at all, which is what
+ * the cap is for.
+ *
+ *   square  0     -> 0        subtle  8px  -> 16px
+ *   strong  12px  -> 24px     round   full -> 32px
+ *
+ * A hand-set radius that matches no preset gets the same treatment rather than
+ * a special case.
+ */
+export const containerRadiusFor = (control) => {
+  const px = toPx(control)
+  if (px === null) return control
+  const out = Math.min(px * 2, CONTAINER_CAP)
+  return out === 0 ? "0" : `${out / REM}rem`
+}
 
 /**
  * Builds a full theme from four seeds. Every foreground is solved against the
@@ -184,6 +216,7 @@ export function derivePalette({
     "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
     radius: edges ? (EDGES[edges] ?? radius) : radius,
+    "radius-container": containerRadiusFor(edges ? (EDGES[edges] ?? radius) : radius),
     sidebar: "var(--card)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",

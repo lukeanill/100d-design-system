@@ -1,5 +1,4 @@
 import { Button } from "@workspace/ui/components/button"
-// @ts-expect-error - shared .mjs colour engine, also used by the build scripts
 import { DERIVED_SWATCHES, checkContrast, oklchToHex, parseOklch } from "@workspace/ui/tokens/color"
 
 type Check = { fg: string; bg: string; label: string; ratio: number; pass: boolean }

@@ -1,6 +1,7 @@
 import { CheckCircleIcon } from "@phosphor-icons/react"
 
 import { Input } from "@workspace/ui/components/input"
+import { EDGES } from "@workspace/ui/tokens/color"
 import { useGoogleFont } from "./useGoogleFont"
 
 /**
@@ -83,12 +84,9 @@ export function FontField({
   )
 }
 
-const EDGE_PREVIEW: Record<string, string> = {
-  square: "0px",
-  subtle: "8px",
-  strong: "16px",
-  round: "9999px",
-}
+// Drawn straight from the token source. Hand-copying these numbers is how the
+// picker came to preview `strong` at 16px while the tokens said 12px.
+const EDGE_PREVIEW: Record<string, string> = EDGES
 
 /** The four radius presets, drawn as the shape they produce. */
 export function EdgePicker({

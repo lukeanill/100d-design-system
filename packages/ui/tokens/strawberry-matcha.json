@@ -13,7 +13,7 @@
     "primary": "SF Pro Text",
     "emphasis": "Playfair Display"
   },
-  "edges": "custom",
+  "edges": "strong",
   "overrides": {},
   "tokens": {
     "background": "oklch(0.989 0.005 3.33)",
@@ -35,7 +35,8 @@
     "border": "var(--muted)",
     "input": "var(--card)",
     "ring": "var(--accent)",
-    "radius": "0.875rem",
+    "radius": "0.75rem",
+    "radius-container": "1.5rem",
     "affirmative-foreground": "oklch(0.145 0 0)",
     "chart-1": "oklch(0.694 0.042 212.37)",
     "chart-2": "oklch(0.778 0.022 227.62)",

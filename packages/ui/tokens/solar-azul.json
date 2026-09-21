@@ -53,6 +53,7 @@
     "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
     "radius": "0.5rem",
+    "radius-container": "1rem",
     "sidebar": "var(--card)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",

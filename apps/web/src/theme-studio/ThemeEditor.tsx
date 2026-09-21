@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react"
 
 import { Button } from "@workspace/ui/components/button"
-// @ts-expect-error - shared .mjs colour engine, also used by the build scripts
 import { derivePalette } from "@workspace/ui/tokens/color"
 import { ColorSeed, EdgePicker, FontField } from "./ColorSeed"
 import { DerivedPalette } from "./DerivedPalette"
