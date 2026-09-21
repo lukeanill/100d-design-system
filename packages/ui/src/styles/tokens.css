@@ -541,7 +541,7 @@
   --primary: oklch(0.000 0.000 0.00);
   --primary-foreground: oklch(1.000 0.000 0.00);
   --secondary: oklch(0.000 0.000 0.00);
-  --secondary-foreground: oklch(1.000 0.000 0.00);
+  --secondary-foreground: oklch(0.000 0.000 0.00);
   --muted: oklch(0.752 0.155 104.94);
   --muted-foreground: oklch(0.324 0.067 0.00);
   --accent: oklch(0.925 0.190 105.01);
@@ -561,8 +561,8 @@
   --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
   --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
   --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
-  --radius: 0;
-  --radius-container: 0;
+  --radius: 0.75rem;
+  --radius-container: 1.5rem;
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);

@@ -4,7 +4,7 @@
     "accent-foreground|accent": 4.38
   },
   "bumblebee": {
-    "accent-foreground|accent": 4.49
+    "secondary-foreground|secondary": 1
   },
   "carbon-mint": {
     "muted-foreground|card": 1.94
