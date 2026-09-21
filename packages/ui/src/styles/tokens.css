@@ -190,6 +190,7 @@
   --border: var(--muted);
   --input: var(--card);
   --ring: var(--accent);
+  --radius: 0.875rem;
   --affirmative-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.694 0.042 212.37);
   --chart-2: oklch(0.778 0.022 227.62);
@@ -239,6 +240,7 @@
   --border: var(--muted);
   --input: var(--card);
   --ring: var(--accent);
+  --radius: 0.875rem;
   --affirmative-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.694 0.042 212.37);
   --chart-2: oklch(0.778 0.022 227.62);
@@ -288,6 +290,7 @@
   --border: var(--muted);
   --input: var(--card);
   --ring: var(--accent);
+  --radius: 0.875rem;
   --affirmative-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.694 0.042 212.37);
   --chart-2: oklch(0.778 0.022 227.62);
@@ -337,6 +340,7 @@
   --border: var(--muted);
   --input: var(--card);
   --ring: var(--accent);
+  --radius: 0.875rem;
   --affirmative-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.694 0.042 212.37);
   --chart-2: oklch(0.778 0.022 227.62);
@@ -386,6 +390,7 @@
   --border: var(--muted);
   --input: var(--card);
   --ring: var(--accent);
+  --radius: 0.875rem;
   --affirmative-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.694 0.042 212.37);
   --chart-2: oklch(0.778 0.022 227.62);
@@ -435,6 +440,7 @@
   --border: var(--muted);
   --input: var(--card);
   --ring: var(--accent);
+  --radius: 0.875rem;
   --affirmative-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.694 0.042 212.37);
   --chart-2: oklch(0.778 0.022 227.62);
@@ -484,6 +490,7 @@
   --border: var(--muted);
   --input: var(--card);
   --ring: var(--accent);
+  --radius: 0.875rem;
   --affirmative-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.694 0.042 212.37);
   --chart-2: oklch(0.778 0.022 227.62);
@@ -749,7 +756,11 @@
 
   --radius-sm: 0.5rem;
   --radius-md: 0.625rem;
-  --radius-lg: var(--radius);
+  /* Container radius. Deliberately NOT var(--radius): that is the theme's
+     edge preset, which belongs to buttons, inputs and tags. Pointing cards,
+     menus, drawers and toasts at it turns a round theme into a page of
+     pills. Controls opt in with rounded-(--radius) instead. */
+  --radius-lg: 0.875rem;
   --radius-xl: 1.25rem;
   --radius-full: 9999px;
 

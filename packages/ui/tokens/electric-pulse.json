@@ -35,6 +35,7 @@
     "border": "var(--muted)",
     "input": "var(--card)",
     "ring": "var(--accent)",
+    "radius": "0.875rem",
     "affirmative-foreground": "oklch(0.145 0 0)",
     "chart-1": "oklch(0.694 0.042 212.37)",
     "chart-2": "oklch(0.778 0.022 227.62)",
