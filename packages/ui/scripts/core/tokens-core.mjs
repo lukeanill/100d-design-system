@@ -39,21 +39,33 @@ export function sortThemes(themes) {
   })
 }
 
-const FALLBACK = {
-  heading: "ui-sans-serif, system-ui, sans-serif",
+/**
+ * What each role falls back to: sans for primary and body, serif for emphasis.
+ *
+ * This is both the tail of every font stack and the whole value when no family
+ * is named. A role left empty used to emit no declaration at all, which left
+ * the token undefined and the text rendering in whatever happened to be
+ * inherited — a theme with a blank font slot should still be a complete theme.
+ */
+const SYSTEM_FONT = {
+  primary: "ui-sans-serif, system-ui, sans-serif",
+  emphasis: "ui-serif, Georgia, serif",
   body: "ui-sans-serif, system-ui, sans-serif",
-  serif: "Georgia, serif",
 }
+
+const FONT_ROLES = ["primary", "emphasis", "body"]
 
 function block({ selector, tokens, extra = [], fonts, fontSource }) {
   const lines = []
   // Themes paired to bundled faces are styled by their [data-font-theme] block,
   // so their `fonts` are studio metadata only. Google themes declare theirs here.
-  if (fonts && fontSource === "google") {
-    for (const [role, family] of Object.entries(fonts)) {
-      if (!family) continue
+  if (fontSource === "google") {
+    for (const role of FONT_ROLES) {
+      const family = fonts?.[role]?.trim()
       const name = role === "body" ? "font-body-token" : `font-${role}`
-      lines.push(`  --${name}: '${family}', ${FALLBACK[role] ?? FALLBACK.body};`)
+      // every role is declared whether or not a family was named, so the stack
+      // always ends somewhere real
+      lines.push(`  --${name}: ${family ? `'${family}', ` : ""}${SYSTEM_FONT[role]};`)
     }
   }
   for (const [name, value] of Object.entries(tokens)) {

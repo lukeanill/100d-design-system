@@ -529,7 +529,7 @@
 
 .bumblebee {
   --font-primary: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-emphasis: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-emphasis: 'Plus Jakarta Sans', ui-serif, Georgia, serif;
   --font-body-token: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
   --font-body-weight: 400;
   --background: oklch(0.925 0.190 105.03);
@@ -584,8 +584,8 @@
 
 .night-violet {
   --font-primary: 'Eczar', ui-sans-serif, system-ui, sans-serif;
+  --font-emphasis: 'Eczar', ui-serif, Georgia, serif;
   --font-body-token: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-emphasis: 'Eczar', ui-sans-serif, system-ui, sans-serif;
   --font-body-weight: 400;
   --background: oklch(0.226 0.000 0.00);
   --foreground: oklch(0.910 0.000 0.00);
