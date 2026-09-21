@@ -91,7 +91,7 @@ pnpm --filter @workspace/ui tokens:check
                        │
         ┌──────────────┴──────────────┐
    dev server                   /api/themes
-   (theme-studio-plugin.ts)     (apps/web/api/themes.mjs)
+   (theme-studio-plugin.ts)     (api/themes.mjs)
         │                             │
         └────────────┬────────────────┘
                      │
@@ -110,12 +110,28 @@ local save and an online save producing identical results.
 which CI runs — the hosted studio commits through this code without a human
 reading the diff first, so it is tested rather than trusted.
 
+## A note on `vercel.json`
+
+The SPA rewrite's `source` is **path-to-regexp**, not a raw regular expression.
+A bare lookahead (`/((?!storybook).*)`) silently matches nothing rather than
+erroring, which is why `/tokens` and `/history` used to 404 in production while
+`/` worked. The pattern has to hang off a named parameter:
+
+```json
+{ "source": "/:path((?!api/|storybook).*)", "destination": "/index.html" }
+```
+
+This file also carries the build settings. It genuinely is in effect — removing
+it falls back to the dashboard's settings, which point at a different output
+directory and fail the build.
+
 ## Files
 
 | Path | What it does |
 | --- | --- |
 | `apps/web/src/theme-studio/` | The editor UI |
-| `apps/web/api/themes.mjs` | Deployed API — commits to the repo |
+| `api/themes.mjs` | Deployed API — commits to the repo |
+| `vercel.json` | Build settings and the SPA rewrite |
 | `apps/web/theme-studio-plugin.ts` | Local dev API — writes to your working copy |
 | `packages/ui/scripts/core/` | The shared logic both APIs call |
 | `packages/ui/tokens/*.json` | One file per theme; the source of truth |

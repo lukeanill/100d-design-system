@@ -14,9 +14,9 @@
 //   THEME_BRANCH  branch to commit to (defaults to the production branch)
 
 import { timingSafeEqual } from "node:crypto"
-// Imported through the workspace package rather than by relative path: this
-// function is bundled from apps/web, and @workspace/ui is a real dependency
-// of it, so the tracer follows these the same way the app does.
+// Relative imports: this function sits at the repo root, where @workspace/ui
+// is not linked into node_modules (it is a dependency of apps/web, not of the
+// workspace root). A file path always resolves and the bundler traces it.
 import {
   applyThemeChange,
   listThemes,
@@ -25,8 +25,8 @@ import {
   FONT_REGISTRY,
   TOKENS_CSS,
   TOKENS_DIR,
-} from "@workspace/ui/scripts/core/theme-change"
-import { formatContrast } from "@workspace/ui/scripts/core/contrast-core"
+} from "../packages/ui/scripts/core/theme-change.mjs"
+import { formatContrast } from "../packages/ui/scripts/core/contrast-core.mjs"
 
 const API = "https://api.github.com"
 
