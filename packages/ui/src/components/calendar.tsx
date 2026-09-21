@@ -11,6 +11,23 @@ import {
 import { cn } from "@workspace/ui/lib/utils"
 import { Button, buttonVariants } from "@workspace/ui/components/button"
 import { CaretLeftIcon, CaretRightIcon, CaretDownIcon } from "@phosphor-icons/react"
+import { DayActivity, type ActivityDatum } from "@workspace/ui/components/day-activity"
+import { type ActivitySurface } from "@workspace/ui/lib/activity-palette"
+
+type CalendarActivityProps = {
+  /**
+   * Per-day category counts. Return an empty array for a quiet day; the cell
+   * keeps its height either way so the grid does not jump between months.
+   */
+  activity?: (date: Date) => ActivityDatum[]
+  /**
+   * Shared ceiling for every cell's bars. Without it each day scales to its own
+   * busiest category, which makes a one-event day and a twenty-event day draw
+   * the same bar — the comparison across the month is the whole point.
+   */
+  activityMax?: number
+  activitySurface?: ActivitySurface
+}
 
 function Calendar({
   className,
@@ -21,10 +38,13 @@ function Calendar({
   locale,
   formatters,
   components,
+  activity,
+  activityMax,
+  activitySurface,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
-}) {
+} & CalendarActivityProps) {
   const defaultClassNames = getDefaultClassNames()
 
   return (
@@ -162,7 +182,13 @@ function Calendar({
           )
         },
         DayButton: ({ ...props }) => (
-          <CalendarDayButton locale={locale} {...props} />
+          <CalendarDayButton
+            locale={locale}
+            activity={activity}
+            activityMax={activityMax}
+            activitySurface={activitySurface}
+            {...props}
+          />
         ),
         WeekNumber: ({ children, ...props }) => {
           return (
@@ -185,9 +211,16 @@ function CalendarDayButton({
   day,
   modifiers,
   locale,
+  activity,
+  activityMax,
+  activitySurface = "light",
+  children,
   ...props
-}: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
+}: React.ComponentProps<typeof DayButton> & {
+  locale?: Partial<Locale>
+} & CalendarActivityProps) {
   const defaultClassNames = getDefaultClassNames()
+  const counts = activity?.(day.date)
 
   const ref = React.useRef<HTMLButtonElement>(null)
   React.useEffect(() => {
@@ -214,7 +247,22 @@ function CalendarDayButton({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {/* Sits inside the button on purpose: its aria-label folds into the
+          button's accessible name, so the date reads as "5 September, 3 events:
+          2 meetings, 1 alert" rather than leaving the bars unannounced. */}
+      {counts && (
+        <DayActivity
+          data={counts}
+          max={activityMax}
+          surface={activitySurface}
+          height={12}
+          barWidth={3}
+          gap={2}
+        />
+      )}
+    </Button>
   )
 }
 
