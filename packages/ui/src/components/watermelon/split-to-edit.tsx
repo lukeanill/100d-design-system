@@ -17,6 +17,9 @@
 //   The original only saved on Enter or the check button, which loses the
 //   value when someone types a time and then presses a form's Continue.
 // - Real button semantics and accessible names on the inputs and button.
+// - classNames and radius, so a product can restyle each part. The root
+//   carries data-state="open|closed" and the group/split name, for styles
+//   that differ between the two states.
 
 import * as React from "react"
 import {
@@ -43,6 +46,17 @@ export interface SplitToEditProps {
   padHours?: boolean
   disabled?: boolean
   className?: string
+  /** Corner radius of the segments. Defaults to the theme's --radius. */
+  radius?: string
+  classNames?: {
+    hours?: string
+    minutes?: string
+    action?: string
+    button?: string
+    input?: string
+    label?: string
+    icon?: string
+  }
 }
 
 const expandedTransition: Transition = {
@@ -57,8 +71,6 @@ const collapsedTransition: Transition = {
   damping: 25,
   mass: 1,
 }
-
-const RADIUS = "var(--radius)"
 
 function clamp(value: string, max: number): number {
   return Math.min(max, Math.max(0, parseInt(value, 10) || 0))
@@ -76,7 +88,10 @@ export function SplitToEdit({
   padHours = false,
   disabled = false,
   className,
+  radius = "var(--radius)",
+  classNames,
 }: SplitToEditProps) {
+  const RADIUS = radius
   const format = React.useCallback(
     (h: number, m: number) => ({
       h: padHours ? String(h).padStart(2, "0") : String(h),
@@ -151,9 +166,16 @@ export function SplitToEdit({
     disabled ? "cursor-not-allowed" : "cursor-pointer",
     isExpanded && "gap-2 px-2.5"
   )
-  const inputClass =
-    "h-10 w-[2ch] bg-transparent text-center font-mono text-xl font-semibold text-foreground outline-none"
-  const labelClass = "font-mono text-lg font-medium text-muted-foreground"
+  // Fonts are left to inherit from the root, so one class there restyles all.
+  const inputClass = cn(
+    "h-10 w-[2ch] bg-transparent text-center text-xl font-semibold text-foreground outline-none",
+    classNames?.input
+  )
+  const labelClass = cn(
+    "text-lg font-medium text-muted-foreground",
+    classNames?.label
+  )
+  const iconClass = cn("size-5 text-muted-foreground", classNames?.icon)
 
   return (
     <MotionConfig
@@ -164,8 +186,9 @@ export function SplitToEdit({
         layout
         onBlur={handleBlur}
         aria-disabled={disabled || undefined}
+        data-state={isExpanded ? "open" : "closed"}
         className={cn(
-          "flex items-center font-mono",
+          "group/split flex items-center font-mono",
           isExpanded && "gap-2",
           disabled && "opacity-40",
           className
@@ -179,7 +202,7 @@ export function SplitToEdit({
             borderTopRightRadius: isExpanded ? RADIUS : 0,
             borderBottomRightRadius: isExpanded ? RADIUS : 0,
           }}
-          className={cn(segmentClass, "pl-2")}
+          className={cn(segmentClass, "pl-2", classNames?.hours)}
           onClick={open}
         >
           <motion.input
@@ -210,7 +233,11 @@ export function SplitToEdit({
             borderTopRightRadius: isExpanded ? RADIUS : 0,
             borderBottomRightRadius: isExpanded ? RADIUS : 0,
           }}
-          className={cn(segmentClass, "will-change-transform")}
+          className={cn(
+            segmentClass,
+            "will-change-transform",
+            classNames?.minutes
+          )}
           onClick={open}
         >
           <motion.input
@@ -240,14 +267,20 @@ export function SplitToEdit({
             borderTopRightRadius: RADIUS,
             borderBottomRightRadius: RADIUS,
           }}
-          className="flex size-10 items-center justify-center bg-muted will-change-transform"
+          className={cn(
+            "flex size-10 items-center justify-center bg-muted will-change-transform",
+            classNames?.action
+          )}
         >
           <button
             type="button"
             disabled={disabled}
             aria-label={isExpanded ? saveLabel : editLabel}
             onClick={isExpanded ? save : open}
-            className="flex size-full cursor-pointer items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed"
+            className={cn(
+              "flex size-full cursor-pointer items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed",
+              classNames?.button
+            )}
             style={{ borderRadius: "inherit" }}
           >
             <AnimatePresence mode="popLayout" initial={false}>
@@ -260,9 +293,9 @@ export function SplitToEdit({
                 className="flex"
               >
                 {isExpanded ? (
-                  <CheckIcon className="size-5 text-muted-foreground" />
+                  <CheckIcon className={iconClass} />
                 ) : (
-                  <PencilSimpleIcon className="size-5 text-muted-foreground" />
+                  <PencilSimpleIcon className={iconClass} />
                 )}
               </motion.span>
             </AnimatePresence>
