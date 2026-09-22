@@ -11,7 +11,8 @@
   },
   "fonts": {
     "primary": "Gudea",
-    "emphasis": "IBM Plex Mono"
+    "emphasis": "IBM Plex Mono",
+    "body": "IBM Plex Mono"
   },
   "edges": "subtle",
   "overrides": {
@@ -27,7 +28,7 @@
     "accent-foreground": "#ffffff"
   },
   "fontSource": "bundled",
-  "fontTheme": "solar-violet",
+  "fontTheme": "solar-azul",
   "tokens": {
     "font-body-weight": "400",
     "background": "oklch(0.953 0.010 87.47)",

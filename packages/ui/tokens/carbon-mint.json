@@ -11,7 +11,8 @@
   },
   "fonts": {
     "primary": "Inter",
-    "emphasis": "New York"
+    "emphasis": "New York",
+    "body": "New York"
   },
   "edges": "strong",
   "overrides": {},

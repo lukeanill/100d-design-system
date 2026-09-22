@@ -10,8 +10,9 @@
     "secondary": "#5f5959"
   },
   "fonts": {
-    "primary": "AUTHENTIC Sans 60",
-    "emphasis": "Oranienbaum"
+    "primary": "Authentic Sans 60",
+    "emphasis": "Instrument Serif",
+    "body": "Authentic Sans 60"
   },
   "edges": "round",
   "overrides": {

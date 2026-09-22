@@ -10,8 +10,9 @@
     "secondary": "#96b4eb"
   },
   "fonts": {
-    "primary": "AUTHENTIC Sans 90",
-    "emphasis": "Lora"
+    "primary": "Authentic Sans 90",
+    "emphasis": "Lora",
+    "body": "Lora"
   },
   "edges": "strong",
   "overrides": {},

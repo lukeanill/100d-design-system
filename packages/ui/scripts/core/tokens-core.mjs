@@ -10,7 +10,7 @@ import { fmt, hexToOklch } from "../../tokens/lib/color.mjs"
 // Themes appear in the CSS in this order; anything else is appended alphabetically.
 export const ORDER = [
   "light", "dark", "electric-pulse", "acid-forest", "carbon-mint",
-  "solar-violet", "arctic-aurora", "strawberry-matcha", "metallic-mist",
+  "solar-azul", "arctic-aurora", "strawberry-matcha", "metallic-mist",
 ]
 
 export const START = "/* @tokens:start"

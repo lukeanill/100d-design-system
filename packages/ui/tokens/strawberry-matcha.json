@@ -10,8 +10,9 @@
     "secondary": "#d2eebc"
   },
   "fonts": {
-    "primary": "SF Pro Text",
-    "emphasis": "Playfair Display"
+    "primary": "MADE Gentle",
+    "emphasis": "Playfair Display",
+    "body": "Google Sans"
   },
   "edges": "strong",
   "overrides": {},

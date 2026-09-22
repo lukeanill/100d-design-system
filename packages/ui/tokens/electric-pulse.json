@@ -11,7 +11,8 @@
   },
   "fonts": {
     "primary": "Geist Mono",
-    "emphasis": "Geist"
+    "emphasis": "Geist",
+    "body": "Geist"
   },
   "edges": "strong",
   "overrides": {},

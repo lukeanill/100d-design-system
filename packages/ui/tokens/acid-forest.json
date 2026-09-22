@@ -11,7 +11,8 @@
   },
   "fonts": {
     "primary": "Migra",
-    "emphasis": "Koulen"
+    "emphasis": "MRK Maston",
+    "body": "Mulish"
   },
   "edges": "strong",
   "overrides": {},

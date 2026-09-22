@@ -22,7 +22,7 @@ export const colorThemes: ColorTheme[] = [
   { id: "metallic-mist", label: "Metallic Mist", fontTheme: "metallic-mist", primary: "oklch(0.538 0.228 276.05)", order: 10 },
   { id: "bumblebee", label: "Bumblebee", fontTheme: "bumblebee", primary: "oklch(0.000 0.000 0.00)", order: 4 },
   { id: "light", label: "Lighten Up", fontTheme: "chill-light", primary: "oklch(0.248 0.000 0.00)", order: 0 },
-  { id: "solar-azul", label: "Solar Azul", fontTheme: "solar-violet", primary: "oklch(0.568 0.221 265.35)", order: 3 },
+  { id: "solar-azul", label: "Solar Azul", fontTheme: "solar-azul", primary: "oklch(0.568 0.221 265.35)", order: 3 },
   { id: "night-violet", label: "Night Violet", fontTheme: "night-violet", primary: "oklch(0.787 0.059 313.08)", order: 6 },
 ]
 

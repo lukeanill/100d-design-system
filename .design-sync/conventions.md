@@ -13,7 +13,7 @@ import { FontThemeProvider } from "@workspace/ui/components/font-theme-provider"
 </ThemeProvider>
 ```
 
-This design system ships **9 named color themes** (each with its own font pairing), not just light/dark — `light`, `dark`, `electric-pulse`, `acid-forest`, `carbon-mint`, `solar-violet`, `arctic-aurora`, `strawberry-matcha`, `metallic-mist`. Pass one as `forcedTheme` (or omit it to follow system + a theme toggle). See `@workspace/ui/lib/theme-registry` for the full list and font pairings.
+This design system ships **11 named color themes** (each with its own font pairing), not just light/dark — `dark`, `electric-pulse`, `acid-forest`, `carbon-mint`, `arctic-aurora`, `strawberry-matcha`, `metallic-mist`, `bumblebee`, `light`, `solar-azul`, `night-violet`. Pass one as `forcedTheme` (or omit it to follow system + a theme toggle). See `@workspace/ui/lib/theme-registry` for the full list and font pairings.
 
 ## The styling idiom
 

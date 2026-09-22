@@ -11,7 +11,8 @@
   },
   "fonts": {
     "primary": "Grenze",
-    "emphasis": "Grenze Gotisch"
+    "emphasis": "Grenze Gotisch",
+    "body": "Spline Sans"
   },
   "edges": "strong",
   "overrides": {},
