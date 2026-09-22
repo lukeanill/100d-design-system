@@ -12,16 +12,24 @@ import { pullTheme, type PulledTheme } from "./api"
  * what it guessed and what it swapped rather than quietly filling the fields
  * and leaving you to notice.
  *
- * The preview is the site's own og:image and favicon rather than a screenshot:
- * a real screenshot needs a headless browser, which a serverless function
- * cannot practically run, and og:image is a real image the site chose to
- * represent itself.
+ * The preview is the screenshot the colours were read from, so what you see is
+ * what the seeds describe. When the screenshot fails it falls back to the
+ * site's og:image, and the summary says which the colours came from.
  */
-export function SiteImport({ onPulled }: { onPulled: (pulled: PulledTheme) => void }) {
+export function SiteImport({
+  onPulled,
+  confirm = false,
+}: {
+  onPulled: (pulled: PulledTheme) => void
+  /** On an existing theme, show what was found and wait for Apply rather
+   *  than overwriting a palette someone already chose. */
+  confirm?: boolean
+}) {
   const [url, setUrl] = useState("")
   const [result, setResult] = useState<PulledTheme | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const [applied, setApplied] = useState(false)
 
   const pull = async () => {
     if (!url.trim() || busy) return
@@ -30,7 +38,8 @@ export function SiteImport({ onPulled }: { onPulled: (pulled: PulledTheme) => vo
     try {
       const pulled = await pullTheme(url)
       setResult(pulled)
-      onPulled(pulled)
+      setApplied(!confirm)
+      if (!confirm) onPulled(pulled)
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not read that site.")
     } finally {
@@ -42,11 +51,18 @@ export function SiteImport({ onPulled }: { onPulled: (pulled: PulledTheme) => vo
     setUrl("")
     setResult(null)
     setError(null)
+    setApplied(false)
   }
 
   const summary = (pulled: PulledTheme) => {
     const colours = Object.values(pulled.seeds).filter(Boolean).length
-    const parts = [`Found ${colours} colour${colours === 1 ? "" : "s"} to review.`]
+    const from =
+      pulled.colorSource === "screenshot"
+        ? "from a screenshot of the page"
+        : pulled.colorSource === "image"
+          ? "from the site's preview image (the screenshot failed)"
+          : "from its CSS (the screenshot failed)"
+    const parts = [`Found ${colours} colour${colours === 1 ? "" : "s"} ${from}.`]
     if (pulled.substituted.length) {
       const swaps = pulled.substituted
         .map((s) => `${s.found} → ${s.using}`)
@@ -80,7 +96,7 @@ export function SiteImport({ onPulled }: { onPulled: (pulled: PulledTheme) => vo
           <Button onClick={reset}>Reset</Button>
         ) : (
           <Button onClick={pull} disabled={!url.trim() || busy}>
-            {busy ? "Reading…" : "Pull Theme"}
+            {busy ? "Taking a screenshot…" : "Pull Theme"}
           </Button>
         )}
       </div>
@@ -94,9 +110,9 @@ export function SiteImport({ onPulled }: { onPulled: (pulled: PulledTheme) => vo
       {result && (
         <div className="mt-6 flex flex-wrap items-start gap-6">
           <div className="flex shrink-0 gap-3">
-            {result.preview.ogImage && (
+            {(result.preview.screenshot ?? result.preview.ogImage) && (
               <img
-                src={result.preview.ogImage}
+                src={result.preview.screenshot ?? result.preview.ogImage ?? undefined}
                 alt=""
                 className="h-28 w-44 rounded-lg border border-border object-cover"
                 // a preview that 404s should leave a gap, not a broken icon
@@ -112,7 +128,35 @@ export function SiteImport({ onPulled }: { onPulled: (pulled: PulledTheme) => vo
               />
             )}
           </div>
-          <p className="min-w-56 flex-1 text-sm text-muted-foreground">{summary(result)}</p>
+          <div className="flex min-w-56 flex-1 flex-col gap-4">
+            <p className="text-sm text-muted-foreground">{summary(result)}</p>
+            <div className="flex flex-wrap items-center gap-3">
+              {(["background", "foreground", "primary", "secondary"] as const).map(
+                (role) =>
+                  result.seeds[role] && (
+                    <span key={role} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <span
+                        className="size-5 rounded-full border border-border"
+                        style={{ background: result.seeds[role] }}
+                      />
+                      <span className="capitalize">{role}</span>
+                      <code>{result.seeds[role]}</code>
+                    </span>
+                  )
+              )}
+              {!applied && (
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    onPulled(result)
+                    setApplied(true)
+                  }}
+                >
+                  Apply to this theme
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </section>

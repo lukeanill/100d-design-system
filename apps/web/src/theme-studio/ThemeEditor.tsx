@@ -50,15 +50,32 @@ export function ThemeEditor({
     [label]
   )
 
-  const generate = (nextOverrides = overrides) => {
-    if (!hasSeeds) return
-    setTokens(derivePalette({ ...seeds, edges, overrides: nextOverrides }))
+  const generate = ({
+    nextSeeds = seeds,
+    nextEdges = edges,
+    nextOverrides = overrides,
+  }: { nextSeeds?: Seeds; nextEdges?: string; nextOverrides?: Record<string, string> } = {}) => {
+    if (!SEED_FIELDS.every(({ key }) => Boolean(nextSeeds[key]))) return
+    setTokens(derivePalette({ ...nextSeeds, edges: nextEdges, overrides: nextOverrides }))
+  }
+
+  // Edits re-derive straight away, so the palette and preview always show the
+  // current seeds — there is nothing to remember to refresh.
+  const setSeed = (key: keyof Seeds, value: string) => {
+    const next = { ...seeds, [key]: value }
+    setSeeds(next)
+    generate({ nextSeeds: next })
+  }
+
+  const setEdgesAndDerive = (value: string) => {
+    setEdges(value)
+    generate({ nextEdges: value })
   }
 
   const override = (token: string, value: string) => {
     const next = { ...overrides, [token]: value }
     setOverrides(next)
-    generate(next)
+    generate({ nextOverrides: next })
   }
 
   return (
@@ -97,21 +114,20 @@ export function ThemeEditor({
         </div>
       </header>
 
-      {/* Only offered on a new theme. Pulling a site over one that already
-          exists would overwrite a palette someone chose, and the Reset here
-          clears the panel, not the edits it made. */}
-      {!theme && (
-        <SiteImport
-          onPulled={(pulled) => {
-            setSeeds((current) => ({ ...current, ...pulled.seeds }))
-            setFonts((current) => ({ ...current, ...pulled.fonts }))
-            // the pulled seeds are the point, so show the palette they make
-            if (SEED_FIELDS.every(({ key }) => Boolean(pulled.seeds[key]))) {
-              setTokens(derivePalette({ ...pulled.seeds, edges, overrides }))
-            }
-          }}
-        />
-      )}
+      {/* On a new theme a pull fills the fields straight away. On an existing
+          one it shows what it found and waits for Apply, so a palette someone
+          chose is never overwritten by accident. Themes on bundled faces keep
+          their fonts: those are set in font-theme-registry.ts, not here. */}
+      <SiteImport
+        confirm={Boolean(theme)}
+        onPulled={(pulled) => {
+          const nextSeeds = { ...seeds, ...pulled.seeds }
+          setSeeds(nextSeeds)
+          if (!bundled) setFonts((current) => ({ ...current, ...pulled.fonts }))
+          // the pulled seeds are the point, so show the palette they make
+          generate({ nextSeeds })
+        }}
+      />
 
       <div className="grid gap-10 md:grid-cols-3">
         <section className="flex flex-col gap-4">
@@ -121,7 +137,7 @@ export function ThemeEditor({
               key={key}
               label={fieldLabel}
               value={seeds[key]}
-              onChange={(value) => setSeeds((s) => ({ ...s, [key]: value }))}
+              onChange={(value) => setSeed(key, value)}
             />
           ))}
         </section>
@@ -157,7 +173,7 @@ export function ThemeEditor({
 
         <section className="flex flex-col gap-4">
           <h2 className="text-xl font-light">Edges</h2>
-          <EdgePicker value={edges} onChange={setEdges} />
+          <EdgePicker value={edges} onChange={setEdgesAndDerive} />
         </section>
       </div>
 
@@ -172,7 +188,6 @@ export function ThemeEditor({
         tokens={tokens}
         fonts={fonts}
         generated={Object.keys(tokens).length > 0}
-        onRefresh={() => generate()}
       />
     </div>
   )

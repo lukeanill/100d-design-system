@@ -15,7 +15,19 @@
 import dns from "node:dns/promises"
 import { isIP } from "node:net"
 
-import { extractSiteTheme } from "./site-theme.mjs"
+import jpeg from "jpeg-js"
+import { PNG } from "pngjs"
+
+import {
+  extractSiteTheme,
+  fontsFromStyles,
+  googleAlternative,
+  colorsIn,
+  cssColorRanking,
+  mixSeeds,
+  rolesFromImage,
+  snapToDeclared,
+} from "./site-theme.mjs"
 
 const UA = "Mozilla/5.0 (compatible; 100DS-ThemeStudio/1.0; +https://www.lukeai.space)"
 
@@ -32,6 +44,7 @@ const LIMITS = {
   sheet: 400_000,
   sheets: 24,
   totalCss: 4_000_000,
+  image: 8_000_000,
   ms: 8000,
 }
 
@@ -110,10 +123,43 @@ const withTimeout = async (url, ms) => {
 const capped = async (res, limit) => (await res.text()).slice(0, limit)
 
 /**
+ * Fetch and decode the site's preview image to RGBA, or null when there is
+ * none or it is in a format we do not read (WebP, AVIF, SVG). JPEG and PNG
+ * cover nearly every og:image; the decoders are pure JS so the serverless
+ * function needs no native binaries.
+ */
+async function loadImage(href) {
+  try {
+    await assertPublicUrl(href)
+    const res = await withTimeout(href, LIMITS.ms)
+    if (!res.ok) return null
+    const bytes = Buffer.from(await res.arrayBuffer())
+    if (bytes.length > LIMITS.image) return null
+    return decode(bytes)
+  } catch {
+    // an unreadable image falls back to reading the CSS, not to an error
+    return null
+  }
+}
+
+/** JPEG or PNG bytes to RGBA pixels; null for any other format. */
+function decode(bytes) {
+  try {
+    if (bytes[0] === 0xff && bytes[1] === 0xd8) {
+      return jpeg.decode(bytes, { useTArray: true, formatAsRGBA: true, maxResolutionInMP: 40 })
+    }
+    if (bytes.subarray(0, 4).toString("hex") === "89504e47") return PNG.sync.read(bytes)
+  } catch {
+    // a corrupt image is treated like a missing one
+  }
+  return null
+}
+
+/**
  * Read a site and guess its theme.
  * @returns the shape extractSiteTheme returns, plus the URL actually landed on.
  */
-export async function fetchSiteTheme(raw) {
+export async function fetchSiteTheme(raw, { screenshot = true } = {}) {
   const url = await assertPublicUrl(raw)
 
   const res = await withTimeout(url.href, LIMITS.ms)
@@ -130,6 +176,9 @@ export async function fetchSiteTheme(raw) {
   const hrefs = [...html.matchAll(/<link[^>]+rel=["']stylesheet["'][^>]*>/gi)]
     .map((tag) => /href\s*=\s*["']([^"']+)["']/i.exec(tag[0])?.[1])
     .filter(Boolean)
+    // reset sheets are browser defaults, not the site's design: normalize.css
+    // alone contributes the yellow it gives <mark>
+    .filter((href) => !/(^|\/)(normalize|reset|sanitize)(\.min)?\.css/i.test(href))
     .slice(0, LIMITS.sheets)
 
   const sheets = await Promise.allSettled(
@@ -156,5 +205,71 @@ export async function fetchSiteTheme(raw) {
     css += "\n" + block.slice(0, LIMITS.sheet)
   }
 
-  return { ...extractSiteTheme({ html, css, url: landed }), url: landed, sheets: hrefs.length }
+  const found = extractSiteTheme({ html, css, url: landed })
+
+  // The screenshot decides which colours are on screen; the styles the page
+  // declares supply their exact values. Without a screenshot, the og:image
+  // stands in, and the CSS reading fills any role left over.
+  const shot = screenshot ? await (await import("./site-shot.mjs")).screenshotSite(landed) : null
+  const image = shot
+    ? decode(shot.pixels)
+    : found.preview.ogImage
+      ? await loadImage(found.preview.ogImage)
+      : null
+  const pictured = image ? rolesFromImage(image) : {}
+  const declared = new Set([...(shot?.styles?.palette ?? []), ...colorsIn(css)])
+  const exact = snapToDeclared(pictured, declared)
+  // A primary or secondary the site never declares came from a photograph,
+  // not a token; the declared ink or page colour stands in, as it does on any
+  // site with no second colour.
+  if (shot?.styles) {
+    if (exact.primary && !declared.has(exact.primary)) exact.primary = exact.foreground
+    if (exact.secondary && !declared.has(exact.secondary)) exact.secondary = exact.background
+  }
+  // then the CSS: where the screenshot shows no accent, the one the site's
+  // CSS uses most steps in
+  const mixed = shot ? mixSeeds(
+        exact,
+        cssColorRanking(html, css),
+        shot.styles?.palette,
+        shot.styles?.applied.map((c) => c.hex)
+      ) : exact
+  const seeds = { ...found.seeds }
+  for (const [role, hex] of Object.entries(mixed)) if (hex) seeds[role] = hex
+
+  // The exact families the page renders in. The editor needs faces it can
+  // load, so each is swapped for a Google stand-in when it is not one — and
+  // both names are kept, so the record says what the site really uses.
+  const exactFonts = fontsFromStyles(shot?.styles)
+  const fonts = { ...found.fonts }
+  // when the page's real families are known, only their swaps are worth
+  // reporting — the CSS reading also lists fallbacks like Segoe UI
+  const substituted = exactFonts.body ? [] : [...found.substituted]
+  if (exactFonts.body) {
+    for (const [role, family] of Object.entries(exactFonts)) {
+      const alt = googleAlternative(family, found.googleFamilies)
+      fonts[role] = alt ?? family
+      if (alt && !substituted.some((s) => s.found === family)) substituted.push({ found: family, using: alt })
+    }
+  }
+
+  return {
+    ...found,
+    seeds,
+    fonts,
+    exactFonts,
+    substituted,
+    /** Which seeds matched a colour the site declares exactly, and which were sampled. */
+    exactSeeds: Object.fromEntries(
+      Object.entries(exact).map(([role, hex]) => [role, declared.has(hex)])
+    ),
+    styles: shot?.styles ?? null,
+    preview: {
+      ...found.preview,
+      screenshot: shot ? `data:image/jpeg;base64,${shot.image.toString("base64")}` : null,
+    },
+    colorSource: shot ? "screenshot" : pictured.background ? "image" : "css",
+    url: landed,
+    sheets: hrefs.length,
+  }
 }

@@ -85,7 +85,9 @@ export type PulledTheme = {
   customFamilies: string[]
   /** What was swapped for what, so the studio can say so rather than hide it. */
   substituted: { found: string; using: string }[]
-  preview: { ogImage: string | null; favicon: string | null }
+  preview: { ogImage: string | null; favicon: string | null; screenshot: string | null }
+  /** Where the seeds were read from, best first. */
+  colorSource: "screenshot" | "image" | "css"
   sheets: number
 }
 

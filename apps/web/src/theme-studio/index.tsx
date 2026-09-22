@@ -3,6 +3,12 @@ import { useEffect, useState } from "react"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import {
+  ToastList,
+  ToastProvider,
+  ToastViewport,
+  toast,
+} from "@workspace/ui/components/toast"
+import {
   clearKey,
   deleteTheme,
   listThemes,
@@ -60,7 +66,11 @@ function Lock({ onUnlock }: { onUnlock: () => void }) {
           }}
           autoFocus
         />
-        {error && <p className="text-sm text-destructive whitespace-pre-line">{error}</p>}
+        {error && (
+          <p className="text-sm whitespace-pre-line text-destructive">
+            {error}
+          </p>
+        )}
         <Button type="submit">Unlock</Button>
       </form>
     </div>
@@ -71,14 +81,13 @@ export function ThemeStudio() {
   const [unlocked, setUnlocked] = useState(false)
   const [themes, setThemes] = useState<Theme[]>([])
   const [editing, setEditing] = useState<Theme | null | "new">(null)
-  const [status, setStatus] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
     if (!unlocked) return
     listThemes()
       .then((d) => setThemes(d.themes))
-      .catch((e) => setStatus(e.message))
+      .catch((e) => toast.add({ type: "error", title: e.message }))
   }, [unlocked])
 
   /* A save on the deployed studio is not finished when the request returns —
@@ -88,22 +97,33 @@ export function ThemeStudio() {
    * Contrast rides along as a note. It never stops a save, but the numbers are
    * worth seeing, so they are appended rather than hidden. */
   const outcome = (data: ThemesResponse, message: string) => {
-    const saved = data.deploying
-      ? `${message} Committed to ${data.branch ?? "the repo"} — the site rebuilds in a minute or two.`
-      : message
-    return data.belowContrast && data.contrast ? `${saved}\n\n${data.contrast}` : saved
+    const deployed = data.deploying
+      ? `Committed to ${data.branch ?? "the repo"} — the site rebuilds in a minute or two.`
+      : undefined
+    const contrast =
+      data.belowContrast && data.contrast ? data.contrast : undefined
+    return {
+      title: message,
+      description:
+        [deployed, contrast].filter(Boolean).join("\n\n") || undefined,
+    }
   }
 
-  const run = async (action: () => Promise<ThemesResponse>, message: string) => {
+  const run = async (
+    action: () => Promise<ThemesResponse>,
+    message: string
+  ) => {
     setBusy(true)
-    setStatus(null)
     try {
       const data = await action()
       setThemes(data.themes)
-      setStatus(outcome(data, message))
+      toast.add({ type: "success", ...outcome(data, message) })
       return true
     } catch (e) {
-      setStatus(e instanceof Error ? e.message : "Something went wrong.")
+      toast.add({
+        type: "error",
+        title: e instanceof Error ? e.message : "Something went wrong.",
+      })
       return false
     } finally {
       setBusy(false)
@@ -121,39 +141,48 @@ export function ThemeStudio() {
   ) as React.CSSProperties
 
   return (
-    <div style={lightStyle} className="min-h-screen bg-background text-foreground">
-      {editing ? (
-        <ThemeEditor
-          theme={editing === "new" ? null : editing}
-          busy={busy}
-          onCancel={() => setEditing(null)}
-          onSave={async (theme) => {
-            const ok = await run(
-              () => saveTheme(theme),
-              `Saved ${theme.label ?? theme.name}.`
-            )
-            if (ok) setEditing(null)
-          }}
-        />
-      ) : (
-        <ThemeList
-          themes={themes}
-          onNew={() => setEditing("new")}
-          onEdit={(theme) => setEditing(theme)}
-          onDelete={(theme) => run(() => deleteTheme(theme.name), `Deleted ${theme.label}.`)}
-          onReorder={(names) => {
-            // optimistic: the rows should follow the pointer, not the round trip
-            setThemes((prev) => names.flatMap((n) => prev.find((t) => t.name === n) ?? []))
-            void run(() => reorderThemes(names), "Order saved.")
-          }}
-        />
-      )}
+    <ToastProvider toastManager={toast}>
+      <div
+        style={lightStyle}
+        className="min-h-screen bg-background text-foreground"
+      >
+        {editing ? (
+          <ThemeEditor
+            theme={editing === "new" ? null : editing}
+            busy={busy}
+            onCancel={() => setEditing(null)}
+            onSave={async (theme) => {
+              const ok = await run(
+                () => saveTheme(theme),
+                `Saved ${theme.label ?? theme.name}.`
+              )
+              if (ok) setEditing(null)
+            }}
+          />
+        ) : (
+          <ThemeList
+            themes={themes}
+            onNew={() => setEditing("new")}
+            onEdit={(theme) => setEditing(theme)}
+            onDelete={(theme) =>
+              run(() => deleteTheme(theme.name), `Deleted ${theme.label}.`)
+            }
+            onReorder={(names) => {
+              // optimistic: the rows should follow the pointer, not the round trip
+              setThemes((prev) =>
+                names.flatMap((n) => prev.find((t) => t.name === n) ?? [])
+              )
+              void run(() => reorderThemes(names), "Order saved.")
+            }}
+          />
+        )}
 
-      {status && (
-        <p className="mx-auto max-w-2xl whitespace-pre-line pb-10 text-center text-sm text-muted-foreground" role="status">
-          {status}
-        </p>
-      )}
-    </div>
+        {/* Rendered here rather than portalled to <body> so toasts pick up the
+          studio's light tokens instead of the app's current theme. */}
+        <ToastViewport>
+          <ToastList />
+        </ToastViewport>
+      </div>
+    </ToastProvider>
   )
 }

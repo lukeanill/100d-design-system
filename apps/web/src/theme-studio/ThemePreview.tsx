@@ -11,12 +11,10 @@ import type { Fonts } from "./api"
 export function ThemePreview({
   tokens,
   fonts,
-  onRefresh,
   generated,
 }: {
   tokens: Record<string, string>
   fonts: Fonts
-  onRefresh: () => void
   generated: boolean
 }) {
   const style = Object.fromEntries(
@@ -25,16 +23,10 @@ export function ThemePreview({
 
   return (
     <section className="rounded-2xl bg-card p-6 shadow-xs">
-      <div className="flex justify-end">
-        <Button variant="outline" size="sm" onClick={onRefresh} disabled={!generated}>
-          {generated ? "Refresh" : "Generate Preview"}
-        </Button>
-      </div>
-
       {generated ? (
         <div
           style={{ ...style, fontFamily: fonts.body ? `'${fonts.body}', sans-serif` : undefined }}
-          className="mt-6 flex flex-col gap-5 rounded-xl bg-background p-6 text-foreground"
+          className="flex flex-col gap-5 rounded-xl bg-background p-6 text-foreground"
         >
           <h2
             className="text-3xl"
@@ -69,7 +61,7 @@ export function ThemePreview({
           <Input placeholder="Input on the card surface" aria-label="Preview input" />
         </div>
       ) : (
-        <p className="mt-6 text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Generate a palette, then preview it against real components.
         </p>
       )}

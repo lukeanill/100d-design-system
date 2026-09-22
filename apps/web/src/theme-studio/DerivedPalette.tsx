@@ -19,7 +19,7 @@ const swatchOf = (tokens: Record<string, string>, token: string) => {
 
 /**
  * The twelve derived tokens, each editable. Editing one records an override so
- * a later Refresh re-derives everything else around it instead of discarding it.
+ * later seed edits re-derive everything else around it instead of discarding it.
  */
 export function DerivedPalette({
   tokens,
@@ -39,14 +39,18 @@ export function DerivedPalette({
 
   return (
     <section className="rounded-2xl bg-card p-6 shadow-xs">
-      <div className="flex justify-end">
-        <Button variant="outline" size="sm" onClick={onGenerate} disabled={!hasSeeds}>
-          {generated ? "Refresh" : "Generate Palette"}
-        </Button>
-      </div>
+      {/* Seed and edge edits re-derive on their own, so the button is only
+          needed to make the first palette. */}
+      {!generated && (
+        <div className="flex justify-end">
+          <Button variant="outline" size="sm" onClick={onGenerate} disabled={!hasSeeds}>
+            Generate Palette
+          </Button>
+        </div>
+      )}
 
       {generated ? (
-        <div className="mt-6 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
           {DERIVED_SWATCHES.map(({ token, label }: { token: string; label: string }) => {
             const swatch = swatchOf(tokens, token)
             const failure = failureFor(token)

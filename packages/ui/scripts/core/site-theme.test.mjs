@@ -18,10 +18,14 @@ import {
   familiesIn,
   googleAlternative,
   googleFamiliesIn,
+  mixSeeds,
+  namedColorsIn,
   selfHostedFamiliesIn,
   shapeOf,
+  snapToDeclared,
 } from "./site-theme.mjs"
 import { assertPublicUrl } from "./site-fetch.mjs"
+import { hexToOklch } from "../../tokens/lib/color.mjs"
 
 const HTML = `<!doctype html><html><head>
   <meta name="theme-color" content="#1a7f4b">
@@ -53,6 +57,73 @@ test("roles land on the extremes of lightness and the most chromatic", () => {
   assert.equal(seeds.background, "#ffffff", "the lightest is the page")
   assert.equal(seeds.foreground, "#111111", "the darkest is the ink")
   assert.equal(seeds.primary, "#1a7f4b", "theme-color wins the brand slot")
+})
+
+test("the brand is the colour a site uses, not the loudest one it mentions", () => {
+  // modelled on hellomuller.com: an orange on every button and named as a
+  // variable, one magenta badge, and a reset's yellow <mark>
+  const css = `
+    :root { --hm-orange: #ff4800; }
+    mark { background: #ff0; }
+    body { background: #fff; color: #000; }
+    .button, .nav, .hero, .tag { background-color: #ff4800; }
+    .footer { background-color: #ff4800; border-color: #ddd; }
+    .badge { background-color: #e9048a; }
+    .card { border: 1px solid #ddd; } .rule { border-color: #ddd; }
+  `
+  const seeds = assignRoles([...colorsIn(css), ...namedColorsIn(css)])
+  assert.equal(seeds.primary, "#ff4800", "the orange used everywhere, not the one-off magenta")
+  assert.notEqual(seeds.secondary, "#ffff00", "a colour used once is noise, not a secondary")
+  assert.notEqual(seeds.secondary, "#e9048a", "a colour used once is noise, not a secondary")
+  assert.equal(seeds.secondary, "#dddddd", "with no second colour, the most used grey stands in")
+})
+
+test("the page colour is what <body> is painted in, not the lightest colour around", () => {
+  // Webflow's own sheet sets body to white; the site's class on <body> wins
+  const html = `<html><body class="body"><h1>hello</h1></body></html>`
+  const css = `
+    body { background-color: #fff; color: #333; }
+    .body { background-color: #ff4800; }
+    body { color: #000; }
+    .card { background: #fafafa; }
+  `
+  const out = extractSiteTheme({ html, css })
+  assert.equal(out.seeds.background, "#ff4800", "the class on <body> beats the bare body rule")
+  assert.equal(out.seeds.foreground, "#000000", "the later of two equal rules wins")
+  assert.equal(out.seeds.primary, "#000000", "with no other brand colour, the ink is the primary")
+})
+
+test("sampled colours snap to the exact colour the site declares", () => {
+  // what capture does to flat colours: JPEG shifts, near-blacks, photo greys
+  const sampled = { background: "#fe4800", foreground: "#010101", primary: "#010102", secondary: "#292926" }
+  const snapped = snapToDeclared(sampled, ["#ff4800", "#000000", "#ffffff"])
+  assert.equal(snapped.background, "#ff4800")
+  assert.equal(snapped.foreground, "#000000", "a near-black is the declared black")
+  assert.equal(snapped.primary, "#000000")
+  assert.equal(snapped.secondary, "#292926", "nothing declared is that close, so it stays sampled")
+})
+
+test("the css supplies an accent the screenshot does not show, if the page applies it", () => {
+  const seeds = { background: "#ffffff", foreground: "#000000", primary: "#000000", secondary: "#ffffff" }
+  const ranking = [
+    { hex: "#0078ff", ...hexToOklch("#0078ff"), count: 8 }, // a platform popup's blue
+    { hex: "#fdd131", ...hexToOklch("#fdd131"), count: 6 },
+  ]
+  const mixed = mixSeeds(seeds, ranking, ["#ffffff", "#000000"], ["#ffffff", "#000000", "#fdd131"])
+  assert.equal(mixed.primary, "#fdd131", "applied on the page, so it counts")
+  assert.notEqual(mixed.secondary, "#0078ff", "declared but never applied is not the site's colour")
+})
+
+test("a coloured ink is the primary, not replaced by the css", () => {
+  const seeds = { background: "#fdf7ec", foreground: "#ff451c", primary: "#ff451c", secondary: "#fdf7ec" }
+  const ranking = [{ hex: "#ff8f77", ...hexToOklch("#ff8f77"), count: 9 }]
+  assert.equal(mixSeeds(seeds, ranking, [], ["#ff8f77"]).primary, "#ff451c")
+})
+
+test("ink the same as the page is replaced by the declared colour that stands out", () => {
+  const seeds = { background: "#000000", foreground: "#000000", primary: "#000000", secondary: "#000000" }
+  const mixed = mixSeeds(seeds, [], ["#000000", "#f4ffd1"], ["#000000", "#f4ffd1"])
+  assert.equal(mixed.foreground, "#f4ffd1")
 })
 
 test("a Google family loaded by the page is found", () => {
@@ -197,7 +268,7 @@ test("fonts in a linked stylesheet are found, and sheets fetch together", async 
     "https://example.com/b.css": "h1{font-family:'Tiempos Headline',serif}",
   })
 
-  const out = await fetchSiteTheme("https://example.com")
+  const out = await fetchSiteTheme("https://example.com", { screenshot: false })
 
   assert.equal(out.sheets, 2, "both stylesheets were discovered")
   assert.ok(seen.includes("https://example.com/a.css"), "a.css fetched")
@@ -223,6 +294,6 @@ test("an unreachable stylesheet does not lose the rest of the read", async (t) =
     "https://example.com/ok.css": "body{background:#101010;color:#fafafa}",
   })
 
-  const out = await fetchSiteTheme("https://example.com")
-  assert.equal(out.seeds.background, "#fafafa", "the reachable sheet still read")
+  const out = await fetchSiteTheme("https://example.com", { screenshot: false })
+  assert.equal(out.seeds.background, "#101010", "the reachable sheet still read")
 })

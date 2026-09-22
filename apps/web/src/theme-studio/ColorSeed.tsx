@@ -112,7 +112,7 @@ export function EdgePicker({
               style={{
                 borderRadius: radius,
                 background: selected ? "var(--foreground)" : "var(--card)",
-                borderColor: selected ? "var(--foreground)" : "var(--border)",
+                borderColor: "var(--primary)",
               }}
             />
           </div>

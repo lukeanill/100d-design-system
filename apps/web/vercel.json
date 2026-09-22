@@ -3,6 +3,14 @@
   "buildCommand": "pnpm --filter web run build && STORYBOOK_BASE_PATH=/storybook/ pnpm --filter web run stories:build && rm -rf dist/storybook && mkdir -p dist/storybook && cp -r storybook-static/. dist/storybook/",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/:path((?!api/|storybook).*)", "destination": "/index.html" }
-  ]
+    {
+      "source": "/:path((?!api/|storybook).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/pull-theme.mjs": {
+      "maxDuration": 60
+    }
+  }
 }

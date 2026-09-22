@@ -11,7 +11,7 @@
  * can be trusted more than one counted out of a heap of declarations.
  */
 
-import { hexToOklch } from "../../tokens/lib/color.mjs"
+import { contrast, hexToOklch, rgbToOklch } from "../../tokens/lib/color.mjs"
 
 /* ---------------------------------------------------------------- colours -- */
 
@@ -45,10 +45,28 @@ export function colorsIn(css) {
   return out
 }
 
+/**
+ * Colours a site names as custom properties, repeated so they count for more.
+ *
+ * A colour someone bothered to name (`--hm-orange`, `--brand-primary`) is part
+ * of the design; one written once inline is usually an accident of a component.
+ * A name that says what the colour is for counts for more again.
+ */
+export function namedColorsIn(css) {
+  const out = []
+  for (const [, name, value] of css.matchAll(/(--[\w-]+)\s*:\s*([^;}]+)/g)) {
+    const found = colorsIn(value)
+    if (found.length !== 1) continue
+    const weight = /brand|primary|accent|main|key|highlight/i.test(name) ? 8 : 3
+    for (let i = 0; i < weight; i++) out.push(found[0])
+  }
+  return out
+}
+
 const describe = (hex) => {
   try {
-    const { L, C } = hexToOklch(hex)
-    return { hex, L, C }
+    const { L, C, H } = hexToOklch(hex)
+    return { hex, L, C, H }
   } catch {
     return null
   }
@@ -220,38 +238,194 @@ const absolute = (href, base) => {
 /* ----------------------------------------------------------------- roles -- */
 
 /**
+ * The colours the page itself is painted in: the background and text colour
+ * set on <html>, <body> or the classes and ids those two tags carry.
+ *
+ * Lightness is a poor guess at the page colour — hellomuller.com is solid
+ * orange, but a framework stylesheet's `body { background: #fff }` made white
+ * the "lightest" answer. The rule that actually wins on <body> is the answer.
+ * Of the rules that match, the most specific wins and, between equals, the
+ * later one, as in the cascade.
+ */
+export function pageColors(html, css) {
+  const tagAttr = (tag, attr) =>
+    new RegExp(`<${tag}\\b[^>]*\\b${attr}\\s*=\\s*["']([^"']+)["']`, "i").exec(html)?.[1] ?? ""
+  const specificity = new Map([["html", 1], ["body", 1], [":root", 1]])
+  for (const tag of ["html", "body"]) {
+    for (const cls of tagAttr(tag, "class").split(/\s+/).filter(Boolean)) {
+      specificity.set(`.${cls}`, 10).set(`${tag}.${cls}`, 11)
+    }
+    const id = tagAttr(tag, "id").trim()
+    if (id) specificity.set(`#${id}`, 100)
+  }
+
+  const best = { background: null, foreground: null }
+  const consider = (role, hex, score) => {
+    if (hex && (!best[role] || score >= best[role].score)) best[role] = { hex, score }
+  }
+  // A scan rather than a regex: /([^{}]+)\{/ backtracks quadratically on a
+  // long brace-free run, and one 950KB page held the function for minutes.
+  for (const chunk of css.split("}")) {
+    const open = chunk.lastIndexOf("{")
+    if (open < 0) continue
+    const body = chunk.slice(open + 1)
+    const prelude = chunk.slice(0, open)
+    // inside @media the chunk reads "@media … { .a", so take what follows it
+    const selectors = prelude.slice(prelude.lastIndexOf("{") + 1)
+    const score = Math.max(
+      0,
+      ...selectors.split(",").map((sel) => specificity.get(sel.trim()) ?? 0)
+    )
+    if (!score) continue
+    const background = /(?:^|;|\s)background(?:-color)?\s*:\s*([^;]+)/i.exec(body)?.[1]
+    const color = /(?:^|;|\s)color\s*:\s*([^;]+)/i.exec(body)?.[1]
+    consider("background", background && colorsIn(background)[0], score)
+    consider("foreground", color && colorsIn(color)[0], score)
+  }
+  return { background: best.background?.hex, foreground: best.foreground?.hex }
+}
+
+/**
+ * The colours a site's CSS actually uses, most used first, each with its count.
+ * Named custom properties count extra (see namedColorsIn). Tailwind's own
+ * plumbing — `--tw-ring-color` and friends, set on every element whether used
+ * or not — is left out, or its default blue would outrank any brand.
+ */
+export function cssColorRanking(html, css) {
+  const clean = (text) => text.replace(/--tw-[\w-]+\s*:[^;}]*/g, "")
+  const counts = new Map()
+  for (const hex of [...colorsIn(clean(`${html}\n${css}`)), ...namedColorsIn(clean(css))]) {
+    counts.set(hex, (counts.get(hex) ?? 0) + 1)
+  }
+  return [...counts]
+    .map(([hex, count]) => ({ ...describe(hex), count }))
+    .filter((c) => c.hex)
+    .sort((a, b) => b.count - a.count)
+}
+
+/**
+ * Primary and secondary from both sources. The screenshot knows what is on
+ * screen; the CSS knows what the site uses beyond its first screen — the
+ * accent on buttons further down, a hover, a tag. So a colour the screenshot
+ * shows wins, and where it shows none (it only found the page and its ink),
+ * the CSS's most used colour steps in, preferring one that is on the first
+ * screen as well.
+ *
+ * @param seeds    the four seeds from the screenshot, already exact
+ * @param ranking  cssColorRanking(html, css)
+ * @param onScreen colours declared by elements on the first screen
+ * @param applied  colours applied to any element on the page; when given, a
+ *                 CSS colour must be one of them — declared is not enough
+ */
+export function mixSeeds(seeds, ranking, onScreen = [], applied = null) {
+  const bg = seeds.background && describe(seeds.background)
+  if (!bg) return seeds
+  // Ink that is barely distinguishable from the page means the screenshot
+  // caught the page before its text (a preloader, a fade-in). The colour
+  // declared on screen that stands out most against the page is the ink.
+  let fg = seeds.foreground && describe(seeds.foreground)
+  if (!fg || contrast(fg, bg) < 1.5) {
+    const ink = onScreen
+      .map(describe)
+      .filter(Boolean)
+      .sort((a, b) => contrast(b, bg) - contrast(a, bg))[0]
+    if (ink && contrast(ink, bg) >= 1.5) {
+      if (seeds.primary === seeds.foreground) seeds = { ...seeds, primary: ink.hex }
+      seeds = { ...seeds, foreground: ink.hex }
+      fg = ink
+    }
+  }
+  const visible = new Set(onScreen)
+  const used = applied && new Set(applied)
+  const distinct = (c, ...others) =>
+    others.every((o) => !o || (c.hex !== o.hex && labGap(c, o) >= 0.1))
+  // a colour, used on purpose (more than a stray declaration or two), and not
+  // the page or its ink
+  const accents = ranking
+    .filter(
+      (c) =>
+        c.C >= 0.04 &&
+        (visible.has(c.hex) || (used ? used.has(c.hex) : c.count >= 3)) &&
+        distinct(c, bg, fg)
+    )
+    .sort((a, b) => Number(visible.has(b.hex)) - Number(visible.has(a.hex)) || b.count - a.count)
+
+  const out = { ...seeds }
+  // the ink counts as shown when it is itself a colour — POV's orange type
+  const shownPrimary =
+    seeds.primary && (seeds.primary !== seeds.foreground || (fg && fg.C >= 0.1))
+  const primary = shownPrimary ? describe(seeds.primary) : accents[0]
+  if (primary) out.primary = primary.hex
+
+  const shownSecondary =
+    seeds.secondary && seeds.secondary !== seeds.background && seeds.secondary !== seeds.foreground
+  if (!shownSecondary) {
+    const next = accents.find((c) => primary && distinct(c, primary))
+    if (next) out.secondary = next.hex
+  }
+  return out
+}
+
+/** Degrees between two hues, the short way round. */
+const hueGap = (a, b) => {
+  const d = Math.abs((a ?? 0) - (b ?? 0)) % 360
+  return d > 180 ? 360 - d : d
+}
+
+/**
  * Sort candidate colours into the four seeds the studio asks for.
  *
+ * `hexes` is every colour occurrence, duplicates included — how often a colour
+ * is used is the best evidence of whether it is the brand or an accident.
+ * Picking by chroma alone let a one-off magenta badge, or the yellow that
+ * normalize.css gives <mark>, beat an orange used on every button.
+ *
  * Background and foreground are the extremes of lightness — a page is mostly
- * one and reads in the other. Primary and secondary are the most chromatic
- * colours left, because that is what a brand colour is: the thing that is not
- * grey. Hues are kept apart so a brand does not fill both slots with two
- * shades of itself.
+ * one and reads in the other. Primary is the most used colour that is not grey.
+ * Secondary is the next one used often enough to be deliberate and far enough
+ * away in hue or lightness not to be the brand twice; when a site has no second
+ * colour, which is common, it falls back to the site's most used grey rather
+ * than inventing one out of the noise.
  */
-export function assignRoles(hexes, { themeColor } = {}) {
-  const seen = new Set()
+export function assignRoles(hexes, { themeColor, page = {} } = {}) {
+  const counts = new Map()
+  for (const hex of hexes) counts.set(hex, (counts.get(hex) ?? 0) + 1)
+
   const colors = []
-  for (const hex of hexes) {
-    if (seen.has(hex)) continue
-    seen.add(hex)
+  for (const [hex, count] of counts) {
     const d = describe(hex)
-    if (d) colors.push(d)
+    if (d) colors.push({ ...d, count })
   }
   if (!colors.length) return {}
 
+  // what <body> is painted in, when the CSS says; the extremes of lightness
+  // otherwise, since a page is mostly one and reads in the other
+  const known = (hex) => (hex ? (colors.find((c) => c.hex === hex) ?? describe(hex)) : null)
   const byLight = [...colors].sort((a, b) => b.L - a.L)
-  const background = byLight[0]
-  const foreground = byLight[byLight.length - 1]
+  const background = known(page.background) ?? byLight[0]
+  const foreground = known(page.foreground) ?? byLight[byLight.length - 1]
+  const rest = colors.filter((c) => c.hex !== background.hex && c.hex !== foreground.hex)
+  const byUse = (a, b) => b.count - a.count || b.C - a.C
 
-  const chromatic = colors
-    .filter((c) => c.C >= 0.04 && c !== background && c !== foreground)
-    .sort((a, b) => b.C - a.C)
+  const chromatic = rest.filter((c) => c.C >= 0.04).sort(byUse)
+  // theme-color tints the browser's chrome; on dark sites that is often a
+  // near-black, which says nothing about the brand, so only a colour counts
+  const described = themeColor ? describe(themeColor.toLowerCase()) : null
+  const themed = described && described.C >= 0.04 ? described : null
+  // a brand colour is used more than a couple of times; when the site's only
+  // colour is its background, the ink it sets on it is the primary instead
+  const primary = themed
+    ? (colors.find((c) => c.hex === themed.hex) ?? { ...themed, count: 0 })
+    : (chromatic.find((c) => c.count >= 3) ?? foreground)
 
-  const primary = themeColor ? describe(themeColor) ?? chromatic[0] : chromatic[0]
-  // a different hue, so the two seeds are not one brand colour twice
-  const secondary = chromatic.find(
-    (c) => c !== primary && (!primary || Math.abs(c.L - primary.L) > 0.12)
-  )
+  const enough = Math.max(2, (primary?.count ?? 0) * 0.25)
+  const secondary =
+    chromatic.find(
+      (c) =>
+        c.hex !== primary?.hex &&
+        c.count >= enough &&
+        (!primary || hueGap(c.H, primary.H) >= 40 || Math.abs(c.L - primary.L) > 0.25)
+    ) ?? rest.filter((c) => c.C < 0.04 && c.hex !== primary?.hex).sort(byUse)[0]
 
   return {
     background: background?.hex,
@@ -259,6 +433,132 @@ export function assignRoles(hexes, { themeColor } = {}) {
     primary: primary?.hex,
     secondary: secondary?.hex,
   }
+}
+
+/* ----------------------------------------------------------------- image -- */
+
+/** Distance between two OKLCH colours, in OKLab. */
+const labGap = (a, b) => {
+  const ab = (c) => [c.C * Math.cos((c.H * Math.PI) / 180), c.C * Math.sin((c.H * Math.PI) / 180)]
+  const [a1, b1] = ab(a)
+  const [a2, b2] = ab(b)
+  return Math.hypot(a.L - b.L, a1 - a2, b1 - b2)
+}
+
+/**
+ * The colours an image is made of, largest area first, each with its share.
+ *
+ * Pixels are bucketed coarsely, then buckets that look alike are merged, so a
+ * gradient or JPEG noise reads as one colour rather than forty near-misses.
+ */
+export function imageColors({ data, width, height }) {
+  const total = width * height
+  const step = Math.max(1, Math.floor(Math.sqrt(total / 40000)))
+  const buckets = new Map()
+  let sampled = 0
+  for (let y = 0; y < height; y += step) {
+    for (let x = 0; x < width; x += step) {
+      const i = (y * width + x) * 4
+      if (data[i + 3] < 128) continue // transparent pixels are not the page
+      const key = ((data[i] >> 4) << 8) | ((data[i + 1] >> 4) << 4) | (data[i + 2] >> 4)
+      const b = buckets.get(key) ?? { n: 0, r: 0, g: 0, b: 0 }
+      b.n++
+      b.r += data[i]
+      b.g += data[i + 1]
+      b.b += data[i + 2]
+      buckets.set(key, b)
+      sampled++
+    }
+  }
+  if (!sampled) return []
+
+  const clusters = []
+  for (const b of [...buckets.values()].sort((x, y) => y.n - x.n)) {
+    const rgb = [b.r / b.n, b.g / b.n, b.b / b.n]
+    const color = rgbToOklch(rgb.map((v) => v / 255))
+    const near = clusters.find((c) => labGap(c.color, color) < 0.07)
+    if (near) near.n += b.n
+    else clusters.push({ n: b.n, rgb, color })
+  }
+  return clusters
+    .sort((a, b) => b.n - a.n)
+    .map(({ n, rgb, color }) => ({ hex: toHex(...rgb), ...color, share: n / sampled }))
+}
+
+/**
+ * Seeds read from a picture of the site, by area: what you see most of is the
+ * background, the colour that stands out most against it is the ink, and the
+ * biggest colour that is neither is the primary. It reflects the picture, not
+ * the brand guidelines — which is the point.
+ */
+export function rolesFromImage(image) {
+  const colors = imageColors(image).filter((c) => c.share >= 0.01)
+  if (!colors.length) return {}
+
+  const background = colors[0]
+  const distinct = (c, ...others) => others.every((o) => !o || labGap(c, o) >= 0.15)
+
+  const foreground = [...colors.slice(1)].sort(
+    (a, b) => contrast(b, background) - contrast(a, background)
+  )[0]
+  const primary =
+    // clearly a colour, and enough of it to be part of the look rather than a
+    // corner of a photo; a near-black navy is ink, not a primary
+    colors.find((c) => c.C >= 0.08 && c.share >= 0.02 && distinct(c, background, foreground)) ??
+    foreground
+  const secondary =
+    colors.find(
+      (c) => c.share >= 0.02 && distinct(c, background, foreground, primary === foreground ? null : primary)
+    ) ?? background
+
+  return {
+    background: background.hex,
+    foreground: foreground?.hex,
+    primary: primary?.hex,
+    secondary: secondary?.hex,
+  }
+}
+
+/* ---------------------------------------------------------------- styles -- */
+
+/**
+ * Snap each seed read from pixels to the exact colour the site declares for
+ * it. A flat colour survives capture almost unchanged, so the nearest declared
+ * colour within a hair is the one on screen; a seed with nothing that close —
+ * a colour that only exists in a photograph — keeps its sampled value.
+ */
+export function snapToDeclared(seeds, declared, tolerance = 14) {
+  // RGB distance, not perceptual: capture noise is a few units per channel
+  // wherever the colour sits, while OKLab stretches the darks — #010101 is
+  // further from #000000 there than #fe4800 is from #ff4800
+  const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))
+  const palette = [...new Set(declared)].filter((hex) => /^#[0-9a-f]{6}$/.test(hex))
+  const out = {}
+  for (const [role, hex] of Object.entries(seeds)) {
+    if (!hex) continue
+    const seed = rgb(hex)
+    let best = null
+    for (const candidate of palette) {
+      const gap = Math.hypot(...rgb(candidate).map((v, i) => v - seed[i]))
+      if (gap <= tolerance && (!best || gap < best.gap)) best = { hex: candidate, gap }
+    }
+    out[role] = best?.hex ?? hex
+  }
+  return out
+}
+
+/**
+ * The families the page renders in, by role: the display face is the one set
+ * largest, the body face the one covering the most text, and emphasis the
+ * next family used after those. Exact names, as the site declares them.
+ */
+export function fontsFromStyles(styles) {
+  const fonts = (styles?.fonts ?? []).filter((f) => !GENERIC.has(f.family.toLowerCase()))
+  if (!fonts.length) return {}
+  const body = fonts[0]
+  const display = [...fonts].sort((a, b) => b.maxSize - a.maxSize)[0]
+  const emphasis = fonts.find((f) => f !== body && f !== display) ?? display
+  return { primary: display.family, emphasis: emphasis.family, body: body.family }
 }
 
 /* ------------------------------------------------------------- the whole -- */
@@ -272,8 +572,11 @@ export function extractSiteTheme({ html = "", css = "", url = "" }) {
   const all = `${html}\n${css}`
 
   const themeColor = metaContent(html, 'name=["\']theme-color["\']')
-  const seeds = assignRoles(colorsIn(all), {
+  const seeds = assignRoles([...colorsIn(all), ...namedColorsIn(css)], {
     themeColor: themeColor && /^#/.test(themeColor.trim()) ? themeColor.trim() : undefined,
+    // the CSS only: the page's own <style> blocks are already in it, and the
+    // rest of the HTML is markup, not rules
+    page: pageColors(html, css),
   })
 
   const google = googleFamiliesIn(html, css)
