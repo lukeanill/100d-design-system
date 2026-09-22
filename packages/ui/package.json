@@ -88,6 +88,7 @@
     "./globals.css": "./src/styles/globals.css",
     "./lib/get-strict-context": "./src/lib/get-strict-context.tsx",
     "./lib/*": "./src/lib/*.ts",
+    "./components/backgrounds/gradients/*": "./src/components/backgrounds/gradients/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./hooks/use-motion-value-state": "./src/hooks/use-motion-value-state.tsx",
     "./hooks/use-controlled-state": "./src/hooks/use-controlled-state.tsx",

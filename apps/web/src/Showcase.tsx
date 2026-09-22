@@ -23,6 +23,11 @@ import { Badge } from "@workspace/ui/components/badge"
 import { Tooltip, TooltipTrigger, TooltipPanel } from "@workspace/ui/components/animate-ui/components/base/tooltip"
 import AnimatedPathText from "@workspace/ui/components/fancy/text/text-along-path"
 import { GradientText } from "@workspace/ui/components/animate-ui/primitives/texts/gradient"
+import { GradientBackground } from "@workspace/ui/components/backgrounds/gradient-background"
+import type { BalsaBackgroundConfig } from "@workspace/ui/components/backgrounds/gradient-background/gradient-background"
+import { animatedBackgroundAurora } from "@workspace/ui/components/backgrounds/gradients/animated-background-aurora"
+import { animatedBackgroundHolo } from "@workspace/ui/components/backgrounds/gradients/animated-background-holo"
+import { animatedBackgroundSmoke } from "@workspace/ui/components/backgrounds/gradients/animated-background-smoke"
 import {
   Item,
   ItemGroup,
@@ -78,6 +83,13 @@ function ThemeSelect() {
  * reordering in the studio never reached the site while the app read that.
  */
 const orderedThemes = [...colorThemes].sort((a, b) => a.order - b.order)
+
+/** The animated page background, for the themes that have one. */
+const THEME_BACKGROUNDS: Record<string, BalsaBackgroundConfig> = {
+  dark: animatedBackgroundSmoke,
+  "electric-pulse": animatedBackgroundHolo,
+  "arctic-aurora": animatedBackgroundAurora,
+}
 
 function ThemeSwatches({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme()
@@ -346,6 +358,8 @@ function ShipmentDrawer({ shipment, open, onOpenChange }: { shipment: Shipment |
 export function Showcase() {
   const [activeShipment, setActiveShipment] = useState<Shipment | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const pageBackground = resolvedTheme ? THEME_BACKGROUNDS[resolvedTheme] : undefined
 
   const openShipment = (shipment: Shipment) => {
     setActiveShipment(shipment)
@@ -353,7 +367,15 @@ export function Showcase() {
   }
 
   return (
-    <div className="min-h-svh bg-background">
+    <div className="relative isolate min-h-svh bg-background">
+      {/* Behind the whole page: fixed to the viewport so it stays as the page
+          scrolls, and at z -1 inside this isolated root so it paints over the
+          page colour but under everything on it. */}
+      {pageBackground && (
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <GradientBackground config={pageBackground} />
+        </div>
+      )}
       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-muted bg-background/95 px-6 py-3 backdrop-blur">
         <Button
           variant="outline"

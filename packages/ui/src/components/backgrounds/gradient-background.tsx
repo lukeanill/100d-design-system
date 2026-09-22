@@ -129,12 +129,20 @@ function useThemeColors(ref: React.RefObject<HTMLElement | null>, enabled: boole
  * or on browser events, and re-rendering for them would cost more than the
  * shader does. The component creates one, feeds it configuration and pause
  * changes, and disposes of it.
+ *
+ * Each controller draws on a canvas of its own, created here and removed on
+ * dispose. Balsa's renderer forces the WebGL context lost when disposed, and a
+ * canvas whose context was lost never yields a new one — so a remount (React's
+ * StrictMode mounts twice in development) must not reuse the old canvas.
  */
 function createController(
   root: HTMLElement,
-  canvas: HTMLCanvasElement,
+  host: HTMLElement,
   onStatus: (status: { ready: boolean; contextLost: boolean }) => void
 ) {
+  const canvas = document.createElement("canvas")
+  canvas.className = "block size-full"
+  host.appendChild(canvas)
   let renderer: GradientBackgroundRenderer | undefined
   let glyphs: GradientBackgroundGlyphAtlas | undefined
   let glyphSignature = ""
@@ -305,6 +313,7 @@ function createController(
       document.removeEventListener("visibilitychange", onVisibility)
       canvas.removeEventListener("webglcontextlost", onContextLost)
       canvas.removeEventListener("webglcontextrestored", onContextRestored)
+      canvas.remove()
       renderer?.dispose()
       renderer = undefined
       glyphs?.dispose()
@@ -323,7 +332,7 @@ export function GradientBackground({
   className,
 }: GradientBackgroundProps) {
   const rootRef = React.useRef<HTMLDivElement>(null)
-  const canvasRef = React.useRef<HTMLCanvasElement>(null)
+  const canvasHostRef = React.useRef<HTMLDivElement>(null)
   const controllerRef = React.useRef<ReturnType<typeof createController> | null>(null)
   const [{ ready, contextLost }, setStatus] = React.useState({ ready: false, contextLost: false })
 
@@ -348,8 +357,8 @@ export function GradientBackground({
   }, [preset, config, themeKey])
 
   React.useEffect(() => {
-    if (!rootRef.current || !canvasRef.current) return
-    const controller = createController(rootRef.current, canvasRef.current, setStatus)
+    if (!rootRef.current || !canvasHostRef.current) return
+    const controller = createController(rootRef.current, canvasHostRef.current, setStatus)
     controllerRef.current = controller
     return () => {
       controller.dispose()
@@ -396,8 +405,8 @@ export function GradientBackground({
           ),
         }}
       />
-      <canvas
-        ref={canvasRef}
+      <div
+        ref={canvasHostRef}
         className={cn(
           "absolute inset-0 block size-full transition-opacity forced-colors:hidden",
           showCanvas ? "opacity-100" : "opacity-0"
