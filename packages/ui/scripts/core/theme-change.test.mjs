@@ -42,13 +42,22 @@ test("re-saving an unchanged theme rewrites nothing", () => {
   }
 })
 
-test("the light theme keeps its :root selector", () => {
+test("the default theme keeps its :root selector", () => {
   const ws = workspace()
-  assert.equal(ws.themes.light.selector, ":root", "fixture assumption")
-  const { files } = applyThemeChange(ws, { type: "save", theme: ws.themes.light })
-  const saved = JSON.parse(files["packages/ui/tokens/light.json"] ?? read("packages/ui/tokens/light.json"))
+  assert.equal(ws.themes["lighten-up"].selector, ":root", "fixture assumption")
+  const { files } = applyThemeChange(ws, { type: "save", theme: ws.themes["lighten-up"] })
+  const saved = JSON.parse(
+    files["packages/ui/tokens/lighten-up.json"] ?? read("packages/ui/tokens/lighten-up.json")
+  )
   // deriving this would move the default theme off :root and unstyle the site
   assert.equal(saved.selector, ":root")
+})
+
+test("the :root default is written before the themes that override it", () => {
+  const css = read("packages/ui/src/styles/tokens.css")
+  // same specificity as .dark, so a default written later would win over every
+  // theme instead of being the fallback they replace
+  assert.ok(css.indexOf("\n:root {") < css.indexOf("\n.dark {"), ":root must come first")
 })
 
 test("a new theme reaches every file the app reads from", () => {
