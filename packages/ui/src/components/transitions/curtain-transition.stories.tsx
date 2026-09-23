@@ -13,35 +13,22 @@ export default {
   args: { color: "var(--foreground)" },
 }
 
-const PAGES = ["Page one", "Page two", "Page three"]
-
 export const CurtainTransitionDemo = (args: { color?: string }) => {
-  const [page, setPage] = React.useState(0)
-  const go = (step: number) =>
-    setPage((p) => (p + step + PAGES.length) % PAGES.length)
+  const [run, setRun] = React.useState(0)
 
   return (
-    <CurtainTransition transitionKey={String(page)} color={args.color}>
+    <CurtainTransition transitionKey={String(run)} color={args.color}>
       <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-8">
         <h2 className="text-3xl font-semibold text-foreground">
-          {PAGES[page]}
+          Page {run + 1}
         </h2>
-        <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={() => go(-1)}
-            className="rounded-md border border-border px-4 py-2 text-foreground"
-          >
-            Prev
-          </button>
-          <button
-            type="button"
-            onClick={() => go(1)}
-            className="rounded-md bg-primary px-4 py-2 text-primary-foreground"
-          >
-            Next
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setRun((r) => r + 1)}
+          className="rounded-md bg-primary px-4 py-2 text-primary-foreground"
+        >
+          Test
+        </button>
       </div>
     </CurtainTransition>
   )
