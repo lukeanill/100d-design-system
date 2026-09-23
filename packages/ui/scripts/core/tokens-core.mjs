@@ -9,7 +9,7 @@ import { fmt, hexToOklch } from "../../tokens/lib/color.mjs"
 
 // Themes appear in the CSS in this order; anything else is appended alphabetically.
 export const ORDER = [
-  "light", "dark", "electric-pulse", "acid-forest", "carbon-mint",
+  "lighten-up", "dark", "electric-pulse", "acid-forest", "carbon-mint",
   "solar-azul", "arctic-aurora", "strawberry-matcha", "metallic-mist",
 ]
 
@@ -29,7 +29,12 @@ const render = (v) => (isHex(v) ? fmt(hexToOklch(v)) : v)
 
 /** CSS order, which is not the studio's display order (that is `theme.order`). */
 export function sortThemes(themes) {
+  // The :root default has to be emitted first. `:root` and `.dark` have the
+  // same specificity, so whichever is written last wins: a default block after
+  // the others would override every theme it was meant to be overridden by.
+  const isDefault = (theme) => theme.selector === ":root"
   return [...themes].sort((a, b) => {
+    if (isDefault(a) !== isDefault(b)) return isDefault(a) ? -1 : 1
     const ai = ORDER.indexOf(a.name)
     const bi = ORDER.indexOf(b.name)
     if (ai === -1 && bi === -1) return a.name.localeCompare(b.name)

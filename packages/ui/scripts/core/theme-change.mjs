@@ -44,6 +44,34 @@ export function listThemes(themes) {
 const serialize = (theme) => JSON.stringify(theme, null, 2) + "\n"
 
 /**
+ * The themes the site can actually use. An archived theme keeps its file, so
+ * it can come back exactly as it was, but it is written out of tokens.css and
+ * the registry: no CSS block to apply, and nothing to pick it from.
+ */
+const liveThemes = (themes) => Object.values(themes).filter((theme) => !theme.archived)
+
+/**
+ * The default theme is whichever one is first in the studio's list, and it is
+ * the one written to `:root`. Everything else is a class.
+ *
+ * Derived rather than stored, so moving a theme to the top of the list is all
+ * it takes to make it the default — and so there is always exactly one, which
+ * the site needs: a page with no theme class falls back to `:root`, and with no
+ * `:root` block it renders with no tokens at all.
+ *
+ * Mutates `themes` and records any file that changed.
+ */
+function syncRootSelector(themes, files) {
+  const first = liveThemes(themes).sort((a, b) => (a.order ?? 99) - (b.order ?? 99))[0]
+  for (const theme of Object.values(themes)) {
+    const selector = theme.name === first?.name ? ":root" : `.${theme.name}`
+    if (theme.selector === selector) continue
+    themes[theme.name] = { ...theme, selector }
+    files[themePath(theme.name)] = serialize(themes[theme.name])
+  }
+}
+
+/**
  * Emit keys in the order the stored file already used, so re-saving an
  * untouched theme is a no-op diff rather than a whole-file reshuffle. The
  * studio's commits are meant to be readable; a reordered file hides the one
@@ -64,11 +92,9 @@ function normalize(body, existing = {}, themeCount = 0) {
     name,
     label: body.label ?? existing.label ?? body.name ?? name,
     order: body.order ?? existing.order ?? themeCount,
-    // Never re-derive a stored selector. The light theme is the `:root`
-    // default, and deriving would rewrite it to `.light` — which drops the
-    // default theme off the root and leaves the site unstyled until a class
-    // is set. Only genuinely new themes get a selector computed for them.
-    selector: body.selector ?? existing.selector ?? (name === "system" ? ":root" : `.${name}`),
+    // A starting point only: syncRootSelector has the final say, giving
+    // `:root` to whichever theme is first in the list and a class to the rest.
+    selector: body.selector ?? existing.selector ?? `.${name}`,
     seeds: body.seeds ?? existing.seeds ?? {},
     fonts: body.fonts ?? existing.fonts ?? {},
     edges: body.edges ?? existing.edges ?? "custom",
@@ -78,6 +104,10 @@ function normalize(body, existing = {}, themeCount = 0) {
       ? { fontTheme: body.fontTheme ?? existing.fontTheme }
       : {}),
     tokens: body.tokens ?? existing.tokens,
+    // Archived themes stay on disk but leave the registry and tokens.css, so
+    // nothing can select one. Only ever present when true, to keep the stored
+    // file free of a flag that means nothing for a live theme.
+    ...((body.archived ?? existing.archived) ? { archived: true } : {}),
     ...(body.extra ?? existing.extra ? { extra: body.extra ?? existing.extra } : {}),
   }
 }
@@ -119,7 +149,7 @@ export function applyThemeChange(workspace, change) {
     themes[name] = theme
     files[themePath(name)] = serialize(theme)
 
-    if (theme.fontSource === "google") {
+    if (theme.fontSource === "google" && !theme.archived) {
       // a Google-font theme brings its own pairing along
       const next = upsertFontThemeIn(fontRegistry, {
         id: name,
@@ -129,6 +159,10 @@ export function applyThemeChange(workspace, change) {
       })
       fontRegistry = next.source
     }
+    if (theme.archived) {
+      colorRegistry = removeColorThemeIn(colorRegistry, name)
+      if (theme.fontSource === "google") fontRegistry = removeFontThemeIn(fontRegistry, name)
+    } else {
     const nextColor = upsertColorThemeIn(colorRegistry, {
       id: name,
       label: theme.label,
@@ -139,6 +173,41 @@ export function applyThemeChange(workspace, change) {
       order: theme.order,
     })
     colorRegistry = nextColor.source
+    }
+  } else if (change.type === "archive" || change.type === "unarchive") {
+    const name = slug(change.name)
+    const theme = themes[name]
+    if (!name || name === "system") throw new Error("Cannot archive that theme.")
+    if (!theme) throw new Error(`No theme called "${name}".`)
+
+    const archiving = change.type === "archive"
+    const next = { ...theme }
+    if (archiving) next.archived = true
+    else delete next.archived
+
+    themes[name] = next
+    files[themePath(name)] = serialize(next)
+
+    if (archiving) {
+      colorRegistry = removeColorThemeIn(colorRegistry, name)
+      if (next.fontSource === "google") fontRegistry = removeFontThemeIn(fontRegistry, name)
+    } else {
+      colorRegistry = upsertColorThemeIn(colorRegistry, {
+        id: name,
+        label: next.label,
+        fontTheme: next.fontTheme ?? (next.fontSource === "google" ? name : undefined),
+        primary: next.tokens?.primary,
+        order: next.order,
+      }).source
+      if (next.fontSource === "google") {
+        fontRegistry = upsertFontThemeIn(fontRegistry, {
+          id: name,
+          label: next.label,
+          primaryFont: next.fonts?.primary ?? "",
+          secondaryFont: next.fonts?.emphasis ?? "",
+        }).source
+      }
+    }
   } else if (change.type === "delete") {
     const name = slug(change.name)
     if (!name || name === "system") throw new Error("Cannot delete that theme.")
@@ -169,22 +238,23 @@ export function applyThemeChange(workspace, change) {
         order: index,
       }).source
     })
-    if (colorRegistry !== workspace.colorRegistry) files[COLOR_REGISTRY] = colorRegistry
-    // order changes no colours, so there is no CSS to regenerate
-    return { files, themes: listThemes(themes), contrast: null }
   } else {
     throw new Error(`Unknown change type: ${change.type}`)
   }
+
+  // Whatever the change was, it may have moved which theme is first: a
+  // reorder, a new theme, or archiving the one that held :root.
+  syncRootSelector(themes, files)
 
   if (colorRegistry !== workspace.colorRegistry) files[COLOR_REGISTRY] = colorRegistry
   if (fontRegistry !== workspace.fontRegistry) files[FONT_REGISTRY] = fontRegistry
 
   // regenerate tokens.css so the change is live and diffable, and so the CI
   // check that tokens.css matches tokens/*.json stays green
-  const tokensCss = renderTokensCss(workspace.tokensCss, Object.values(themes))
+  const tokensCss = renderTokensCss(workspace.tokensCss, liveThemes(themes))
   if (tokensCss !== workspace.tokensCss) files[TOKENS_CSS] = tokensCss
 
-  const contrast = evaluateContrast(Object.values(themes), workspace.baseline ?? {})
+  const contrast = evaluateContrast(liveThemes(themes), workspace.baseline ?? {})
 
   // Contrast never stops a save. That is the design system owner's standing
   // decision, not an oversight: they are the one judging legibility, some pairs

@@ -21,7 +21,8 @@ import { loadEnv, type Plugin } from "vite"
 const ROOT = path.resolve(__dirname, "../..")
 const CORE = path.join(ROOT, "packages/ui/scripts/core")
 
-const load = (file: string) => import(/* @vite-ignore */ pathToFileURL(path.join(CORE, file)).href)
+const load = (file: string) =>
+  import(/* @vite-ignore */ pathToFileURL(path.join(CORE, file)).href)
 
 const authorized = (header: string | undefined, password: string) => {
   if (!header) return false
@@ -37,15 +38,23 @@ export function themeStudio(): Plugin {
     configureServer(server) {
       // .env.local reaches import.meta.env, not process.env, so load it here
       const env = loadEnv(server.config.mode, server.config.root, "")
-      const password = env.THEME_STUDIO_PASSWORD ?? process.env.THEME_STUDIO_PASSWORD ?? ""
+      const password =
+        env.THEME_STUDIO_PASSWORD ?? process.env.THEME_STUDIO_PASSWORD ?? ""
 
-      const send = (res: import("node:http").ServerResponse, code: number, body: unknown) => {
+      const send = (
+        res: import("node:http").ServerResponse,
+        code: number,
+        body: unknown
+      ) => {
         res.statusCode = code
         res.setHeader("content-type", "application/json")
         res.end(JSON.stringify(body))
       }
 
-      const guard = (req: import("node:http").IncomingMessage, res: import("node:http").ServerResponse) => {
+      const guard = (
+        req: import("node:http").IncomingMessage,
+        res: import("node:http").ServerResponse
+      ) => {
         if (!password) {
           send(res, 503, {
             error:
@@ -53,7 +62,9 @@ export function themeStudio(): Plugin {
           })
           return false
         }
-        if (!authorized(req.headers["x-theme-studio-key"] as string, password)) {
+        if (
+          !authorized(req.headers["x-theme-studio-key"] as string, password)
+        ) {
           send(res, 401, { error: "Wrong password." })
           return false
         }
@@ -64,13 +75,17 @@ export function themeStudio(): Plugin {
       // theme from it; writes nothing, so it needs no credentials of its own.
       server.middlewares.use("/__pull-theme", async (req, res) => {
         if (!guard(req, res)) return
-        if (req.method !== "POST") return send(res, 405, { error: "Method not allowed." })
+        if (req.method !== "POST")
+          return send(res, 405, { error: "Method not allowed." })
         try {
           const { fetchSiteTheme } = await load("site-fetch.mjs")
           const chunks: Buffer[] = []
           for await (const c of req) chunks.push(c as Buffer)
-          const { url } = chunks.length ? JSON.parse(Buffer.concat(chunks).toString()) : {}
-          if (!url?.trim()) return send(res, 400, { error: "Enter a web address first." })
+          const { url } = chunks.length
+            ? JSON.parse(Buffer.concat(chunks).toString())
+            : {}
+          if (!url?.trim())
+            return send(res, 400, { error: "Enter a web address first." })
           return send(res, 200, await fetchSiteTheme(url))
         } catch (error) {
           return send(res, 422, {
@@ -92,7 +107,9 @@ export function themeStudio(): Plugin {
               "THEME_STUDIO_PASSWORD is not set. Add it to apps/web/.env.local and restart the dev server.",
           })
         }
-        if (!authorized(req.headers["x-theme-studio-key"] as string, password)) {
+        if (
+          !authorized(req.headers["x-theme-studio-key"] as string, password)
+        ) {
           return send(401, { error: "Wrong password." })
         }
 
@@ -103,17 +120,29 @@ export function themeStudio(): Plugin {
 
           const workspace = fs.readWorkspace(ROOT)
           if (req.method === "GET") {
-            return send(200, { themes: change.listThemes(workspace.themes), target: "local" })
+            return send(200, {
+              themes: change.listThemes(workspace.themes),
+              target: "local",
+            })
           }
 
           const chunks: Buffer[] = []
           for await (const c of req) chunks.push(c as Buffer)
-          const body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString()) : {}
+          const body = chunks.length
+            ? JSON.parse(Buffer.concat(chunks).toString())
+            : {}
 
           let request
           if (req.method === "PUT") request = { type: "save", theme: body }
-          else if (req.method === "DELETE") request = { type: "delete", name: body.name }
-          else if (req.method === "POST") request = { type: "reorder", order: body.order }
+          else if (req.method === "DELETE")
+            request = { type: "delete", name: body.name }
+          else if (req.method === "PATCH")
+            request = {
+              type: body.archived ? "archive" : "unarchive",
+              name: body.name,
+            }
+          else if (req.method === "POST")
+            request = { type: "reorder", order: body.order }
           else return send(405, { error: "Method not allowed." })
 
           const result = change.applyThemeChange(workspace, request)
@@ -129,7 +158,9 @@ export function themeStudio(): Plugin {
             belowContrast: result.contrast?.failures?.length ?? 0,
           })
         } catch (error) {
-          return send(500, { error: error instanceof Error ? error.message : String(error) })
+          return send(500, {
+            error: error instanceof Error ? error.message : String(error),
+          })
         }
       })
     },

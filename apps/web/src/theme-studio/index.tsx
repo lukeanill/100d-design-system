@@ -10,11 +10,11 @@ import {
 } from "@workspace/ui/components/toast"
 import {
   clearKey,
-  deleteTheme,
   listThemes,
   reorderThemes,
   saveTheme,
   setKey,
+  setThemeArchived,
   type Theme,
   type ThemesResponse,
 } from "./api"
@@ -135,7 +135,10 @@ export function ThemeStudio() {
   /* The studio is always light, whatever theme the app is set to. Themes are
    * applied as a class on <html>, so rather than fight the cascade we paint the
    * light theme's own tokens onto this subtree. */
-  const lightTokens = themes.find((t) => t.name === "light")?.tokens ?? {}
+  const lightTokens =
+    themes.find((t) => t.selector === ":root")?.tokens ??
+    themes.find((t) => t.name === "lighten-up")?.tokens ??
+    {}
   const lightStyle = Object.fromEntries(
     Object.entries(lightTokens).map(([token, value]) => [`--${token}`, value])
   ) as React.CSSProperties
@@ -164,8 +167,17 @@ export function ThemeStudio() {
             themes={themes}
             onNew={() => setEditing("new")}
             onEdit={(theme) => setEditing(theme)}
-            onDelete={(theme) =>
-              run(() => deleteTheme(theme.name), `Deleted ${theme.label}.`)
+            onArchive={(theme) =>
+              run(
+                () => setThemeArchived(theme.name, true),
+                `Archived ${theme.label}.`
+              )
+            }
+            onUnarchive={(theme) =>
+              run(
+                () => setThemeArchived(theme.name, false),
+                `Restored ${theme.label}.`
+              )
             }
             onReorder={(names) => {
               // optimistic: the rows should follow the pointer, not the round trip

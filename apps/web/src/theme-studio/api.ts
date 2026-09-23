@@ -33,6 +33,8 @@ export type Theme = {
   swatches?: string[]
   /** ISO timestamp, set on save — and only when something actually changed. */
   updatedAt?: string
+  /** Archived themes stay in the studio but leave the site entirely. */
+  archived?: boolean
 }
 
 export type ThemesResponse = {
@@ -56,10 +58,17 @@ export const getKey = () => sessionStorage.getItem(KEY) ?? ""
 export const setKey = (value: string) => sessionStorage.setItem(KEY, value)
 export const clearKey = () => sessionStorage.removeItem(KEY)
 
-async function request<T>(method: string, body?: unknown, endpoint = ENDPOINT): Promise<T> {
+async function request<T>(
+  method: string,
+  body?: unknown,
+  endpoint = ENDPOINT
+): Promise<T> {
   const res = await fetch(endpoint, {
     method,
-    headers: { "content-type": "application/json", "x-theme-studio-key": getKey() },
+    headers: {
+      "content-type": "application/json",
+      "x-theme-studio-key": getKey(),
+    },
     body: body ? JSON.stringify(body) : undefined,
   })
   const data = await res.json().catch(() => ({}))
@@ -72,9 +81,19 @@ export const listThemes = () => request<ThemesResponse>("GET")
 export const saveTheme = (theme: Partial<Theme> & { name: string }) =>
   request<ThemesResponse>("PUT", theme)
 
-export const deleteTheme = (name: string) => request<ThemesResponse>("DELETE", { name })
+export const deleteTheme = (name: string) =>
+  request<ThemesResponse>("DELETE", { name })
 
-export const reorderThemes = (order: string[]) => request<ThemesResponse>("POST", { order })
+/**
+ * Archiving keeps the theme's file, so it can come back exactly as it was, but
+ * writes it out of tokens.css and the registry: nothing can select an archived
+ * theme. It is what the studio offers instead of deleting.
+ */
+export const setThemeArchived = (name: string, archived: boolean) =>
+  request<ThemesResponse>("PATCH", { name, archived })
+
+export const reorderThemes = (order: string[]) =>
+  request<ThemesResponse>("POST", { order })
 
 export type PulledTheme = {
   url: string
@@ -85,7 +104,11 @@ export type PulledTheme = {
   customFamilies: string[]
   /** What was swapped for what, so the studio can say so rather than hide it. */
   substituted: { found: string; using: string }[]
-  preview: { ogImage: string | null; favicon: string | null; screenshot: string | null }
+  preview: {
+    ogImage: string | null
+    favicon: string | null
+    screenshot: string | null
+  }
   /** Where the seeds were read from, best first. */
   colorSource: "screenshot" | "image" | "css"
   sheets: number
@@ -93,4 +116,8 @@ export type PulledTheme = {
 
 /** Read a website and guess a theme from it. */
 export const pullTheme = (url: string) =>
-  request<PulledTheme>("POST", { url }, import.meta.env.DEV ? "/__pull-theme" : "/api/pull-theme")
+  request<PulledTheme>(
+    "POST",
+    { url },
+    import.meta.env.DEV ? "/__pull-theme" : "/api/pull-theme"
+  )
