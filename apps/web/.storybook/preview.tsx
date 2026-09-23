@@ -69,7 +69,15 @@ const preview: Preview = {
     (Story, context) => (
       <ThemeProvider forcedTheme={context.globals.theme}>
         <FontThemeProvider>
-          <div className="min-h-screen bg-background p-6 text-foreground">
+          {/* Fullscreen stories get no padding, so a story can reach the page
+              edges -- a scoped overlay padded away from them isn't fullscreen. */}
+          <div
+            className={
+              context.parameters.layout === "fullscreen"
+                ? "min-h-screen bg-background text-foreground"
+                : "min-h-screen bg-background p-6 text-foreground"
+            }
+          >
             <Story />
           </div>
         </FontThemeProvider>

@@ -18,14 +18,11 @@ export const CurtainTransitionDemo = (args: { color?: string }) => {
 
   return (
     <CurtainTransition transitionKey={String(run)} color={args.color}>
-      <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-8">
-        <h2 className="text-3xl font-semibold text-foreground">
-          Page {run + 1}
-        </h2>
+      <div className="flex min-h-svh items-center justify-center bg-background">
         <button
           type="button"
           onClick={() => setRun((r) => r + 1)}
-          className="rounded-md bg-primary px-4 py-2 text-primary-foreground"
+          className="rounded-md bg-primary px-5 py-2.5 text-primary-foreground"
         >
           Test
         </button>
