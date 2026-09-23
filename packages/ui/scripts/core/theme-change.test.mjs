@@ -236,3 +236,54 @@ test("the light theme cannot be deleted into a broken site", () => {
   assert.throws(() => applyThemeChange(ws, { type: "delete", name: "system" }), /Cannot delete/)
   assert.throws(() => applyThemeChange(ws, { type: "delete", name: "nope" }), /No theme called/)
 })
+
+test("archiving keeps the theme file but takes it out of the site", () => {
+  const ws = workspace()
+  const result = applyThemeChange(ws, { type: "archive", name: "bumblebee" })
+
+  const stored = JSON.parse(result.files["packages/ui/tokens/bumblebee.json"])
+  assert.equal(stored.archived, true, "the theme file stays, flagged")
+
+  // nothing may be able to select an archived theme
+  const registry = result.files["packages/ui/src/lib/theme-registry.ts"]
+  assert.ok(registry && !registry.includes('id: "bumblebee"'), "left the registry")
+  const css = result.files["packages/ui/src/styles/tokens.css"]
+  assert.ok(css && !css.includes("\n.bumblebee {"), "left tokens.css")
+
+  assert.equal(
+    result.themes.find((t) => t.name === "bumblebee")?.archived,
+    true,
+    "the studio still lists it, so it can be brought back"
+  )
+})
+
+test("unarchiving restores the theme exactly", () => {
+  const ws = workspace()
+  const archived = applyThemeChange(ws, { type: "archive", name: "bumblebee" })
+  const restored = applyThemeChange(advance(ws, archived), {
+    type: "unarchive",
+    name: "bumblebee",
+  })
+
+  assert.deepEqual(
+    JSON.parse(restored.files["packages/ui/tokens/bumblebee.json"]),
+    JSON.parse(read("packages/ui/tokens/bumblebee.json")),
+    "back to the stored file, byte for byte"
+  )
+  assert.equal(restored.files["packages/ui/src/styles/tokens.css"], read("packages/ui/src/styles/tokens.css"))
+
+  // The registry gets the same entries back, though the restored one is
+  // appended rather than slotted into its old position. That only shows up in
+  // a diff: every picker sorts by each theme's `order`, not by array position.
+  const entries = (source) => source.match(/\{ id: .*\}/g)?.sort()
+  assert.deepEqual(
+    entries(restored.files["packages/ui/src/lib/theme-registry.ts"]),
+    entries(read("packages/ui/src/lib/theme-registry.ts"))
+  )
+})
+
+test("the default theme cannot be archived into a broken site", () => {
+  const ws = workspace()
+  assert.throws(() => applyThemeChange(ws, { type: "archive", name: "system" }), /Cannot archive/)
+  assert.throws(() => applyThemeChange(ws, { type: "archive", name: "nope" }), /No theme called/)
+})

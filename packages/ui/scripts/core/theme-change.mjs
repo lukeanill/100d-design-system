@@ -44,6 +44,13 @@ export function listThemes(themes) {
 const serialize = (theme) => JSON.stringify(theme, null, 2) + "\n"
 
 /**
+ * The themes the site can actually use. An archived theme keeps its file, so
+ * it can come back exactly as it was, but it is written out of tokens.css and
+ * the registry: no CSS block to apply, and nothing to pick it from.
+ */
+const liveThemes = (themes) => Object.values(themes).filter((theme) => !theme.archived)
+
+/**
  * Emit keys in the order the stored file already used, so re-saving an
  * untouched theme is a no-op diff rather than a whole-file reshuffle. The
  * studio's commits are meant to be readable; a reordered file hides the one
@@ -78,6 +85,10 @@ function normalize(body, existing = {}, themeCount = 0) {
       ? { fontTheme: body.fontTheme ?? existing.fontTheme }
       : {}),
     tokens: body.tokens ?? existing.tokens,
+    // Archived themes stay on disk but leave the registry and tokens.css, so
+    // nothing can select one. Only ever present when true, to keep the stored
+    // file free of a flag that means nothing for a live theme.
+    ...((body.archived ?? existing.archived) ? { archived: true } : {}),
     ...(body.extra ?? existing.extra ? { extra: body.extra ?? existing.extra } : {}),
   }
 }
@@ -119,7 +130,7 @@ export function applyThemeChange(workspace, change) {
     themes[name] = theme
     files[themePath(name)] = serialize(theme)
 
-    if (theme.fontSource === "google") {
+    if (theme.fontSource === "google" && !theme.archived) {
       // a Google-font theme brings its own pairing along
       const next = upsertFontThemeIn(fontRegistry, {
         id: name,
@@ -129,6 +140,10 @@ export function applyThemeChange(workspace, change) {
       })
       fontRegistry = next.source
     }
+    if (theme.archived) {
+      colorRegistry = removeColorThemeIn(colorRegistry, name)
+      if (theme.fontSource === "google") fontRegistry = removeFontThemeIn(fontRegistry, name)
+    } else {
     const nextColor = upsertColorThemeIn(colorRegistry, {
       id: name,
       label: theme.label,
@@ -139,6 +154,41 @@ export function applyThemeChange(workspace, change) {
       order: theme.order,
     })
     colorRegistry = nextColor.source
+    }
+  } else if (change.type === "archive" || change.type === "unarchive") {
+    const name = slug(change.name)
+    const theme = themes[name]
+    if (!name || name === "system") throw new Error("Cannot archive that theme.")
+    if (!theme) throw new Error(`No theme called "${name}".`)
+
+    const archiving = change.type === "archive"
+    const next = { ...theme }
+    if (archiving) next.archived = true
+    else delete next.archived
+
+    themes[name] = next
+    files[themePath(name)] = serialize(next)
+
+    if (archiving) {
+      colorRegistry = removeColorThemeIn(colorRegistry, name)
+      if (next.fontSource === "google") fontRegistry = removeFontThemeIn(fontRegistry, name)
+    } else {
+      colorRegistry = upsertColorThemeIn(colorRegistry, {
+        id: name,
+        label: next.label,
+        fontTheme: next.fontTheme ?? (next.fontSource === "google" ? name : undefined),
+        primary: next.tokens?.primary,
+        order: next.order,
+      }).source
+      if (next.fontSource === "google") {
+        fontRegistry = upsertFontThemeIn(fontRegistry, {
+          id: name,
+          label: next.label,
+          primaryFont: next.fonts?.primary ?? "",
+          secondaryFont: next.fonts?.emphasis ?? "",
+        }).source
+      }
+    }
   } else if (change.type === "delete") {
     const name = slug(change.name)
     if (!name || name === "system") throw new Error("Cannot delete that theme.")
@@ -181,10 +231,10 @@ export function applyThemeChange(workspace, change) {
 
   // regenerate tokens.css so the change is live and diffable, and so the CI
   // check that tokens.css matches tokens/*.json stays green
-  const tokensCss = renderTokensCss(workspace.tokensCss, Object.values(themes))
+  const tokensCss = renderTokensCss(workspace.tokensCss, liveThemes(themes))
   if (tokensCss !== workspace.tokensCss) files[TOKENS_CSS] = tokensCss
 
-  const contrast = evaluateContrast(Object.values(themes), workspace.baseline ?? {})
+  const contrast = evaluateContrast(liveThemes(themes), workspace.baseline ?? {})
 
   // Contrast never stops a save. That is the design system owner's standing
   // decision, not an oversight: they are the one judging legibility, some pairs

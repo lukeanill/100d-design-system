@@ -36,7 +36,8 @@ const repo = () =>
     ? `${process.env.VERCEL_GIT_REPO_OWNER}/${process.env.VERCEL_GIT_REPO_SLUG}`
     : "")
 
-const branch = () => process.env.THEME_BRANCH || process.env.VERCEL_GIT_COMMIT_REF || "master"
+const branch = () =>
+  process.env.THEME_BRANCH || process.env.VERCEL_GIT_COMMIT_REF || "master"
 
 const authorized = (header, password) => {
   if (!header) return false
@@ -72,14 +73,20 @@ async function readWorkspace(token) {
   const ref = await gh(`/repos/${slug}/git/ref/heads/${branch()}`, { token })
   const head = ref.object.sha
   const commit = await gh(`/repos/${slug}/git/commits/${head}`, { token })
-  const tree = await gh(`/repos/${slug}/git/trees/${commit.tree.sha}?recursive=1`, { token })
+  const tree = await gh(
+    `/repos/${slug}/git/trees/${commit.tree.sha}?recursive=1`,
+    { token }
+  )
 
   const bySha = new Map(tree.tree.map((e) => [e.path, e.sha]))
   const text = async (path) => {
     const sha = bySha.get(path)
     if (!sha) throw new Error(`${path} is missing from the repo.`)
     const blob = await gh(`/repos/${slug}/git/blobs/${sha}`, { token })
-    return Buffer.from(blob.content, blob.encoding === "base64" ? "base64" : "utf8").toString("utf8")
+    return Buffer.from(
+      blob.content,
+      blob.encoding === "base64" ? "base64" : "utf8"
+    ).toString("utf8")
   }
 
   const themeFiles = tree.tree
@@ -88,13 +95,14 @@ async function readWorkspace(token) {
     .filter((p) => p.startsWith(`${TOKENS_DIR}/`) && p.endsWith(".json"))
     .filter((p) => !p.slice(TOKENS_DIR.length + 1).startsWith("."))
 
-  const [tokensCss, colorRegistry, fontRegistry, baselineRaw, ...themeSources] = await Promise.all([
-    text(TOKENS_CSS),
-    text(COLOR_REGISTRY),
-    text(FONT_REGISTRY),
-    bySha.has(BASELINE) ? text(BASELINE) : Promise.resolve("{}"),
-    ...themeFiles.map(text),
-  ])
+  const [tokensCss, colorRegistry, fontRegistry, baselineRaw, ...themeSources] =
+    await Promise.all([
+      text(TOKENS_CSS),
+      text(COLOR_REGISTRY),
+      text(FONT_REGISTRY),
+      bySha.has(BASELINE) ? text(BASELINE) : Promise.resolve("{}"),
+      ...themeFiles.map(text),
+    ])
 
   const themes = {}
   for (const source of themeSources) {
@@ -103,7 +111,13 @@ async function readWorkspace(token) {
   }
 
   return {
-    workspace: { themes, tokensCss, colorRegistry, fontRegistry, baseline: JSON.parse(baselineRaw) },
+    workspace: {
+      themes,
+      tokensCss,
+      colorRegistry,
+      fontRegistry,
+      baseline: JSON.parse(baselineRaw),
+    },
     head,
     baseTree: commit.tree.sha,
   }
@@ -177,7 +191,11 @@ export default async function handler(req, res) {
     const { workspace, head, baseTree } = await readWorkspace(token)
 
     if (req.method === "GET") {
-      return send(200, { themes: listThemes(workspace.themes), target: "repo", branch: branch() })
+      return send(200, {
+        themes: listThemes(workspace.themes),
+        target: "repo",
+        branch: branch(),
+      })
     }
 
     const body = await readBody(req)
@@ -189,6 +207,10 @@ export default async function handler(req, res) {
     } else if (req.method === "DELETE") {
       change = { type: "delete", name: body.name }
       message = `Theme: delete ${body.name}`
+    } else if (req.method === "PATCH") {
+      const archiving = Boolean(body.archived)
+      change = { type: archiving ? "archive" : "unarchive", name: body.name }
+      message = `Theme: ${archiving ? "archive" : "unarchive"} ${body.name}`
     } else if (req.method === "POST") {
       change = { type: "reorder", order: body.order }
       message = "Theme: reorder"
@@ -200,7 +222,13 @@ export default async function handler(req, res) {
 
     // A contrast shortfall is reported, never refused — applyThemeChange
     // records it alongside the theme so the commit is one CI accepts.
-    const sha = await commitFiles({ token, files: result.files, head, baseTree, message })
+    const sha = await commitFiles({
+      token,
+      files: result.files,
+      head,
+      baseTree,
+      message,
+    })
 
     return send(200, {
       themes: result.themes,

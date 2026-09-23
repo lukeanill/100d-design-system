@@ -1,5 +1,10 @@
 import { useState } from "react"
-import { DotsSixVerticalIcon, PencilSimpleIcon, PlusIcon, TrashIcon } from "@phosphor-icons/react"
+import {
+  ArchiveIcon,
+  DotsSixVerticalIcon,
+  PencilSimpleIcon,
+  PlusIcon,
+} from "@phosphor-icons/react"
 
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
@@ -19,7 +24,11 @@ const formatDate = (iso?: string) => {
   const d = new Date(iso)
   return Number.isNaN(d.getTime())
     ? null
-    : d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    : d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
 }
 
 /**
@@ -81,7 +90,9 @@ function ThemeRow({
   onDragEnd,
   onMoveUp,
   onEdit,
-  onDelete,
+  onArchive,
+  onUnarchive,
+  archived = false,
 }: {
   theme: Theme
   dragging: boolean
@@ -92,25 +103,33 @@ function ThemeRow({
   onDragEnd: () => void
   onMoveUp: () => void
   onEdit: () => void
-  onDelete: () => void
+  onArchive: () => void
+  onUnarchive: () => void
+  archived?: boolean
 }) {
   // a Google-font theme has to fetch its face before the name can be set in it
-  useGoogleFont(theme.fontSource === "google" ? theme.fonts?.primary : undefined)
+  useGoogleFont(
+    theme.fontSource === "google" ? theme.fonts?.primary : undefined
+  )
 
   const t = theme.tokens ?? {}
   const date = formatDate(theme.updatedAt)
-  const locked = theme.name === "system"
+  // The default theme is what everything falls back to, so archiving it would
+  // leave the site with no tokens at all.
+  const locked = theme.name === "system" || theme.selector === ":root"
 
   return (
     <li
-      draggable
-      onDragStart={onDragStart}
+      draggable={!archived}
+      onDragStart={archived ? undefined : onDragStart}
       onDragOver={(e) => e.preventDefault()}
-      onDrop={onDrop}
-      onDragEnd={onDragEnd}
+      onDrop={archived ? undefined : onDrop}
+      onDragEnd={archived ? undefined : onDragEnd}
       className={cn(
         "flex items-center gap-5 px-6 py-4 ring-1 ring-current/10 transition-opacity",
-        dragging && "opacity-50"
+        dragging && "opacity-50",
+        // An archived theme is out of the site: shown, but plainly not in use.
+        archived && "opacity-50"
       )}
       style={{
         background: t.background,
@@ -120,20 +139,30 @@ function ThemeRow({
         borderRadius: t["radius-container"] ?? "1.5rem",
       }}
     >
-      <button
-        type="button"
-        aria-label={`Move ${theme.label} up`}
-        onClick={onMoveUp}
-        className="cursor-grab opacity-40 transition-opacity hover:opacity-100"
-      >
-        <DotsSixVerticalIcon className="size-5" />
-      </button>
+      <span className={cn("opacity-40", archived && "invisible")}>
+        {archived ? (
+          <DotsSixVerticalIcon className="size-5" />
+        ) : (
+          <button
+            type="button"
+            aria-label={`Move ${theme.label} up`}
+            onClick={onMoveUp}
+            className="cursor-grab transition-opacity hover:opacity-100"
+          >
+            <DotsSixVerticalIcon className="size-5" />
+          </button>
+        )}
+      </span>
 
       <div className="flex min-w-0 flex-1 flex-col">
         {date && <span className="text-xs opacity-60">{date}</span>}
         <span
           className="truncate text-3xl leading-tight"
-          style={{ fontFamily: theme.fonts?.primary ? `'${theme.fonts.primary}'` : undefined }}
+          style={{
+            fontFamily: theme.fonts?.primary
+              ? `'${theme.fonts.primary}'`
+              : undefined,
+          }}
         >
           {theme.label}
         </span>
@@ -144,31 +173,49 @@ function ThemeRow({
       <EdgeChip edges={theme.edges} radius={t.radius} />
 
       <div className="flex items-center gap-2">
-        <button
-          type="button"
-          aria-label={`Edit ${theme.label}`}
-          onClick={onEdit}
-          className="grid size-10 place-items-center rounded-full bg-current/10 transition-colors hover:bg-current/20"
-        >
-          <PencilSimpleIcon className="size-4" />
-        </button>
+        {archived ? (
+          <button
+            type="button"
+            onClick={onUnarchive}
+            className="rounded-full px-4 py-2 text-sm underline-offset-4 transition-colors hover:underline"
+          >
+            Unarchive
+          </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              aria-label={`Edit ${theme.label}`}
+              onClick={onEdit}
+              className="grid size-10 place-items-center rounded-full bg-current/10 transition-colors hover:bg-current/20"
+            >
+              <PencilSimpleIcon className="size-4" />
+            </button>
 
-        <button
-          type="button"
-          aria-label={armed ? `Confirm delete ${theme.label}` : `Delete ${theme.label}`}
-          onClick={() => (armed ? onDelete() : onArm(true))}
-          onBlur={() => onArm(false)}
-          disabled={locked}
-          title={locked ? "The system theme cannot be deleted" : undefined}
-          className={cn(
-            "grid size-10 place-items-center rounded-full transition-colors disabled:opacity-30",
-            armed
-              ? "bg-destructive text-destructive-foreground"
-              : "bg-current/10 text-destructive hover:bg-current/20"
-          )}
-        >
-          <TrashIcon className="size-4" />
-        </button>
+            <button
+              type="button"
+              aria-label={
+                armed
+                  ? `Confirm archive ${theme.label}`
+                  : `Archive ${theme.label}`
+              }
+              onClick={() => (armed ? onArchive() : onArm(true))}
+              onBlur={() => onArm(false)}
+              disabled={locked}
+              title={
+                locked ? "The default theme cannot be archived" : undefined
+              }
+              className={cn(
+                "grid size-10 place-items-center rounded-full transition-colors disabled:opacity-30",
+                armed
+                  ? "bg-current/80 text-background"
+                  : "bg-current/10 hover:bg-current/20"
+              )}
+            >
+              <ArchiveIcon className="size-4" />
+            </button>
+          </>
+        )}
       </div>
     </li>
   )
@@ -178,23 +225,30 @@ export function ThemeList({
   themes,
   onNew,
   onEdit,
-  onDelete,
+  onArchive,
+  onUnarchive,
   onReorder,
 }: {
   themes: Theme[]
   onNew: () => void
   onEdit: (theme: Theme) => void
-  onDelete: (theme: Theme) => void
+  onArchive: (theme: Theme) => void
+  onUnarchive: (theme: Theme) => void
   onReorder: (names: string[]) => void
 }) {
   const [dragging, setDragging] = useState<string | null>(null)
   const [armed, setArmed] = useState<string | null>(null)
 
+  const active = themes.filter((theme) => !theme.archived)
+  const archived = themes.filter((theme) => theme.archived)
+
+  // Reordering only ever concerns the live themes; an archived one has no
+  // position on the site to move.
   const move = (name: string, direction: -1 | 1) => {
-    const from = themes.findIndex((t) => t.name === name)
+    const from = active.findIndex((t) => t.name === name)
     const to = from + direction
-    if (from === -1 || to < 0 || to >= themes.length) return
-    const next = [...themes]
+    if (from === -1 || to < 0 || to >= active.length) return
+    const next = [...active]
     const [row] = next.splice(from, 1)
     next.splice(to, 0, row!)
     onReorder(next.map((t) => t.name))
@@ -202,7 +256,7 @@ export function ThemeList({
 
   const dropOn = (target: string) => {
     if (!dragging || dragging === target) return
-    const next = themes.map((t) => t.name).filter((n) => n !== dragging)
+    const next = active.map((t) => t.name).filter((n) => n !== dragging)
     next.splice(next.indexOf(target), 0, dragging)
     onReorder(next)
     setDragging(null)
@@ -218,31 +272,60 @@ export function ThemeList({
         </Button>
       </header>
 
-      <ul className="flex flex-col gap-3">
-        {themes.map((theme) => (
-          <ThemeRow
-            key={theme.name}
-            theme={theme}
-            dragging={dragging === theme.name}
-            armed={armed === theme.name}
-            onArm={(next) => setArmed(next ? theme.name : null)}
-            onDragStart={() => setDragging(theme.name)}
-            onDrop={() => dropOn(theme.name)}
-            onDragEnd={() => setDragging(null)}
-            onMoveUp={() => move(theme.name, -1)}
-            onEdit={() => onEdit(theme)}
-            onDelete={() => {
-              onDelete(theme)
-              setArmed(null)
-            }}
-          />
-        ))}
-      </ul>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-light">{active.length} Active</h2>
+        <ul className="flex flex-col gap-3">
+          {active.map((theme) => (
+            <ThemeRow
+              key={theme.name}
+              theme={theme}
+              dragging={dragging === theme.name}
+              armed={armed === theme.name}
+              onArm={(next) => setArmed(next ? theme.name : null)}
+              onDragStart={() => setDragging(theme.name)}
+              onDrop={() => dropOn(theme.name)}
+              onDragEnd={() => setDragging(null)}
+              onMoveUp={() => move(theme.name, -1)}
+              onEdit={() => onEdit(theme)}
+              onArchive={() => {
+                onArchive(theme)
+                setArmed(null)
+              }}
+              onUnarchive={() => onUnarchive(theme)}
+            />
+          ))}
+        </ul>
 
-      {themes.length === 0 && (
-        <p className="text-sm text-muted-foreground">
-          No themes yet — create one to get started.
-        </p>
+        {active.length === 0 && (
+          <p className="text-sm text-muted-foreground">
+            No themes yet — create one to get started.
+          </p>
+        )}
+      </section>
+
+      {archived.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <h2 className="text-2xl font-light">{archived.length} Archived</h2>
+          <ul className="flex flex-col gap-3">
+            {archived.map((theme) => (
+              <ThemeRow
+                key={theme.name}
+                theme={theme}
+                archived
+                dragging={false}
+                armed={false}
+                onArm={() => {}}
+                onDragStart={() => {}}
+                onDrop={() => {}}
+                onDragEnd={() => {}}
+                onMoveUp={() => {}}
+                onEdit={() => onEdit(theme)}
+                onArchive={() => onArchive(theme)}
+                onUnarchive={() => onUnarchive(theme)}
+              />
+            ))}
+          </ul>
+        </section>
       )}
     </div>
   )
