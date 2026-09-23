@@ -1,7 +1,7 @@
 {
   "name": "carbon-mint",
   "label": "Carbon Mint",
-  "order": 8,
+  "order": 9,
   "selector": ".carbon-mint",
   "seeds": {
     "background": "#ebfffa",

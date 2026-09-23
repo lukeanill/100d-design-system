@@ -1,7 +1,7 @@
 {
   "name": "arctic-aurora",
   "label": "Arctic Aurora",
-  "order": 9,
+  "order": 10,
   "selector": ".arctic-aurora",
   "seeds": {
     "background": "#160132",
