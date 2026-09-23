@@ -51,6 +51,27 @@ const serialize = (theme) => JSON.stringify(theme, null, 2) + "\n"
 const liveThemes = (themes) => Object.values(themes).filter((theme) => !theme.archived)
 
 /**
+ * The default theme is whichever one is first in the studio's list, and it is
+ * the one written to `:root`. Everything else is a class.
+ *
+ * Derived rather than stored, so moving a theme to the top of the list is all
+ * it takes to make it the default — and so there is always exactly one, which
+ * the site needs: a page with no theme class falls back to `:root`, and with no
+ * `:root` block it renders with no tokens at all.
+ *
+ * Mutates `themes` and records any file that changed.
+ */
+function syncRootSelector(themes, files) {
+  const first = liveThemes(themes).sort((a, b) => (a.order ?? 99) - (b.order ?? 99))[0]
+  for (const theme of Object.values(themes)) {
+    const selector = theme.name === first?.name ? ":root" : `.${theme.name}`
+    if (theme.selector === selector) continue
+    themes[theme.name] = { ...theme, selector }
+    files[themePath(theme.name)] = serialize(themes[theme.name])
+  }
+}
+
+/**
  * Emit keys in the order the stored file already used, so re-saving an
  * untouched theme is a no-op diff rather than a whole-file reshuffle. The
  * studio's commits are meant to be readable; a reordered file hides the one
@@ -71,11 +92,9 @@ function normalize(body, existing = {}, themeCount = 0) {
     name,
     label: body.label ?? existing.label ?? body.name ?? name,
     order: body.order ?? existing.order ?? themeCount,
-    // Never re-derive a stored selector. The light theme is the `:root`
-    // default, and deriving would rewrite it to `.light` — which drops the
-    // default theme off the root and leaves the site unstyled until a class
-    // is set. Only genuinely new themes get a selector computed for them.
-    selector: body.selector ?? existing.selector ?? (name === "system" ? ":root" : `.${name}`),
+    // A starting point only: syncRootSelector has the final say, giving
+    // `:root` to whichever theme is first in the list and a class to the rest.
+    selector: body.selector ?? existing.selector ?? `.${name}`,
     seeds: body.seeds ?? existing.seeds ?? {},
     fonts: body.fonts ?? existing.fonts ?? {},
     edges: body.edges ?? existing.edges ?? "custom",
@@ -219,12 +238,13 @@ export function applyThemeChange(workspace, change) {
         order: index,
       }).source
     })
-    if (colorRegistry !== workspace.colorRegistry) files[COLOR_REGISTRY] = colorRegistry
-    // order changes no colours, so there is no CSS to regenerate
-    return { files, themes: listThemes(themes), contrast: null }
   } else {
     throw new Error(`Unknown change type: ${change.type}`)
   }
+
+  // Whatever the change was, it may have moved which theme is first: a
+  // reorder, a new theme, or archiving the one that held :root.
+  syncRootSelector(themes, files)
 
   if (colorRegistry !== workspace.colorRegistry) files[COLOR_REGISTRY] = colorRegistry
   if (fontRegistry !== workspace.fontRegistry) files[FONT_REGISTRY] = fontRegistry

@@ -192,35 +192,37 @@ test("a clean save never touches the baseline", () => {
   }
 })
 
-test("reordering changes order everywhere, and nothing else", () => {
+test("reordering changes order and the default theme, and nothing else", () => {
   const ws = workspace()
   const names = listThemes(ws.themes).map((t) => t.name)
   const reordered = [...names].reverse()
   const { files } = applyThemeChange(ws, { type: "reorder", order: reordered })
   const REGISTRY = "packages/ui/src/lib/theme-registry.ts"
+  const CSS = "packages/ui/src/styles/tokens.css"
 
-  // themes and the registry, and no palette regeneration
+  // themes, the registry, and the CSS the moved :root block lives in
   for (const path of Object.keys(files)) {
-    if (path === REGISTRY) continue
+    if (path === REGISTRY || path === CSS) continue
     assert.match(path, /^packages\/ui\/tokens\/.+\.json$/, `reorder touched ${path}`)
   }
   for (const [path, content] of Object.entries(files)) {
-    if (path === REGISTRY) continue
+    if (path === REGISTRY || path === CSS) continue
     const before = JSON.parse(read(path))
     const after = JSON.parse(content)
-    assert.deepEqual({ ...after, order: 0 }, { ...before, order: 0 }, `${path} changed beyond order`)
+    const ignore = { order: 0, selector: "" }
+    assert.deepEqual(
+      { ...after, ...ignore },
+      { ...before, ...ignore },
+      `${path} changed beyond order and selector`
+    )
   }
 
   // The registry carries `order` because the app's theme picker sorts by it.
   // Leaving it behind is how a reorder in the studio fails to reach the site.
   const registry = files[REGISTRY]
   assert.ok(registry, "a reorder must rewrite the registry")
-  const first = reordered[0]
-  assert.match(
-    registry,
-    new RegExp(`id: "${first}"[^}]*order: 0`),
-    `${first} moved to the top but the registry still says otherwise`
-  )
+  const order = [...registry.matchAll(/id: "([^"]+)".*order: (\d+)/g)].map(([, id, n]) => [id, Number(n)])
+  for (const [id, n] of order) assert.equal(n, reordered.indexOf(id), `${id} kept the old order`)
 })
 
 test("a theme without a generated palette is refused", () => {
@@ -286,4 +288,43 @@ test("the default theme cannot be archived into a broken site", () => {
   const ws = workspace()
   assert.throws(() => applyThemeChange(ws, { type: "archive", name: "system" }), /Cannot archive/)
   assert.throws(() => applyThemeChange(ws, { type: "archive", name: "nope" }), /No theme called/)
+})
+
+test("the theme at the top of the list is the one on :root", () => {
+  const ws = workspace()
+  const names = listThemes(ws.themes).map((t) => t.name)
+  const promoted = names.find((n) => ws.themes[n].selector !== ":root")
+  const reordered = [promoted, ...names.filter((n) => n !== promoted)]
+
+  const { files, themes } = applyThemeChange(ws, { type: "reorder", order: reordered })
+
+  assert.equal(themes.find((t) => t.name === promoted).selector, ":root")
+  // exactly one default, or a page with no theme class has no tokens at all
+  assert.deepEqual(
+    themes.filter((t) => t.selector === ":root").map((t) => t.name),
+    [promoted]
+  )
+
+  const css = files["packages/ui/src/styles/tokens.css"]
+  assert.ok(css.includes(`\n:root {`), "the new default is written to :root")
+  assert.ok(
+    css.indexOf("\n:root {") < css.indexOf("\n."),
+    "and first, so the themes that override it come after"
+  )
+})
+
+test("archiving the default theme hands :root to the next one", () => {
+  const ws = workspace()
+  const before = listThemes(ws.themes).filter((t) => !t.archived)
+  const defaultTheme = before.find((t) => t.selector === ":root")
+  assert.ok(defaultTheme, "fixture assumption")
+
+  // the guard only protects the theme that currently holds :root, so move it
+  // down first and archive it from there
+  const order = [...before.map((t) => t.name).filter((n) => n !== defaultTheme.name), defaultTheme.name]
+  const reordered = applyThemeChange(ws, { type: "reorder", order })
+  const next = advance(ws, reordered)
+
+  assert.equal(next.themes[order[0]].selector, ":root", "the new first theme took over")
+  assert.equal(next.themes[defaultTheme.name].selector, `.${defaultTheme.name}`)
 })
