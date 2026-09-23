@@ -19,7 +19,7 @@ import { cn } from "@workspace/ui/lib/utils"
 // Timings taken from the reference: roughly 0.45s per half, cubic ease-in-out,
 // with the swap happening while fully covered.
 
-const DURATION = 0.45
+const DEFAULT_DURATION = 0.45
 const EASE: [number, number, number, number] = [0.65, 0, 0.35, 1]
 
 // Backgrounded tabs can throttle frames enough that an animate() promise never
@@ -38,6 +38,8 @@ interface StepCurtainProps {
   transitionKey: string
   children: React.ReactNode
   color?: string
+  /** Seconds for each half of the sweep: cover, then uncover. */
+  duration?: number
   /** On the positioned wrapper the curtain is scoped to. */
   className?: string
 }
@@ -46,6 +48,7 @@ export function StepCurtain({
   transitionKey,
   children,
   color = "var(--foreground)",
+  duration = DEFAULT_DURATION,
   className,
 }: StepCurtainProps) {
   const [scope, animate] = useAnimate()
@@ -63,10 +66,10 @@ export function StepCurtain({
     runningRef.current = true
 
     async function run() {
-      const timeoutMs = DURATION * 1000 + 200
+      const timeoutMs = duration * 1000 + 200
 
       await withTimeout(
-        animate(scope.current, { x: "0%" }, { duration: DURATION, ease: EASE }),
+        animate(scope.current, { x: "0%" }, { duration, ease: EASE }),
         timeoutMs
       )
 
@@ -74,11 +77,7 @@ export function StepCurtain({
       setDisplayedKey(transitionKey)
 
       await withTimeout(
-        animate(
-          scope.current,
-          { x: "100%" },
-          { duration: DURATION, ease: EASE }
-        ),
+        animate(scope.current, { x: "100%" }, { duration, ease: EASE }),
         timeoutMs
       )
 
@@ -91,7 +90,7 @@ export function StepCurtain({
     }
 
     run()
-  }, [transitionKey, displayedKey, animate, scope])
+  }, [transitionKey, displayedKey, animate, scope, duration])
 
   React.useEffect(() => {
     if (transitionKey === displayedKey && !runningRef.current) {

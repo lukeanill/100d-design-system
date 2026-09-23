@@ -11,7 +11,7 @@ import { motion, useAnimate } from "motion/react"
 // StepCurtain is the scoped sibling, for moving between steps inside one
 // page without disturbing the chrome around them.
 
-const DURATION = 0.55
+const DEFAULT_DURATION = 0.55
 const EASE: [number, number, number, number] = [0.65, 0, 0.35, 1]
 const FULL_CIRCLE = "circle(150% at 50% 50%)"
 const ZERO_CIRCLE = "circle(0% at 50% 50%)"
@@ -34,12 +34,15 @@ interface CurtainTransitionProps {
   transitionKey: string
   children: React.ReactNode
   color?: string
+  /** Seconds for each half: the wipe in, then the iris out. */
+  duration?: number
 }
 
 export function CurtainTransition({
   transitionKey,
   children,
   color = "var(--foreground)",
+  duration = DEFAULT_DURATION,
 }: CurtainTransitionProps) {
   const [scope, animate] = useAnimate()
   const [displayedKey, setDisplayedKey] = React.useState(transitionKey)
@@ -56,13 +59,13 @@ export function CurtainTransition({
     runningRef.current = true
 
     async function run() {
-      const timeoutMs = DURATION * 1000 + 200
+      const timeoutMs = duration * 1000 + 200
       // Cover: wipe the solid panel in from the left.
       await withTimeout(
         animate(
           scope.current,
           { scaleX: 1, clipPath: FULL_CIRCLE },
-          { duration: DURATION, ease: EASE }
+          { duration, ease: EASE }
         ),
         timeoutMs
       )
@@ -74,7 +77,7 @@ export function CurtainTransition({
         animate(
           scope.current,
           { clipPath: ZERO_CIRCLE },
-          { duration: DURATION, ease: EASE }
+          { duration, ease: EASE }
         ),
         timeoutMs
       )
@@ -91,7 +94,7 @@ export function CurtainTransition({
     }
 
     run()
-  }, [transitionKey, displayedKey, animate, scope])
+  }, [transitionKey, displayedKey, animate, scope, duration])
 
   React.useEffect(() => {
     if (transitionKey === displayedKey && !runningRef.current) {
