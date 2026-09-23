@@ -5,7 +5,7 @@ import { colorThemes } from "@workspace/ui/lib/theme-registry"
 import "@workspace/ui/globals.css"
 
 const COLOR_ICONS: Record<string, string> = {
-  light: "sun",
+  "lighten-up": "sun",
   dark: "moon",
 }
 
@@ -59,7 +59,11 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    theme: "light",
+    // Must be an id in the theme registry. It used to be "light", which was
+    // deleted with that theme: nothing matched, so no theme class was applied
+    // and every token was undefined -- stories rendered with no colours at all,
+    // and anything painted with var(--foreground) came out transparent.
+    theme: "lighten-up",
   },
   decorators: [
     (Story, context) => (
