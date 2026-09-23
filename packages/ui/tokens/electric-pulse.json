@@ -1,7 +1,7 @@
 {
   "name": "electric-pulse",
   "label": "Electric Pulse",
-  "order": 7,
+  "order": 8,
   "selector": ".electric-pulse",
   "seeds": {
     "background": "#f5f5ff",
