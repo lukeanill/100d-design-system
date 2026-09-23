@@ -1,7 +1,7 @@
 {
   "name": "dark",
   "label": "Dark Mood",
-  "order": 1,
+  "order": 2,
   "selector": ".dark",
   "seeds": {
     "background": "#010101",

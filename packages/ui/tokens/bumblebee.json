@@ -1,7 +1,7 @@
 {
   "name": "bumblebee",
   "label": "Bumblebee",
-  "order": 4,
+  "order": 5,
   "selector": ".bumblebee",
   "seeds": {
     "background": "#faec24",

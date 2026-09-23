@@ -1,7 +1,7 @@
 {
   "name": "solar-azul",
   "label": "Solar Azul",
-  "order": 3,
+  "order": 4,
   "selector": ".solar-azul",
   "seeds": {
     "background": "#f2efe8",
