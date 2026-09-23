@@ -3,9 +3,6 @@
     "secondary-foreground|secondary": 4.38,
     "accent-foreground|accent": 4.38
   },
-  "bumblebee": {
-    "secondary-foreground|secondary": 1
-  },
   "carbon-mint": {
     "muted-foreground|card": 1.94
   },
@@ -24,15 +21,16 @@
     "accent-foreground|accent": 2.17
   },
   "solar-azul": {
-    "foreground|background": 4.14,
-    "card-foreground|card": 4.25,
-    "muted-foreground|card": 4.33,
-    "accent-foreground|accent": 4.03
+    "foreground|background": 4.14
   },
   "strawberry-matcha": {
     "muted-foreground|card": 2.18,
     "secondary-foreground|secondary": 2.5,
     "accent-foreground|accent": 2.5,
     "destructive|background": 1.64
+  },
+  "lighten-up": {
+    "secondary-foreground|secondary": 1.68,
+    "accent-foreground|accent": 4.49
   }
 }
