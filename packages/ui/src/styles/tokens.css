@@ -176,6 +176,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .dark {
@@ -227,6 +233,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .electric-pulse {
@@ -278,6 +290,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .acid-forest {
@@ -329,6 +347,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 32%), 0px 8px 16px -4px oklch(0 0 0 / 16%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 8%), 0px 4px 8px -4px oklch(0 0 0 / 16%), 0px 16px 24px -8px oklch(0 0 0 / 24%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 8%), 0px 8px 16px -4px oklch(0 0 0 / 16%), 0px 24px 32px -8px oklch(0 0 0 / 24%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .carbon-mint {
@@ -380,6 +404,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .solar-azul {
@@ -432,6 +462,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .arctic-aurora {
@@ -483,6 +519,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 32%), 0px 8px 16px -4px oklch(0 0 0 / 16%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 8%), 0px 4px 8px -4px oklch(0 0 0 / 16%), 0px 16px 24px -8px oklch(0 0 0 / 24%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 8%), 0px 8px 16px -4px oklch(0 0 0 / 16%), 0px 24px 32px -8px oklch(0 0 0 / 24%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .strawberry-matcha {
@@ -534,6 +576,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .metallic-mist {
@@ -585,6 +633,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .bumblebee {
@@ -643,6 +697,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 
 .night-violet {
@@ -701,6 +761,12 @@
   --shadow-lg: 0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%);
   --shadow-xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%);
   --shadow-2xl: 0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%);
+
+  --h1-gradient: linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%);
+  --h1-gradient-size: 700% 100%;
+  --h1-gradient-clip: text;
+  --h1-gradient-color: transparent;
+  --h1-gradient-animation: heading-gradient-pan 50s linear infinite;
 }
 /* @tokens:end */
 
@@ -824,6 +890,22 @@
     line-height: 1.2;
     letter-spacing: 0;
     font-weight: var(--h1-weight, 400);
+    /*
+      A theme can fill its H1s with an animated gradient. Every property below
+      resolves to its initial value until the theme sets one, so this rule is
+      inert on a theme that did not ask for it.
+    */
+    background-image: var(--h1-gradient, none);
+    background-size: var(--h1-gradient-size, auto);
+    background-clip: var(--h1-gradient-clip, border-box);
+    color: var(--h1-gradient-color, inherit);
+    animation: var(--h1-gradient-animation, none);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 {
+      animation: none;
+    }
   }
 
   h2 {

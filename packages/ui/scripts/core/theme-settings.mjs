@@ -160,19 +160,28 @@ export function glassDeclarations(glass) {
     selects: "--popover",
     overlays: "--popover",
   }
-  const group = { card: "card", actions: "action", inputs: "input", selects: "select", overlays: "overlay" }
+  // one tick can drive more than one group: an overlay is a popover surface
+  // and a dialog, which sit on different colours
+  const group = {
+    card: ["card"],
+    actions: ["action"],
+    inputs: ["input"],
+    selects: ["select"],
+    overlays: ["overlay", "dialog"],
+  }
 
   const lines = []
   for (const key of ["card", ...settings.applications]) {
-    const name = group[key]
+    for (const name of group[key]) {
     lines.push(
       // an empty string is a content value that renders; `none` in the
       // default block means no ::before box is generated at all
       `--glass-${name}-layer: "";`,
       `--glass-${name}-blur: ${blur};`,
       `--glass-${name}-saturate: ${saturate};`,
-      `--glass-${name}-surface: color-mix(in oklab, color-mix(in oklab, var(${base[key]}) ${amount}, ${tint}) ${surface}, transparent);`
+      `--glass-${name}-surface: color-mix(in oklab, color-mix(in oklab, var(${name === "dialog" ? "--background" : base[key]}) ${amount}, ${tint}) ${surface}, transparent);`
     )
+    }
   }
   return lines
 }

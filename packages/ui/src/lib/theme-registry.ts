@@ -21,11 +21,11 @@ export type PageTransitionId = "fade" | "blinds" | "curtain" | "iris"
 export type ThemeBackgroundId = "smoke" | "holo" | "aurora" | "eighties" | "ascii"
 
 export const colorThemes: ColorTheme[] = [
-  { id: "dark", label: "Dark Mood", fontTheme: "dark-mode", primary: "oklch(0.993 0.004 56.38)", order: 2 },
-  { id: "electric-pulse", label: "Electric Pulse", fontTheme: "electric-pulse", primary: "oklch(0.580 0.233 278.14)", order: 8 },
+  { id: "dark", label: "Dark Mood", fontTheme: "dark-mode", primary: "oklch(0.993 0.004 56.38)", order: 2, background: "smoke" },
+  { id: "electric-pulse", label: "Electric Pulse", fontTheme: "electric-pulse", primary: "oklch(0.580 0.233 278.14)", order: 8, background: "holo" },
   { id: "acid-forest", label: "Acid Forest", fontTheme: "acid-forest", primary: "oklch(0.944 0.220 118.56)", order: 3 },
   { id: "carbon-mint", label: "Carbon Mint", fontTheme: "carbon-mint", primary: "oklch(0.520 0.053 174.97)", order: 9 },
-  { id: "arctic-aurora", label: "Arctic Aurora", fontTheme: "arctic-aurora", primary: "oklch(0.541 0.241 267.63)", order: 10 },
+  { id: "arctic-aurora", label: "Arctic Aurora", fontTheme: "arctic-aurora", primary: "oklch(0.541 0.241 267.63)", order: 10, background: "aurora" },
   { id: "strawberry-matcha", label: "Strawberry Matcha", fontTheme: "strawberry-matcha", primary: "oklch(0.551 0.155 14.40)", order: 6 },
   { id: "metallic-mist", label: "Metallic Mist", fontTheme: "metallic-mist", primary: "oklch(0.538 0.228 276.05)", order: 11 },
   { id: "bumblebee", label: "Bumblebee", fontTheme: "bumblebee", primary: "oklch(0.000 0.000 0.00)", order: 5 },

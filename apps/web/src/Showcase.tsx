@@ -3,6 +3,7 @@ import { useTheme } from "next-themes"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts"
 
 import { colorThemes } from "@workspace/ui/lib/theme-registry"
+import { ThemeBackground } from "@workspace/ui/components/backgrounds/theme-background"
 import { cn } from "@workspace/ui/lib/utils"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@workspace/ui/components/select"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@workspace/ui/components/card"
@@ -22,12 +23,6 @@ import { RadioGroup, RadioGroupItem } from "@workspace/ui/components/radio-group
 import { Badge } from "@workspace/ui/components/badge"
 import { Tooltip, TooltipTrigger, TooltipPanel } from "@workspace/ui/components/animate-ui/components/base/tooltip"
 import AnimatedPathText from "@workspace/ui/components/fancy/text/text-along-path"
-import { GradientText } from "@workspace/ui/components/animate-ui/primitives/texts/gradient"
-import { GradientBackground } from "@workspace/ui/components/backgrounds/gradient-background"
-import type { BalsaBackgroundConfig } from "@workspace/ui/components/backgrounds/gradient-background/gradient-background"
-import { animatedBackgroundAurora } from "@workspace/ui/components/backgrounds/gradients/animated-background-aurora"
-import { animatedBackgroundHolo } from "@workspace/ui/components/backgrounds/gradients/animated-background-holo"
-import { animatedBackgroundSmoke } from "@workspace/ui/components/backgrounds/gradients/animated-background-smoke"
 import {
   Item,
   ItemGroup,
@@ -83,13 +78,6 @@ function ThemeSelect() {
  * reordering in the studio never reached the site while the app read that.
  */
 const orderedThemes = [...colorThemes].sort((a, b) => a.order - b.order)
-
-/** The animated page background, for the themes that have one. */
-const THEME_BACKGROUNDS: Record<string, BalsaBackgroundConfig> = {
-  dark: animatedBackgroundSmoke,
-  "electric-pulse": animatedBackgroundHolo,
-  "arctic-aurora": animatedBackgroundAurora,
-}
 
 function ThemeSwatches({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme()
@@ -358,8 +346,6 @@ function ShipmentDrawer({ shipment, open, onOpenChange }: { shipment: Shipment |
 export function Showcase() {
   const [activeShipment, setActiveShipment] = useState<Shipment | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const { resolvedTheme } = useTheme()
-  const pageBackground = resolvedTheme ? THEME_BACKGROUNDS[resolvedTheme] : undefined
 
   const openShipment = (shipment: Shipment) => {
     setActiveShipment(shipment)
@@ -368,14 +354,8 @@ export function Showcase() {
 
   return (
     <div className="relative isolate min-h-svh bg-background">
-      {/* Behind the whole page: fixed to the viewport so it stays as the page
-          scrolls, and at z -1 inside this isolated root so it paints over the
-          page colour but under everything on it. */}
-      {pageBackground && (
-        <div className="pointer-events-none fixed inset-0 -z-10">
-          <GradientBackground config={pageBackground} />
-        </div>
-      )}
+      <ThemeBackground />
+
       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-muted bg-background/95 px-6 py-3 backdrop-blur">
         <Button
           variant="outline"
@@ -399,12 +379,9 @@ export function Showcase() {
             <Badge variant="outline">9 demo themes</Badge>
           </div>
 
-          <h1 className="text-balance">
-            <GradientText
-              text="100D Design System"
-              gradient="linear-gradient(90deg, var(--accent-foreground) 0%, var(--muted-foreground) 20%, var(--accent-foreground) 50%, var(--muted-foreground) 80%, var(--accent-foreground) 100%)"
-            />
-          </h1>
+          {/* The gradient fill is the theme's, not this page's — see the
+              headingGradient setting. */}
+          <h1 className="text-balance">100D Design System</h1>
 
           <RichScrambleText className="max-w-xl min-h-11 text-body-small text-foreground" segments={CREDITS_SEGMENTS} />
 

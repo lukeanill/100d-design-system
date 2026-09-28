@@ -67,5 +67,12 @@
   },
   "fontTheme": "acid-forest",
   "fontSource": "bundled",
-  "updatedAt": "2026-09-21T14:48:21+00:00"
+  "effects": {
+    "headingGradient": {
+      "enabled": true,
+      "from": "accent-foreground",
+      "to": "muted-foreground"
+    }
+  },
+  "updatedAt": "2026-09-28T02:24:47.499Z"
 }

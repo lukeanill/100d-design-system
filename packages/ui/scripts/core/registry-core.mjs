@@ -52,10 +52,11 @@ export function upsertColorThemeIn(source, { id, label, fontTheme, primary, orde
     fontTheme: fontTheme ?? themes[index]?.fontTheme ?? id,
     primary: primary ?? themes[index]?.primary ?? "",
     order: order ?? themes[index]?.order ?? themes.length,
-    // effects travel with the theme; an archived theme that comes back has no
-    // registry entry to read them from, so they come from the theme itself
-    pageTransition: effects?.pageTransition ?? themes[index]?.pageTransition,
-    background: effects?.background ?? themes[index]?.background,
+    // Effects travel with the theme: when the caller passes them, they are the
+    // whole truth, so turning one off in the studio takes it out of the entry.
+    // The existing entry is only consulted when the caller says nothing at all.
+    pageTransition: effects ? effects.pageTransition : themes[index]?.pageTransition,
+    background: effects ? effects.background : themes[index]?.background,
   }
   if (index === -1) themes.push(entry)
   else themes[index] = { ...themes[index], ...entry }

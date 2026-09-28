@@ -69,6 +69,19 @@ test("a theme's settings survive a save, and reach the stylesheet", () => {
   assert.match(registry, /id: "dark".*pageTransition: "curtain".*background: "smoke"/)
 })
 
+test("turning an effect off takes it out of the registry", () => {
+  let ws = workspace()
+  const theme = { ...ws.themes["dark"], effects: { pageTransition: "fade" } }
+  ws = advance(ws, applyThemeChange(ws, { type: "save", theme }))
+  assert.match(ws.colorRegistry, /id: "dark".*pageTransition: "fade"/)
+
+  const { files } = applyThemeChange(ws, { type: "save", theme: { ...theme, effects: {} } })
+  assert.ok(
+    !/id: "dark".*pageTransition/.test(files["packages/ui/src/lib/theme-registry.ts"]),
+    "an entry keeps a setting the theme no longer has"
+  )
+})
+
 test("settings survive archiving and coming back", () => {
   let ws = workspace()
   const theme = { ...ws.themes["dark"], effects: { pageTransition: "fade", background: "holo" } }
