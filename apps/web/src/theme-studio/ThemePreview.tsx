@@ -2,7 +2,13 @@ import { Button } from "@workspace/ui/components/button"
 import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import { Input } from "@workspace/ui/components/input"
-import type { Fonts } from "./api"
+import {
+  glassDeclarations,
+  headingGradientDeclarations,
+  typographyDeclarations,
+  // @ts-expect-error - shared .mjs settings tables, also used by the build scripts
+} from "@workspace/ui/scripts/core/theme-settings"
+import type { Effects, Fonts, Glass, Typography } from "./api"
 
 /**
  * The designs leave this panel empty, so it renders a sampler of real library
@@ -12,14 +18,31 @@ export function ThemePreview({
   tokens,
   fonts,
   generated,
+  glass,
+  typography,
+  effects,
 }: {
   tokens: Record<string, string>
   fonts: Fonts
   generated: boolean
+  glass?: Glass
+  typography?: Typography
+  effects?: Effects
 }) {
-  const style = Object.fromEntries(
-    Object.entries(tokens).map(([token, value]) => [`--${token}`, value])
-  ) as React.CSSProperties
+  // The settings are previewed through the same emitters the generator writes
+  // with, so what is shown here is what the stylesheet will say.
+  const declarations = [
+    ...(glassDeclarations(glass) as string[]),
+    ...(typographyDeclarations(typography) as string[]),
+    ...(headingGradientDeclarations(effects, tokens) as string[]),
+  ]
+  const style = Object.fromEntries([
+    ...Object.entries(tokens).map(([token, value]) => [`--${token}`, value]),
+    ...declarations.map((line) => {
+      const [name, ...rest] = line.replace(/;$/, "").split(":")
+      return [name.trim(), rest.join(":").trim()]
+    }),
+  ]) as React.CSSProperties
 
   return (
     <section className="rounded-2xl bg-card p-6 shadow-xs">
@@ -28,6 +51,8 @@ export function ThemePreview({
           style={{ ...style, fontFamily: fonts.body ? `'${fonts.body}', sans-serif` : undefined }}
           className="flex flex-col gap-5 rounded-xl bg-background p-6 text-foreground"
         >
+          <h1>Heading 1</h1>
+          <h3>Heading 3</h3>
           <h2
             className="text-3xl"
             style={{ fontFamily: fonts.primary ? `'${fonts.primary}', sans-serif` : undefined }}

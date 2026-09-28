@@ -209,6 +209,9 @@ export function ThemeEditor({
       <ThemePreview
         tokens={tokens}
         fonts={fonts}
+        glass={glass}
+        typography={typography}
+        effects={effects}
         generated={Object.keys(tokens).length > 0}
       />
     </div>
