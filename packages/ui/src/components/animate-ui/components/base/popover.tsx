@@ -19,7 +19,8 @@ import {
   type PopoverTitleProps as PopoverTitlePrimitiveProps,
   type PopoverDescriptionProps as PopoverDescriptionPrimitiveProps,
 } from '@workspace/ui/components/animate-ui/primitives/base/popover';
-import { cn } from '@workspace/ui/lib/utils';
+import { cn } from '@workspace/ui/lib/utils'
+import { glass } from "@workspace/ui/lib/glass";
 
 type PopoverProps = PopoverPrimitiveProps;
 
@@ -58,7 +59,7 @@ function PopoverPanel({
           initialFocus={initialFocus}
           finalFocus={finalFocus}
           className={cn(
-            'bg-popover text-popover-foreground w-72 rounded-md border p-4 shadow-md outline-hidden origin-(--transform-origin)',
+            `${glass("overlay")} text-popover-foreground w-72 rounded-md border p-4 shadow-md outline-hidden origin-(--transform-origin)`,
             className,
           )}
           style={style}

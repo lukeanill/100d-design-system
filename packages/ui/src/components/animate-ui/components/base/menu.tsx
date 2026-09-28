@@ -38,7 +38,8 @@ import {
   type MenuSubmenuProps as MenuSubmenuPrimitiveProps,
   type MenuSubmenuTriggerProps as MenuSubmenuTriggerPrimitiveProps,
 } from '@workspace/ui/components/animate-ui/primitives/base/menu';
-import { cn } from '@workspace/ui/lib/utils';
+import { cn } from '@workspace/ui/lib/utils'
+import { glass } from "@workspace/ui/lib/glass";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react';
 
 type MenuProps = MenuPrimitiveProps;
@@ -82,7 +83,7 @@ function MenuPanel({
           transition={transition}
           id={id}
           className={cn(
-            'bg-popover text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md outline-none',
+            `${glass("overlay")} text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md outline-none`,
             className,
           )}
         >
@@ -314,7 +315,7 @@ function MenuSubmenuPanel({
           transition={transition}
           id={id}
           className={cn(
-            'bg-popover text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md',
+            `${glass("overlay")} text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md`,
             className,
           )}
         >

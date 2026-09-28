@@ -949,6 +949,120 @@
   }
 }
 
+@layer base {
+  /*
+    Glass surfaces. A theme sets these in its own block (see theme-settings.mjs);
+    everything below is what renders when it says nothing.
+
+    `--glass-*-layer` is the switch, and it is a `content` value: `none` means
+    the ::before box is never generated, which is not the same as a zero blur.
+    `backdrop-filter: blur(0)` still creates a containing block and a stacking
+    context and still re-rasterises the text above it, so an "off" surface has
+    to have no layer at all rather than an empty one.
+
+    Menus, selects and popovers have been glass since before this setting
+    existed. Their defaults are that recipe — 40px, 150%, 70% — so a theme that
+    chooses nothing renders exactly as it did, and `medium` is the identity
+    weight.
+  */
+  :root {
+    --glass-card-layer: none;
+    --glass-card-surface: var(--card);
+    --glass-card-blur: 0px;
+    --glass-card-saturate: 100%;
+
+    --glass-action-layer: none;
+    --glass-action-surface: var(--primary);
+    --glass-action-blur: 0px;
+    --glass-action-saturate: 100%;
+
+    --glass-input-layer: none;
+    --glass-input-surface: var(--card);
+    --glass-input-blur: 0px;
+    --glass-input-saturate: 100%;
+
+    --glass-select-layer: "";
+    --glass-select-surface: color-mix(in oklab, var(--popover) 70%, transparent);
+    --glass-select-blur: 40px;
+    --glass-select-saturate: 150%;
+
+    --glass-overlay-layer: "";
+    --glass-overlay-surface: color-mix(in oklab, var(--popover) 70%, transparent);
+    --glass-overlay-blur: 40px;
+    --glass-overlay-saturate: 150%;
+
+    /* dialogs sit on the page colour rather than the popover colour, and were
+       never glass; the Overlays choice drives them alongside the rest */
+    --glass-dialog-layer: none;
+    --glass-dialog-surface: var(--background);
+    --glass-dialog-blur: 0px;
+    --glass-dialog-saturate: 100%;
+  }
+
+  /*
+    One recipe, five groups. `glass(group)` in lib/glass.ts returns these two
+    classes; the group class only points the shared rule at that group's
+    variables, so a surface picks up whatever its theme chose without every
+    component knowing the recipe.
+  */
+  .glass-surface {
+    position: relative;
+    background-color: var(--glass-surface);
+  }
+
+  .glass-surface::before {
+    content: var(--glass-layer);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  }
+
+  .glass-card {
+    --glass-layer: var(--glass-card-layer);
+    --glass-surface: var(--glass-card-surface);
+    --glass-blur: var(--glass-card-blur);
+    --glass-saturate: var(--glass-card-saturate);
+  }
+
+  .glass-action {
+    --glass-layer: var(--glass-action-layer);
+    --glass-surface: var(--glass-action-surface);
+    --glass-blur: var(--glass-action-blur);
+    --glass-saturate: var(--glass-action-saturate);
+  }
+
+  .glass-input {
+    --glass-layer: var(--glass-input-layer);
+    --glass-surface: var(--glass-input-surface);
+    --glass-blur: var(--glass-input-blur);
+    --glass-saturate: var(--glass-input-saturate);
+  }
+
+  .glass-select {
+    --glass-layer: var(--glass-select-layer);
+    --glass-surface: var(--glass-select-surface);
+    --glass-blur: var(--glass-select-blur);
+    --glass-saturate: var(--glass-select-saturate);
+  }
+
+  .glass-overlay {
+    --glass-layer: var(--glass-overlay-layer);
+    --glass-surface: var(--glass-overlay-surface);
+    --glass-blur: var(--glass-overlay-blur);
+    --glass-saturate: var(--glass-overlay-saturate);
+  }
+
+  .glass-dialog {
+    --glass-layer: var(--glass-dialog-layer);
+    --glass-surface: var(--glass-dialog-surface);
+    --glass-blur: var(--glass-dialog-blur);
+    --glass-saturate: var(--glass-dialog-saturate);
+  }
+}
+
 /*
   Tailwind's `@theme inline` collapses aliases like `--font-heading: var(--font-authentic-sans-60)`
   down to `var(--font-authentic-sans-60)` when it compiles the `.font-heading`/`.font-sans`/`.font-body`/

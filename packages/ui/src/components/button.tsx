@@ -6,13 +6,17 @@ import { AnimatePresence, motion } from "motion/react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { glass } from "@workspace/ui/lib/glass"
 
 const buttonVariants = cva(
   "group/button relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-(--radius) border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap shadow-md transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        // hover is the surface at 80%, which is exactly what bg-primary/80 was
+        // while the surface is var(--primary), and follows the glass once a
+        // theme turns it on
+        default: `${glass("action")} text-primary-foreground hover:bg-[color-mix(in_oklab,var(--glass-action-surface),transparent_20%)]`,
         outline:
           "border-foreground bg-transparent hover:bg-muted aria-expanded:bg-muted",
         secondary:

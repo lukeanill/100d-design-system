@@ -1,13 +1,14 @@
 import * as React from "react"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { glass } from "@workspace/ui/lib/glass"
 
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea
       data-slot="textarea"
       className={cn(
-        "flex field-sizing-content min-h-16 w-full resize-none rounded-xl border border-muted bg-card px-3 py-3 text-base shadow-md transition-colors outline-none placeholder:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 md:text-sm dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
+        `flex field-sizing-content min-h-16 w-full resize-none rounded-xl border border-muted ${glass("input")} px-3 py-3 text-base shadow-md transition-colors outline-none placeholder:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 md:text-sm dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40`,
         className
       )}
       {...props}

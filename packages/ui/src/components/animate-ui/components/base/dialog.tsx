@@ -22,7 +22,8 @@ import {
   type DialogBackdropProps as DialogBackdropPrimitiveProps,
   type DialogCloseProps as DialogClosePrimitiveProps,
 } from '@workspace/ui/components/animate-ui/primitives/base/dialog';
-import { cn } from '@workspace/ui/lib/utils';
+import { cn } from '@workspace/ui/lib/utils'
+import { glass } from "@workspace/ui/lib/glass";
 
 type DialogProps = DialogPrimitiveProps;
 
@@ -68,7 +69,7 @@ function DialogPopup({
       <DialogBackdrop />
       <DialogPopupPrimitive
         className={cn(
-          'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg',
+          `${glass("dialog")} fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg`,
           className,
         )}
         {...props}
