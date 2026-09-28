@@ -60,6 +60,24 @@ const SYSTEM_FONT = {
 
 const FONT_ROLES = ["primary", "emphasis", "body"]
 
+/**
+ * The variables each role has to land on to reach the page.
+ *
+ * `--font-primary` and `--font-emphasis` are the honest names, but nothing
+ * resolves them: Tailwind's `@theme inline` compiles `.font-heading` and
+ * `.font-serif` down to the physical variables below, and the headings in
+ * `@layer base` follow the same chain. A Google theme that declared only the
+ * honest names therefore rendered in the default faces — which is why
+ * Bumblebee's headings were Authentic Sans rather than Work Sans. The bundled
+ * themes have always done this through their [data-font-theme] blocks; these
+ * are the same overrides, generated.
+ */
+const ROLE_VARIABLES = {
+  primary: ["font-primary", "font-authentic-sans-60", "font-authentic-sans-90"],
+  emphasis: ["font-emphasis", "font-oranienbaum"],
+  body: ["font-body-token"],
+}
+
 function block({ selector, tokens, extra = [], fonts, fontSource }) {
   const lines = []
   // Themes paired to bundled faces are styled by their [data-font-theme] block,
@@ -67,10 +85,10 @@ function block({ selector, tokens, extra = [], fonts, fontSource }) {
   if (fontSource === "google") {
     for (const role of FONT_ROLES) {
       const family = fonts?.[role]?.trim()
-      const name = role === "body" ? "font-body-token" : `font-${role}`
       // every role is declared whether or not a family was named, so the stack
       // always ends somewhere real
-      lines.push(`  --${name}: ${family ? `'${family}', ` : ""}${SYSTEM_FONT[role]};`)
+      const stack = `${family ? `'${family}', ` : ""}${SYSTEM_FONT[role]}`
+      for (const name of ROLE_VARIABLES[role]) lines.push(`  --${name}: ${stack};`)
     }
   }
   for (const [name, value] of Object.entries(tokens)) {
