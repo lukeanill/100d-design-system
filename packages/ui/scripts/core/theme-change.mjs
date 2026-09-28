@@ -14,6 +14,7 @@ import {
   upsertFontThemeIn,
 } from "./registry-core.mjs"
 import { evaluateContrast } from "./contrast-core.mjs"
+import { normalizeEffects, normalizeGlass, normalizeTypography } from "./theme-settings.mjs"
 
 export const TOKENS_DIR = "packages/ui/tokens"
 export const TOKENS_CSS = "packages/ui/src/styles/tokens.css"
@@ -109,7 +110,19 @@ function normalize(body, existing = {}, themeCount = 0) {
     // file free of a flag that means nothing for a live theme.
     ...((body.archived ?? existing.archived) ? { archived: true } : {}),
     ...(body.extra ?? existing.extra ? { extra: body.extra ?? existing.extra } : {}),
+    // Settings beyond colour and fonts. Each normalizer returns undefined when
+    // everything is at its default, so a theme that has chosen nothing carries
+    // no key and its stored file is unchanged.
+    ...(settings("glass", normalizeGlass, body, existing)),
+    ...(settings("typography", normalizeTypography, body, existing)),
+    ...(settings("effects", (value) => normalizeEffects(value, body.tokens ?? existing.tokens), body, existing)),
   }
+}
+
+/** `{ key: value }` when the normalizer kept something, `{}` when it did not. */
+function settings(key, normalize, body, existing) {
+  const value = normalize(key in body ? body[key] : existing[key])
+  return value ? { [key]: value } : {}
 }
 
 /**
@@ -171,6 +184,7 @@ export function applyThemeChange(workspace, change) {
       // own copy, which is how the old one came to be missing three themes
       primary: theme.tokens?.primary,
       order: theme.order,
+      effects: theme.effects,
     })
     colorRegistry = nextColor.source
     }
@@ -198,6 +212,7 @@ export function applyThemeChange(workspace, change) {
         fontTheme: next.fontTheme ?? (next.fontSource === "google" ? name : undefined),
         primary: next.tokens?.primary,
         order: next.order,
+        effects: next.effects,
       }).source
       if (next.fontSource === "google") {
         fontRegistry = upsertFontThemeIn(fontRegistry, {
@@ -236,6 +251,7 @@ export function applyThemeChange(workspace, change) {
         fontTheme: theme.fontTheme,
         primary: theme.tokens?.primary,
         order: index,
+        effects: theme.effects,
       }).source
     })
   } else {

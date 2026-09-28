@@ -24,8 +24,14 @@ export const readFontThemesFrom = (source) => entries(source, "fontThemes")
 // `primary` and `order` are here so the app can draw a theme picker without a
 // hand-kept copy of either. The old picker carried a hardcoded colour map that
 // went stale the moment a theme was added, renamed or reordered.
-const colorLine = ({ id, label, fontTheme, primary, order }) =>
-  `  { id: "${id}", label: "${label}", fontTheme: "${fontTheme}", primary: "${primary ?? ""}", order: ${order ?? 99} },`
+// `pageTransition` and `background` are appended only when the theme chose one,
+// so the entry for a theme that chose neither is the line it always was — and a
+// save touches the registry only when something really changed.
+const colorLine = ({ id, label, fontTheme, primary, order, pageTransition, background }) =>
+  `  { id: "${id}", label: "${label}", fontTheme: "${fontTheme}", primary: "${primary ?? ""}", order: ${order ?? 99}` +
+  (pageTransition && pageTransition !== "none" ? `, pageTransition: "${pageTransition}"` : "") +
+  (background && background !== "none" ? `, background: "${background}"` : "") +
+  ` },`
 
 const fontLine = ({ id, label, primaryFont, secondaryFont }) =>
   `  { id: "${id}", label: "${label}", primaryFont: "${primaryFont}", secondaryFont: "${secondaryFont}" },`
@@ -37,7 +43,7 @@ const rewrite = (source, arrayName, lines) => {
 }
 
 /** Add or update a colour theme, preserving registry order for existing ids. */
-export function upsertColorThemeIn(source, { id, label, fontTheme, primary, order }) {
+export function upsertColorThemeIn(source, { id, label, fontTheme, primary, order, effects }) {
   const themes = readColorThemesFrom(source)
   const index = themes.findIndex((t) => t.id === id)
   const entry = {
@@ -46,6 +52,10 @@ export function upsertColorThemeIn(source, { id, label, fontTheme, primary, orde
     fontTheme: fontTheme ?? themes[index]?.fontTheme ?? id,
     primary: primary ?? themes[index]?.primary ?? "",
     order: order ?? themes[index]?.order ?? themes.length,
+    // effects travel with the theme; an archived theme that comes back has no
+    // registry entry to read them from, so they come from the theme itself
+    pageTransition: effects?.pageTransition ?? themes[index]?.pageTransition,
+    background: effects?.background ?? themes[index]?.background,
   }
   if (index === -1) themes.push(entry)
   else themes[index] = { ...themes[index], ...entry }

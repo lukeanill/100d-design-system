@@ -42,6 +42,46 @@ test("re-saving an unchanged theme rewrites nothing", () => {
   }
 })
 
+test("a theme's settings survive a save, and reach the stylesheet", () => {
+  const ws = workspace()
+  const theme = {
+    ...ws.themes["dark"],
+    glass: { style: "glass", weight: "heavy", tone: "dark", applications: ["actions"] },
+    typography: { scale: "compact", headings: { h2: { font: "emphasis" } } },
+    effects: { pageTransition: "curtain", background: "smoke" },
+  }
+  const { files, themes } = applyThemeChange(ws, { type: "save", theme })
+
+  const saved = themes.find((t) => t.name === "dark")
+  assert.equal(saved.glass.weight, "heavy")
+  assert.equal(saved.typography.scale, "compact")
+  assert.equal(saved.effects.pageTransition, "curtain")
+
+  const css = files["packages/ui/src/styles/tokens.css"]
+  const block = css.slice(css.indexOf(".dark {"), css.indexOf("}", css.indexOf(".dark {")))
+  assert.match(block, /--glass-card-blur: 64px;/, "cards are glass even though only actions was ticked")
+  assert.match(block, /--glass-action-blur: 64px;/)
+  assert.ok(!/--glass-select-/.test(block), "an unticked group keeps the look it already had")
+  assert.match(block, /--h1-size: 3\.75rem;/)
+  assert.match(block, /--h2-family: var\(--font-oranienbaum\);/)
+
+  const registry = files["packages/ui/src/lib/theme-registry.ts"]
+  assert.match(registry, /id: "dark".*pageTransition: "curtain".*background: "smoke"/)
+})
+
+test("settings survive archiving and coming back", () => {
+  let ws = workspace()
+  const theme = { ...ws.themes["dark"], effects: { pageTransition: "fade", background: "holo" } }
+  ws = advance(ws, applyThemeChange(ws, { type: "save", theme }))
+  ws = advance(ws, applyThemeChange(ws, { type: "archive", name: "dark" }))
+  const { files } = applyThemeChange(ws, { type: "unarchive", name: "dark" })
+  assert.match(
+    files["packages/ui/src/lib/theme-registry.ts"],
+    /id: "dark".*pageTransition: "fade".*background: "holo"/,
+    "the registry entry comes back with the theme's effects, not stripped"
+  )
+})
+
 test("the default theme keeps its :root selector", () => {
   const ws = workspace()
   assert.equal(ws.themes["lighten-up"].selector, ":root", "fixture assumption")

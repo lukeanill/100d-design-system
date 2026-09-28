@@ -5,6 +5,7 @@ import { derivePalette } from "@workspace/ui/tokens/color"
 import { ColorSeed, EdgePicker, FontField } from "./ColorSeed"
 import { SiteImport } from "./SiteImport"
 import { DerivedPalette } from "./DerivedPalette"
+import { EffectsPanel, SurfacePanel, TypographyPanel } from "./ThemeSettings"
 import { ThemePreview } from "./ThemePreview"
 import type { Fonts, Seeds, Theme } from "./api"
 
@@ -37,6 +38,11 @@ export function ThemeEditor({
   const [fonts, setFonts] = useState<Fonts>(theme?.fonts ?? {})
   const [edges, setEdges] = useState(theme?.edges ?? "strong")
   const [overrides, setOverrides] = useState<Record<string, string>>(theme?.overrides ?? {})
+  // Settings beyond colour and fonts. Undefined means "at the defaults", which
+  // is also what gets stored: nothing.
+  const [glass, setGlass] = useState<Theme["glass"]>(theme?.glass)
+  const [typography, setTypography] = useState<Theme["typography"]>(theme?.typography)
+  const [effects, setEffects] = useState<Theme["effects"]>(theme?.effects)
   // The nine existing themes pair to bundled faces via [data-font-theme]; their
   // fonts are shown but not editable. New themes name Google families instead.
   const bundled = theme?.fontSource === "bundled"
@@ -100,6 +106,9 @@ export function ThemeEditor({
               edges,
               overrides,
               tokens,
+              ...(glass ? { glass } : {}),
+              ...(typography ? { typography } : {}),
+              ...(effects ? { effects } : {}),
               fontSource: bundled ? "bundled" : "google",
               ...(theme?.fontTheme ? { fontTheme: theme.fontTheme } : {}),
             })
@@ -175,6 +184,19 @@ export function ThemeEditor({
           <h2 className="text-xl font-light">Edges</h2>
           <EdgePicker value={edges} onChange={setEdgesAndDerive} />
         </section>
+      </div>
+
+      {/* Everything beyond colour and fonts: surface style, heading
+          typography, and the animations a theme brings with it. */}
+      <div className="grid gap-10 md:grid-cols-3">
+        <SurfacePanel glass={glass} onChange={setGlass} />
+        <TypographyPanel
+          typography={typography}
+          bundled={bundled}
+          fontTheme={theme?.fontTheme}
+          onChange={setTypography}
+        />
+        <EffectsPanel effects={effects} tokens={tokens} onChange={setEffects} />
       </div>
 
       <DerivedPalette

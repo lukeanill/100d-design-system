@@ -10,7 +10,15 @@ export interface ColorTheme {
   primary: string
   /** Position in the studio's list. Pickers sort by this, not by array order. */
   order: number
+  /** Transition played on route change. Absent means none. */
+  pageTransition?: PageTransitionId
+  /** Animated page background. Absent means none. */
+  background?: ThemeBackgroundId
 }
+
+/** Kept as plain unions so the registry stays a file anyone can read and edit. */
+export type PageTransitionId = "fade" | "blinds" | "curtain" | "iris"
+export type ThemeBackgroundId = "smoke" | "holo" | "aurora" | "eighties" | "ascii"
 
 export const colorThemes: ColorTheme[] = [
   { id: "dark", label: "Dark Mood", fontTheme: "dark-mode", primary: "oklch(0.993 0.004 56.38)", order: 2 },

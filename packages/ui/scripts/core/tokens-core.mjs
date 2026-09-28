@@ -6,6 +6,11 @@
 // produce byte-identical CSS.
 
 import { fmt, hexToOklch } from "../../tokens/lib/color.mjs"
+import {
+  glassDeclarations,
+  headingGradientDeclarations,
+  typographyDeclarations,
+} from "./theme-settings.mjs"
 
 // Themes appear in the CSS in this order; anything else is appended alphabetically.
 export const ORDER = [
@@ -78,7 +83,7 @@ const ROLE_VARIABLES = {
   body: ["font-body-token"],
 }
 
-function block({ selector, tokens, extra = [], fonts, fontSource }) {
+function block({ selector, tokens, extra = [], fonts, fontSource, glass, typography, effects }) {
   const lines = []
   // Themes paired to bundled faces are styled by their [data-font-theme] block,
   // so their `fonts` are studio metadata only. Google themes declare theirs here.
@@ -99,6 +104,18 @@ function block({ selector, tokens, extra = [], fonts, fontSource }) {
   for (const decl of extra) {
     lines.push("")
     lines.push(`  ${decl}`)
+  }
+  // Settings beyond colour and fonts. Each emitter returns nothing when the
+  // theme left that setting alone, so a theme from before they existed renders
+  // exactly the block it always did.
+  for (const group of [
+    glassDeclarations(glass),
+    typographyDeclarations(typography),
+    headingGradientDeclarations(effects, tokens),
+  ]) {
+    if (!group.length) continue
+    lines.push("")
+    for (const decl of group) lines.push(`  ${decl}`)
   }
   return `${selector} {\n${lines.join("\n")}\n}\n`
 }

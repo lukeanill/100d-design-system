@@ -18,6 +18,27 @@ export type Seeds = {
 
 export type Fonts = { primary?: string; emphasis?: string; body?: string }
 
+/** Surface style. Glass always covers cards; `applications` adds groups to it. */
+export type Glass = {
+  style: "solid" | "glass"
+  weight: "light" | "medium" | "heavy"
+  tone: "light" | "dark"
+  applications: ("actions" | "inputs" | "selects" | "overlays")[]
+}
+
+export type HeadingSetting = { font: "primary" | "emphasis"; weight?: 300 | 400 | 500 | 700 }
+
+export type Typography = {
+  scale?: "compact" | "classic"
+  headings?: Partial<Record<"h1" | "h2" | "h3" | "h4" | "h5" | "h6", HeadingSetting>>
+}
+
+export type Effects = {
+  pageTransition?: "fade" | "blinds" | "curtain" | "iris"
+  background?: "smoke" | "holo" | "aurora" | "eighties" | "ascii"
+  headingGradient?: { enabled: true; from: string; to: string }
+}
+
 export type Theme = {
   name: string
   label: string
@@ -35,6 +56,10 @@ export type Theme = {
   updatedAt?: string
   /** Archived themes stay in the studio but leave the site entirely. */
   archived?: boolean
+  /** Absent means the theme is at the defaults: solid, current scale, no effects. */
+  glass?: Glass
+  typography?: Typography
+  effects?: Effects
 }
 
 export type ThemesResponse = {
