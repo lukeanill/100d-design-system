@@ -1046,37 +1046,36 @@
     existed. Their defaults are that recipe — 40px, 150%, 70% — so a theme that
     chooses nothing renders exactly as it did, and `medium` is the identity
     weight.
+
+    The surface colours are not here but on the group classes below: a var()
+    inside a custom property is substituted where the property is declared, so
+    `--glass-card-surface: var(--card)` at :root would freeze whichever theme
+    the page was on and ignore a theme scoped to a subtree.
   */
   :root {
     --glass-card-layer: none;
-    --glass-card-surface: var(--card);
     --glass-card-blur: 0px;
     --glass-card-saturate: 100%;
 
     --glass-action-layer: none;
-    --glass-action-surface: var(--primary);
     --glass-action-blur: 0px;
     --glass-action-saturate: 100%;
 
     --glass-input-layer: none;
-    --glass-input-surface: var(--card);
     --glass-input-blur: 0px;
     --glass-input-saturate: 100%;
 
     --glass-select-layer: "";
-    --glass-select-surface: color-mix(in oklab, var(--popover) 70%, transparent);
     --glass-select-blur: 40px;
     --glass-select-saturate: 150%;
 
     --glass-overlay-layer: "";
-    --glass-overlay-surface: color-mix(in oklab, var(--popover) 70%, transparent);
     --glass-overlay-blur: 40px;
     --glass-overlay-saturate: 150%;
 
     /* dialogs sit on the page colour rather than the popover colour, and were
        never glass; the Overlays choice drives them alongside the rest */
     --glass-dialog-layer: none;
-    --glass-dialog-surface: var(--background);
     --glass-dialog-blur: 0px;
     --glass-dialog-saturate: 100%;
   }
@@ -1104,42 +1103,54 @@
 
   .glass-card {
     --glass-layer: var(--glass-card-layer);
-    --glass-surface: var(--glass-card-surface);
+    /* the fallback resolves here, on the element, rather than at :root where
+       it would bake whichever theme the page happened to be on */
+    --glass-surface: var(--glass-card-surface, var(--card));
     --glass-blur: var(--glass-card-blur);
     --glass-saturate: var(--glass-card-saturate);
   }
 
   .glass-action {
     --glass-layer: var(--glass-action-layer);
-    --glass-surface: var(--glass-action-surface);
+    /* the fallback resolves here, on the element, rather than at :root where
+       it would bake whichever theme the page happened to be on */
+    --glass-surface: var(--glass-action-surface, var(--primary));
     --glass-blur: var(--glass-action-blur);
     --glass-saturate: var(--glass-action-saturate);
   }
 
   .glass-input {
     --glass-layer: var(--glass-input-layer);
-    --glass-surface: var(--glass-input-surface);
+    /* the fallback resolves here, on the element, rather than at :root where
+       it would bake whichever theme the page happened to be on */
+    --glass-surface: var(--glass-input-surface, var(--card));
     --glass-blur: var(--glass-input-blur);
     --glass-saturate: var(--glass-input-saturate);
   }
 
   .glass-select {
     --glass-layer: var(--glass-select-layer);
-    --glass-surface: var(--glass-select-surface);
+    /* the fallback resolves here, on the element, rather than at :root where
+       it would bake whichever theme the page happened to be on */
+    --glass-surface: var(--glass-select-surface, color-mix(in oklab, var(--popover) 70%, transparent));
     --glass-blur: var(--glass-select-blur);
     --glass-saturate: var(--glass-select-saturate);
   }
 
   .glass-overlay {
     --glass-layer: var(--glass-overlay-layer);
-    --glass-surface: var(--glass-overlay-surface);
+    /* the fallback resolves here, on the element, rather than at :root where
+       it would bake whichever theme the page happened to be on */
+    --glass-surface: var(--glass-overlay-surface, color-mix(in oklab, var(--popover) 70%, transparent));
     --glass-blur: var(--glass-overlay-blur);
     --glass-saturate: var(--glass-overlay-saturate);
   }
 
   .glass-dialog {
     --glass-layer: var(--glass-dialog-layer);
-    --glass-surface: var(--glass-dialog-surface);
+    /* the fallback resolves here, on the element, rather than at :root where
+       it would bake whichever theme the page happened to be on */
+    --glass-surface: var(--glass-dialog-surface, var(--background));
     --glass-blur: var(--glass-dialog-blur);
     --glass-saturate: var(--glass-dialog-saturate);
   }

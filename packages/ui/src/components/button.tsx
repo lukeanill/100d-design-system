@@ -16,7 +16,7 @@ const buttonVariants = cva(
         // hover is the surface at 80%, which is exactly what bg-primary/80 was
         // while the surface is var(--primary), and follows the glass once a
         // theme turns it on
-        default: `${glass("action")} text-primary-foreground hover:bg-[color-mix(in_oklab,var(--glass-action-surface),transparent_20%)]`,
+        default: `${glass("action")} text-primary-foreground hover:bg-[color-mix(in_oklab,var(--glass-surface),transparent_20%)]`,
         outline:
           "border-foreground bg-transparent hover:bg-muted aria-expanded:bg-muted",
         secondary:

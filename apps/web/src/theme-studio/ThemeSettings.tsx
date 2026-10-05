@@ -106,14 +106,17 @@ export function SurfacePanel({
   onChange,
 }: {
   glass: Glass | undefined
-  onChange: (glass: Glass | undefined) => void
+  /** The editor's setter, so two quick edits in one frame cannot overwrite
+   *  each other by both computing from the same stale value. */
+  onChange: React.Dispatch<React.SetStateAction<Glass | undefined>>
 }) {
   const current: Glass = glass ?? { style: "solid", weight: "medium", tone: "light", applications: [] }
   const isGlass = current.style === "glass"
-  const set = (patch: Partial<Glass>) => {
-    const next = { ...current, ...patch }
-    onChange(next.style === "glass" ? next : undefined)
-  }
+  const set = (patch: Partial<Glass>) =>
+    onChange((prev) => {
+      const next = { ...(prev ?? current), ...patch }
+      return next.style === "glass" ? next : undefined
+    })
 
   return (
     <section className={SECTION}>
@@ -199,7 +202,7 @@ export function TypographyPanel({
   /** Bundled faces ship one weight, so weights can only vary on Google fonts. */
   bundled: boolean
   fontTheme?: string
-  onChange: (typography: Typography | undefined) => void
+  onChange: React.Dispatch<React.SetStateAction<Typography | undefined>>
 }) {
   // "current" is a choice in the picker but never a stored value: a theme on
   // the current scale stores no scale at all.
@@ -207,22 +210,24 @@ export function TypographyPanel({
   const scale: ScaleChoice = typography?.scale ?? "current"
   const headings = typography?.headings ?? {}
 
-  const set = (next: { scale: ScaleChoice; headings: Typography["headings"] }) => {
-    const clean: Typography = {
-      ...(next.scale === "current" ? {} : { scale: next.scale }),
-      ...(next.headings && Object.keys(next.headings).length ? { headings: next.headings } : {}),
-    }
-    onChange(Object.keys(clean).length ? clean : undefined)
-  }
+  const set = (patch: { scale?: ScaleChoice; headings?: Typography["headings"] }) =>
+    onChange((prev) => {
+      const nextScale = patch.scale ?? prev?.scale ?? "current"
+      const nextHeadings = patch.headings ?? prev?.headings
+      const clean: Typography = {
+        ...(nextScale === "current" ? {} : { scale: nextScale }),
+        ...(nextHeadings && Object.keys(nextHeadings).length ? { headings: nextHeadings } : {}),
+      }
+      return Object.keys(clean).length ? clean : undefined
+    })
 
   const setHeading = (level: (typeof LEVELS)[number], patch: { font?: "primary" | "emphasis"; weight?: number }) => {
-    const current = headings[level] ?? { font: "primary" as const }
-    const merged = { ...current, ...patch }
+    const merged = { ...(headings[level] ?? { font: "primary" as const }), ...patch }
     const next = { ...headings }
     // primary at 400 is the default, and a default is stored as nothing
     if (merged.font === "primary" && (!merged.weight || merged.weight === 400)) delete next[level]
     else next[level] = { font: merged.font, ...(merged.weight && merged.weight !== 400 ? { weight: merged.weight as 300 | 500 | 700 } : {}) }
-    set({ scale, headings: next })
+    set({ headings: next })
   }
 
   return (
@@ -235,7 +240,7 @@ export function TypographyPanel({
             key={name}
             label={name === "current" ? "Current" : name[0].toUpperCase() + name.slice(1)}
             selected={scale === name}
-            onClick={() => set({ scale: name as ScaleChoice, headings })}
+            onClick={() => set({ scale: name as ScaleChoice })}
           >
             <span className="flex h-9 items-end justify-center gap-1 overflow-hidden">
               <span style={{ fontSize: `calc(${SCALES[name][0]} / 4)`, lineHeight: 1 }}>Ag</span>
@@ -305,16 +310,18 @@ export function EffectsPanel({
   effects: Effects | undefined
   /** The theme's own tokens: the gradient can only name colours it has. */
   tokens: Record<string, string>
-  onChange: (effects: Effects | undefined) => void
+  onChange: React.Dispatch<React.SetStateAction<Effects | undefined>>
 }) {
-  const set = (next: Effects) => {
-    const clean: Effects = {
-      ...(next.pageTransition ? { pageTransition: next.pageTransition } : {}),
-      ...(next.background ? { background: next.background } : {}),
-      ...(next.headingGradient ? { headingGradient: next.headingGradient } : {}),
-    }
-    onChange(Object.keys(clean).length ? clean : undefined)
-  }
+  const set = (patch: Effects) =>
+    onChange((prev) => {
+      const next = { ...prev, ...patch }
+      const clean: Effects = {
+        ...(next.pageTransition ? { pageTransition: next.pageTransition } : {}),
+        ...(next.background ? { background: next.background } : {}),
+        ...(next.headingGradient ? { headingGradient: next.headingGradient } : {}),
+      }
+      return Object.keys(clean).length ? clean : undefined
+    })
 
   const gradient = effects?.headingGradient
   const colourTokens = Object.keys(tokens).filter((name) => tokens[name]?.startsWith("oklch"))
@@ -329,7 +336,7 @@ export function EffectsPanel({
           value={effects?.pageTransition ?? "none"}
           aria-label="Page transition"
           onChange={(e) =>
-            set({ ...effects, pageTransition: e.target.value === "none" ? undefined : (e.target.value as Effects["pageTransition"]) })
+            set({ pageTransition: e.target.value === "none" ? undefined : (e.target.value as Effects["pageTransition"]) })
           }
           className="rounded-md border border-border bg-transparent px-2 py-1.5 text-sm"
         >
@@ -347,7 +354,7 @@ export function EffectsPanel({
           value={effects?.background ?? "none"}
           aria-label="Background"
           onChange={(e) =>
-            set({ ...effects, background: e.target.value === "none" ? undefined : (e.target.value as Effects["background"]) })
+            set({ background: e.target.value === "none" ? undefined : (e.target.value as Effects["background"]) })
           }
           className="rounded-md border border-border bg-transparent px-2 py-1.5 text-sm"
         >
@@ -383,7 +390,7 @@ export function EffectsPanel({
                 <select
                   value={gradient[end]}
                   aria-label={`Gradient ${end}`}
-                  onChange={(e) => set({ ...effects, headingGradient: { ...gradient, [end]: e.target.value } })}
+                  onChange={(e) => set({ headingGradient: { ...gradient, [end]: e.target.value } })}
                   className="flex-1 rounded-md border border-border bg-transparent px-2 py-1 text-xs"
                 >
                   {colourTokens.map((name) => (
