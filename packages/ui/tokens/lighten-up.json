@@ -1,7 +1,7 @@
 {
   "name": "lighten-up",
   "label": "Lighten Up",
-  "order": 1,
+  "order": 0,
   "selector": ":root",
   "seeds": {
     "background": "#fffcfa",

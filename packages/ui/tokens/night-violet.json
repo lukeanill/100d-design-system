@@ -1,7 +1,7 @@
 {
   "name": "night-violet",
   "label": "Night Violet",
-  "order": 7,
+  "order": 6,
   "selector": ".night-violet",
   "seeds": {
     "background": "#1c1c1c",
