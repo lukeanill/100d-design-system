@@ -32,6 +32,7 @@ export const colorThemes: ColorTheme[] = [
   { id: "solar-azul", label: "Solar Azul", fontTheme: "solar-azul", primary: "oklch(0.568 0.221 265.35)", order: 2 },
   { id: "night-violet", label: "Night Violet", fontTheme: "night-violet", primary: "oklch(0.787 0.059 313.08)", order: 7 },
   { id: "lighten-up", label: "Lighten Up", fontTheme: "chill-light", primary: "oklch(0.248 0.000 0.00)", order: 0 },
+  { id: "mozart", label: "Mozart", fontTheme: "mozart", primary: "oklch(0.403 0.141 25.49)", order: 11 },
 ]
 
 export const colorThemeIds = colorThemes.map((t) => t.id)

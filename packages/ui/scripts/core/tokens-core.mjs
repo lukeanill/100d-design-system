@@ -133,7 +133,7 @@ function fontImports(themes) {
     .sort()
     .map(
       (family) =>
-        `@import url("https://fonts.googleapis.com/css2?family=${family.replace(/ /g, "+")}:wght@300;400;500;700&display=swap");`
+        `@import url("https://fonts.googleapis.com/css2?family=${family.replace(/ /g, "+")}:wght@300;400;500;600;700&display=swap");`
     )
     .join("\n")
 }

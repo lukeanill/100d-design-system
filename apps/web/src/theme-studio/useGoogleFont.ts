@@ -22,7 +22,7 @@ export function useGoogleFont(family: string | undefined) {
     link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name).replace(
       /%20/g,
       "+"
-    )}:wght@300;400;500;700&display=swap`
+    )}:wght@300;400;500;600;700&display=swap`
     document.head.appendChild(link)
 
     let cancelled = false

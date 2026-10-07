@@ -46,7 +46,7 @@ export const FONT_SCALES = ["current", "compact", "classic"]
 export const HEADING_LEVELS = ["h1", "h2", "h3", "h4", "h5", "h6"]
 export const HEADING_FONTS = ["primary", "emphasis"]
 /** The weights a Google import carries — see fontImports in tokens-core.mjs. */
-export const HEADING_WEIGHTS = [300, 400, 500, 700]
+export const HEADING_WEIGHTS = [300, 400, 500, 600, 700]
 
 /**
  * Heading sizes per scale, in rem.

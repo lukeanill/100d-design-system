@@ -1,0 +1,95 @@
+{
+  "name": "mozart",
+  "label": "Mozart",
+  "order": 11,
+  "selector": ".mozart",
+  "seeds": {
+    "background": "#F1F2EF",
+    "primary": "#841A1C",
+    "secondary": "#D2A8AD",
+    "foreground": "#1B191A"
+  },
+  "fonts": {
+    "primary": "Libertinus Serif",
+    "body": "Momo Trust Sans",
+    "emphasis": "Libertinus Serif"
+  },
+  "edges": "subtle",
+  "overrides": {
+    "ring": "#E93C3E",
+    "chart-1": "#E93C3E",
+    "chart-2": "#841A1C",
+    "chart-3": "#D2A8AD",
+    "chart-4": "#B5676E",
+    "chart-5": "#8C8A86"
+  },
+  "fontSource": "google",
+  "tokens": {
+    "font-body-weight": "400",
+    "background": "oklch(0.960 0.004 121.56)",
+    "foreground": "oklch(0.216 0.004 345.58)",
+    "card": "oklch(0.972 0.002 121.56)",
+    "card-foreground": "oklch(0.216 0.004 345.58)",
+    "popover": "oklch(0.972 0.002 121.56)",
+    "popover-foreground": "oklch(0.216 0.004 345.58)",
+    "primary": "oklch(0.403 0.141 25.49)",
+    "primary-foreground": "oklch(1.000 0.000 0.00)",
+    "secondary": "oklch(0.771 0.050 10.27)",
+    "secondary-foreground": "oklch(0.403 0.141 25.49)",
+    "muted": "oklch(0.915 0.004 121.56)",
+    "muted-foreground": "oklch(0.476 0.004 345.58)",
+    "accent": "oklch(0.771 0.050 10.27)",
+    "accent-foreground": "oklch(0.403 0.141 25.49)",
+    "destructive": "oklch(0.563 0.190 25.00)",
+    "affirmative": "oklch(0.525 0.150 145.00)",
+    "border": "var(--muted)",
+    "input": "var(--card)",
+    "ring": "oklch(0.619 0.209 25.28)",
+    "affirmative-foreground": "oklch(1.000 0.000 0.00)",
+    "chart-1": "oklch(0.619 0.209 25.28)",
+    "chart-2": "oklch(0.403 0.141 25.49)",
+    "chart-3": "oklch(0.771 0.050 10.27)",
+    "chart-4": "oklch(0.603 0.100 14.77)",
+    "chart-5": "oklch(0.634 0.006 84.58)",
+    "gradient-downlight": "linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%)",
+    "gradient-rise": "linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)",
+    "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
+    "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
+    "radius": "0.5rem",
+    "radius-container": "1rem",
+    "sidebar": "var(--card)",
+    "sidebar-foreground": "var(--foreground)",
+    "sidebar-primary": "var(--primary)",
+    "sidebar-primary-foreground": "var(--primary-foreground)",
+    "sidebar-accent": "var(--accent)",
+    "sidebar-accent-foreground": "var(--accent-foreground)",
+    "sidebar-border": "var(--border)",
+    "sidebar-ring": "var(--ring)",
+    "shadow-2xs": "0px 1px 1px oklch(0 0 0 / 4%)",
+    "shadow-xs": "0px 1px 2px oklch(0 0 0 / 4%)",
+    "shadow-sm": "0px 2px 2px oklch(0 0 0 / 4%)",
+    "shadow": "0px 2px 2px oklch(0 0 0 / 4%)",
+    "shadow-md": "0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 8px -8px oklch(0 0 0 / 4%)",
+    "shadow-lg": "0px 2px 2px oklch(0 0 0 / 4%), 0px 8px 16px -4px oklch(0 0 0 / 4%)",
+    "shadow-xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 4px 8px -4px oklch(0 0 0 / 4%), 0px 16px 24px -8px oklch(0 0 0 / 6%)",
+    "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
+  },
+  "typography": {
+    "scale": "classic",
+    "headings": {
+      "h1": {
+        "font": "primary",
+        "weight": 700
+      },
+      "h2": {
+        "font": "primary",
+        "weight": 600
+      },
+      "h3": {
+        "font": "primary",
+        "weight": 600
+      }
+    }
+  },
+  "updatedAt": "2026-10-07T16:33:26.975Z"
+}
