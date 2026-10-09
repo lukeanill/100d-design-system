@@ -1,11 +1,13 @@
 import { execFile } from "node:child_process"
 import path from "node:path"
+import { fileURLToPath } from "node:url"
 import { promisify } from "node:util"
 import type { Plugin } from "vite"
 
 const run = promisify(execFile)
 
-const ROOT = path.resolve(__dirname, "../..")
+// import.meta.url, not __dirname: Storybook loads this from an ES module
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 /** How often a running dev server looks for themes saved on the live studio. */
 const INTERVAL_MS = 20_000
 const REMOTE = "origin"

@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite"
 
-import { themeSync } from "../theme-sync-plugin"
+import { themeSync } from "../theme-sync-plugin.ts"
 
 const config: StorybookConfig = {
   stories: ["../../../packages/ui/src/components/**/*.stories.tsx"],
