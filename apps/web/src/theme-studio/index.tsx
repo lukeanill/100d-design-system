@@ -10,6 +10,7 @@ import {
 } from "@workspace/ui/components/toast"
 import {
   clearKey,
+  getKey,
   listThemes,
   reorderThemes,
   saveTheme,
