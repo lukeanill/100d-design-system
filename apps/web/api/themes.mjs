@@ -178,7 +178,7 @@ export default async function handler(req, res) {
     })
   }
   if (!authorized(req.headers["x-theme-studio-key"], password)) {
-    return send(401, { error: "Wrong password." })
+    return send(401, { error: "Wrong code." })
   }
   if (!token) {
     return send(503, {

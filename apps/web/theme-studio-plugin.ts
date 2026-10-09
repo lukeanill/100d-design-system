@@ -65,7 +65,7 @@ export function themeStudio(): Plugin {
         if (
           !authorized(req.headers["x-theme-studio-key"] as string, password)
         ) {
-          send(res, 401, { error: "Wrong password." })
+          send(res, 401, { error: "Wrong code." })
           return false
         }
         return true
@@ -110,7 +110,7 @@ export function themeStudio(): Plugin {
         if (
           !authorized(req.headers["x-theme-studio-key"] as string, password)
         ) {
-          return send(401, { error: "Wrong password." })
+          return send(401, { error: "Wrong code." })
         }
 
         try {

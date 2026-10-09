@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { Button } from "@workspace/ui/components/button"
-import { Input } from "@workspace/ui/components/input"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@workspace/ui/components/input-otp"
 import {
   ToastList,
   ToastProvider,
@@ -31,47 +31,76 @@ import { ThemeList } from "./ThemeList"
  * commits for you, and Vercel redeploys — which is the whole reason it is
  * hosted. The save message says which of the two you just wrote to. */
 
+/** The code is six digits. It is checked on the server, never here. */
+const CODE_LENGTH = 6
+
 function Lock({ onUnlock }: { onUnlock: () => void }) {
   const [value, setValue] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const [checking, setChecking] = useState(false)
 
-  const submit = async (event: React.FormEvent) => {
-    event.preventDefault()
-    setKey(value)
+  const submit = async (code: string) => {
+    if (code.length !== CODE_LENGTH || checking) return
+    setChecking(true)
+    setKey(code)
     try {
       await listThemes()
       onUnlock()
     } catch (e) {
       clearKey()
+      setValue("")
       setError(e instanceof Error ? e.message : "Could not unlock.")
+    } finally {
+      setChecking(false)
     }
   }
 
   return (
     // matches the studio: light regardless of the app's current theme
     <div className="flex min-h-screen items-center justify-center bg-white p-6 text-neutral-900">
-      <form onSubmit={submit} className="flex w-80 flex-col gap-3">
-        <Input
-          type="password"
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+          void submit(value)
+        }}
+        className="flex w-80 flex-col items-center gap-4"
+      >
+        <InputOTP
+          maxLength={CODE_LENGTH}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Password"
-          aria-label="Theme studio password"
-          // submit explicitly: implicit form submission did not fire reliably here
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault()
-              void submit(e)
-            }
+          onChange={(next) => {
+            setValue(next)
+            setError(null)
           }}
+          // digits only, and the code is tried as soon as the last one is in
+          pattern="^[0-9]*$"
+          inputMode="numeric"
+          onComplete={(code) => void submit(code)}
+          disabled={checking}
+          aria-label="Theme studio code"
           autoFocus
-        />
+        >
+          <InputOTPGroup>
+            {Array.from({ length: CODE_LENGTH }).map((_, i) => (
+              <InputOTPSlot
+                key={i}
+                index={i}
+                // the lock is light whatever theme the app is in, so the slot
+                // is painted directly rather than from the theme's tokens
+                className="border-neutral-300 bg-white text-neutral-900"
+                aria-invalid={error ? true : undefined}
+              />
+            ))}
+          </InputOTPGroup>
+        </InputOTP>
         {error && (
-          <p className="text-sm whitespace-pre-line text-destructive">
+          <p className="text-center text-sm whitespace-pre-line text-destructive">
             {error}
           </p>
         )}
-        <Button type="submit">Unlock</Button>
+        <Button type="submit" disabled={value.length !== CODE_LENGTH || checking}>
+          Unlock
+        </Button>
       </form>
     </div>
   )
