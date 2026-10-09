@@ -30,7 +30,13 @@ const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.arg
 if (isMain) {
   const css = readFileSync(CSS, "utf8")
   const themes = loadThemes()
-  const next = renderTokensCss(css, themes)
+  // An archived theme keeps its file but is written out of tokens.css, the same
+  // as the studio does when it archives one (see liveThemes in theme-change.mjs).
+  // Without this the script would write its block straight back in, and CI's
+  // --check would call a studio archive out of date. loadThemes still returns
+  // them all: the studio's tests and its archive list need the full set.
+  const live = themes.filter((theme) => !theme.archived)
+  const next = renderTokensCss(css, live)
 
   if (process.argv.includes("--check")) {
     if (next !== css) {
@@ -40,9 +46,9 @@ if (isMain) {
       )
       process.exit(1)
     }
-    console.log(`tokens.css is up to date (${themes.length} themes)`)
+    console.log(`tokens.css is up to date (${live.length} themes)`)
   } else {
     writeFileSync(CSS, next)
-    console.log(`wrote ${themes.length} theme blocks to src/styles/tokens.css`)
+    console.log(`wrote ${live.length} theme blocks to src/styles/tokens.css`)
   }
 }

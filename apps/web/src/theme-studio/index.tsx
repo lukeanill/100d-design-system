@@ -34,6 +34,17 @@ import { ThemeList } from "./ThemeList"
 /** The code is six digits. It is checked on the server, never here. */
 const CODE_LENGTH = 6
 
+/**
+ * Where a confirmation waits while the page reloads.
+ *
+ * Every change the local studio makes writes files the app itself imports, so
+ * Vite reloads the page a moment after the request returns. Archiving always
+ * rewrites theme-registry.ts, so archiving always reloaded — and the reload
+ * took the lock state and the toast with it. The change had landed; the studio
+ * just looked like it had done nothing.
+ */
+const PENDING_TOAST = "theme-studio-pending-toast"
+
 function Lock({ onUnlock }: { onUnlock: () => void }) {
   const [value, setValue] = useState("")
   const [error, setError] = useState<string | null>(null)
@@ -107,7 +118,10 @@ function Lock({ onUnlock }: { onUnlock: () => void }) {
 }
 
 export function ThemeStudio() {
-  const [unlocked, setUnlocked] = useState(false)
+  // The code is already in sessionStorage and survives a reload, so take it
+  // rather than asking for it again. It is still the server that checks it:
+  // the first listThemes below is what proves it, and a refusal locks back up.
+  const [unlocked, setUnlocked] = useState(() => getKey().length === CODE_LENGTH)
   const [themes, setThemes] = useState<Theme[]>([])
   const [editing, setEditing] = useState<Theme | null | "new">(null)
   const [busy, setBusy] = useState(false)
@@ -115,8 +129,19 @@ export function ThemeStudio() {
   useEffect(() => {
     if (!unlocked) return
     listThemes()
-      .then((d) => setThemes(d.themes))
-      .catch((e) => toast.add({ type: "error", title: e.message }))
+      .then((d) => {
+        setThemes(d.themes)
+        const pending = sessionStorage.getItem(PENDING_TOAST)
+        if (!pending) return
+        sessionStorage.removeItem(PENDING_TOAST)
+        toast.add({ type: "success", ...JSON.parse(pending) })
+      })
+      .catch(() => {
+        // a stored code the server will not take: ask for it again, where the
+        // lock screen can say why
+        clearKey()
+        setUnlocked(false)
+      })
   }, [unlocked])
 
   /* A save on the deployed studio is not finished when the request returns —
@@ -146,7 +171,12 @@ export function ThemeStudio() {
     try {
       const data = await action()
       setThemes(data.themes)
-      toast.add({ type: "success", ...outcome(data, message) })
+      const result = outcome(data, message)
+      toast.add({ type: "success", ...result })
+      // If Vite is about to reload the page, this is the copy that survives;
+      // if no reload comes, it is dropped before it can surface later.
+      sessionStorage.setItem(PENDING_TOAST, JSON.stringify(result))
+      window.setTimeout(() => sessionStorage.removeItem(PENDING_TOAST), 2000)
       return true
     } catch (e) {
       toast.add({

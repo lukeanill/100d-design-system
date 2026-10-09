@@ -10,6 +10,7 @@ export type FontThemeId =
   | "metallic-mist"
   | "night-violet"
   | "mozart"
+  | "bumblebee"
 
 export interface FontTheme {
   id: FontThemeId
@@ -30,6 +31,7 @@ export const fontThemes: FontTheme[] = [
   { id: "metallic-mist", label: "Metallic Mist", primaryFont: "Authentic Sans 90", secondaryFont: "Lora" },
   { id: "night-violet", label: "Night Violet", primaryFont: "Eczar", secondaryFont: "Eczar" },
   { id: "mozart", label: "Mozart", primaryFont: "UnifrakturCook", secondaryFont: "Momo Trust Sans" },
+  { id: "bumblebee", label: "Bumblebee", primaryFont: "Work Sans", secondaryFont: "Plus Jakarta Sans" },
 ]
 
 export const fontThemeIds = fontThemes.map((t) => t.id) as [FontThemeId, ...FontThemeId[]]
