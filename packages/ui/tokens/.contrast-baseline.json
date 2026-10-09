@@ -16,9 +16,16 @@
     "accent-foreground|accent": 2.96,
     "destructive|background": 2.93
   },
+  "lighten-up": {
+    "secondary-foreground|secondary": 1.68,
+    "accent-foreground|accent": 4.49
+  },
   "metallic-mist": {
     "secondary-foreground|secondary": 2.17,
     "accent-foreground|accent": 2.17
+  },
+  "mozart": {
+    "muted-foreground|card": 4.03
   },
   "solar-azul": {
     "foreground|background": 4.14
@@ -28,9 +35,5 @@
     "secondary-foreground|secondary": 2.5,
     "accent-foreground|accent": 2.5,
     "destructive|background": 1.64
-  },
-  "lighten-up": {
-    "secondary-foreground|secondary": 1.68,
-    "accent-foreground|accent": 4.49
   }
 }

@@ -36,7 +36,10 @@ export function ThemeTiles({ className }: { className?: string }) {
                 // the theme's own class and font pairing, scoped to this tile
                 className={cn(
                   t.id,
-                  "size-16 rounded-[12.8px] bg-background text-primary transition-[box-shadow] outline-none",
+                  // a fixed radius, not the theme's: `rounded-lg` follows the
+                  // edge token, which turned the tiles into circles on a
+                  // round-edged theme
+                  "size-10 rounded-[8px] bg-background text-primary transition-[box-shadow] outline-none",
                   "focus-visible:ring-[3px] focus-visible:ring-ring/50",
                   active === t.id
                     ? // the drawn selection: an ink ring, held off the tile by
@@ -49,8 +52,9 @@ export function ThemeTiles({ className }: { className?: string }) {
                 aria-pressed={active === t.id}
                 onClick={() => setTheme(t.id)}
               >
-                {/* the specimen fills about half the tile, as drawn */}
-                <span aria-hidden className="font-heading text-4xl leading-none">
+                {/* the specimen fills about half the tile, as drawn; sized so
+                    the tallest face still clears the box */}
+                <span aria-hidden className="font-heading text-[22px] leading-none">
                   Aa
                 </span>
               </button>

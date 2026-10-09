@@ -30,7 +30,7 @@ import {
   ItemActions,
 } from "@workspace/ui/components/item"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@workspace/ui/components/chart"
-import { ArrowDownIcon, ArrowRightIcon, ResizeIcon, SlidersHorizontalIcon } from "@phosphor-icons/react"
+import { ArrowDownIcon, ArrowRightIcon } from "@phosphor-icons/react"
 import {
   Drawer,
   DrawerContent,
@@ -180,14 +180,22 @@ export function Showcase() {
       <ThemeBackground />
 
       <section className="px-6 pt-20 pb-24 sm:pt-32">
-        <div className={`${COLUMN} flex flex-col items-center gap-30`}>
+        <div className={`${COLUMN} @container flex flex-col items-center gap-30`}>
           <div className="flex flex-col items-center gap-10">
             {/* the theme's own H1 size, but never wider than the screen it is
                 read on — min() keeps whichever scale the theme chose */}
-            <h1 className="text-balance text-center text-[min(var(--h1-size,6rem),13vw)]">
-              A very themeable design system
-            </h1>
-            <p className="text-body text-center">Made by Luke &amp; Claude</p>
+            {/* No hard break: the line that holds "A very themeable design
+                system," needs anything from 51px (Geist Mono) to 87px
+                (Instrument Serif) to fit this column, so a fixed break would
+                orphan a word in half the themes. Balanced wrapping keeps the
+                lines even in each one. */}
+            {/* measured against the column, not the viewport: the column
+                stops growing at 956px, so a vw cap left the headline at full
+                size in a window only a little wider than the text */}
+            <h3 className="text-center text-balance text-[min(var(--h3-size,4rem),7cqi)]">
+              A very themeable design system, for the AI native.
+            </h3>
+            <p className="text-body-lg text-center">Made by Luke &amp; Claude</p>
           </div>
 
           <ThemeTiles />
@@ -202,7 +210,7 @@ export function Showcase() {
                 key={link.label}
                 variant="ghost"
                 nativeButton={false}
-                className="h-11 gap-2 rounded-full px-5 text-body-lg tracking-[0.01em]"
+                className="h-11 gap-2 rounded-full px-5 text-lg font-semibold tracking-[0.01em]"
                 render={
                   <a
                     href={link.href}
@@ -218,34 +226,62 @@ export function Showcase() {
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="px-6 pb-30">
         <div className={`${COLUMN} flex flex-col gap-10`}>
-          <h4 className="text-balance">This exists as an experiment on Design with AI in its DNA.</h4>
+          <h5 className="text-balance">
+            This is an experiment.
+            <br />
+            Exploring Design with AI in its DNA.
+            <br />
+            Mind over matter.
+          </h5>
 
-          <div className="flex flex-col gap-4">
-            <h5>Prototyping 100s of diverse products from an interest.</h5>
-            <h5>Developed with Claude assistance at every step.</h5>
-            <h5>Testing the impact &amp; constraints of this design foundation.</h5>
+          <div className="flex flex-col gap-1">
+            <p className="text-body">
+              Prototyping 100s of diverse products. From an interest, observation, or a chat.
+            </p>
+            <p className="text-body">
+              With this design system serving each and every one. Developed with Claude at every step.
+            </p>
+            <p className="text-body">Testing the impact &amp; constraints of this design foundation.</p>
+            <p className="text-body">How much AI challenges conventional effort-to quality trade-offs.</p>
+            <p className="text-body">How easily AI adjusts and extends the system, cohesively.</p>
           </div>
+        </div>
+      </section>
 
-          <div className="flex flex-col gap-20 pt-12 sm:flex-row">
-            {[
-              { Icon: SlidersHorizontalIcon, text: "How much AI challenges conventional effort -to- quality trade-offs." },
-              { Icon: ResizeIcon, text: "How easily AI adjusts and extends the system, cohesively." },
-            ].map(({ Icon, text }) => (
-              <div key={text} className="flex flex-1 flex-col gap-6">
-                <Icon className="size-10" weight="thin" />
-                <p className="text-body">{text}</p>
-              </div>
-            ))}
+      <section className="px-6 pb-30">
+        <div className={`${COLUMN} flex flex-col gap-10`}>
+          <h5 className="text-balance">My why. For AI natives.</h5>
+
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <p className="text-body">For proper designers AI promises a golden age.</p>
+              <p className="text-body">
+                Good design demands engagement with people and their culture, with a purpose.
+              </p>
+              <p className="text-body">
+                Great demands excellent judgement and taste &ndash; that you know a lot, and do a lot of
+                diverse things.
+              </p>
+              <p className="text-body">Positive minds will seek positive displacement.</p>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <p className="text-body">Great WAS the enemy of the good.</p>
+              <p className="text-body">
+                We&rsquo;re in a race now: make fast, learn fast, no shortcuts, make it better.
+              </p>
+              <p className="text-body">Debaters, deniers, uh-ahs and egos are your death.</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="px-6 pb-20">
         <div className={`${COLUMN} flex flex-col items-center gap-2 pt-16 text-center`}>
-          <ArrowDownIcon className="size-8 animate-bounce text-secondary-foreground" />
-          <p className="text-body text-secondary-foreground">See it in action &mdash; an example report</p>
+          <ArrowDownIcon className="size-8 animate-bounce text-muted-foreground" />
+          <p className="text-body text-muted-foreground">See it in action &mdash; an example report</p>
         </div>
       </section>
 
@@ -276,7 +312,7 @@ export function Showcase() {
             </Avatar>
             <AvatarGroupCount>+2</AvatarGroupCount>
           </AvatarGroup>
-          <p className="text-body-small text-secondary-foreground">Report by Priya, Devon, Mara and 2 others</p>
+          <p className="text-body-small text-muted-foreground">Report by Priya, Devon, Mara and 2 others</p>
         </div>
 
         <StatCard
@@ -583,7 +619,7 @@ export function Showcase() {
           viewBox="0 0 1100 400"
           duration={14}
           showPath={false}
-          svgClassName="text-secondary-foreground"
+          svgClassName="text-muted-foreground"
           textClassName="text-[30px] font-mono tracking-wide"
         />
       </div>

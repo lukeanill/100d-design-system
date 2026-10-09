@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="100+ AI Design System">
+  <!-- The tab-sized mark: the app icon's dot matrix reduced to a 4x4 grid.
+       The full artwork (icon-192/512) keeps its eight rows, which collapse
+       into texture below about 48px. Pitch, dot-to-pitch ratio (0.66), corner
+       radius and both colours are taken from that artwork, so this reads as
+       the same mark rather than a different one. -->
+  <rect width="32" height="32" rx="4.75" fill="#686868"/>
+  <g fill="#ffffff">
+    <circle cx="5.35" cy="5.35" r="2.35"/>
+    <circle cx="12.43" cy="5.35" r="2.35"/>
+    <circle cx="5.35" cy="12.43" r="2.35"/>
+    <circle cx="12.43" cy="12.43" r="2.35"/>
+    <circle cx="19.51" cy="12.43" r="2.35"/>
+    <circle cx="5.35" cy="19.51" r="2.35"/>
+    <circle cx="12.43" cy="19.51" r="2.35"/>
+    <circle cx="19.51" cy="19.51" r="2.35"/>
+    <circle cx="26.59" cy="19.51" r="2.35"/>
+    <circle cx="5.35" cy="26.59" r="2.35"/>
+    <circle cx="12.43" cy="26.59" r="2.35"/>
+    <circle cx="19.51" cy="26.59" r="2.35"/>
+    <circle cx="26.59" cy="26.59" r="2.35"/>
+  </g>
+  <!-- the red corner, where the artwork's cut discs sit -->
+  <g fill="#c76666">
+    <circle cx="19.51" cy="5.35" r="2.35"/>
+    <circle cx="26.59" cy="5.35" r="2.35"/>
+    <circle cx="26.59" cy="12.43" r="2.35"/>
+  </g>
+</svg>

@@ -4,48 +4,49 @@
   "order": 11,
   "selector": ".mozart",
   "seeds": {
-    "background": "#F1F2EF",
+    "background": "#e90c17",
     "primary": "#841A1C",
     "secondary": "#D2A8AD",
-    "foreground": "#1B191A"
+    "foreground": "#ffffff"
   },
   "fonts": {
-    "primary": "Libertinus Serif",
+    "primary": "UnifrakturCook",
     "body": "Momo Trust Sans",
-    "emphasis": "Libertinus Serif"
+    "emphasis": "Momo Trust Sans"
   },
-  "edges": "subtle",
+  "edges": "square",
   "overrides": {
     "ring": "#E93C3E",
     "chart-1": "#E93C3E",
     "chart-2": "#841A1C",
     "chart-3": "#D2A8AD",
     "chart-4": "#B5676E",
-    "chart-5": "#8C8A86"
+    "chart-5": "#8C8A86",
+    "card": "#e90c17"
   },
   "fontSource": "google",
   "tokens": {
     "font-body-weight": "400",
-    "background": "oklch(0.960 0.004 121.56)",
-    "foreground": "oklch(0.216 0.004 345.58)",
-    "card": "oklch(0.972 0.002 121.56)",
-    "card-foreground": "oklch(0.216 0.004 345.58)",
-    "popover": "oklch(0.972 0.002 121.56)",
-    "popover-foreground": "oklch(0.216 0.004 345.58)",
+    "background": "oklch(0.590 0.237 27.81)",
+    "foreground": "oklch(1.000 0.000 0.00)",
+    "card": "oklch(0.590 0.237 27.81)",
+    "card-foreground": "oklch(1.000 0.000 0.00)",
+    "popover": "oklch(0.640 0.119 27.81)",
+    "popover-foreground": "oklch(1.000 0.000 0.00)",
     "primary": "oklch(0.403 0.141 25.49)",
     "primary-foreground": "oklch(1.000 0.000 0.00)",
     "secondary": "oklch(0.771 0.050 10.27)",
     "secondary-foreground": "oklch(0.403 0.141 25.49)",
-    "muted": "oklch(0.915 0.004 121.56)",
-    "muted-foreground": "oklch(0.476 0.004 345.58)",
+    "muted": "oklch(0.631 0.214 27.81)",
+    "muted-foreground": "oklch(1.000 0.083 0.00)",
     "accent": "oklch(0.771 0.050 10.27)",
     "accent-foreground": "oklch(0.403 0.141 25.49)",
-    "destructive": "oklch(0.563 0.190 25.00)",
-    "affirmative": "oklch(0.525 0.150 145.00)",
+    "destructive": "oklch(1.000 0.190 25.00)",
+    "affirmative": "oklch(1.000 0.150 145.00)",
     "border": "var(--muted)",
     "input": "var(--card)",
     "ring": "oklch(0.619 0.209 25.28)",
-    "affirmative-foreground": "oklch(1.000 0.000 0.00)",
+    "affirmative-foreground": "oklch(0.145 0.000 0.00)",
     "chart-1": "oklch(0.619 0.209 25.28)",
     "chart-2": "oklch(0.403 0.141 25.49)",
     "chart-3": "oklch(0.771 0.050 10.27)",
@@ -55,8 +56,8 @@
     "gradient-rise": "linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)",
     "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
-    "radius": "0.5rem",
-    "radius-container": "1rem",
+    "radius": "0",
+    "radius-container": "0",
     "sidebar": "var(--card)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",
@@ -75,7 +76,7 @@
     "shadow-2xl": "0px 1px 1px oklch(0 0 0 / 2%), 0px 8px 16px -4px oklch(0 0 0 / 4%), 0px 24px 32px -8px oklch(0 0 0 / 6%)"
   },
   "typography": {
-    "scale": "classic",
+    "scale": "compact",
     "headings": {
       "h1": {
         "font": "primary",
@@ -83,13 +84,24 @@
       },
       "h2": {
         "font": "primary",
-        "weight": 600
+        "weight": 700
       },
       "h3": {
-        "font": "primary",
-        "weight": 600
+        "font": "emphasis"
+      },
+      "h4": {
+        "font": "emphasis"
+      },
+      "h5": {
+        "font": "emphasis"
+      },
+      "h6": {
+        "font": "emphasis"
       }
     }
   },
-  "updatedAt": "2026-10-07T16:33:26.975Z"
+  "effects": {
+    "pageTransition": "blinds"
+  },
+  "updatedAt": "2026-10-09T22:56:39.915Z"
 }
