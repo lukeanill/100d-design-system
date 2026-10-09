@@ -113,6 +113,15 @@ export function themeStudio(): Plugin {
           return send(401, { error: "Wrong code." })
         }
 
+        // Theming is edited on the live studio and pulled in by theme-sync-plugin;
+        // a save here would write to the working copy and fight the next pull.
+        if (req.method !== "GET") {
+          return send(403, {
+            error:
+              "Themes are edited on the live studio, not on localhost. Make the change there and it will appear here on its own.",
+          })
+        }
+
         try {
           const change = await load("theme-change.mjs")
           const fs = await load("workspace-fs.mjs")

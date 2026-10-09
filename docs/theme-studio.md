@@ -5,14 +5,25 @@ Pick four seed colours and three fonts, and it derives the full token palette,
 writes the theme, regenerates `tokens.css` and updates the registries the app
 renders from.
 
-It runs in two places.
+Themes are edited in one place: the deployed studio. It commits to `master`, and
+Vercel redeploys. Local dev servers (`pnpm dev`, `pnpm stories`) do not edit
+themes: `/themes` on localhost only points you to the live studio, and a running
+dev server pulls the live studio's commits in by itself.
 
-| | Where it saves | How the site updates |
-| --- | --- | --- |
-| **Deployed** — `https://www.lukeai.space/themes` | A commit on `master` | Vercel redeploys automatically, ~1–2 minutes |
-| **Local** — `http://localhost:5173/themes` | Your working copy | You commit and push |
+| | What it does |
+| --- | --- |
+| **Deployed** — `https://100d-design-system.vercel.app/themes` | Saves as a commit on `master`; Vercel redeploys in ~1–2 minutes |
+| **Local** — `http://localhost:5173/themes` | Read-only notice. Saves are refused |
+| **Local sync** — `apps/web/theme-sync-plugin.ts` | While a dev server runs, fetches `origin/master` every ~20 s and fast-forwards your working copy, so a theme saved live shows up without a `git pull` |
 
-Both are password-gated and both refuse every request until a password is set.
+The studio asks for a six-digit code, checked against `THEME_STUDIO_PASSWORD`
+on the server. Saving also needs `THEME_STUDIO_GH_TOKEN` (a fine-grained GitHub
+token with Contents: read and write on this repo) in the Vercel project.
+
+The sync is timid on purpose: it only fast-forwards, only on `master`, and
+leaves things alone (saying so once in the dev server log) if you have unpushed
+commits or uncommitted changes in a file the live studio touched. Set
+`THEME_SYNC=off` to switch it off.
 
 ## Using the deployed studio
 

@@ -118,7 +118,34 @@ function Lock({ onUnlock }: { onUnlock: () => void }) {
   )
 }
 
+/** Where themes are edited. Localhost only reads them: see theme-sync-plugin.ts. */
+const LIVE_STUDIO = "https://100d-design-system.vercel.app/themes"
+
+function LiveOnly() {
+  return (
+    // matches the studio: light regardless of the app's current theme
+    <div className="flex min-h-screen items-center justify-center bg-white p-6 text-neutral-900">
+      <div className="flex max-w-sm flex-col items-center gap-4 text-center">
+        <p className="text-lg">Themes are edited on the live site.</p>
+        <p className="text-sm text-neutral-600">
+          Make the change there and it appears in this dev server on its own, within about twenty
+          seconds.
+        </p>
+        <Button render={<a href={LIVE_STUDIO} target="_blank" rel="noreferrer" />}>
+          Open the live studio
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 export function ThemeStudio() {
+  // Vite's dev flag is true for `pnpm dev` and Storybook, never for the build
+  if (import.meta.env.DEV) return <LiveOnly />
+  return <LiveStudio />
+}
+
+function LiveStudio() {
   // The code is already in sessionStorage and survives a reload, so take it
   // rather than asking for it again. It is still the server that checks it:
   // the first listThemes below is what proves it, and a refusal locks back up.
