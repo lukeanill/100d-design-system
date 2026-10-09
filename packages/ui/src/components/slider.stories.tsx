@@ -15,6 +15,7 @@ export default {
     max: { control: { type: "number" } },
     step: { control: { type: "number" } },
     disabled: { control: "boolean" },
+    range: { control: "boolean" },
     defaultValue: { table: { disable: true } },
   },
   args: {
@@ -24,10 +25,19 @@ export default {
     step: 1,
     orientation: "horizontal",
     disabled: false,
+    range: false,
   },
 }
 
-export const Slider = (args: ComponentProps<typeof SliderImpl>) => <SliderImpl {...args} className="w-64" aria-label="Volume" />
+export const Slider = ({ range, ...args }: ComponentProps<typeof SliderImpl> & { range?: boolean }) => (
+  <SliderImpl
+    key={range ? "range" : "single"}
+    {...args}
+    defaultValue={range ? [25, 75] : [50]}
+    className="w-64"
+    aria-label="Volume"
+  />
+)
 
 Slider.play = async ({ canvasElement }: StoryContext) => {
   const canvas = within(canvasElement)

@@ -4,6 +4,7 @@ import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { glass } from "@workspace/ui/lib/glass"
 import {
   Dialog,
   DialogPopup,
@@ -25,7 +26,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "flex size-full flex-col overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground",
+        `flex size-full flex-col overflow-hidden rounded-lg ${glass("select")} p-1 text-popover-foreground`,
         className
       )}
       {...props}

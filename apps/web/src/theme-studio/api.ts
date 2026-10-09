@@ -22,9 +22,14 @@ export type Fonts = { primary?: string; emphasis?: string; body?: string }
 export type Glass = {
   style: "solid" | "glass"
   weight: "light" | "medium" | "heavy"
-  tone: "light" | "dark"
+  tone: "clear" | "light" | "dark"
   applications: ("actions" | "inputs" | "selects" | "overlays")[]
+  /** Cards (Soft) and overlays (Heavy) bend what is behind them; absent means off. */
+  refraction?: boolean
 }
+
+/** How dark the theme draws its shadows. Absent means Light, the shadows as defined. */
+export type ShadowWeight = "medium" | "dark"
 
 export type HeadingSetting = { font: "primary" | "emphasis"; weight?: 300 | 400 | 500 | 700 }
 
@@ -58,6 +63,7 @@ export type Theme = {
   archived?: boolean
   /** Absent means the theme is at the defaults: solid, current scale, no effects. */
   glass?: Glass
+  shadow?: ShadowWeight
   typography?: Typography
   effects?: Effects
 }

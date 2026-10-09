@@ -4,6 +4,7 @@ import { Item as ItemImpl, ItemContent, ItemTitle, ItemDescription } from "./ite
 export default {
   title: "Components/Content/Item",
   component: ItemImpl,
+  tags: ["!dev"],
   argTypes: {
     variant: { control: "select", options: ["default", "outline", "muted"] },
     size: { control: "select", options: ["default", "sm", "xs"] },

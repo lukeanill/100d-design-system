@@ -4,6 +4,7 @@ import { AvatarGroup as AvatarGroupImpl, AvatarGroupTooltip } from "./avatar-gro
 export default {
   title: "Components/Content/Avatar Group",
   component: AvatarGroupImpl,
+  tags: ["!dev"],
   argTypes: {
     side: { control: "select", options: ["top", "bottom", "left", "right"] },
     align: { control: "select", options: ["start", "center", "end"] },

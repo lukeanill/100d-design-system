@@ -6,6 +6,7 @@ import { RadioGroup as RadioGroupImpl, RadioGroupItem } from "./radio-group"
 export default {
   title: "Components/Selects/Radio Group",
   component: RadioGroupImpl,
+  tags: ["!dev"],
   argTypes: {
     disabled: { control: "boolean" },
   },

@@ -4,6 +4,7 @@ import { MessageBubble as MessageBubbleImpl, MessageBubbleContent } from "./mess
 export default {
   title: "Components/Content/Message Bubble",
   component: MessageBubbleImpl,
+  tags: ["!dev"],
   argTypes: {
     "data.content": { control: "text" },
     "data.author": { control: "text" },

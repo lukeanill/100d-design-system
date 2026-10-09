@@ -10,6 +10,7 @@ import {
 export default {
   title: "Components/Overlays/Context Menu",
   component: ContextMenuImpl,
+  tags: ["!dev"],
   parameters: { controls: { disable: true } },
 }
 

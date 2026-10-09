@@ -4,6 +4,7 @@ import { ChartContainer, type ChartConfig } from "./chart"
 export default {
   title: "Components/Content/Chart",
   component: ChartContainer,
+  tags: ["!dev"],
   parameters: { controls: { disable: true } },
 }
 

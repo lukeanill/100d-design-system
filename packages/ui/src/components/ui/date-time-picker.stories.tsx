@@ -24,7 +24,7 @@ export default {
     control: { table: { disable: true } },
   },
   args: {
-    appearance: { showTimezone: true, showTitle: true, weekStartsOn: "sunday" },
+    appearance: { showTimezone: true, showTitle: false, weekStartsOn: "sunday" },
     data: {
       availableDates,
       availableTimeSlots: ["9:00am", "10:00am", "11:30am", "1:00pm", "2:30pm", "4:00pm"],

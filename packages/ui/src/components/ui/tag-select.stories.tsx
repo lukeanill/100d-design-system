@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react"
-import { TagSelect as TagSelectImpl, TagSelectContent, TagSelectTags, TagSelectActions } from "./tag-select"
+import { TagSelect as TagSelectImpl, TagSelectContent, TagSelectTags } from "./tag-select"
 
 export default {
   title: "Components/Selects/Tag Select",
@@ -9,9 +9,6 @@ export default {
       control: "select",
       options: ["single", "multiple"],
     },
-    "appearance.showClear": { control: "boolean" },
-    "appearance.showValidate": { control: "boolean" },
-    "appearance.validateLabel": { control: "text" },
     "data.tags": { table: { disable: true } },
     "control.selectedTagIds": { table: { disable: true } },
     actions: { table: { disable: true } },
@@ -19,9 +16,8 @@ export default {
   args: {
     appearance: {
       mode: "multiple",
-      showClear: true,
-      showValidate: true,
-      validateLabel: "Apply tags",
+      showClear: false,
+      showValidate: false,
     },
     control: { selectedTagIds: ["2"] },
     data: {
@@ -38,7 +34,6 @@ export const TagSelect = (args: ComponentProps<typeof TagSelectImpl>) => (
   <TagSelectImpl {...args}>
     <TagSelectContent>
       <TagSelectTags />
-      <TagSelectActions />
     </TagSelectContent>
   </TagSelectImpl>
 )

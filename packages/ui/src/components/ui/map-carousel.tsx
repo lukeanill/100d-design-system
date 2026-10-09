@@ -22,6 +22,7 @@ import type { ImgHTMLAttributes, ReactNode } from "react";
 import { Button } from "@workspace/ui/components/button";
 import { Checkbox } from "@workspace/ui/components/animate-ui/components/base/checkbox";
 import { cn } from "@workspace/ui/lib/utils";
+import { glass } from "@workspace/ui/lib/glass";
 
 const BlockImage = (props: ImgHTMLAttributes<HTMLImageElement>) =>
   createElement("img", props);
@@ -1012,9 +1013,9 @@ const MapCarouselView = ({ data, actions, appearance }: MapCarouselProps) => {
       {/* Expand button in top right */}
       <div className="absolute top-3 right-3 z-[1001]">
         <Button
-          variant="secondary"
+          variant="ghost"
           size="icon"
-          className="size-8 bg-background/90 backdrop-blur-sm shadow-md"
+          className={`size-8 ${glass("overlay")} shadow-md`}
           aria-label="Expand to fullscreen"
         >
           <Maximize2 className="size-4" />

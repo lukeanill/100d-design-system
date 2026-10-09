@@ -5,10 +5,12 @@ import {
   GLASS_WEIGHT_VALUES,
   HEADING_LEVELS,
   HEADING_WEIGHTS,
+  SHADOW_WEIGHTS,
+  shadowDeclarations,
   // @ts-expect-error - shared .mjs settings tables, also used by the build scripts
 } from "@workspace/ui/scripts/core/theme-settings"
 import { cn } from "@workspace/ui/lib/utils"
-import type { Effects, Glass, Typography } from "./api"
+import type { Effects, Glass, ShadowWeight, Typography } from "./api"
 
 /**
  * The panels for everything a theme carries beyond colour and fonts.
@@ -19,7 +21,7 @@ import type { Effects, Glass, Typography } from "./api"
  */
 
 const WEIGHTS = GLASS_WEIGHT_VALUES as Record<string, { blur: string; saturate: string; surface: string }>
-const TONES = GLASS_TONE_VALUES as Record<string, { tint: string; amount: string }>
+const TONES = GLASS_TONE_VALUES as Record<string, { tint: string | null; amount: string | null }>
 const SCALES = FONT_SCALE_SIZES as Record<string, string[]>
 const LEVELS = HEADING_LEVELS as ("h1" | "h2" | "h3" | "h4" | "h5" | "h6")[]
 const APPLICATIONS = GLASS_APPLICATIONS as Glass["applications"]
@@ -85,14 +87,16 @@ const STRIPE = {
 
 function GlassSample({ weight, tone }: { weight?: string; tone?: string }) {
   const values = weight ? WEIGHTS[weight] : undefined
-  const toneValues = TONES[tone ?? "light"]
+  const toneValues = TONES[tone ?? "clear"]
   return (
     <span className="relative block h-9 w-full overflow-hidden rounded" style={STRIPE}>
       <span
         className="absolute inset-1.5 rounded"
         style={{
           backgroundColor: values
-            ? `color-mix(in oklab, color-mix(in oklab, var(--card) ${toneValues.amount}, ${toneValues.tint}) ${values.surface}, transparent)`
+            ? !toneValues.tint
+              ? "transparent"
+              : `color-mix(in oklab, color-mix(in oklab, var(--card) ${toneValues.amount}, ${toneValues.tint}) ${values.surface}, transparent)`
             : "var(--card)",
           backdropFilter: values ? `blur(${values.blur}) saturate(${values.saturate})` : undefined,
         }}
@@ -110,7 +114,7 @@ export function SurfacePanel({
    *  each other by both computing from the same stale value. */
   onChange: React.Dispatch<React.SetStateAction<Glass | undefined>>
 }) {
-  const current: Glass = glass ?? { style: "solid", weight: "medium", tone: "light", applications: [] }
+  const current: Glass = glass ?? { style: "solid", weight: "medium", tone: "clear", applications: [] }
   const isGlass = current.style === "glass"
   const set = (patch: Partial<Glass>) =>
     onChange((prev) => {
@@ -186,8 +190,69 @@ export function SurfacePanel({
               alone keeps the look it has today.
             </p>
           </div>
+
+          <div className="flex flex-col gap-1.5">
+            <span className={LABEL}>Refraction</span>
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={current.refraction === true}
+                onChange={(e) => set({ refraction: e.target.checked ? true : undefined })}
+              />
+              Bend what is behind the glass
+            </label>
+            <p className={NOTE}>
+              Cards refract Soft, and overlays, menus and selects refract Heavy. Actions and inputs
+              stay on the plain blur. Chromium only; other browsers keep the blur.
+            </p>
+          </div>
         </>
       )}
+    </section>
+  )
+}
+
+/**
+ * How dark the theme draws its shadows: Light is the theme's shadows as they
+ * are, Medium and Dark scale them. Each option is drawn as the shadow it makes,
+ * through the same emitter the generator writes with.
+ */
+export function ShadowPanel({
+  shadow,
+  tokens,
+  onChange,
+}: {
+  shadow: ShadowWeight | undefined
+  tokens: Record<string, string>
+  onChange: React.Dispatch<React.SetStateAction<ShadowWeight | undefined>>
+}) {
+  const current = shadow ?? "light"
+
+  // `--shadow-xl` as this weight would write it, for the sample
+  const sample = (weight: string) => {
+    const lines = weight === "light" ? [] : (shadowDeclarations(weight, tokens) as string[])
+    const line = lines.find((l) => l.startsWith("--shadow-xl:"))
+    return line ? line.slice("--shadow-xl:".length, -1).trim() : tokens["shadow-xl"]
+  }
+
+  return (
+    <section className={SECTION}>
+      <h2 className={HEADING}>Shadows</h2>
+      <Options>
+        {(SHADOW_WEIGHTS as string[]).map((weight) => (
+          <Option
+            key={weight}
+            label={weight[0].toUpperCase() + weight.slice(1)}
+            selected={current === weight}
+            onClick={() => onChange(weight === "light" ? undefined : (weight as ShadowWeight))}
+          >
+            <span className="flex h-9 w-full items-center justify-center">
+              <span className="size-6 rounded bg-card" style={{ boxShadow: sample(weight) }} />
+            </span>
+          </Option>
+        ))}
+      </Options>
+      <p className={NOTE}>Light is the shadows as the theme defines them. Medium and Dark draw them heavier.</p>
     </section>
   )
 }

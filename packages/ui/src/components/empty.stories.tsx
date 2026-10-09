@@ -10,6 +10,7 @@ import {
 export default {
   title: "Components/Feedback/Empty",
   component: EmptyImpl,
+  tags: ["!dev"],
   parameters: { controls: { disable: true } },
 }
 

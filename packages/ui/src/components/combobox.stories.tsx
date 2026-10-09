@@ -12,6 +12,7 @@ import {
 export default {
   title: "Components/Selects/Combobox",
   component: ComboboxImpl,
+  tags: ["!dev"],
   argTypes: {
     disabled: { control: "boolean" },
     multiple: { control: "boolean" },

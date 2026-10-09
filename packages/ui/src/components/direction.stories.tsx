@@ -4,6 +4,7 @@ import { DirectionProvider as DirectionProviderImpl } from "./direction"
 export default {
   title: "Components/Layout/Direction",
   component: DirectionProviderImpl,
+  tags: ["!dev"],
   argTypes: { direction: { control: "select", options: ["ltr", "rtl"] } },
   args: { direction: "rtl" },
 }

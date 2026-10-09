@@ -1,10 +1,8 @@
-import { Fragment, useEffect, useState } from "react"
-import { useTheme } from "next-themes"
+import { useState } from "react"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts"
 
-import { colorThemes } from "@workspace/ui/lib/theme-registry"
 import { ThemeBackground } from "@workspace/ui/components/backgrounds/theme-background"
-import { cn } from "@workspace/ui/lib/utils"
+import { ThemeTiles } from "./components/theme-tiles"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@workspace/ui/components/select"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@workspace/ui/components/card"
 import { StatCard, StatCardList } from "@workspace/ui/components/ui/stat-card"
@@ -21,7 +19,6 @@ import { Avatar, AvatarImage, AvatarFallback, AvatarGroup, AvatarGroupCount } fr
 import { MapCarousel, MapCarouselContent } from "@workspace/ui/components/ui/map-carousel"
 import { RadioGroup, RadioGroupItem } from "@workspace/ui/components/radio-group"
 import { Badge } from "@workspace/ui/components/badge"
-import { Tooltip, TooltipTrigger, TooltipPanel } from "@workspace/ui/components/animate-ui/components/base/tooltip"
 import AnimatedPathText from "@workspace/ui/components/fancy/text/text-along-path"
 import {
   Item,
@@ -33,7 +30,7 @@ import {
   ItemActions,
 } from "@workspace/ui/components/item"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@workspace/ui/components/chart"
-import { BookOpenIcon, ArrowDownIcon, PaletteIcon } from "@phosphor-icons/react"
+import { ArrowDownIcon, ArrowRightIcon, ResizeIcon, SlidersHorizontalIcon } from "@phosphor-icons/react"
 import {
   Drawer,
   DrawerContent,
@@ -49,183 +46,6 @@ const SHIPMENT_STATUS = {
   delivered: { label: "Delivered", variant: "default" },
   shipped: { label: "Shipped", variant: "secondary" },
 } as const
-
-function ThemeSelect() {
-  const { theme, setTheme } = useTheme()
-
-  return (
-    <Select value={theme} onValueChange={(value) => value && setTheme(value)}>
-      <SelectTrigger className="w-52 text-sm font-medium">
-        <PaletteIcon />
-        <SelectValue placeholder="Theme">
-          {(value: string) => colorThemes.find((t) => t.id === value)?.label ?? value}
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {orderedThemes.map((t) => (
-          <SelectItem key={t.id} value={t.id}>
-            {t.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
-
-/**
- * Themes in the order the studio put them, which is what `order` is for.
- * Array order in the registry is just the sequence entries were written in, so
- * reordering in the studio never reached the site while the app read that.
- */
-const orderedThemes = [...colorThemes].sort((a, b) => a.order - b.order)
-
-function ThemeSwatches({ className }: { className?: string }) {
-  const { theme, setTheme } = useTheme()
-
-  return (
-    <div className={cn("flex flex-wrap items-center gap-2", className)}>
-      {orderedThemes.map((t) => (
-        <Tooltip key={t.id}>
-          <TooltipTrigger
-            render={
-              <button
-                type="button"
-                onClick={() => setTheme(t.id)}
-                aria-label={`Switch to ${t.label} theme`}
-                aria-pressed={theme === t.id}
-                // a theme whose primary matches the page — Bumblebee's black
-                // on a black background — would be an invisible hole without
-                // a border that does not depend on the fill
-                className="size-6 shrink-0 rounded-full border border-foreground/30 transition-transform hover:scale-110"
-                style={{
-                  backgroundColor: t.primary,
-                  outline: theme === t.id ? "2px solid var(--foreground)" : "none",
-                  outlineOffset: 2,
-                }}
-              />
-            }
-          />
-          <TooltipPanel>{t.label}</TooltipPanel>
-        </Tooltip>
-      ))}
-    </div>
-  )
-}
-
-type TypewriterSegment =
-  | { type: "text"; value: string }
-  | { type: "link"; value: string; href: string }
-  | { type: "break" }
-
-const CREDITS_SEGMENTS: TypewriterSegment[] = [
-  { type: "text", value: "Made by " },
-  { type: "link", value: "Luke", href: "https://www.linkedin.com/in/lukeillidge/" },
-  { type: "text", value: " & Claude. Crafted to back 100 prototypes in 100 days." },
-  { type: "break" },
-  { type: "text", value: "Want to contribute? " },
-  { type: "link", value: "Hit me up", href: "https://www.linkedin.com/in/lukeillidge/" },
-  { type: "text", value: "." },
-]
-
-const SCRAMBLE_CHARS = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
-
-function scrambledSlice(len: number) {
-  return Array.from({ length: Math.max(0, len) }, () => SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]).join("")
-}
-
-function RichScrambleText({
-  segments,
-  className,
-  speed = 45,
-  scrambledLetterCount = 3,
-}: {
-  segments: TypewriterSegment[]
-  className?: string
-  speed?: number
-  scrambledLetterCount?: number
-}) {
-  const [index, setIndex] = useState(0)
-  const [revealed, setRevealed] = useState(0)
-  const [tick, setTick] = useState(0)
-  const [done, setDone] = useState(false)
-
-  useEffect(() => {
-    if (done) return
-    const segment = segments[index]
-    if (!segment) {
-      setDone(true)
-      return
-    }
-
-    if (segment.type === "break") {
-      const id = setTimeout(() => {
-        setIndex((i) => i + 1)
-        setRevealed(0)
-        setTick(0)
-      }, speed)
-      return () => clearTimeout(id)
-    }
-
-    const totalTicks = segment.value.length + scrambledLetterCount
-    if (tick < totalTicks) {
-      const id = setTimeout(() => {
-        setTick((t) => t + 1)
-        setRevealed((r) => Math.min(r + 1, segment.value.length))
-      }, speed)
-      return () => clearTimeout(id)
-    }
-
-    const id = setTimeout(() => {
-      setIndex((i) => i + 1)
-      setRevealed(0)
-      setTick(0)
-    }, speed)
-    return () => clearTimeout(id)
-  }, [segments, index, tick, done, speed, scrambledLetterCount])
-
-  return (
-    <p className={className}>
-      {segments.map((segment, i) => {
-        if (i > index) return null
-        if (segment.type === "break") return <br key={i} />
-
-        const isCurrent = i === index
-        if (!isCurrent) {
-          if (segment.type === "link") {
-            return (
-              <a
-                key={i}
-                href={segment.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline underline-offset-4 hover:text-secondary-foreground"
-              >
-                {segment.value}
-              </a>
-            )
-          }
-          return <Fragment key={i}>{segment.value}</Fragment>
-        }
-
-        const scrambleCount = Math.min(segment.value.length - revealed, scrambledLetterCount)
-        const content = (
-          <>
-            {segment.value.slice(0, revealed)}
-            {scrambledSlice(scrambleCount)}
-          </>
-        )
-        return segment.type === "link" ? (
-          <span key={i} className="underline underline-offset-4 opacity-70">
-            {content}
-          </span>
-        ) : (
-          <Fragment key={i}>{content}</Fragment>
-        )
-      })}
-      {!done && <span className="animate-pulse">|</span>}
-    </p>
-  )
-}
 
 const revenueData = [
   { month: "Apr", value: 84 },
@@ -343,6 +163,9 @@ function ShipmentDrawer({ shipment, open, onOpenChange }: { shipment: Shipment |
   )
 }
 
+/** The page's column: every section sits on the same 956px measure. */
+const COLUMN = "mx-auto w-full max-w-[956px]"
+
 export function Showcase() {
   const [activeShipment, setActiveShipment] = useState<Shipment | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -356,45 +179,77 @@ export function Showcase() {
     <div className="relative isolate min-h-svh bg-background">
       <ThemeBackground />
 
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-muted bg-background/95 px-6 py-3 backdrop-blur">
-        <Button
-          variant="outline"
-          nativeButton={false}
-          render={
-            <a href="/storybook" target="_blank" rel="noopener noreferrer" title="Open Storybook">
-              <BookOpenIcon />
-              Storybook
-            </a>
-          }
-        />
-        <div className="flex items-center gap-2">
-          <ThemeSelect />
-        </div>
-      </div>
-
-      <section className="border-b border-muted px-6 py-20 sm:py-28">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="outline">Extended shadcn/ui</Badge>
-            <Badge variant="outline">9 demo themes</Badge>
+      <section className="px-6 pt-20 pb-24 sm:pt-32">
+        <div className={`${COLUMN} flex flex-col items-center gap-30`}>
+          <div className="flex flex-col items-center gap-10">
+            {/* the theme's own H1 size, but never wider than the screen it is
+                read on — min() keeps whichever scale the theme chose */}
+            <h1 className="text-balance text-center text-[min(var(--h1-size,6rem),13vw)]">
+              A very themeable design system
+            </h1>
+            <p className="text-body text-center">Made by Luke &amp; Claude</p>
           </div>
 
-          {/* The gradient fill is the theme's, not this page's — see the
-              headingGradient setting. */}
-          <h1 className="text-balance">100D Design System</h1>
+          <ThemeTiles />
 
-          <RichScrambleText className="max-w-xl min-h-11 text-body-small text-foreground" segments={CREDITS_SEGMENTS} />
-
-          <ThemeSwatches className="mt-6" />
-        </div>
-
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 pt-16 text-center">
-          <ArrowDownIcon className="size-8 animate-bounce text-secondary-foreground" />
-          <p className="text-body-small text-secondary-foreground">See it in action &mdash; an example report</p>
+          <nav className="flex flex-wrap items-center justify-center gap-4">
+            {[
+              { label: "Storybook", href: "/storybook", external: true },
+              { label: "Themer", href: "/themes", external: false },
+              { label: "Github", href: "https://github.com/lukeanill/100d-design-system", external: true },
+            ].map((link) => (
+              <Button
+                key={link.label}
+                variant="ghost"
+                nativeButton={false}
+                className="h-11 gap-2 rounded-full px-5 text-body-lg tracking-[0.01em]"
+                render={
+                  <a
+                    href={link.href}
+                    {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
+                    {link.label}
+                    <ArrowRightIcon />
+                  </a>
+                }
+              />
+            ))}
+          </nav>
         </div>
       </section>
 
-      <div className="mx-auto flex max-w-3xl flex-col gap-14 p-6 py-10">
+      <section className="px-6 pb-24">
+        <div className={`${COLUMN} flex flex-col gap-10`}>
+          <h4 className="text-balance">This exists as an experiment on Design with AI in its DNA.</h4>
+
+          <div className="flex flex-col gap-4">
+            <h5>Prototyping 100s of diverse products from an interest.</h5>
+            <h5>Developed with Claude assistance at every step.</h5>
+            <h5>Testing the impact &amp; constraints of this design foundation.</h5>
+          </div>
+
+          <div className="flex flex-col gap-20 pt-12 sm:flex-row">
+            {[
+              { Icon: SlidersHorizontalIcon, text: "How much AI challenges conventional effort -to- quality trade-offs." },
+              { Icon: ResizeIcon, text: "How easily AI adjusts and extends the system, cohesively." },
+            ].map(({ Icon, text }) => (
+              <div key={text} className="flex flex-1 flex-col gap-6">
+                <Icon className="size-10" weight="thin" />
+                <p className="text-body">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 pb-20">
+        <div className={`${COLUMN} flex flex-col items-center gap-2 pt-16 text-center`}>
+          <ArrowDownIcon className="size-8 animate-bounce text-secondary-foreground" />
+          <p className="text-body text-secondary-foreground">See it in action &mdash; an example report</p>
+        </div>
+      </section>
+
+      <div className={`${COLUMN} flex flex-col gap-14 px-6 py-10`}>
         {/* Editorial header */}
         <div className="flex flex-col gap-4">
           <h2>Fulfillment report, Q3</h2>

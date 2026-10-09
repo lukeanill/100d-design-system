@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { ChatConversation as ChatConversationImpl, ChatConversationMessages } from "./chat-conversation"
 
 export default {
-  title: "Components/Content/Chat Conversation",
+  title: "Components/Content/Chat",
   component: ChatConversationImpl,
   argTypes: {
     "data.messages": { table: { disable: true } },

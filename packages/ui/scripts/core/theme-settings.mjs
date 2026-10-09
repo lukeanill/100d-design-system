@@ -21,7 +21,8 @@
 
 export const GLASS_STYLES = ["solid", "glass"]
 export const GLASS_WEIGHTS = ["light", "medium", "heavy"]
-export const GLASS_TONES = ["light", "dark"]
+/** Clear is the default: glass with no fill, only the blur and refraction. */
+export const GLASS_TONES = ["clear", "light", "dark"]
 /** Cards are not here: glass always applies to them. These are the extras. */
 export const GLASS_APPLICATIONS = ["actions", "inputs", "selects", "overlays"]
 
@@ -34,11 +35,62 @@ export const GLASS_WEIGHT_VALUES = {
   heavy: { blur: "64px", saturate: "180%", surface: "55%" },
 }
 
+/**
+ * What refraction does at each weight: the bezel is how wide the bending rim
+ * is, thickness how deep the glass reads, scale how hard it bends, blur the
+ * small softening inside the filter, specular the strength of the edge light.
+ * Light, medium and heavy are the Soft, Medium and Heavy of the Figma glass
+ * sheet; heavy has not been specified there yet and is a placeholder.
+ */
+export const GLASS_REFRACTION_VALUES = {
+  light: { bezel: 12, thickness: 20, scale: 0.5, blur: 1, specular: 0.8 },
+  medium: { bezel: 30, thickness: 60, scale: 0.6, blur: 5, specular: 0.8 },
+  heavy: { bezel: 28, thickness: 40, scale: 1, blur: 14, specular: 0.5 },
+}
+
+/**
+ * Which refraction weight each group wears. This is fixed by the component, not
+ * chosen per theme: cards are Soft, and everything that floats over the page
+ * (menus, selects, popovers, dialogs) is Heavy. A theme only decides whether
+ * refraction is on. Actions and inputs are not here: they stay on the blur.
+ */
+export const GLASS_REFRACTION_GROUPS = {
+  card: "light",
+  select: "heavy",
+  overlay: "heavy",
+  dialog: "heavy",
+}
+
 /** What the glass is tinted toward, and by how much. */
 export const GLASS_TONE_VALUES = {
+  // no tint at all: the surface is transparent and the glass is only its blur
+  clear: { tint: null, amount: null },
   light: { tint: "oklch(1 0 0)", amount: "90%" },
   dark: { tint: "oklch(0 0 0)", amount: "90%" },
 }
+
+/* ----------------------------------------------------------------- shadow -- */
+
+export const SHADOW_WEIGHTS = ["light", "medium", "dark"]
+
+/**
+ * How much darker than the theme's own shadows each weight draws them. Light is
+ * the shadows exactly as the theme defines them, so it is the default and
+ * stores nothing; medium and dark scale every alpha in the scale together.
+ */
+export const SHADOW_WEIGHT_FACTORS = { light: 1, medium: 2, dark: 4 }
+
+/** The shadow tokens a theme carries, which the weight scales. */
+export const SHADOW_TOKENS = [
+  "shadow-2xs",
+  "shadow-xs",
+  "shadow-sm",
+  "shadow",
+  "shadow-md",
+  "shadow-lg",
+  "shadow-xl",
+  "shadow-2xl",
+]
 
 /* ------------------------------------------------------------- typography -- */
 
@@ -92,9 +144,17 @@ export function normalizeGlass(value) {
   return {
     style,
     weight: option(value.weight, GLASS_WEIGHTS, "medium"),
-    tone: option(value.tone, GLASS_TONES, "light"),
+    tone: option(value.tone, GLASS_TONES, "clear"),
     applications,
+    // like every setting, stored only when it differs from the default (off)
+    ...(flag(value.refraction) ? { refraction: true } : {}),
   }
+}
+
+/** The shadow weight the theme chose, or undefined while it is Light. */
+export function normalizeShadow(value) {
+  const weight = option(value, SHADOW_WEIGHTS, "light")
+  return weight === "light" ? undefined : weight
 }
 
 export function normalizeTypography(value) {
@@ -179,11 +239,43 @@ export function glassDeclarations(glass) {
       `--glass-${name}-layer: "";`,
       `--glass-${name}-blur: ${blur};`,
       `--glass-${name}-saturate: ${saturate};`,
-      `--glass-${name}-surface: color-mix(in oklab, color-mix(in oklab, var(${name === "dialog" ? "--background" : base[key]}) ${amount}, ${tint}) ${surface}, transparent);`
+      tint
+        ? `--glass-${name}-surface: color-mix(in oklab, color-mix(in oklab, var(${name === "dialog" ? "--background" : base[key]}) ${amount}, ${tint}) ${surface}, transparent);`
+        : `--glass-${name}-surface: transparent;`
     )
     }
   }
+  if (settings.refraction) {
+    // Which groups bend is the runtime's selector; a group that is not glass at
+    // the moment has no layer, and is skipped there, so this does not turn
+    // unticked menus into glass.
+    lines.push("--glass-refraction: 1;")
+    for (const [name, weight] of Object.entries(GLASS_REFRACTION_GROUPS)) {
+      const r = GLASS_REFRACTION_VALUES[weight]
+      lines.push(
+        `--glass-${name}-refraction-bezel: ${r.bezel};`,
+        `--glass-${name}-refraction-thickness: ${r.thickness};`,
+        `--glass-${name}-refraction-scale: ${r.scale};`,
+        `--glass-${name}-refraction-blur: ${r.blur};`,
+        `--glass-${name}-refraction-specular: ${r.specular};`
+      )
+    }
+  }
   return lines
+}
+
+/**
+ * Shadow declarations: the theme's own shadow tokens with every alpha scaled by
+ * the weight, as plain overrides after them in the theme's block. Nothing for
+ * Light. An alpha caps at 100%.
+ */
+export function shadowDeclarations(shadow, tokens) {
+  const weight = normalizeShadow(shadow)
+  if (!weight || !tokens) return []
+  const factor = SHADOW_WEIGHT_FACTORS[weight]
+  const scale = (value) =>
+    String(value).replace(/\/\s*([\d.]+)%/g, (_, alpha) => `/ ${Math.min(100, Math.round(parseFloat(alpha) * factor * 100) / 100)}%`)
+  return SHADOW_TOKENS.filter((name) => typeof tokens[name] === "string").map((name) => `--${name}: ${scale(tokens[name])};`)
 }
 
 /**

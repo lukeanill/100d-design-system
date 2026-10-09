@@ -8,6 +8,7 @@
 import { fmt, hexToOklch } from "../../tokens/lib/color.mjs"
 import {
   glassDeclarations,
+  shadowDeclarations,
   headingGradientDeclarations,
   typographyDeclarations,
 } from "./theme-settings.mjs"
@@ -83,7 +84,15 @@ const ROLE_VARIABLES = {
   body: ["font-body-token"],
 }
 
-function block({ selector, tokens, extra = [], fonts, fontSource, glass, typography, effects }) {
+/**
+ * The default theme owns `:root`, but it still needs a class of its own: a
+ * swatch that paints itself in another theme does it by carrying that theme's
+ * class, and without this the default theme would be the one swatch that could
+ * only render as whatever the page already was.
+ */
+const selectorFor = ({ selector, name }) => (selector === ":root" ? `:root,\n.${name}` : selector)
+
+function block({ selector, name, tokens, extra = [], fonts, fontSource, glass, shadow, typography, effects }) {
   const lines = []
   // Themes paired to bundled faces are styled by their [data-font-theme] block,
   // so their `fonts` are studio metadata only. Google themes declare theirs here.
@@ -110,6 +119,7 @@ function block({ selector, tokens, extra = [], fonts, fontSource, glass, typogra
   // exactly the block it always did.
   for (const group of [
     glassDeclarations(glass),
+    shadowDeclarations(shadow, tokens),
     typographyDeclarations(typography),
     headingGradientDeclarations(effects, tokens),
   ]) {
@@ -117,7 +127,7 @@ function block({ selector, tokens, extra = [], fonts, fontSource, glass, typogra
     lines.push("")
     for (const decl of group) lines.push(`  ${decl}`)
   }
-  return `${selector} {\n${lines.join("\n")}\n}\n`
+  return `${selectorFor({ selector, name })} {\n${lines.join("\n")}\n}\n`
 }
 
 /** @import lines for every Google family named by a theme, deduped and sorted. */

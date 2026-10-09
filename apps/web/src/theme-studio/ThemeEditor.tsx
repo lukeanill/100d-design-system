@@ -5,7 +5,7 @@ import { derivePalette } from "@workspace/ui/tokens/color"
 import { ColorSeed, EdgePicker, FontField } from "./ColorSeed"
 import { SiteImport } from "./SiteImport"
 import { DerivedPalette } from "./DerivedPalette"
-import { EffectsPanel, SurfacePanel, TypographyPanel } from "./ThemeSettings"
+import { EffectsPanel, ShadowPanel, SurfacePanel, TypographyPanel } from "./ThemeSettings"
 import { ThemePreview } from "./ThemePreview"
 import type { Fonts, Seeds, Theme } from "./api"
 
@@ -41,6 +41,7 @@ export function ThemeEditor({
   // Settings beyond colour and fonts. Undefined means "at the defaults", which
   // is also what gets stored: nothing.
   const [glass, setGlass] = useState<Theme["glass"]>(theme?.glass)
+  const [shadow, setShadow] = useState<Theme["shadow"]>(theme?.shadow)
   const [typography, setTypography] = useState<Theme["typography"]>(theme?.typography)
   const [effects, setEffects] = useState<Theme["effects"]>(theme?.effects)
   // The nine existing themes pair to bundled faces via [data-font-theme]; their
@@ -107,6 +108,7 @@ export function ThemeEditor({
               overrides,
               tokens,
               ...(glass ? { glass } : {}),
+              ...(shadow ? { shadow } : {}),
               ...(typography ? { typography } : {}),
               ...(effects ? { effects } : {}),
               fontSource: bundled ? "bundled" : "google",
@@ -188,8 +190,9 @@ export function ThemeEditor({
 
       {/* Everything beyond colour and fonts: surface style, heading
           typography, and the animations a theme brings with it. */}
-      <div className="grid gap-10 md:grid-cols-3">
+      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <SurfacePanel glass={glass} onChange={setGlass} />
+        <ShadowPanel shadow={shadow} tokens={tokens} onChange={setShadow} />
         <TypographyPanel
           typography={typography}
           bundled={bundled}
@@ -210,6 +213,7 @@ export function ThemeEditor({
         tokens={tokens}
         fonts={fonts}
         glass={glass}
+        shadow={shadow}
         typography={typography}
         effects={effects}
         generated={Object.keys(tokens).length > 0}

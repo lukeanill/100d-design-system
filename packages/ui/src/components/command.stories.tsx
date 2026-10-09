@@ -11,7 +11,7 @@ import {
 } from "./command"
 
 export default {
-  title: "Components/Navigation/Command",
+  title: "Components/Actions/Command",
   component: CommandImpl,
   parameters: { controls: { disable: true } },
 }

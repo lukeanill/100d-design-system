@@ -4,6 +4,7 @@ import { QuickReply as QuickReplyImpl, QuickReplyList } from "./quick-reply"
 export default {
   title: "Components/Actions/Quick Reply",
   component: QuickReplyImpl,
+  tags: ["!dev"],
   argTypes: {
     "data.replies": { table: { disable: true } },
     actions: { table: { disable: true } },

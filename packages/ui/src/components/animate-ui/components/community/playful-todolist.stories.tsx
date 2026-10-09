@@ -1,7 +1,7 @@
 import { PlayfulTodolist as PlayfulTodolistImpl } from "./playful-todolist"
 
 export default {
-  title: "Components/Actions/Playful Todolist",
+  title: "Components/Content/Playful Todolist",
   component: PlayfulTodolistImpl,
   parameters: { controls: { disable: true } },
 }

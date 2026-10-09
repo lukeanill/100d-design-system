@@ -4,6 +4,7 @@ import { Bubble as BubbleImpl, BubbleContent } from "./bubble"
 export default {
   title: "Components/Content/Bubble",
   component: BubbleImpl,
+  tags: ["!dev"],
   argTypes: {
     variant: {
       control: "select",

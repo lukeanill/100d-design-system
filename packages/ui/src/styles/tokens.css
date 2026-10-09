@@ -128,7 +128,8 @@
 }
 
 /* @tokens:start — generated from packages/ui/tokens/*.json by `pnpm tokens:build`; edit the JSON, not this block */
-:root {
+:root,
+.lighten-up {
   --font-body-weight: 400;
   --background: oklch(0.993 0.004 56.38);
   --foreground: oklch(0.345 0.000 0.00);
@@ -1123,6 +1124,11 @@
     the page was on and ignore a theme scoped to a subtree.
   */
   :root {
+    /* 1 turns refraction on for cards (Soft) and selects, overlays and dialogs
+       (Heavy); a theme sets it, with the --glass-<group>-refraction-* numbers the
+       runtime reads (glassDeclarations) */
+    --glass-refraction: 0;
+
     --glass-card-layer: none;
     --glass-card-blur: 0px;
     --glass-card-saturate: 100%;
@@ -1159,6 +1165,10 @@
   .glass-surface {
     position: relative;
     background-color: var(--glass-surface);
+    /* Set inline, per element, by lib/glass-refraction.ts. Reset here so it does
+       not inherit: a card's filter is sized to the card, and a button inside it
+       must fall back to its own blur. The inline value still wins on the card. */
+    --glass-backdrop: initial;
   }
 
   .glass-surface::before {
@@ -1168,7 +1178,9 @@
     z-index: -1;
     border-radius: inherit;
     pointer-events: none;
-    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    /* `--glass-backdrop` is set per element by lib/glass-refraction.ts, and only
+       for a theme that opts in; without it this is the plain blur */
+    backdrop-filter: var(--glass-backdrop, blur(var(--glass-blur)) saturate(var(--glass-saturate)));
   }
 
   .glass-card {
@@ -1233,6 +1245,20 @@
   utilities. Instead these blocks override the underlying physical font variables the utilities
   actually reference, which stay live CSS custom properties at runtime.
 */
+
+/*
+  Chill Light used to rely on the defaults in `@theme inline`, which works while
+  it is the whole page but not when a theme is scoped to part of one: a swatch
+  carrying this pairing would keep whatever faces the page was already wearing.
+  Stating them here makes it a pairing like any other.
+*/
+[data-font-theme="chill-light"] {
+  --font-authentic-sans-60: 'Authentic Sans 60', ui-sans-serif, system-ui, sans-serif;
+  --font-authentic-sans-90: 'Authentic Sans 90', ui-sans-serif, system-ui, sans-serif;
+  --font-oranienbaum: var(--font-instrument-serif);
+  --font-body-token: var(--font-authentic-sans-60);
+  --font-body-weight: 400;
+}
 
 [data-font-theme="dark-mode"] {
   /*

@@ -4,6 +4,7 @@ import { Hero as HeroImpl, HeroContent, HeroTitle, HeroDescription, HeroActions 
 export default {
   title: "Components/Content/Hero",
   component: HeroImpl,
+  tags: ["!dev"],
   argTypes: {
     "data.title": { control: "text" },
     "data.subtitle": { control: "text" },

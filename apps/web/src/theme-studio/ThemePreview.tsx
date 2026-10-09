@@ -5,10 +5,11 @@ import { Input } from "@workspace/ui/components/input"
 import {
   glassDeclarations,
   headingGradientDeclarations,
+  shadowDeclarations,
   typographyDeclarations,
   // @ts-expect-error - shared .mjs settings tables, also used by the build scripts
 } from "@workspace/ui/scripts/core/theme-settings"
-import type { Effects, Fonts, Glass, Typography } from "./api"
+import type { Effects, Fonts, Glass, ShadowWeight, Typography } from "./api"
 
 /**
  * The designs leave this panel empty, so it renders a sampler of real library
@@ -19,6 +20,7 @@ export function ThemePreview({
   fonts,
   generated,
   glass,
+  shadow,
   typography,
   effects,
 }: {
@@ -26,6 +28,7 @@ export function ThemePreview({
   fonts: Fonts
   generated: boolean
   glass?: Glass
+  shadow?: ShadowWeight
   typography?: Typography
   effects?: Effects
 }) {
@@ -33,6 +36,7 @@ export function ThemePreview({
   // with, so what is shown here is what the stylesheet will say.
   const declarations = [
     ...(glassDeclarations(glass) as string[]),
+    ...(shadowDeclarations(shadow, tokens) as string[]),
     ...(typographyDeclarations(typography) as string[]),
     ...(headingGradientDeclarations(effects, tokens) as string[]),
   ]

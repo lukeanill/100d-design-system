@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { glass } from "@workspace/ui/lib/glass";
+
 import {
   AlertDialog as AlertDialogPrimitive,
   AlertDialogPopup as AlertDialogPopupPrimitive,
@@ -58,7 +60,7 @@ function AlertDialogPopup({ className, ...props }: AlertDialogPopupProps) {
       <AlertDialogBackdrop />
       <AlertDialogPopupPrimitive
         className={cn(
-          'bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg',
+          `${glass("dialog")} fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg`,
           className,
         )}
         {...props}

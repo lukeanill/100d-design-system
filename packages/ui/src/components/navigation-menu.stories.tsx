@@ -9,7 +9,7 @@ import {
 } from "./navigation-menu"
 
 export default {
-  title: "Components/Navigation/Navigation Menu",
+  title: "Components/Navigation/Dropdown Menu",
   component: NavigationMenuImpl,
   argTypes: {
     align: {

@@ -1,6 +1,7 @@
 import * as React from "react"
 import { ThemeProvider as NextThemeProvider, useTheme } from "next-themes"
 import { colorThemeIds } from "@workspace/ui/lib/theme-registry"
+import { startGlassRefraction } from "@workspace/ui/lib/glass-refraction"
 
 function isEditableTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
@@ -34,6 +35,12 @@ function KeyboardThemeToggle() {
   return null
 }
 
+/** Refraction for the large glass surfaces of a theme that opts in. */
+function GlassRefraction() {
+  React.useEffect(() => startGlassRefraction(), [])
+  return null
+}
+
 export function ThemeProvider({
   children,
   forcedTheme,
@@ -50,6 +57,7 @@ export function ThemeProvider({
       forcedTheme={forcedTheme}
     >
       <KeyboardThemeToggle />
+      <GlassRefraction />
       {children}
     </NextThemeProvider>
   )

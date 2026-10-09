@@ -6,7 +6,7 @@ import {
 } from "./scroll-progress"
 
 export default {
-  title: "Components/Feedback/Scroll Progress",
+  title: "Components/Content/Scroll Progress",
   component: ScrollProgressImpl,
   argTypes: {
     mode: { control: "select", options: ["width", "height", "scaleY", "scaleX"] },

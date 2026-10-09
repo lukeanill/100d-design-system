@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 
+import { Rule, Sheet, SHEET, sheetText } from "./tokens-sheet"
+
+/** The three specimens: the heading face, the emphasis face, and the body face. */
 const FONT_FAMILIES = [
-  { name: "Heading", token: "font-heading" },
-  { name: "Body (20px and under)", token: "font-body" },
-  { name: "Serif", token: "font-serif" },
-  { name: "Code", token: "font-mono" },
+  { label: "Primary", token: "font-heading" },
+  { label: "Emphasis", token: "font-serif" },
+  { label: "Body", token: "font-body" },
 ] as const
 
 function resolvedFontName(token: string) {
@@ -29,98 +31,70 @@ function useResolvedFontNames() {
   return names
 }
 
-const TYPE_SCALE = [
-  { tag: "h1", label: "Heading 1", size: "96px" },
-  { tag: "h2", label: "Heading 2", size: "80px" },
-  { tag: "h3", label: "Heading 3", size: "64px" },
-  { tag: "h4", label: "Heading 4", size: "48px" },
-  { tag: "h5", label: "Heading 5", size: "32px" },
-  { tag: "h6", label: "Heading 6", size: "24px" },
-] as const
+const HEADINGS = [1, 2, 3, 4, 5, 6] as const
+
+const GLYPHS = ["£123$4567€890", "!#@;-?", "“ty**”"]
 
 const BODY_STYLES = [
-  { sans: "text-footnote", serif: null, label: "Footnote", size: "11px" },
-  { sans: "text-body-small", serif: null, label: "Body Small", size: "13px" },
-  { sans: "text-body", serif: "text-body-serif", label: "Body", size: "15px / 16px" },
-  { sans: "text-body-lg", serif: "text-body-lg-serif", label: "Body Large", size: "18px / 19px" },
+  { className: "text-body-lg", label: "Body Large" },
+  { className: "text-body", label: "Body" },
+  { className: "text-body-small", label: "Body Small" },
 ] as const
 
 export default { title: "Tokens/Typography", parameters: { layout: "fullscreen" } }
 
-export const Typography = () => {
-  const resolvedNames = useResolvedFontNames()
+/** A heading size straight from the theme's scale, so Compact and Classic show as they are. */
+const headingSize = (level: number) => `var(--h${level}-size, ${[96, 80, 64, 48, 32, 24][level - 1]}px)`
 
+function Specimen({ label, token, name }: { label: string; token: string; name: string }) {
+  const family = { ...sheetText, fontFamily: `var(--${token})` }
+  const isBody = token === "font-body"
   return (
-  <div className="min-h-screen w-full bg-card">
-   <div className="mx-auto flex max-w-5xl flex-col gap-16 p-10">
-    <header className="flex flex-col gap-3 border-b border-muted pb-8">
-      <p className="font-sans text-xs font-medium tracking-wide text-secondary-foreground uppercase">
-        Tokens &middot; Typography
-      </p>
-      <h1 className="font-heading text-4xl font-normal text-foreground">Typography</h1>
-    </header>
-
-    <section className="flex flex-col gap-6">
-      <h2 className="font-heading text-xl font-normal text-foreground">Font families</h2>
-      <div className="grid gap-4 sm:grid-cols-4">
-        {FONT_FAMILIES.map((fam) => (
-          <div key={fam.name} className="flex flex-col gap-4 rounded-xl border border-muted bg-card p-6 shadow-xs">
-            <div className="text-5xl text-foreground" style={{ fontFamily: `var(--${fam.token})` }}>
-              Ag
-            </div>
-            <div>
-              <div className="text-sm font-medium text-foreground">{fam.name}</div>
-              <div className="text-xs text-secondary-foreground">{resolvedNames[fam.token] || "—"}</div>
-              <div className="text-xs text-secondary-foreground">--{fam.token}</div>
-            </div>
-          </div>
-        ))}
+    <section>
+      <div style={{ ...family, display: "flex", flexDirection: "column", gap: SHEET.gap }}>
+        <p style={{ fontSize: SHEET.groupLabel, margin: 0, opacity: 0.5 }}>{label}</p>
+        <p style={{ fontSize: SHEET.name, margin: 0 }}>{name || "—"}</p>
       </div>
-    </section>
-
-    <section className="flex flex-col gap-6">
-      <h2 className="font-heading text-xl font-normal text-foreground">Type scale</h2>
-      <div className="flex flex-col divide-y divide-muted rounded-xl border border-muted bg-card shadow-xs">
-        {TYPE_SCALE.map((t) => (
-          <div key={t.tag} className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              {t.tag === "h1" && <h1 className="truncate">Design, distilled</h1>}
-              {t.tag === "h2" && <h2 className="truncate">Design, distilled</h2>}
-              {t.tag === "h3" && <h3 className="truncate">Design, distilled</h3>}
-              {t.tag === "h4" && <h4 className="truncate">Design, distilled</h4>}
-              {t.tag === "h5" && <h5 className="truncate">Design, distilled</h5>}
-              {t.tag === "h6" && <h6 className="truncate">Design, distilled</h6>}
+      <Rule />
+      {isBody ? (
+        <div style={{ ...family, display: "flex", flexDirection: "column", gap: 16, maxWidth: 505 }}>
+          {BODY_STYLES.map((b) => (
+            <div key={b.label} className={b.className} style={{ lineHeight: 1.6 }}>
+              <p style={{ margin: 0 }}>{b.label}</p>
+              <p style={{ margin: 0 }}>The quick brown fox jumped over the lazy dog.</p>
             </div>
-            <div className="shrink-0 text-xs text-secondary-foreground sm:text-right">
-              <div className="font-medium text-foreground">{t.label}</div>
-              <div>{t.size}</div>
-            </div>
+          ))}
+        </div>
+      ) : (
+        <div style={{ ...family, display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 48 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16, width: 550, maxWidth: "100%", whiteSpace: "nowrap" }}>
+            {HEADINGS.map((level) => (
+              <p key={level} style={{ fontSize: headingSize(level), margin: 0 }}>
+                Heading {level}
+              </p>
+            ))}
           </div>
-        ))}
-        {BODY_STYLES.map((b) => (
-          <div key={b.label} className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex min-w-0 flex-col gap-2">
-              <p className={`${b.sans} max-w-md truncate`}>The quick brown fox jumps over the lazy dog.</p>
-              {b.serif && <p className={`${b.serif} max-w-md truncate`}>The quick brown fox jumps over the lazy dog.</p>}
-            </div>
-            <div className="shrink-0 text-xs text-secondary-foreground sm:text-right">
-              <div className="font-medium text-foreground">{b.label}</div>
-              <div>{b.size}</div>
-            </div>
-          </div>
-        ))}
-        <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
-          <code className="w-fit rounded-md bg-muted px-3 py-2 font-mono text-sm text-foreground">
-            const design = &quot;system&quot;
-          </code>
-          <div className="shrink-0 text-xs text-secondary-foreground sm:text-right">
-            <div className="font-medium text-foreground">Mono</div>
-            <div>--font-mono</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 24, width: SHEET.column, maxWidth: "100%", fontSize: SHEET.name }}>
+            {GLYPHS.map((glyphs) => (
+              <p key={glyphs} style={{ margin: 0, overflowWrap: "anywhere" }}>
+                {glyphs}
+              </p>
+            ))}
           </div>
         </div>
-      </div>
+      )}
     </section>
-   </div>
-  </div>
+  )
+}
+
+export const Typography = () => {
+  const names = useResolvedFontNames()
+
+  return (
+    <Sheet gap={SHEET.groups}>
+      {FONT_FAMILIES.map((fam) => (
+        <Specimen key={fam.token} label={fam.label} token={fam.token} name={names[fam.token] ?? ""} />
+      ))}
+    </Sheet>
   )
 }

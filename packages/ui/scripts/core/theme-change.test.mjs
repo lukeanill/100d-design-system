@@ -359,11 +359,16 @@ test("the theme at the top of the list is the one on :root", () => {
   )
 
   const css = files["packages/ui/src/styles/tokens.css"]
-  assert.ok(css.includes(`\n:root {`), "the new default is written to :root")
-  assert.ok(
-    css.indexOf("\n:root {") < css.indexOf("\n."),
-    "and first, so the themes that override it come after"
-  )
+  // the default owns :root and still carries its own class, so a swatch can
+  // paint itself in it the same way it can in any other theme
+  const defaultBlock = `\n:root,\n.${promoted} {`
+  assert.ok(css.includes(defaultBlock), "the new default is written to :root and its class")
+  for (const other of names.filter((n) => n !== promoted)) {
+    assert.ok(
+      css.indexOf(defaultBlock) < css.indexOf(`\n.${other} {`),
+      "and first, so the themes that override it come after"
+    )
+  }
 })
 
 test("archiving the default theme hands :root to the next one", () => {

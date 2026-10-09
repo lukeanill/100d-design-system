@@ -14,7 +14,7 @@ import {
   upsertFontThemeIn,
 } from "./registry-core.mjs"
 import { evaluateContrast } from "./contrast-core.mjs"
-import { normalizeEffects, normalizeGlass, normalizeTypography } from "./theme-settings.mjs"
+import { normalizeEffects, normalizeGlass, normalizeShadow, normalizeTypography } from "./theme-settings.mjs"
 
 export const TOKENS_DIR = "packages/ui/tokens"
 export const TOKENS_CSS = "packages/ui/src/styles/tokens.css"
@@ -114,6 +114,7 @@ function normalize(body, existing = {}, themeCount = 0) {
     // everything is at its default, so a theme that has chosen nothing carries
     // no key and its stored file is unchanged.
     ...(settings("glass", normalizeGlass, body, existing)),
+    ...(settings("shadow", normalizeShadow, body, existing)),
     ...(settings("typography", normalizeTypography, body, existing)),
     ...(settings("effects", (value) => normalizeEffects(value, body.tokens ?? existing.tokens), body, existing)),
   }

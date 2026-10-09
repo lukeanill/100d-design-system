@@ -1,77 +1,91 @@
-import * as React from "react"
-
-import { Button } from "@workspace/ui/components/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
-import { Input } from "@workspace/ui/components/input"
-import { GradientBackground } from "@workspace/ui/components/backgrounds/gradient-background"
-import { animatedBackgroundAurora } from "@workspace/ui/components/backgrounds/gradients/animated-background-aurora"
+import background from "./tokens-glass-bg.mp4"
+import { LiquidGlass } from "./liquid-glass"
 
 /**
- * Glass is a per-theme setting: a weight, a tone, and which groups it covers
- * (cards always, then actions, inputs, selects and overlays). The controls here
- * stand in for a theme's choice so the recipe can be seen without saving one.
+ * The glass sheet from the Figma file (100DS, "Glass"): three weights (Soft,
+ * Medium, Heavy) across four tones (Clear, Light, Dark, Tinted).
  *
- * The blur needs something behind it, so the sampler sits on a paused
- * background.
+ * Each tile is a refraction glass (see liquid-glass.tsx): an SVG displacement
+ * filter bends the background along the rim and a specular highlight catches
+ * the edge. The weight sets how frosted and how thick the glass is; the tone is
+ * the fill. SVG backdrop filters are Chromium-only; other browsers get a plain
+ * blur.
  */
 const WEIGHTS = {
-  light: { blur: "16px", saturate: "125%", surface: "85%" },
-  medium: { blur: "40px", saturate: "150%", surface: "70%" },
-  heavy: { blur: "64px", saturate: "180%", surface: "55%" },
+  soft: { blur: 1, bezel: 12, thickness: 20, scaleRatio: 0.5, specularOpacity: 0.8, fallbackBlur: 2, fill: 0.32, light: 0.16, dark: 0.4 },
+  medium: { blur: 5, bezel: 30, thickness: 60, scaleRatio: 0.6, specularOpacity: 0.8, fallbackBlur: 10, fill: 0.4, light: 0.24, dark: 0.48 },
+  heavy: { blur: 14, bezel: 28, thickness: 40, scaleRatio: 1, specularOpacity: 0.5, fallbackBlur: 40, fill: 0.48, light: 0.32, dark: 0.48 },
 }
 
-const TONES = { light: "oklch(1 0 0)", dark: "oklch(0 0 0)" }
+type Weight = (typeof WEIGHTS)["soft"]
 
-const GROUPS = ["card", "action", "input", "select", "overlay"] as const
+const TONES = {
+  clear: () => undefined,
+  light: (w: Weight) => `rgba(255, 255, 255, ${w.light})`,
+  dark: (w: Weight) => `rgba(0, 0, 0, ${w.dark})`,
+  tinted: (w: Weight) =>
+    `linear-gradient(162deg, rgba(50, 205, 216, ${w.fill}) 42.7%, rgba(21, 61, 155, ${w.fill}) 93.1%)`,
+}
 
 export default {
   title: "Tokens/Glass",
-  parameters: { layout: "fullscreen" },
-  argTypes: {
-    style: { control: "inline-radio", options: ["solid", "glass"] },
-    weight: { control: "inline-radio", options: Object.keys(WEIGHTS) },
-    tone: { control: "inline-radio", options: Object.keys(TONES) },
-  },
-  args: { style: "glass", weight: "medium", tone: "light" },
+  parameters: { layout: "fullscreen", controls: { disable: true } },
 }
 
-type Args = { style: "solid" | "glass"; weight: keyof typeof WEIGHTS; tone: keyof typeof TONES }
-
-/** The declarations a theme would carry, as inline properties. */
-function glassStyle({ style, weight, tone }: Args) {
-  if (style === "solid") return {}
-  const { blur, saturate, surface } = WEIGHTS[weight]
-  const base = { card: "--card", action: "--primary", input: "--card", select: "--popover", overlay: "--popover" }
-  return Object.fromEntries(
-    GROUPS.flatMap((group) => [
-      [`--glass-${group}-layer`, '""'],
-      [`--glass-${group}-blur`, blur],
-      [`--glass-${group}-saturate`, saturate],
-      [
-        `--glass-${group}-surface`,
-        `color-mix(in oklab, color-mix(in oklab, var(${base[group]}) 90%, ${TONES[tone]}) ${surface}, transparent)`,
-      ],
-    ])
-  ) as React.CSSProperties
-}
-
-export const Glass = (args: Args) => (
-  <section className="relative isolate min-h-screen overflow-hidden" style={glassStyle(args)}>
-    <GradientBackground config={animatedBackgroundAurora} paused />
-    <div className="relative z-10 flex flex-col gap-6 p-10">
-      <Card className="max-w-md">
-        <CardHeader>
-          <CardTitle>Card</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3 text-sm">
-          <p>Cards are glass whenever the theme is, whatever else is ticked.</p>
-          <Input placeholder="Input" aria-label="Input" />
-          <div className="flex gap-2">
-            <Button>Action</Button>
-            <Button variant="secondary">Secondary</Button>
+export const Glass = () => (
+  <section
+    style={{
+      position: "relative",
+      isolation: "isolate",
+      display: "grid",
+      gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+      gap: "24px clamp(12px, 4.8vw, 80px)",
+      alignContent: "center",
+      minHeight: "100vh",
+      padding: "76px clamp(16px, 7.25vw, 120px)",
+      overflow: "hidden",
+    }}
+  >
+    <video
+      src={background}
+      autoPlay
+      loop
+      muted
+      playsInline
+      aria-hidden="true"
+      style={{ position: "absolute", inset: 0, zIndex: -1, width: "100%", height: "100%", objectFit: "cover" }}
+    />
+    {(Object.keys(WEIGHTS) as (keyof typeof WEIGHTS)[]).flatMap((weight) =>
+      (Object.keys(TONES) as (keyof typeof TONES)[]).map((tone) => (
+        <LiquidGlass
+          key={`${weight}-${tone}`}
+          radius={16}
+          blur={WEIGHTS[weight].blur}
+          bezel={WEIGHTS[weight].bezel}
+          thickness={WEIGHTS[weight].thickness}
+          scaleRatio={WEIGHTS[weight].scaleRatio}
+          specularOpacity={WEIGHTS[weight].specularOpacity}
+          fallbackBlur={WEIGHTS[weight].fallbackBlur}
+          tint={TONES[tone](WEIGHTS[weight])}
+          style={{ height: 241 }}
+        >
+          <div
+            className="text-body-small"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              height: "100%",
+              color: "white",
+              textTransform: "capitalize",
+            }}
+          >
+            <span>{tone}</span>
+            <span style={{ opacity: 0.5 }}>{weight}</span>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </LiquidGlass>
+      ))
+    )}
   </section>
 )

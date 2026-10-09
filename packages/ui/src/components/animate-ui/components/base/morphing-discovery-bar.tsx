@@ -5,6 +5,8 @@ import type { FC, ReactNode } from "react"
 import { AnimatePresence, LayoutGroup, motion } from "motion/react"
 import { Search, X } from "lucide-react"
 
+import { glass } from "@workspace/ui/lib/glass"
+
 /* A search icon that expands into a search field, paired with a separate
  * tab group. Ported from Watermelon UI's Morphing Discovery Bar
  * (ui.watermelon.sh/animated-components/category/tabs), restyled onto our
@@ -44,7 +46,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
     <div className={`flex w-full flex-col items-center justify-center bg-transparent p-2 transition-colors duration-500 sm:p-4 ${className}`}>
       <div className="flex h-14 w-full max-w-full items-center justify-center">
         <LayoutGroup>
-          <motion.div layout transition={transition} className="flex max-w-full items-center gap-1.5 rounded-[32px] p-1.5 backdrop-blur-md sm:gap-3 sm:p-2">
+          <motion.div layout transition={transition} className={`flex max-w-full items-center gap-1.5 rounded-[32px] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
             <motion.div
               layout
               transition={transition}
