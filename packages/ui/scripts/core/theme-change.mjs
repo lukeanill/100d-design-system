@@ -196,9 +196,10 @@ export function applyThemeChange(workspace, change) {
     if (!theme) throw new Error(`No theme called "${name}".`)
 
     const archiving = change.type === "archive"
-    const next = { ...theme }
-    if (archiving) next.archived = true
-    else delete next.archived
+    // Same key order a save writes (updatedAt last), so archiving and then
+    // saving the theme is not a reshuffle of the file.
+    const { updatedAt, archived: _archived, ...rest } = theme
+    const next = { ...rest, ...(archiving ? { archived: true } : {}), ...(updatedAt ? { updatedAt } : {}) }
 
     themes[name] = next
     files[themePath(name)] = serialize(next)

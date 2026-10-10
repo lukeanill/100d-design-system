@@ -18,8 +18,37 @@ import { applyThemeChange, listThemes } from "./theme-change.mjs"
 import { readWorkspace } from "./workspace-fs.mjs"
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..")
-const read = (rel) => readFileSync(join(ROOT, rel), "utf8")
-const workspace = () => readWorkspace(ROOT)
+/**
+ * What "the stored file" means in these tests. Normally the file on disk, but
+ * while a theme is archived on disk `workspace()` brings it back in memory, so
+ * the files it would be stored as are recorded here and read from here instead.
+ */
+let stored = {}
+const read = (rel) => stored[rel] ?? readFileSync(join(ROOT, rel), "utf8")
+/**
+ * The repo's themes, all of them live.
+ *
+ * These tests run against the real theme files, and the studio can leave any of
+ * them archived. A theme that is archived at the moment has no block in
+ * tokens.css and no registry entry, which would make half of what is asserted
+ * below fail for a reason that has nothing to do with the code. So any archived
+ * theme is brought back in memory first; nothing is written.
+ */
+const workspace = () => {
+  let ws = readWorkspace(ROOT)
+  for (const name of Object.keys(ws.themes).filter((n) => ws.themes[n].archived)) {
+    ws = advance(ws, applyThemeChange(ws, { type: "unarchive", name }))
+  }
+  stored = {
+    "packages/ui/src/styles/tokens.css": ws.tokensCss,
+    "packages/ui/src/lib/theme-registry.ts": ws.colorRegistry,
+    "packages/ui/src/lib/font-theme-registry.ts": ws.fontRegistry,
+    ...Object.fromEntries(
+      Object.values(ws.themes).map((theme) => [`packages/ui/tokens/${theme.name}.json`, JSON.stringify(theme, null, 2) + "\n"])
+    ),
+  }
+  return ws
+}
 
 /** The workspace you get by applying a change, without re-reading the disk. */
 const advance = (ws, result) => ({
@@ -385,4 +414,22 @@ test("archiving the default theme hands :root to the next one", () => {
 
   assert.equal(next.themes[order[0]].selector, ":root", "the new first theme took over")
   assert.equal(next.themes[defaultTheme.name].selector, `.${defaultTheme.name}`)
+})
+
+test("an archived theme is stored the way a save would store it", () => {
+  // archive writes the file itself, and a later save of the same theme must
+  // not reshuffle it: the studio's commits are meant to show one changed line
+  const ws = workspace()
+  const name = Object.keys(ws.themes).find((n) => ws.themes[n].selector !== ":root")
+  const archived = applyThemeChange(ws, { type: "archive", name })
+  const stored = archived.files[`packages/ui/tokens/${name}.json`]
+  const next = advance(ws, archived)
+  const { swatches: _swatches, ...theme } = archived.themes.find((t) => t.name === name)
+  const again = applyThemeChange(next, { type: "save", theme })
+  assert.equal(
+    again.files[`packages/ui/tokens/${name}.json`] ?? stored,
+    stored,
+    "re-saving an archived theme rewrites nothing"
+  )
+  assert.ok(stored.indexOf('"archived"') < stored.indexOf('"updatedAt"') || !stored.includes('"updatedAt"'), "archived sits before updatedAt, as a save writes it")
 })
