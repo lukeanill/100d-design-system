@@ -20,6 +20,7 @@ const preview: Preview = {
           "Components",
           [
             "Actions",
+            "Metal",
             "Inputs",
             "Selects",
             "Navigation",
