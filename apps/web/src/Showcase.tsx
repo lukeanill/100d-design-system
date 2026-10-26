@@ -155,7 +155,8 @@ function CodeBox({ children }: { children: ReactNode }) {
  * overlaps the second and third tiles, 30px past the row's right edge and 16px
  * above it. It is the design system's Popover, so it comes in with its spring and
  * closes on Escape or a click outside; the row is its anchor. The Popover's own
- * surface is switched off so the glass is the only one.
+ * surface is switched off so the glass is the only one, and the panel scales in
+ * without fading (the content fades instead) so the refraction is there from the first frame.
  */
 function InstallPanel({ anchor }: { anchor: React.RefObject<HTMLElement | null> }) {
   return (
@@ -166,11 +167,12 @@ function InstallPanel({ anchor }: { anchor: React.RefObject<HTMLElement | null> 
       sideOffset={({ anchor }) => -(anchor.height + 16)}
       alignOffset={-30}
       initialFocus={false}
+      fade={false}
       className="w-[min(571px,calc(100vw-40px))] rounded-[16px] border-0 p-0 shadow-none"
       style={{ "--glass-layer": "none", "--glass-surface": "transparent" } as CSSProperties}
     >
       <LiquidGlass radius={16} {...glassProps("heavy", "dark")} style={{ boxShadow: "0 24px 40px rgba(0, 0, 0, 0.25)" }}>
-        <div className="flex flex-col justify-end gap-6 p-6 sm:p-10">
+        <div className="flex animate-in flex-col justify-end gap-6 p-6 duration-300 fade-in-0 sm:p-10">
           <div className="flex w-full flex-col gap-4">
             <p className={`${BODY} text-[18px] leading-[1.42]`}>Install from command line</p>
             <CodeBox>npm install @lukeanill/ui</CodeBox>

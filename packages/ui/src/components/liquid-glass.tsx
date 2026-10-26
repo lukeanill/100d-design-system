@@ -55,10 +55,10 @@ export function LiquidGlass({
   const id = React.useId().replace(/:/g, "")
   const ref = React.useRef<HTMLDivElement>(null)
   const [size, setSize] = React.useState<[number, number]>([0, 0])
-  const [supported, setSupported] = React.useState(false)
+  const [supported] = React.useState(supportsSvgBackdrop)
 
-  React.useEffect(() => {
-    setSupported(supportsSvgBackdrop())
+  // before paint, so the refraction filter exists on the first frame rather than one frame later
+  React.useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
     const measure = () => setSize([el.offsetWidth, el.offsetHeight])

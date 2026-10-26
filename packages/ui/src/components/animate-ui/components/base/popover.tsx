@@ -34,7 +34,14 @@ function PopoverTrigger(props: PopoverTriggerProps) {
 }
 
 type PopoverPanelProps = PopoverPositionerPrimitiveProps &
-  PopoverPopupPrimitiveProps;
+  PopoverPopupPrimitiveProps & {
+    /**
+     * Fade the panel with its scale (the default). Turn it off for a surface whose
+     * backdrop filter has to see the page from the first frame: anything under full
+     * opacity is a backdrop root, so refraction glass would only appear once the fade ended.
+     */
+    fade?: boolean;
+  };
 
 function PopoverPanel({
   className,
@@ -42,6 +49,7 @@ function PopoverPanel({
   sideOffset = 4,
   initialFocus,
   finalFocus,
+  fade = true,
   style,
   children,
   ...props
@@ -57,6 +65,16 @@ function PopoverPanel({
         <PopoverPopupPrimitive
           initialFocus={initialFocus}
           finalFocus={finalFocus}
+          {...(fade
+            ? {}
+            : {
+                initial: { scale: 0.5 },
+                animate: { scale: 1 },
+                // Base UI keeps the panel on screen only while it sees a CSS/WAAPI animation, and a
+                // scale spring is neither, so the exit carries a fade that waits for the scale to
+                // be well under way: the glass keeps its backdrop for the first part of the exit.
+                exit: { scale: 0.5, opacity: 0, transition: { opacity: { delay: 0.1, duration: 0.12 } } },
+              })}
           className={cn(
             `${glass("overlay")} text-popover-foreground w-72 rounded-md border p-4 shadow-md outline-hidden origin-(--transform-origin)`,
             className,
