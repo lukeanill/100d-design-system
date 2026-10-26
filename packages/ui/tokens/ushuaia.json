@@ -1,0 +1,129 @@
+{
+  "name": "ushuaia",
+  "label": "Ushuaia",
+  "order": 8,
+  "selector": ".ushuaia",
+  "scheme": "light",
+  "seeds": {
+    "background": "#edebe3",
+    "foreground": "#0f0e0e",
+    "primary": "#222222",
+    "secondary": "#ffffff"
+  },
+  "fonts": {
+    "primary": "Migra",
+    "emphasis": "Newsreader",
+    "body": "Archivo"
+  },
+  "edges": "strong",
+  "overrides": {
+    "primary-foreground": "#0f0e0e",
+    "secondary-foreground": "#222222",
+    "destructive": "#e7000b",
+    "chart-1": "#f54900",
+    "chart-2": "#009689",
+    "chart-3": "#104e64",
+    "chart-4": "#ffb900",
+    "chart-5": "#fe9a00"
+  },
+  "fontSource": "google",
+  "tokens": {
+    "font-body-weight": "400",
+    "background": "oklch(0.939 0.011 95.17)",
+    "foreground": "oklch(0.165 0.002 17.33)",
+    "card": "var(--background)",
+    "card-foreground": "var(--foreground)",
+    "popover": "var(--background)",
+    "popover-foreground": "var(--foreground)",
+    "primary": "oklch(0.252 0.000 0.00)",
+    "primary-foreground": "oklch(0.165 0.002 17.33)",
+    "secondary": "oklch(1.000 0.000 0.00)",
+    "secondary-foreground": "oklch(0.252 0.000 0.00)",
+    "muted": "var(--secondary)",
+    "muted-foreground": "oklch(0.165 0.002 17.33 / 65%)",
+    "accent": "var(--secondary)",
+    "accent-foreground": "var(--secondary-foreground)",
+    "destructive": "oklch(0.583 0.239 28.48)",
+    "affirmative": "oklch(0.548 0.150 145.00)",
+    "border": "oklch(0.165 0.002 17.33 / 15%)",
+    "input": "oklch(0.165 0.002 17.33 / 20%)",
+    "ring": "oklch(0.165 0.002 17.33 / 70%)",
+    "affirmative-foreground": "oklch(1.000 0.000 0.00)",
+    "chart-1": "oklch(0.647 0.217 36.85)",
+    "chart-2": "oklch(0.605 0.107 184.17)",
+    "chart-3": "oklch(0.397 0.070 227.19)",
+    "chart-4": "oklch(0.829 0.171 81.04)",
+    "chart-5": "oklch(0.772 0.173 65.37)",
+    "gradient-downlight": "linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%)",
+    "gradient-rise": "linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)",
+    "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
+    "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
+    "radius": "1rem",
+    "radius-container": "1.5rem",
+    "sidebar": "var(--background)",
+    "sidebar-foreground": "var(--foreground)",
+    "sidebar-primary": "var(--primary)",
+    "sidebar-primary-foreground": "var(--primary-foreground)",
+    "sidebar-accent": "var(--accent)",
+    "sidebar-accent-foreground": "var(--accent-foreground)",
+    "sidebar-border": "var(--border)",
+    "sidebar-ring": "var(--ring)",
+    "shadow-2xs": "5px 5px 10px rgb(34 34 34 / 8%)",
+    "shadow-xs": "5px 5px 10px rgb(34 34 34 / 8%)",
+    "shadow-sm": "10px 10px 20px rgb(34 34 34 / 12%)",
+    "shadow": "10px 10px 20px rgb(34 34 34 / 12%)",
+    "shadow-md": "20px 20px 40px rgb(34 34 34 / 16%)",
+    "shadow-lg": "30px 30px 60px rgb(34 34 34 / 24%)",
+    "shadow-xl": "30px 30px 60px rgb(34 34 34 / 24%)",
+    "shadow-2xl": "30px 30px 60px rgb(34 34 34 / 24%)"
+  },
+  "typography": {
+    "headings": {
+      "h1": {
+        "font": "primary",
+        "weight": 200
+      },
+      "h2": {
+        "font": "primary",
+        "weight": 200
+      },
+      "h3": {
+        "font": "primary",
+        "weight": 200
+      },
+      "h4": {
+        "font": "primary",
+        "weight": 200
+      },
+      "h5": {
+        "font": "primary",
+        "weight": 200
+      },
+      "h6": {
+        "font": "primary",
+        "weight": 200
+      }
+    }
+  },
+  "figma": {
+    "color": "light",
+    "spacing": "lg",
+    "motion": "smooth",
+    "material": "gradient",
+    "elevation": "strong",
+    "fonts": {
+      "display": {
+        "family": "Migra",
+        "weight": 800
+      },
+      "sans": {
+        "family": "Archivo",
+        "weight": 400
+      },
+      "serif": {
+        "family": "Newsreader",
+        "weight": 500
+      }
+    }
+  }
+}

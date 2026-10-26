@@ -1,12 +1,18 @@
 import type { Preview } from "@storybook/react-vite"
 import { ThemeProvider } from "@workspace/ui/components/theme-provider"
-import { FontThemeProvider } from "@workspace/ui/components/font-theme-provider"
-import { colorThemes } from "@workspace/ui/lib/theme-registry"
+import { presets } from "@workspace/ui/themes"
 import "@workspace/ui/globals.css"
 
 const COLOR_ICONS: Record<string, string> = {
-  "lighten-up": "sun",
-  dark: "moon",
+  fabrik: "moon",
+  illuzion: "moon",
+  laroc: "sun",
+  bootshaus: "moon",
+  berghain: "moon",
+  savaya: "moon",
+  pacha: "sun",
+  amnesia: "moon",
+  ushuaia: "sun",
 }
 
 const preview: Preview = {
@@ -49,7 +55,7 @@ const preview: Preview = {
       toolbar: {
         title: "Theme",
         icon: "circlehollow",
-        items: colorThemes.map((t) => ({
+        items: presets.map((t) => ({
           value: t.id,
           icon: COLOR_ICONS[t.id] ?? "circle",
           title: t.label,
@@ -59,16 +65,13 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    // Must be an id in the theme registry. It used to be "light", which was
-    // deleted with that theme: nothing matched, so no theme class was applied
-    // and every token was undefined -- stories rendered with no colours at all,
-    // and anything painted with var(--foreground) came out transparent.
-    theme: "lighten-up",
+    // Must be the id of a preset, or no theme class is applied and every token
+    // is undefined: stories render with no colours at all.
+    theme: "berghain",
   },
   decorators: [
     (Story, context) => (
       <ThemeProvider forcedTheme={context.globals.theme}>
-        <FontThemeProvider>
           {/* Fullscreen stories get no padding, so a story can reach the page
               edges -- a scoped overlay padded away from them isn't fullscreen. */}
           <div
@@ -80,7 +83,6 @@ const preview: Preview = {
           >
             <Story />
           </div>
-        </FontThemeProvider>
       </ThemeProvider>
     ),
   ],

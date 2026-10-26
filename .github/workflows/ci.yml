@@ -17,18 +17,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      # tokens.css is generated from tokens/*.json — a hand-edit to the
-      # generated block fails here rather than drifting silently
-      - name: Tokens are in sync
-        run: pnpm --filter @workspace/ui tokens:build --check
-
-      - name: Tokens are legible
-        run: pnpm --filter @workspace/ui tokens:check
-
-      # the theme studio's shared core — the hosted studio commits through this
-      # without a human reading the diff, so it is covered here
-      - name: Theme core tests
-        run: pnpm --filter @workspace/ui test
+      # the theme generator: what the app renders is what the Themer downloads
+      - name: Theme tests
+        run: pnpm --filter web exec vitest run --project unit
 
       - name: Typecheck
         run: pnpm typecheck

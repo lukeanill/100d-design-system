@@ -1,8 +1,7 @@
 "use client"
 
-import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
-import { AnimatePresence, motion } from "motion/react"
+import { motion } from "motion/react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@workspace/ui/lib/utils"
@@ -46,15 +45,12 @@ const buttonVariants = cva(
   }
 )
 
-type Ripple = { id: number; x: number; y: number; size: number }
-
 const MotionButtonPrimitive = motion.create(ButtonPrimitive)
 
 function Button({
   className,
   variant = "default",
   size = "default",
-  onClick,
   tapScale = 0.95,
   ...props
 }: Omit<
@@ -74,62 +70,14 @@ function Button({
   VariantProps<typeof buttonVariants> & {
     tapScale?: number
   }) {
-  const [ripples, setRipples] = React.useState<Ripple[]>([])
-  const rootRef = React.useRef<HTMLElement | null>(null)
-
-  const handleClick = React.useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      const el = rootRef.current
-      if (el) {
-        const rect = el.getBoundingClientRect()
-        const size = Math.max(rect.width, rect.height) * 1.6
-        const ripple: Ripple = {
-          id: Date.now() + Math.random(),
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top,
-          size,
-        }
-        setRipples((prev) => [...prev, ripple])
-        window.setTimeout(() => {
-          setRipples((prev) => prev.filter((r) => r.id !== ripple.id))
-        }, 550)
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ;(onClick as any)?.(event)
-    },
-    [onClick]
-  )
-
   return (
     <MotionButtonPrimitive
-      ref={rootRef as React.Ref<HTMLButtonElement>}
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
-      onClick={handleClick}
       whileTap={{ scale: tapScale }}
       {...props}
     >
       {props.children}
-      <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
-        <AnimatePresence>
-          {ripples.map((ripple) => (
-            <motion.span
-              key={ripple.id}
-              className="absolute rounded-full bg-current opacity-25"
-              style={{
-                left: ripple.x - ripple.size / 2,
-                top: ripple.y - ripple.size / 2,
-                width: ripple.size,
-                height: ripple.size,
-              }}
-              initial={{ scale: 0, opacity: 0.35 }}
-              animate={{ scale: 1, opacity: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            />
-          ))}
-        </AnimatePresence>
-      </span>
     </MotionButtonPrimitive>
   )
 }

@@ -1,19 +1,16 @@
 ## Wrapping and setup
 
-Every screen must be wrapped in `ThemeProvider` (from `@workspace/ui/components/theme-provider`), nested inside `FontThemeProvider` (`@workspace/ui/components/font-theme-provider`). `FontThemeProvider` reads the active color theme and sets `data-font-theme` on `<html>` — the font-family CSS variables are keyed off that attribute, not just the color theme, so **skipping it renders every component in the wrong typeface even though colors are correct**. Both must wrap the whole app, not per-component:
+Every screen must be wrapped in `ThemeProvider` (from `@workspace/ui/components/theme-provider`). It puts the active theme's class on `<html>`, and every colour, font, radius and shadow token follows from that class, so **skipping it renders components with no tokens at all**. It must wrap the whole app, not individual components:
 
 ```tsx
 import { ThemeProvider } from "@workspace/ui/components/theme-provider"
-import { FontThemeProvider } from "@workspace/ui/components/font-theme-provider"
 
-<ThemeProvider forcedTheme="light">
-  <FontThemeProvider>
-    <App />
-  </FontThemeProvider>
+<ThemeProvider forcedTheme="berghain">
+  <App />
 </ThemeProvider>
 ```
 
-This design system ships **11 named color themes** (each with its own font pairing), not just light/dark — `dark`, `electric-pulse`, `acid-forest`, `carbon-mint`, `arctic-aurora`, `strawberry-matcha`, `metallic-mist`, `bumblebee`, `light`, `solar-azul`, `night-violet`. Pass one as `forcedTheme` (or omit it to follow system + a theme toggle). See `@workspace/ui/lib/theme-registry` for the full list and font pairings.
+This design system ships **9 named themes** — `berghain` (the default), `fabrik`, `illuzion`, `laroc`, `bootshaus`, `savaya`, `pacha`, `amnesia`, `ushuaia` — each a complete look: colours, fonts, edges, shadows and surface. Pass one as `forcedTheme`, or omit it to get `berghain`. They are defined in `@workspace/ui/themes`. A theme someone made in the Themer is a single CSS file: import it after the design system's styles and pass its id as `forcedTheme`.
 
 ## The styling idiom
 

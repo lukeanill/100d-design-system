@@ -3,12 +3,10 @@ import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
-import { themeStudio } from "./theme-studio-plugin"
-import { themeSync } from "./theme-sync-plugin"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), themeStudio(), themeSync()],
+  plugins: [react(), tailwindcss()],
   // honour a PORT assigned by the harness so a second dev server can run
   server: { port: Number(process.env.PORT) || 5173 },
   resolve: {

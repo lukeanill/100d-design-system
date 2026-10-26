@@ -1,10 +1,17 @@
 'use client';
 
-import * as React from 'react';
 import { RotateCcw, ArrowUpRight } from 'lucide-react';
 import { motion, type Transition } from 'motion/react';
 
-const notifications = [
+export type NotificationItem = {
+  id: number;
+  title: string;
+  subtitle: string;
+  time: string;
+  count?: number;
+};
+
+const notifications: NotificationItem[] = [
   {
     id: 1,
     title: 'NPM Install Complete',
@@ -58,7 +65,7 @@ const viewAllTextVariants = {
   expanded: { opacity: 1, y: 0, pointerEvents: 'auto' },
 };
 
-function NotificationList() {
+function NotificationList({ items = notifications }: { items?: NotificationItem[] }) {
   return (
     <motion.div
       className="bg-muted p-3 rounded-lg w-xs space-y-3 shadow-md"
@@ -66,14 +73,14 @@ function NotificationList() {
       whileHover="expanded"
     >
       <div>
-        {notifications.map((notification, i) => (
+        {items.map((notification, i) => (
           <motion.div
             key={notification.id}
             className="bg-card rounded-xl px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-200 relative"
             variants={getCardVariants(i)}
             transition={transition}
             style={{
-              zIndex: notifications.length - i,
+              zIndex: items.length - i,
             }}
           >
             <div className="flex justify-between items-center">
@@ -96,7 +103,7 @@ function NotificationList() {
 
       <div className="flex items-center gap-2">
         <div className="size-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-medium">
-          {notifications.length}
+          {items.length}
         </div>
         <span className="grid">
           <motion.span

@@ -24,12 +24,14 @@ export interface DiscoveryCategory {
 export interface MorphingDiscoveryBarProps {
   categories: DiscoveryCategory[]
   defaultActive?: string
+  /** Called with the category's id when one is chosen. */
+  onChange?: (id: string) => void
   className?: string
 }
 
 const transition = { damping: 32, mass: 1, stiffness: 520, type: "spring" } as const
 
-export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories, defaultActive, className = "" }) => {
+export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories, defaultActive, onChange, className = "" }) => {
   const [isSearching, setIsSearching] = useState(false)
   const [activeTab, setActiveTab] = useState(defaultActive ?? categories[0]?.id)
   const [searchValue, setSearchValue] = useState("")
@@ -98,7 +100,10 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                       <motion.button
                         key={cat.id}
                         layout
-                        onClick={() => setActiveTab(cat.id)}
+                        onClick={() => {
+                          setActiveTab(cat.id)
+                          onChange?.(cat.id)
+                        }}
                         className={`relative z-0 flex h-full items-center gap-1.5 rounded-full px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors ${isActive ? "text-background" : "text-foreground/75"}`}
                       >
                         {isActive && (

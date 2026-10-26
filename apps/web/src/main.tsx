@@ -5,10 +5,9 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router"
 import "@workspace/ui/globals.css"
 import { History } from "./History.tsx"
 import { Tokens } from "./Tokens.tsx"
-import { ThemeStudio } from "./theme-studio"
 import { Showcase } from "./Showcase.tsx"
+import { Themer } from "./themer/Themer"
 import { ThemeProvider } from "@workspace/ui/components/theme-provider"
-import { FontThemeProvider } from "@workspace/ui/components/font-theme-provider"
 import { ThemePageTransition } from "@workspace/ui/components/transitions/theme-page-transition"
 
 /**
@@ -27,22 +26,35 @@ function AppRoutes() {
         <Route path="/" element={<Showcase />} />
         <Route path="/history" element={<History />} />
         <Route path="/tokens" element={<Tokens />} />
-        {/* Available in both: in dev it writes to your working copy, on the
-            deployed site it commits to the repo. Both are password-gated. */}
-        <Route path="/themes" element={<ThemeStudio />} />
+        <Route path="/themes" element={<Themer />} />
       </Routes>
     </ThemePageTransition>
   )
 }
 
+/**
+ * The homepage has no theme of its own: it is always the look the Figma draws,
+ * which is the design system's default tokens. A theme chosen on the homepage
+ * applies to the preview alone. Every other route keeps whatever theme the
+ * visitor has set.
+ */
+const HOME_LOOK = "berghain"
+
+function Themed({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation()
+  return (
+    <ThemeProvider forcedTheme={pathname === "/" || pathname === "/themes" ? HOME_LOOK : undefined}>
+      {children}
+    </ThemeProvider>
+  )
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider>
-      <FontThemeProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </FontThemeProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Themed>
+        <AppRoutes />
+      </Themed>
+    </BrowserRouter>
   </StrictMode>
 )

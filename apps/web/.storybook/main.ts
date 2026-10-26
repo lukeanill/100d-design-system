@@ -1,7 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite"
 
-import { themeSync } from "../theme-sync-plugin.ts"
-
 const config: StorybookConfig = {
   stories: ["../../../packages/ui/src/components/**/*.stories.tsx"],
   framework: {
@@ -16,8 +14,6 @@ const config: StorybookConfig = {
     if (process.env.STORYBOOK_BASE_PATH) {
       viteConfig.base = process.env.STORYBOOK_BASE_PATH
     }
-    // the live studio commits themes; pull them in while Storybook is running
-    viteConfig.plugins = [...(viteConfig.plugins ?? []), themeSync()]
     return viteConfig
   },
   managerHead: (head) => {

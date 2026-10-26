@@ -12,10 +12,10 @@ const TYPE_SCALE = [
 ] as const
 
 const BODY_STYLES = [
-  { className: "text-body-small", label: "Body Small", meta: "14px · Authentic Sans 60 · leading 160%" },
-  { className: "text-body", label: "Body", meta: "16px · Authentic Sans 90 · leading 160%" },
+  { className: "text-body-small", label: "Body Small", meta: "14px · body face · leading 160%" },
+  { className: "text-body", label: "Body", meta: "16px · body face · leading 160%" },
   { className: "text-body-serif", label: "Body Serif", meta: "17px · Louize Trial Italic · leading 160%" },
-  { className: "text-body-lg", label: "Body Large", meta: "20px · Authentic Sans 90 · leading 160% · tracking 1%" },
+  { className: "text-body-lg", label: "Body Large", meta: "20px · body face · leading 160% · tracking 1%" },
   { className: "text-body-lg-serif", label: "Body Large Serif", meta: "21px · Louize Trial Regular · leading 160% · tracking -1%" },
 ] as const
 

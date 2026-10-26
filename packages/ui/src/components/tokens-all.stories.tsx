@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import lightenUp from "../../tokens/lighten-up.json"
+import berghain from "../../tokens/berghain.json"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table"
 
 /**
@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
  * are read off the page, so switching theme in the toolbar changes them.
  */
 
-const TOKENS = (lightenUp as { tokens: Record<string, string> }).tokens
+const TOKENS = (berghain as { tokens: Record<string, string> }).tokens
 const NAMES = Object.keys(TOKENS)
 
 const isGradient = (name: string) => name.startsWith("gradient-")
@@ -41,7 +41,7 @@ function useThemeVersion() {
   const [version, setVersion] = React.useState(0)
   React.useEffect(() => {
     const observer = new MutationObserver(() => setVersion((v) => v + 1))
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-font-theme", "style"] })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style"] })
     return () => observer.disconnect()
   }, [])
   return version

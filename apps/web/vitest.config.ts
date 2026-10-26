@@ -15,6 +15,14 @@ export default defineConfig({
     projects: [
       {
         extends: true,
+        test: {
+          name: "unit",
+          environment: "node",
+          include: ["../../packages/ui/src/themes/**/*.test.ts", "src/themer/**/*.test.ts"],
+        },
+      },
+      {
+        extends: true,
         plugins: [
           storybookTest({ configDir: path.join(dirname, ".storybook") }),
         ],

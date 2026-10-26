@@ -1,10 +1,5 @@
 import * as React from "react"
-import { useTheme } from "next-themes"
 
-import { GradientBackground } from "./backgrounds/gradient-background"
-import { THEME_BACKGROUND_CONFIGS } from "./backgrounds/theme-background"
-import { ThemePageTransition } from "./transitions/theme-page-transition"
-import { colorThemes, type ThemeBackgroundId } from "@workspace/ui/lib/theme-registry"
 import { NAME, NAME_SIZE, OUTLINE, ROW, Sheet, SHEET, SheetLabel, sheetText } from "./tokens-sheet"
 
 /**
@@ -19,16 +14,6 @@ import { NAME, NAME_SIZE, OUTLINE, ROW, Sheet, SHEET, SheetLabel, sheetText } fr
 
 const SHADOWS = ["shadow-xs", "shadow-sm", "shadow-md", "shadow-lg", "shadow-xl", "shadow-2xl"] as const
 
-const BACKGROUND_LABELS: Record<ThemeBackgroundId, string> = {
-  smoke: "Smoke",
-  holo: "Holo",
-  aurora: "Aurora",
-  eighties: "80",
-  ascii: "ASCII",
-}
-
-const capitalize = (value: string) => value[0].toUpperCase() + value.slice(1)
-
 /** Read a custom property off the root, again whenever the theme or its classes change. */
 function useRootProperty(name: string) {
   const [value, setValue] = React.useState("")
@@ -36,7 +21,7 @@ function useRootProperty(name: string) {
     const read = () => setValue(getComputedStyle(document.documentElement).getPropertyValue(name).trim())
     read()
     const observer = new MutationObserver(read)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-font-theme", "style"] })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style"] })
     return () => observer.disconnect()
   }, [name])
   return value
@@ -77,56 +62,11 @@ const CARD_RADIUS = "min(var(--radius), 24px)"
 /** Taller than a colour swatch, about 2:1, so an edge or a shadow has room to read. */
 const swatchBase = { width: SHEET.column, maxWidth: "50%", aspectRatio: "2 / 1", background: "var(--muted)" }
 
-function useActiveTheme() {
-  const { resolvedTheme, forcedTheme } = useTheme()
-  return colorThemes.find((t) => t.id === (forcedTheme ?? resolvedTheme))
-}
-
-function Motion({ transition }: { transition?: string }) {
-  // Playing is a route change: the key moves, and the page under it swaps while covered
-  const [key, setKey] = React.useState(0)
-  return (
-    <div style={{ ...ROW, alignItems: "flex-end" }}>
-      {/* renders nothing of its own; a new key is a route change, so it plays */}
-      <ThemePageTransition transitionKey={String(key)}>
-        <span hidden />
-      </ThemePageTransition>
-      <span style={{ ...NAME, display: "flex", flexDirection: "column" }}>
-        <span>{transition ? capitalize(transition) : "None"}</span>
-        <span>Page Transitions</span>
-      </span>
-      <button
-        type="button"
-        disabled={!transition}
-        onClick={() => setKey((k) => k + 1)}
-        style={{
-          ...sheetText,
-          // one line of the name tall, sitting on the line it shares ("Page Transitions")
-          fontSize: `calc(${NAME_SIZE} * 0.5)`,
-          minWidth: 160,
-          height: `calc(${NAME_SIZE} * 1.2)`,
-          padding: "0 32px",
-          background: "var(--foreground)",
-          color: "var(--background)",
-          border: 0,
-          borderRadius: "min(var(--radius), 8px)",
-          cursor: transition ? "pointer" : "default",
-          opacity: transition ? 1 : 0.4,
-        }}
-      >
-        Play
-      </button>
-    </div>
-  )
-}
-
 export default { title: "Tokens/Effects", parameters: { layout: "fullscreen" } }
 
 export const Effects = () => {
-  const theme = useActiveTheme()
   const radius = useRootProperty("--radius")
   const shadow = useRootProperty("--shadow-2xl")
-  const background = theme?.background
 
   return (
     <Sheet gap={SHEET.groups}>
@@ -170,39 +110,6 @@ export const Effects = () => {
                 {token.replace("shadow-", "")}
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <SheetLabel>Motion</SheetLabel>
-        <div style={{ marginTop: 8 }}>
-          <Motion transition={theme?.pageTransition} />
-        </div>
-      </section>
-
-      <section>
-        <SheetLabel>Animated Background</SheetLabel>
-        <div style={{ marginTop: 8, padding: "24px 0", borderBottom: SHEET.rule }}>
-          <div
-            style={{
-              position: "relative",
-              isolation: "isolate",
-              overflow: "hidden",
-              height: 360,
-              borderRadius: CARD_RADIUS,
-              background: "var(--muted)",
-              display: "flex",
-              alignItems: "flex-end",
-              padding: 24,
-            }}
-          >
-            {background && (
-              <div style={{ position: "absolute", inset: 0, zIndex: -1 }}>
-                <GradientBackground config={THEME_BACKGROUND_CONFIGS[background]} />
-              </div>
-            )}
-            <span style={{ ...sheetText, ...NAME }}>{background ? BACKGROUND_LABELS[background] : "None"}</span>
           </div>
         </div>
       </section>

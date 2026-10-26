@@ -1,16 +1,14 @@
 "use client"
 
 import * as React from "react"
-import { useTheme } from "next-themes"
 
-import { colorThemes, type PageTransitionId } from "@workspace/ui/lib/theme-registry"
 import { BlindsTransition } from "@workspace/ui/components/transitions/blinds-transition"
 import { CurtainTransition } from "@workspace/ui/components/transitions/curtain-transition"
 import { FadeTransition } from "@workspace/ui/components/transitions/fade-transition"
 import { IrisTransition } from "@workspace/ui/components/transitions/iris-transition"
 
 /**
- * The page transition a theme brings with it.
+ * A page transition, chosen by id.
  *
  * All four take the same `transitionKey` + `children`, so choosing one is a
  * lookup. A theme that chose none renders its children unwrapped rather than
@@ -20,6 +18,8 @@ import { IrisTransition } from "@workspace/ui/components/transitions/iris-transi
  * Step Curtain is deliberately absent — it is the scoped sibling for moving
  * between steps inside a page, not a page transition.
  */
+export type PageTransitionId = "fade" | "blinds" | "curtain" | "iris"
+
 const TRANSITIONS = {
   fade: FadeTransition,
   blinds: BlindsTransition,
@@ -56,13 +56,11 @@ export function ThemePageTransition({
   ...props
 }: Omit<TransitionProps, "children"> & {
   children: React.ReactNode
-  /** Overrides the active theme's choice — for stories and previews. */
+  /** The transition to play. None renders the children unwrapped. */
   transition?: PageTransitionId | "none"
 }) {
-  const { resolvedTheme, forcedTheme } = useTheme()
   const reducedMotion = usePrefersReducedMotion()
-  const themed = colorThemes.find((t) => t.id === (forcedTheme ?? resolvedTheme))?.pageTransition
-  const chosen = transition ?? themed
+  const chosen = transition
 
   // Asked for less motion, so the page simply changes.
   if (reducedMotion || !chosen || chosen === "none") return <>{children}</>

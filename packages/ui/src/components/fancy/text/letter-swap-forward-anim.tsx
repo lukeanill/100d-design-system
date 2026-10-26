@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { AnimationOptions, motion, stagger, useAnimate } from "motion/react"
+import { motion, stagger, useAnimate, type AnimationOptions } from "motion/react"
 
 interface TextProps {
   label: string

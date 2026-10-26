@@ -157,7 +157,7 @@ export function startGlassRefraction() {
   mutations.observe(document.body, { childList: true, subtree: true })
   // a theme is a class on the root, or scoped to a subtree by one; the style
   // attribute is left out, so this module's own writes do not call it again
-  const themeAttributes = ["class", "data-theme", "data-font-theme"]
+  const themeAttributes = ["class", "data-theme"]
   mutations.observe(document.documentElement, { attributes: true, attributeFilter: themeAttributes })
   mutations.observe(document.body, { attributes: true, subtree: true, attributeFilter: themeAttributes })
 

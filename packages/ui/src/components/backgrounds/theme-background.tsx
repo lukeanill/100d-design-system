@@ -1,8 +1,5 @@
 "use client"
 
-import { useTheme } from "next-themes"
-
-import { colorThemes, type ThemeBackgroundId } from "@workspace/ui/lib/theme-registry"
 import { GradientBackground } from "@workspace/ui/components/backgrounds/gradient-background"
 import type { BalsaBackgroundConfig } from "@workspace/ui/components/backgrounds/gradient-background/gradient-background"
 import { animatedBackground80 } from "@workspace/ui/components/backgrounds/gradients/animated-background-80"
@@ -11,7 +8,9 @@ import { animatedBackgroundAurora } from "@workspace/ui/components/backgrounds/g
 import { animatedBackgroundHolo } from "@workspace/ui/components/backgrounds/gradients/animated-background-holo"
 import { animatedBackgroundSmoke } from "@workspace/ui/components/backgrounds/gradients/animated-background-smoke"
 
-/** The backgrounds a theme can choose, by the id stored in the registry. */
+export type ThemeBackgroundId = "smoke" | "holo" | "aurora" | "eighties" | "ascii"
+
+/** The animated backgrounds, by id. */
 export const THEME_BACKGROUND_CONFIGS: Record<ThemeBackgroundId, BalsaBackgroundConfig> = {
   smoke: animatedBackgroundSmoke,
   holo: animatedBackgroundHolo,
@@ -21,17 +20,15 @@ export const THEME_BACKGROUND_CONFIGS: Record<ThemeBackgroundId, BalsaBackground
 }
 
 /**
- * The animated background the active theme brings, behind the whole page.
+ * An animated background behind the whole page.
  *
  * Fixed to the viewport so it stays as the page scrolls, and at z -1 so it
  * paints over the page colour but under everything on it — which means the
- * page needs `relative isolate` for the layering to be its own. A theme that
- * chose none renders nothing at all.
+ * page needs `relative isolate` for the layering to be its own. No id renders
+ * nothing at all.
  */
-export function ThemeBackground({ className }: { className?: string }) {
-  const { resolvedTheme, forcedTheme } = useTheme()
-  const id = colorThemes.find((t) => t.id === (forcedTheme ?? resolvedTheme))?.background
-  const config = id ? THEME_BACKGROUND_CONFIGS[id] : undefined
+export function ThemeBackground({ background, className }: { background?: ThemeBackgroundId; className?: string }) {
+  const config = background ? THEME_BACKGROUND_CONFIGS[background] : undefined
   if (!config) return null
 
   return (

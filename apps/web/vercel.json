@@ -7,10 +7,5 @@
       "source": "/:path((?!api/|storybook).*)",
       "destination": "/index.html"
     }
-  ],
-  "functions": {
-    "api/pull-theme.mjs": {
-      "maxDuration": 60
-    }
-  }
+  ]
 }

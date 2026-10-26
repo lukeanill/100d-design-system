@@ -1,0 +1,129 @@
+{
+  "name": "fabrik",
+  "label": "Fabrik",
+  "order": 1,
+  "selector": ".fabrik",
+  "scheme": "dark",
+  "seeds": {
+    "background": "#3a3c83",
+    "foreground": "#fbfbfc",
+    "primary": "#2e3067",
+    "secondary": "#4d4fad"
+  },
+  "fonts": {
+    "primary": "Folio Std",
+    "emphasis": "EB Garamond",
+    "body": "Inter"
+  },
+  "edges": "square",
+  "overrides": {
+    "primary-foreground": "#ff8081",
+    "secondary-foreground": "#80a8ff",
+    "destructive": "#ff6467",
+    "chart-1": "#1447e6",
+    "chart-2": "#00bc7d",
+    "chart-3": "#fe9a00",
+    "chart-4": "#ad46ff",
+    "chart-5": "#ff2056"
+  },
+  "fontSource": "google",
+  "tokens": {
+    "font-body-weight": "300",
+    "background": "oklch(0.395 0.117 278.39)",
+    "foreground": "oklch(0.988 0.001 286.38)",
+    "card": "var(--background)",
+    "card-foreground": "var(--foreground)",
+    "popover": "var(--background)",
+    "popover-foreground": "var(--foreground)",
+    "primary": "oklch(0.339 0.094 278.52)",
+    "primary-foreground": "oklch(0.745 0.155 21.03)",
+    "secondary": "oklch(0.478 0.147 278.36)",
+    "secondary-foreground": "oklch(0.739 0.134 264.58)",
+    "muted": "var(--secondary)",
+    "muted-foreground": "oklch(0.988 0.001 286.38 / 65%)",
+    "accent": "var(--secondary)",
+    "accent-foreground": "var(--secondary-foreground)",
+    "destructive": "oklch(0.702 0.189 22.23)",
+    "affirmative": "oklch(0.847 0.117 143.45)",
+    "border": "oklch(0.988 0.001 286.38 / 15%)",
+    "input": "oklch(0.988 0.001 286.38 / 20%)",
+    "ring": "oklch(0.988 0.001 286.38 / 70%)",
+    "affirmative-foreground": "oklch(0.145 0.000 0.00)",
+    "chart-1": "oklch(0.488 0.243 264.40)",
+    "chart-2": "oklch(0.702 0.158 160.44)",
+    "chart-3": "oklch(0.772 0.173 65.37)",
+    "chart-4": "oklch(0.622 0.259 305.31)",
+    "chart-5": "oklch(0.643 0.245 16.50)",
+    "gradient-downlight": "linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%)",
+    "gradient-rise": "linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)",
+    "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
+    "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
+    "radius": "0",
+    "radius-container": "0",
+    "sidebar": "var(--background)",
+    "sidebar-foreground": "var(--foreground)",
+    "sidebar-primary": "var(--primary)",
+    "sidebar-primary-foreground": "var(--primary-foreground)",
+    "sidebar-accent": "var(--accent)",
+    "sidebar-accent-foreground": "var(--accent-foreground)",
+    "sidebar-border": "var(--border)",
+    "sidebar-ring": "var(--ring)",
+    "shadow-2xs": "0px 2px 4px rgb(68 68 68 / 6%)",
+    "shadow-xs": "0px 2px 4px rgb(68 68 68 / 6%)",
+    "shadow-sm": "0px 4px 8px rgb(68 68 68 / 6%)",
+    "shadow": "0px 4px 8px rgb(68 68 68 / 6%)",
+    "shadow-md": "0px 8px 16px rgb(68 68 68 / 6%)",
+    "shadow-lg": "0px 16px 24px rgb(68 68 68 / 8%)",
+    "shadow-xl": "0px 16px 24px rgb(68 68 68 / 8%)",
+    "shadow-2xl": "0px 16px 24px rgb(68 68 68 / 8%)"
+  },
+  "typography": {
+    "headings": {
+      "h1": {
+        "font": "primary",
+        "weight": 700
+      },
+      "h2": {
+        "font": "primary",
+        "weight": 700
+      },
+      "h3": {
+        "font": "primary",
+        "weight": 700
+      },
+      "h4": {
+        "font": "primary",
+        "weight": 700
+      },
+      "h5": {
+        "font": "primary",
+        "weight": 700
+      },
+      "h6": {
+        "font": "primary",
+        "weight": 700
+      }
+    }
+  },
+  "figma": {
+    "color": "dark",
+    "spacing": "lg",
+    "motion": "expressive",
+    "material": "solid",
+    "elevation": "subtle",
+    "fonts": {
+      "display": {
+        "family": "Folio Std",
+        "weight": 700
+      },
+      "sans": {
+        "family": "Inter",
+        "weight": 300
+      },
+      "serif": {
+        "family": "EB Garamond",
+        "weight": 400
+      }
+    }
+  }
+}

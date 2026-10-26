@@ -1,4 +1,3 @@
-import * as React from 'react';
 
 import { glass } from "@workspace/ui/lib/glass";
 

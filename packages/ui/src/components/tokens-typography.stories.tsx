@@ -24,7 +24,7 @@ function useResolvedFontNames() {
     }
     update()
     const observer = new MutationObserver(update)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-font-theme"] })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
     return () => observer.disconnect()
   }, [])
 

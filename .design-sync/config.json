@@ -109,10 +109,7 @@
   "provider": {
     "component": "ThemeProvider",
     "props": {
-      "forcedTheme": "light"
-    },
-    "inner": {
-      "component": "FontThemeProvider"
+      "forcedTheme": "berghain"
     }
   },
   "overrides": {

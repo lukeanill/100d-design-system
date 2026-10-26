@@ -269,16 +269,13 @@ pages (`tokens-*.stories.tsx`), not components — `titleMap: null` for each.
 
 ## `cfg.provider`
 
-`ThemeProvider` (from `next-themes`, sets the color theme class) wraps
-`FontThemeProvider` (reads the active theme via `useTheme()`, sets
-`data-font-theme` on `<html>` — this attribute selects which font-family
-CSS variables apply). **Both are required for correct rendering** — without
-`FontThemeProvider`, every preview renders with the wrong/default font
-regardless of CSS being present, since font selection is entirely
-attribute-driven, not just token-driven.
+`ThemeProvider` alone is enough: it puts the active preset's generated CSS
+(`themeToCss()`) on the page and sets the theme class on `<html>`, fonts
+included. `forcedTheme` pins the preset; Berghain is the default.
+(`next-themes` and `FontThemeProvider` are gone.)
 
 ```json
-{"component": "ThemeProvider", "props": {"forcedTheme": "light"}, "inner": {"component": "FontThemeProvider"}}
+{"component": "ThemeProvider", "props": {"forcedTheme": "berghain"}}
 ```
 
 The real `.storybook/preview.tsx` decorator ALSO wraps stories in

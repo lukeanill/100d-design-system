@@ -1,0 +1,135 @@
+{
+  "name": "bootshaus",
+  "label": "Bootshaus",
+  "order": 4,
+  "selector": ".bootshaus",
+  "scheme": "dark",
+  "seeds": {
+    "background": "#214c56",
+    "foreground": "#ffffff",
+    "primary": "#1e363c",
+    "secondary": "#ffc937"
+  },
+  "fonts": {
+    "primary": "ITC Garamond Std",
+    "emphasis": "Lora",
+    "body": "Inter"
+  },
+  "edges": "strong",
+  "overrides": {
+    "primary-foreground": "#ffc937",
+    "secondary-foreground": "#1e363c",
+    "destructive": "#ff6467",
+    "chart-1": "#1447e6",
+    "chart-2": "#00bc7d",
+    "chart-3": "#fe9a00",
+    "chart-4": "#ad46ff",
+    "chart-5": "#ff2056"
+  },
+  "fontSource": "google",
+  "tokens": {
+    "font-body-weight": "500",
+    "background": "oklch(0.390 0.050 215.11)",
+    "foreground": "oklch(1.000 0.000 0.00)",
+    "card": "var(--background)",
+    "card-foreground": "var(--foreground)",
+    "popover": "var(--background)",
+    "popover-foreground": "var(--foreground)",
+    "primary": "oklch(0.316 0.032 215.45)",
+    "primary-foreground": "oklch(0.861 0.162 86.83)",
+    "secondary": "oklch(0.861 0.162 86.83)",
+    "secondary-foreground": "oklch(0.316 0.032 215.45)",
+    "muted": "var(--secondary)",
+    "muted-foreground": "oklch(1.000 0.000 0.00 / 65%)",
+    "accent": "var(--secondary)",
+    "accent-foreground": "var(--secondary-foreground)",
+    "destructive": "oklch(0.702 0.189 22.23)",
+    "affirmative": "oklch(0.847 0.117 143.45)",
+    "border": "oklch(1.000 0.000 0.00 / 15%)",
+    "input": "oklch(1.000 0.000 0.00 / 20%)",
+    "ring": "oklch(1.000 0.000 0.00 / 70%)",
+    "affirmative-foreground": "oklch(0.145 0.000 0.00)",
+    "chart-1": "oklch(0.488 0.243 264.40)",
+    "chart-2": "oklch(0.702 0.158 160.44)",
+    "chart-3": "oklch(0.772 0.173 65.37)",
+    "chart-4": "oklch(0.622 0.259 305.31)",
+    "chart-5": "oklch(0.643 0.245 16.50)",
+    "gradient-downlight": "linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%)",
+    "gradient-rise": "linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)",
+    "gradient-set": "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)",
+    "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
+    "radius": "1rem",
+    "radius-container": "1.5rem",
+    "sidebar": "var(--background)",
+    "sidebar-foreground": "var(--foreground)",
+    "sidebar-primary": "var(--primary)",
+    "sidebar-primary-foreground": "var(--primary-foreground)",
+    "sidebar-accent": "var(--accent)",
+    "sidebar-accent-foreground": "var(--accent-foreground)",
+    "sidebar-border": "var(--border)",
+    "sidebar-ring": "var(--ring)",
+    "shadow-2xs": "5px 5px 10px rgb(34 34 34 / 8%)",
+    "shadow-xs": "5px 5px 10px rgb(34 34 34 / 8%)",
+    "shadow-sm": "10px 10px 20px rgb(34 34 34 / 12%)",
+    "shadow": "10px 10px 20px rgb(34 34 34 / 12%)",
+    "shadow-md": "20px 20px 40px rgb(34 34 34 / 16%)",
+    "shadow-lg": "30px 30px 60px rgb(34 34 34 / 24%)",
+    "shadow-xl": "30px 30px 60px rgb(34 34 34 / 24%)",
+    "shadow-2xl": "30px 30px 60px rgb(34 34 34 / 24%)"
+  },
+  "glass": {
+    "style": "glass",
+    "weight": "heavy",
+    "tone": "dark",
+    "applications": []
+  },
+  "typography": {
+    "headings": {
+      "h1": {
+        "font": "primary",
+        "weight": 800
+      },
+      "h2": {
+        "font": "primary",
+        "weight": 800
+      },
+      "h3": {
+        "font": "primary",
+        "weight": 800
+      },
+      "h4": {
+        "font": "primary",
+        "weight": 800
+      },
+      "h5": {
+        "font": "primary",
+        "weight": 800
+      },
+      "h6": {
+        "font": "primary",
+        "weight": 800
+      }
+    }
+  },
+  "figma": {
+    "color": "dark",
+    "spacing": "md",
+    "motion": "smooth",
+    "material": "glass",
+    "elevation": "strong",
+    "fonts": {
+      "display": {
+        "family": "ITC Garamond Std",
+        "weight": 800
+      },
+      "sans": {
+        "family": "Inter",
+        "weight": 500
+      },
+      "serif": {
+        "family": "Lora",
+        "weight": 500
+      }
+    }
+  }
+}

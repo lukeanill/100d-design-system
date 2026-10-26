@@ -5,7 +5,9 @@ import { motion, type Transition } from 'motion/react';
 import { Label } from '@workspace/ui/components/label';
 import { Checkbox } from '@workspace/ui/components/animate-ui/components/base/checkbox';
 
-const checkboxItems = [
+export type TodoItem = { id: number; label: string; defaultChecked?: boolean };
+
+const defaultItems: TodoItem[] = [
   {
     id: 1,
     label: 'Code in Assembly 💾',
@@ -36,7 +38,7 @@ const getPathTransition = (isChecked: boolean): Transition => ({
   },
 });
 
-function PlayfulTodolist() {
+function PlayfulTodolist({ items: checkboxItems = defaultItems }: { items?: TodoItem[] }) {
   const [checked, setChecked] = React.useState(
     checkboxItems.map((i) => !!i.defaultChecked),
   );

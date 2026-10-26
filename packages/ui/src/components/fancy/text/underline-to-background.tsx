@@ -1,5 +1,5 @@
-import { ElementType, useEffect, useMemo, useRef } from "react"
-import { motion, ValueAnimationTransition } from "motion/react"
+import { useEffect, useMemo, useRef, type ElementType } from "react"
+import { motion, type ValueAnimationTransition } from "motion/react"
 
 import { cn } from "@workspace/ui/lib/utils"
 

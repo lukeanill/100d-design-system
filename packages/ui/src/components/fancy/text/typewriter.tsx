@@ -1,5 +1,5 @@
-import { ElementType, useEffect, useState } from "react"
-import { motion, Variants } from "motion/react"
+import { useEffect, useState, type ElementType } from "react"
+import { motion, type Variants } from "motion/react"
 
 import { cn } from "@workspace/ui/lib/utils"
 

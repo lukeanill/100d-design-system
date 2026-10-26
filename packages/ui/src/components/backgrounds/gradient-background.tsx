@@ -94,8 +94,8 @@ function readThemeColors(element: Element | null): string {
 
 /**
  * Re-reads the theme colours whenever something that could change them does:
- * a theme class or inline tokens on the element or any ancestor (next-themes
- * sets a class on <html>; the theme studio paints tokens on a wrapper), or the
+ * a theme class or inline tokens on the element or any ancestor (ThemeProvider
+ * sets a class on <html>; the Themer paints tokens on a wrapper), or the
  * system colour scheme.
  */
 function useThemeColors(ref: React.RefObject<HTMLElement | null>, enabled: boolean) {
