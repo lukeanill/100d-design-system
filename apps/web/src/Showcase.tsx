@@ -15,6 +15,9 @@ const STORYBOOK_URL = import.meta.env.DEV ? "http://localhost:6006" : "/storyboo
 const GITHUB_URL = "https://github.com/lukeanill/100d-design-system"
 const MONO = "font-[family-name:Geist_Mono,ui-monospace,monospace] font-light"
 
+// the tiles' rim, softer than the system default: they sit on a dark page, where a white rim reads much stronger
+const TILE_EDGE = 0.35
+
 const PAD = "px-[clamp(20px,9.375vw,120px)]"
 
 /** A section: 1280 wide, the 1040 column held by 120 of padding either side. */
@@ -94,11 +97,11 @@ function LinkTile({
   showArrow?: boolean
 }) {
   const className =
-    "group relative flex h-[380px] w-full max-w-[320px] flex-col justify-end overflow-clip rounded-[16px] border border-white/15 p-8 text-left isolate transition-colors duration-300 hover:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 sm:aspect-[320/380] sm:h-auto sm:min-w-0 sm:flex-1 sm:p-4 md:p-6 lg:p-10 motion-reduce:transition-none"
+    "group relative flex h-[380px] w-full max-w-[320px] flex-col justify-end overflow-clip rounded-[16px] p-8 text-left isolate transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 sm:aspect-[320/380] sm:h-auto sm:min-w-0 sm:flex-1 sm:p-4 md:p-6 lg:p-10 motion-reduce:transition-none"
   const content = (
     <>
       {/* the Glass sheet's Soft weight, in the tile's own 16px corner */}
-      <GlassLayer weight="soft" radius={16} />
+      <GlassLayer weight="soft" radius={16} edge={TILE_EDGE} />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-white/[0.02]">
         <img
           alt=""

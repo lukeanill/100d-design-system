@@ -15,6 +15,9 @@ import { buildMaps, supportsSvgBackdrop } from "@workspace/ui/lib/refraction"
  * plain backdrop blur.
  */
 
+/** How strongly every glass catches the light at its rim, unless a surface asks otherwise: 0 is none, 1 is the Figma Glass sheet. */
+export const GLASS_EDGE = 0.6
+
 export type LiquidGlassProps = React.ComponentProps<"div"> & {
   /** Corner radius in px. */
   radius?: number
@@ -30,6 +33,8 @@ export type LiquidGlassProps = React.ComponentProps<"div"> & {
   scaleRatio?: number
   specularOpacity?: number
   specularSaturation?: number
+  /** How strongly the rim catches the light, from 0 (no rim) to 1 (the Figma Glass sheet); GLASS_EDGE by default. Scales the specular highlight and the inner glow together. */
+  edge?: number
   /** Any CSS background: a colour or a gradient. */
   tint?: string
   /** Backdrop blur used where SVG backdrop filters are unavailable. */
@@ -45,6 +50,7 @@ export function LiquidGlass({
   scaleRatio = 1,
   specularOpacity = 0.5,
   specularSaturation = 4,
+  edge = GLASS_EDGE,
   tint,
   fallbackBlur = 12,
   className,
@@ -100,7 +106,7 @@ export function LiquidGlass({
             <feImage href={maps.specular} x="0" y="0" width={w} height={h} result="spec" />
             <feComposite in="displacedSat" in2="spec" operator="in" result="specMasked" />
             <feComponentTransfer in="spec" result="specFaded">
-              <feFuncA type="linear" slope={specularOpacity} />
+              <feFuncA type="linear" slope={specularOpacity * edge} />
             </feComponentTransfer>
             <feBlend in="specMasked" in2="displaced" mode="normal" result="withSat" />
             <feBlend in="specFaded" in2="withSat" mode="normal" />
@@ -126,7 +132,7 @@ export function LiquidGlass({
           zIndex: 1,
           borderRadius: "inherit",
           pointerEvents: "none",
-          boxShadow: "inset 0 0 20px -5px rgba(255, 255, 255, 0.45)",
+          boxShadow: `inset 0 0 20px -5px rgba(255, 255, 255, ${0.45 * edge})`,
           background: tint,
         }}
       />
@@ -177,16 +183,19 @@ export function GlassLayer({
   tone,
   tint,
   radius = 16,
+  edge,
 }: {
   weight: GlassWeight
   tone?: GlassTone
   tint?: string
   radius?: number
+  edge?: number
 }) {
   return (
     <LiquidGlass
       aria-hidden="true"
       radius={radius}
+      edge={edge}
       {...glassProps(weight, tone, tint)}
       style={{ position: "absolute", inset: 0, pointerEvents: "none", boxShadow: "none" }}
     />
