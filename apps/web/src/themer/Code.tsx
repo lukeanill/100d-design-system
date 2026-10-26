@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 
+import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { ActionButton, BackButton, Header, HomeButton, Page, PageTitle } from "./Chrome"
@@ -48,25 +49,28 @@ function tokenize(code: string): Piece[][] {
 export function CodePanel({ code, numbered }: { code: string; numbered?: boolean }) {
   const lines = useMemo(() => tokenize(code), [code])
   return (
-    <div
-      className="overflow-auto rounded-2xl border border-white/15 bg-[#1b1b1b]/90 px-10 py-12 backdrop-blur-xl max-sm:px-4 max-sm:py-6"
-      style={{ maxHeight: "min(780px, 75vh)" }}
-    >
-      <pre className="font-mono text-[13px] leading-[23px] text-white" tabIndex={0} aria-label="Theme code">
-        {lines.map((pieces, i) => (
-          <div key={i} className="flex">
-            {numbered && <span aria-hidden className="w-24 shrink-0 select-none text-white/90 max-sm:w-10">{i + 1}</span>}
-            <span className="whitespace-pre">
-              {pieces.map((p, j) => (
-                <span key={j} style={{ color: COLORS[p.kind] }}>
-                  {p.text}
-                </span>
-              ))}
-              {pieces.length === 0 && " "}
-            </span>
-          </div>
-        ))}
-      </pre>
+    <div className="relative isolate rounded-2xl border border-white/15">
+      <GlassLayer weight="medium" tint="rgba(27, 27, 27, 0.9)" radius={16} />
+      <div
+        className="relative overflow-auto rounded-2xl px-10 py-12 max-sm:px-4 max-sm:py-6"
+        style={{ maxHeight: "min(780px, 75vh)" }}
+      >
+        <pre className="font-mono text-[13px] leading-[23px] text-white" tabIndex={0} aria-label="Theme code">
+          {lines.map((pieces, i) => (
+            <div key={i} className="flex">
+              {numbered && <span aria-hidden className="w-24 shrink-0 select-none text-white/90 max-sm:w-10">{i + 1}</span>}
+              <span className="whitespace-pre">
+                {pieces.map((p, j) => (
+                  <span key={j} style={{ color: COLORS[p.kind] }}>
+                    {p.text}
+                  </span>
+                ))}
+                {pieces.length === 0 && " "}
+              </span>
+            </div>
+          ))}
+        </pre>
+      </div>
     </div>
   )
 }

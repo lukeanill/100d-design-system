@@ -1,4 +1,7 @@
-import type { CSSProperties, ReactNode } from "react"
+import { useRef, useState, type CSSProperties, type ReactNode } from "react"
+import { Link } from "react-router"
+import { Popover, PopoverPanel, PopoverTrigger } from "@workspace/ui/components/animate-ui/components/base/popover"
+import { GlassLayer, LiquidGlass, glassProps } from "@workspace/ui/components/liquid-glass"
 
 /* The homepage, built to the Figma "HOME" frame (Themes file, node 94:3232).
  * Sizes, gaps and colours are the frame's own values, not theme tokens. */
@@ -6,6 +9,11 @@ import type { CSSProperties, ReactNode } from "react"
 const MIGRA = "font-[family-name:Migra]"
 // Inter Light stands in for the Figma's "Test Söhne"; Söhne sets about 2.5% narrower, so the tracking is pulled in to keep the same line breaks
 const BODY = "font-[family-name:Inter] font-light tracking-[-0.025em]"
+
+// Storybook is built into the site at /storybook/; in dev it is its own server
+const STORYBOOK_URL = import.meta.env.DEV ? "http://localhost:6006" : "/storybook/"
+const GITHUB_URL = "https://github.com/lukeanill/100d-design-system"
+const MONO = "font-[family-name:Geist_Mono,ui-monospace,monospace] font-light"
 
 const PAD = "px-[clamp(20px,9.375vw,120px)]"
 
@@ -65,9 +73,32 @@ function Arrow() {
  * outline drops away, and the link grows from 16px to 20px with its arrow from
  * 16px to 22px (the Figma's hover frame).
  */
-function LinkTile({ image, title, label }: { image: string; title: ReactNode; label: string }) {
-  return (
-    <div className="group relative flex h-[380px] w-full max-w-[320px] flex-col justify-end overflow-clip rounded-[16px] border border-white/15 p-8 backdrop-blur-[12px] transition-colors duration-300 hover:border-transparent sm:aspect-[320/380] sm:h-auto sm:min-w-0 sm:flex-1 sm:p-4 md:p-6 lg:p-10 motion-reduce:transition-none">
+function LinkTile({
+  image,
+  title,
+  label,
+  to,
+  href,
+  popoverTrigger,
+  showArrow = true,
+}: {
+  image: string
+  title: ReactNode
+  label: string
+  /** an in-app route */
+  to?: string
+  /** a plain link, for another app on the same site */
+  href?: string
+  /** makes the tile the trigger of the surrounding <Popover> */
+  popoverTrigger?: boolean
+  showArrow?: boolean
+}) {
+  const className =
+    "group relative flex h-[380px] w-full max-w-[320px] flex-col justify-end overflow-clip rounded-[16px] border border-white/15 p-8 text-left isolate transition-colors duration-300 hover:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 sm:aspect-[320/380] sm:h-auto sm:min-w-0 sm:flex-1 sm:p-4 md:p-6 lg:p-10 motion-reduce:transition-none"
+  const content = (
+    <>
+      {/* the Glass sheet's Soft weight, in the tile's own 16px corner */}
+      <GlassLayer weight="soft" radius={16} />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-white/[0.02]">
         <img
           alt=""
@@ -80,15 +111,79 @@ function LinkTile({ image, title, label }: { image: string; title: ReactNode; la
         className="pointer-events-none absolute inset-0 rounded-[12px] bg-[rgba(30,30,30,0.08)] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 motion-reduce:transition-none"
       />
       <div className="relative flex w-full flex-col items-start justify-end gap-4 transition-[gap] duration-300 ease-out group-hover:gap-6 motion-reduce:transition-none">
-        <p className={`${MIGRA} w-full text-[30px] leading-[1.14] font-extralight sm:text-[clamp(18px,2.8125vw,36px)]`}>{title}</p>
+        <p className={`${MIGRA} w-full [overflow-wrap:anywhere] text-[30px] leading-[1.14] font-extralight sm:text-[clamp(18px,2.8125vw,36px)]`}>{title}</p>
         <div className="flex items-center gap-2">
           <p className={`${BODY} text-[16px] leading-[1.42] whitespace-nowrap transition-[font-size] sm:text-[clamp(12px,1.25vw,16px)] duration-300 ease-out group-hover:text-[20px] motion-reduce:transition-none`}>
             {label}
           </p>
-          <Arrow />
+          {showArrow && <Arrow />}
         </div>
       </div>
+    </>
+  )
+  if (to)
+    return (
+      <Link to={to} className={className}>
+        {content}
+      </Link>
+    )
+  if (href)
+    return (
+      <a href={href} className={className}>
+        {content}
+      </a>
+    )
+  return (
+    <PopoverTrigger className={`${className} cursor-pointer`} data-popover-trigger={popoverTrigger || undefined}>
+      {content}
+    </PopoverTrigger>
+  )
+}
+
+/** One command in the install panel: Soft dark glass, with the text in the chart green. */
+function CodeBox({ children }: { children: ReactNode }) {
+  return (
+    <div className="relative isolate flex w-full items-center rounded-[16px] p-6">
+      <GlassLayer weight="soft" tone="dark" radius={16} />
+      <code className={`${MONO} relative min-w-0 flex-1 text-[18px] leading-[1.14] break-all text-[#00bc7d]`}>{children}</code>
     </div>
+  )
+}
+
+/**
+ * The install panel the third tile opens (Figma 287:7271): Heavy dark glass that
+ * overlaps the second and third tiles, 30px past the row's right edge and 16px
+ * above it. It is the design system's Popover, so it comes in with its spring and
+ * closes on Escape or a click outside; the row is its anchor. The Popover's own
+ * surface is switched off so the glass is the only one.
+ */
+function InstallPanel({ anchor }: { anchor: React.RefObject<HTMLElement | null> }) {
+  return (
+    <PopoverPanel
+      anchor={anchor}
+      side="bottom"
+      align="end"
+      sideOffset={({ anchor }) => -(anchor.height + 16)}
+      alignOffset={-30}
+      initialFocus={false}
+      className="w-[min(571px,calc(100vw-40px))] rounded-[16px] border-0 p-0 shadow-none"
+      style={{ "--glass-layer": "none", "--glass-surface": "transparent" } as CSSProperties}
+    >
+      <LiquidGlass radius={16} {...glassProps("heavy", "dark")} style={{ boxShadow: "0 24px 40px rgba(0, 0, 0, 0.25)" }}>
+        <div className="flex flex-col justify-end gap-6 p-6 sm:p-10">
+          <div className="flex w-full flex-col gap-4">
+            <p className={`${BODY} text-[18px] leading-[1.42]`}>Install from command line</p>
+            <CodeBox>npm install @lukeanill/ui</CodeBox>
+            <p className={`${BODY} text-[18px] leading-[1.42]`}>Install via package.json</p>
+            <CodeBox>&quot;@lukeanill/ui&quot;</CodeBox>
+          </div>
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="flex w-full items-center justify-end gap-2 py-6">
+            <span className={`${BODY} text-[16px] leading-[1.42] whitespace-nowrap`}>View on Github</span>
+            <img alt="" src="/home/arrow-right.svg" className="size-4 shrink-0" />
+          </a>
+        </div>
+      </LiquidGlass>
+    </PopoverPanel>
   )
 }
 
@@ -118,6 +213,9 @@ const H36 = `${MIGRA} text-[clamp(26px,2.8125vw,36px)] leading-[1.22] font-extra
 const BODY20 = `${BODY} text-[20px] leading-[1.42]`
 
 export function Showcase() {
+  const [installOpen, setInstallOpen] = useState(false)
+  const tilesRef = useRef<HTMLDivElement>(null)
+
   return (
     <div className="relative isolate flex min-h-svh flex-col items-center overflow-x-clip bg-black text-[#fbfbfc]">
       <Backdrop />
@@ -138,7 +236,9 @@ export function Showcase() {
         </Section>
 
         {/* Three link tiles */}
-        <Section className="flex flex-col items-center gap-6 pt-10 pb-20 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
+        <Section className="pt-10 pb-20">
+          <Popover open={installOpen} onOpenChange={setInstallOpen}>
+          <div ref={tilesRef} className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
           <LinkTile
             image="/home/tile-blob.png"
             title={
@@ -149,9 +249,19 @@ export function Showcase() {
               </>
             }
             label="View storybook"
+            href={STORYBOOK_URL}
           />
-          <LinkTile image="/home/tile-box.png" title="Your look, feel and principles" label="Build your theme" />
-          <LinkTile image="/home/tile-star.png" title="Use the system in your AI tool" label="Install package" />
+          <LinkTile image="/home/tile-box.png" title="Your look, feel and principles" label="Build your theme" to="/themes" />
+          <LinkTile
+            image="/home/tile-star.png"
+            title={installOpen ? "npm install @lukeanill/ui@4.3.0" : "Use the system in your AI tool"}
+            label="Install package"
+            showArrow={!installOpen}
+            popoverTrigger
+          />
+          </div>
+          <InstallPanel anchor={tilesRef} />
+          </Popover>
         </Section>
 
         {/* This is */}

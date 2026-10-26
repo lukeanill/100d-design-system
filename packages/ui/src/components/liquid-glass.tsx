@@ -134,3 +134,61 @@ export function LiquidGlass({
     </div>
   )
 }
+
+/**
+ * The Glass sheet's weights and tones (Figma "Glass": Soft, Medium, Heavy across
+ * Clear, Light, Dark, Tinted). Everything that wants the design system's glass
+ * asks for one of these rather than choosing its own blur.
+ */
+const WEIGHTS = {
+  soft: { blur: 1, bezel: 12, thickness: 20, scaleRatio: 0.5, specularOpacity: 0.8, fallbackBlur: 2, fill: 0.32, light: 0.16, dark: 0.4 },
+  medium: { blur: 5, bezel: 30, thickness: 60, scaleRatio: 0.6, specularOpacity: 0.8, fallbackBlur: 10, fill: 0.4, light: 0.24, dark: 0.48 },
+  heavy: { blur: 14, bezel: 28, thickness: 40, scaleRatio: 1, specularOpacity: 0.5, fallbackBlur: 40, fill: 0.48, light: 0.32, dark: 0.48 },
+}
+
+export type GlassWeight = keyof typeof WEIGHTS
+type WeightValues = (typeof WEIGHTS)["soft"]
+
+const TONES = {
+  clear: () => undefined,
+  light: (w: WeightValues) => `rgba(255, 255, 255, ${w.light})`,
+  dark: (w: WeightValues) => `rgba(0, 0, 0, ${w.dark})`,
+  tinted: (w: WeightValues) =>
+    `linear-gradient(162deg, rgba(50, 205, 216, ${w.fill}) 42.7%, rgba(21, 61, 155, ${w.fill}) 93.1%)`,
+}
+
+export type GlassTone = keyof typeof TONES
+export const glassWeights = Object.keys(WEIGHTS) as GlassWeight[]
+export const glassTones = Object.keys(TONES) as GlassTone[]
+
+/** The LiquidGlass props for a weight and tone; `tint` replaces the tone's fill when a surface has its own. */
+export function glassProps(weight: GlassWeight, tone: GlassTone = "clear", tint?: string) {
+  const { blur, bezel, thickness, scaleRatio, specularOpacity, fallbackBlur } = WEIGHTS[weight]
+  return { blur, bezel, thickness, scaleRatio, specularOpacity, fallbackBlur, tint: tint ?? TONES[tone](WEIGHTS[weight]) }
+}
+
+/**
+ * The glass as a layer behind a surface's content: fills the nearest positioned
+ * ancestor (give it `relative` and its own radius), takes no clicks, and leaves
+ * the content to paint above it. Content must come after it and be `relative`.
+ */
+export function GlassLayer({
+  weight,
+  tone,
+  tint,
+  radius = 16,
+}: {
+  weight: GlassWeight
+  tone?: GlassTone
+  tint?: string
+  radius?: number
+}) {
+  return (
+    <LiquidGlass
+      aria-hidden="true"
+      radius={radius}
+      {...glassProps(weight, tone, tint)}
+      style={{ position: "absolute", inset: 0, pointerEvents: "none", boxShadow: "none" }}
+    />
+  )
+}

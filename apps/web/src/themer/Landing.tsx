@@ -1,3 +1,4 @@
+import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 import { Header, HomeButton, Page, PageTitle } from "./Chrome"
 
 const CARDS = [
@@ -18,8 +19,13 @@ export function Landing({ onChoose, onHome }: { onChoose: (choice: LandingChoice
             key={card.id}
             type="button"
             onClick={() => onChoose(card.id)}
-            className="relative flex h-[380px] cursor-pointer flex-col justify-end overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.12] p-10 text-left outline-none backdrop-blur-xl transition-transform focus-visible:ring-[3px] focus-visible:ring-ring/50 max-sm:h-[240px] max-sm:p-6"
+            className="relative flex h-[380px] cursor-pointer flex-col justify-end isolate overflow-hidden rounded-2xl border border-white/10 p-10 text-left outline-none transition-transform focus-visible:ring-[3px] focus-visible:ring-ring/50 max-sm:h-[240px] max-sm:p-6"
           >
+            <GlassLayer
+              weight="medium"
+              tint="linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12))"
+              radius={16}
+            />
             <img
               src={`/themer/${card.image}.jpg`}
               alt=""

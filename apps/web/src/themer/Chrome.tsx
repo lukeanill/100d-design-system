@@ -1,4 +1,5 @@
 import { ArrowDownLeftIcon, ArrowUpLeftIcon } from "@phosphor-icons/react"
+import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 import type { CSSProperties, ReactNode } from "react"
 
 import { Button } from "@workspace/ui/components/button"
@@ -65,11 +66,13 @@ export const ActionButton = ({ children, className, ...props }: React.ComponentP
 /** A glass panel with the thin edge the Figma draws around every section. */
 export function Panel({ children, className, style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   return (
-    <section
-      className={cn("rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-white/[0.06] backdrop-blur-xl", className)}
-      style={style}
-    >
-      {children}
+    <section className={cn("relative isolate rounded-2xl border border-white/10", className)} style={style}>
+      <GlassLayer
+        weight="soft"
+        tint="linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.06))"
+        radius={16}
+      />
+      <div className="relative">{children}</div>
     </section>
   )
 }
