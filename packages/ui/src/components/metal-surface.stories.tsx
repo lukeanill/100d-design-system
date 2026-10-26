@@ -3,7 +3,7 @@ import { MetalSurface as MetalSurfaceImpl } from "./metal-surface"
 
 // The libraries.dev metal-fx demo button, in each engine.
 export default {
-  title: "Components/Metal/Metal Surface",
+  title: "Special FX Components/Metal/Metal Surface",
   component: MetalSurfaceImpl,
   argTypes: {
     engine: { control: "inline-radio", options: ["v1", "v2"] },

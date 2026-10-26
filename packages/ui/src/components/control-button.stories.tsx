@@ -3,7 +3,7 @@ import { Check, Compass, Info, Layers, MessageCircle, Minus, Play, Plus, Search,
 import { ControlButton as ControlButtonImpl, ControlGroup, ControlGroupItem } from "./control-button"
 
 export default {
-  title: "Components/Metal/Control Button",
+  title: "Special FX Components/Metal/Control Button",
   component: ControlButtonImpl,
   argTypes: {
     shape: { control: "inline-radio", options: ["circle", "pill"] },

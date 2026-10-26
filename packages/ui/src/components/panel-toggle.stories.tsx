@@ -3,7 +3,7 @@ import { Info } from "lucide-react"
 import { PanelToggle as PanelToggleImpl } from "./panel-toggle"
 
 export default {
-  title: "Components/Metal/Panel Toggle",
+  title: "Special FX Components/Metal/Panel Toggle",
   component: PanelToggleImpl,
   argTypes: {
     closeLabel: { control: "text" },

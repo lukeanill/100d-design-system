@@ -26,7 +26,6 @@ const preview: Preview = {
           "Components",
           [
             "Actions",
-            "Metal",
             "Inputs",
             "Selects",
             "Navigation",
@@ -36,6 +35,8 @@ const preview: Preview = {
             "Layout",
             "Theming",
           ],
+          "Special FX Components",
+          ["Metal"],
           "Animation",
         ],
       },
