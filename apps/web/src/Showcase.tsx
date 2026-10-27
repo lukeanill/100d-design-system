@@ -1,22 +1,15 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from "react"
-import { Link } from "react-router"
-import { Popover, PopoverPanel, PopoverTrigger } from "@workspace/ui/components/animate-ui/components/base/popover"
+import { Popover, PopoverPanel } from "@workspace/ui/components/animate-ui/components/base/popover"
 import { GlassLayer, LiquidGlass, glassProps } from "@workspace/ui/components/liquid-glass"
+import { BODY, LinkTile, MIGRA } from "./LinkTile"
 
 /* The homepage, built to the Figma "HOME" frame (Themes file, node 94:3232).
  * Sizes, gaps and colours are the frame's own values, not theme tokens. */
-
-const MIGRA = "font-[family-name:Migra]"
-// Inter Light stands in for the Figma's "Test Söhne"; Söhne sets about 2.5% narrower, so the tracking is pulled in to keep the same line breaks
-const BODY = "font-[family-name:Inter] font-light tracking-[-0.025em]"
 
 // Storybook is built into the site at /storybook/; in dev it is its own server
 const STORYBOOK_URL = import.meta.env.DEV ? "http://localhost:6006" : "/storybook/"
 const GITHUB_URL = "https://github.com/lukeanill/100d-design-system"
 const MONO = "font-[family-name:Geist_Mono,ui-monospace,monospace] font-light"
-
-// the tiles' rim, softer than the system default: they sit on a dark page, where a white rim reads much stronger
-const TILE_EDGE = 0.35
 
 const PAD = "px-[clamp(20px,9.375vw,120px)]"
 
@@ -61,85 +54,6 @@ function Backdrop() {
       {/* measured against the Figma: everything inside the 848 frame sits about 22% darker than the glow that spills out below it */}
       <div className="absolute inset-0 bg-black/[0.22]" />
     </div>
-  )
-}
-
-function Arrow() {
-  return <img alt="" src="/home/arrow-right.svg" className="size-4 shrink-0 transition-[width,height] duration-300 ease-out group-hover:size-[22px] motion-reduce:transition-none" />
-}
-
-/**
- * 320 × 380 tile: a 3D object behind a 36px title and a small link.
- * On hover the object softens (a 30px blur, which the Figma draws as a background
- * blur over it; blurring the image itself gives the same look and renders
- * reliably under the blend mode) under a faint dark wash, the
- * outline drops away, and the link grows from 16px to 20px with its arrow from
- * 16px to 22px (the Figma's hover frame).
- */
-function LinkTile({
-  image,
-  title,
-  label,
-  to,
-  href,
-  popoverTrigger,
-  showArrow = true,
-}: {
-  image: string
-  title: ReactNode
-  label: string
-  /** an in-app route */
-  to?: string
-  /** a plain link, for another app on the same site */
-  href?: string
-  /** makes the tile the trigger of the surrounding <Popover> */
-  popoverTrigger?: boolean
-  showArrow?: boolean
-}) {
-  const className =
-    "group relative flex h-[380px] w-full max-w-[320px] flex-col justify-end overflow-clip rounded-[16px] p-8 text-left isolate transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 sm:aspect-[320/380] sm:h-auto sm:min-w-0 sm:flex-1 sm:p-4 md:p-6 lg:p-10 motion-reduce:transition-none"
-  const content = (
-    <>
-      {/* the Glass sheet's Soft weight, in the tile's own 16px corner */}
-      <GlassLayer weight="soft" radius={16} edge={TILE_EDGE} />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-white/[0.02]">
-        <img
-          alt=""
-          src={image}
-          className="absolute inset-0 size-full object-cover opacity-40 mix-blend-screen transition-[filter] duration-300 ease-out group-hover:blur-[30px] motion-reduce:transition-none"
-        />
-      </div>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[12px] bg-[rgba(30,30,30,0.08)] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 motion-reduce:transition-none"
-      />
-      <div className="relative flex w-full flex-col items-start justify-end gap-4 transition-[gap] duration-300 ease-out group-hover:gap-6 motion-reduce:transition-none">
-        <p className={`${MIGRA} w-full [overflow-wrap:anywhere] text-[30px] leading-[1.14] font-extralight sm:text-[clamp(18px,2.8125vw,36px)]`}>{title}</p>
-        <div className="flex items-center gap-2">
-          <p className={`${BODY} text-[16px] leading-[1.42] whitespace-nowrap transition-[font-size] sm:text-[clamp(12px,1.25vw,16px)] duration-300 ease-out group-hover:text-[20px] motion-reduce:transition-none`}>
-            {label}
-          </p>
-          {showArrow && <Arrow />}
-        </div>
-      </div>
-    </>
-  )
-  if (to)
-    return (
-      <Link to={to} className={className}>
-        {content}
-      </Link>
-    )
-  if (href)
-    return (
-      <a href={href} className={className}>
-        {content}
-      </a>
-    )
-  return (
-    <PopoverTrigger className={`${className} cursor-pointer`} data-popover-trigger={popoverTrigger || undefined}>
-      {content}
-    </PopoverTrigger>
   )
 }
 
@@ -227,7 +141,7 @@ export function Showcase() {
 
       <div className="relative z-10 flex w-full flex-col">
         {/* Hero */}
-        <Section className="flex flex-col items-center gap-10 pt-[clamp(128px,15.625vw,200px)] pb-[clamp(64px,9.375vw,120px)]">
+        <Section className="flex flex-col items-center gap-10 pt-[clamp(128px,15.625vw,200px)] pb-[clamp(36px,7.03125vw,90px)]">
           <div className="flex flex-col items-center text-center leading-[1.22]">
             <p className={`${MIGRA} text-[clamp(32px,3.75vw,48px)] font-extralight`}>A themeable</p>
             <p className={`${MIGRA} text-[clamp(40px,4.6875vw,60px)] font-extrabold`}>design system</p>
@@ -241,7 +155,7 @@ export function Showcase() {
         </Section>
 
         {/* Three link tiles */}
-        <Section className="pt-10 pb-20">
+        <Section className="pt-[clamp(12px,2.34375vw,30px)] pb-[clamp(24px,4.6875vw,60px)]">
           <Popover open={installOpen} onOpenChange={setInstallOpen}>
           <div ref={tilesRef} className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
           <LinkTile
@@ -270,7 +184,7 @@ export function Showcase() {
         </Section>
 
         {/* This is */}
-        <Section className="flex flex-col items-start gap-8 py-20">
+        <Section className="flex flex-col items-start gap-8 py-[clamp(24px,4.6875vw,60px)]">
           <Pill>This is</Pill>
           <div className="flex flex-col gap-1">
             <p className={H48}>An experiment of </p>
@@ -286,7 +200,7 @@ export function Showcase() {
         </Section>
 
         {/* Problem */}
-        <Section className="flex flex-col items-start gap-10 pt-20 pb-20">
+        <Section className="flex flex-col items-start gap-10 pt-[clamp(24px,4.6875vw,60px)] pb-[clamp(24px,4.6875vw,60px)]">
           <Pill>Problem</Pill>
           <div className="flex w-full flex-col gap-10 min-[1100px]:flex-row min-[1100px]:gap-20">
             <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -307,7 +221,7 @@ export function Showcase() {
         </Section>
 
         {/* Change */}
-        <Section className="flex flex-col items-start gap-10 pt-10 pb-20">
+        <Section className="flex flex-col items-start gap-10 pt-[clamp(12px,2.34375vw,30px)] pb-[clamp(24px,4.6875vw,60px)]">
           <Pill>Change</Pill>
           <div className="flex w-full flex-col gap-6 min-[1100px]:flex-row min-[1100px]:gap-0">
             <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -330,7 +244,7 @@ export function Showcase() {
         </Section>
 
         {/* Mission */}
-        <Section className="flex flex-col items-start gap-10 pt-20 pb-[clamp(96px,12.5vw,160px)]">
+        <Section className="flex flex-col items-start gap-10 pt-[clamp(24px,4.6875vw,60px)] pb-[clamp(48px,9.375vw,120px)]">
           <Pill>Mission</Pill>
           <div className="flex w-full flex-col gap-10 pb-6 min-[1100px]:flex-row min-[1100px]:gap-20">
             <div className="flex min-w-0 flex-1 flex-col justify-center pb-[6px]">
