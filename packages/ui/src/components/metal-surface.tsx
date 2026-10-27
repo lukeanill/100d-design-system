@@ -6,7 +6,7 @@ import { cn } from "@workspace/ui/lib/utils"
 
 /**
  * A liquid-metal ring around a single control (metal-fx, the libraries.dev "Metal" effect), or the
- * quiet solid surface the control sits on when it isn't active.
+ * quiet glass surface the control sits on when it isn't active.
  *
  * The metal-fx instance stays mounted and only its strength changes, so switching `active` never
  * remounts the wrapped element (an input keeps focus, a menu trigger keeps its popover). The wrapped
@@ -38,12 +38,14 @@ type MetalSurfaceProps = {
   reflectionTargets?: ReadonlyArray<RefObject<HTMLElement | null>>
 }
 
-// The quiet surface: solid, with a hairline rim. `!` because metal-fx injects its own
-// (unlayered) surface styles, which would otherwise win over the utility layer.
-const QUIET_SURFACE = cn(
-  "data-[quiet]:bg-white! data-[quiet]:text-[#1d1d1d]! data-[quiet]:after:shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]!",
-  "dark:data-[quiet]:bg-[#1d1d1d]! dark:data-[quiet]:text-[#f8f8f8]! dark:data-[quiet]:after:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]!",
-  "data-[quiet]:hover:bg-[#f4f4f4]! dark:data-[quiet]:hover:bg-[#242424]!",
+// The surface, quiet or active: glass, not a solid fill. A translucent tint of the theme's foreground
+// colour over a soft blur, with the text in that same foreground, so whatever is behind shows through and the
+// ring reads against it. `!` because metal-fx injects its own (unlayered) surface styles, which would
+// otherwise win over the utility layer.
+const SURFACE = cn(
+  "bg-[color-mix(in_srgb,var(--foreground)_8%,transparent)]! backdrop-blur-md",
+  "hover:bg-[color-mix(in_srgb,var(--foreground)_12%,transparent)]!",
+  "text-foreground! data-[quiet]:after:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_10%,transparent)]!",
   "[&[data-quiet]_.metal-fx-inner]:shadow-none!",
   "transition-colors"
 )
@@ -86,7 +88,7 @@ function MetalSurface({
       theme={theme ?? documentTheme}
       disableGlow={!active || !halo}
       reflectionTargets={active ? reflectionTargets : undefined}
-      className={cn(QUIET_SURFACE, className)}
+      className={cn(SURFACE, className)}
       data-slot="metal-surface"
       data-quiet={active ? undefined : "true"}
     >

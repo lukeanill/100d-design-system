@@ -5,7 +5,7 @@ import { cn } from "@workspace/ui/lib/utils"
 import { MetalSurface, type MetalEngine } from "@workspace/ui/components/metal-surface"
 
 /**
- * Map-style controls, after the metal-fx demo on libraries.dev: a quiet solid surface normally,
+ * Map-style controls, after the metal-fx demo on libraries.dev: a quiet glass surface normally,
  * a liquid-metal ring while the control is active (`metal`) — e.g. an open menu, playback, a
  * message being shown — with an optional wandering `halo`.
  *
