@@ -177,10 +177,7 @@ export function Preview() {
         <div className="min-[1100px]:absolute min-[1100px]:top-[123px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
           <FluidTabs />
         </div>
-        <div className="w-full max-w-[433px] min-[1100px]:absolute min-[1100px]:top-[232px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
-          <PromptBar appearance={{ demo: false }} />
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 min-[1100px]:w-max min-[1100px]:flex-nowrap min-[1100px]:absolute min-[1100px]:top-[346px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
+        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 min-[1100px]:w-max min-[1100px]:flex-nowrap min-[1100px]:absolute min-[1100px]:top-[232px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
           {(["v1", "v2"] as const).map((engine) => (
             <div key={engine} className="flex items-center gap-3">
               <ControlButton size="lg" engine={engine} metal halo aria-label={`Send (${engine})`}>
@@ -193,11 +190,14 @@ export function Preview() {
           ))}
         </div>
         {/* the two cards together: side by side they are the same height, stacked the same width (the wider one's), 16px apart either way */}
-        <div className="min-[1100px]:absolute min-[1100px]:top-[427px] min-[1100px]:left-[calc(50%-168px)]">
+        <div className="min-[1100px]:absolute min-[1100px]:top-[313px] min-[1100px]:left-[calc(50%-168px)]">
           <div className="mx-auto grid w-fit grid-cols-1 gap-4 min-[800px]:grid-cols-[auto_auto]">
             <StatCard />
             <ThreadInsightCard image="/preview/fish-thread.png" />
           </div>
+        </div>
+        <div className="w-full max-w-[433px] min-[1100px]:absolute min-[1100px]:top-[552px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
+          <PromptBar appearance={{ demo: false }} />
         </div>
       </div>
     </div>
