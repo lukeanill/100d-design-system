@@ -15,7 +15,7 @@ import { IrisTransition } from "@workspace/ui/components/transitions/iris-transi
  * through a transition set to zero: the swap components hold the outgoing page
  * in state while covered, and a page that is never covered should never be held.
  *
- * Step Curtain is deliberately absent — it is the scoped sibling for moving
+ * Curtain (StepCurtain) is deliberately absent — it is the scoped sibling for moving
  * between steps inside a page, not a page transition.
  */
 export type PageTransitionId = "fade" | "blinds" | "curtain" | "iris"

@@ -20,11 +20,6 @@ const TILE_LABELS: Record<string, string> = {
   amnesia: "Amensia",
   ushuaia: "Ashuaia",
 }
-/** The Preview's "color" value as Figma's Settings/color holds it, which can disagree with the palette. */
-const FIGMA_COLOR: Record<string, string> = {
-  fabrik: "dark", illuzion: "dark", laroc: "light", bootshaus: "dark", berghain: "dark",
-  savaya: "dark", pacha: "light", amnesia: "dark", ushuaia: "light",
-}
 /**
  * The font name each theme's specimen shows, as written on the Figma Themes frame
  * (node 9:178), typos included: "Glook" is shown as drawn, for the designer to decide.
@@ -41,13 +36,16 @@ const SPECIMEN_NAMES: Record<string, string> = {
   ushuaia: "Migra",
 }
 
+/** Spacing is stored as sm, md, lg; the panel says it in words. */
+const SPACING_WORDS = { sm: "small", md: "medium", lg: "large" } as const
+
 /** What the Preview panel says about a theme's six settings, in Figma's order. */
 const settingsOf = (t: Theme) => [
-  ["elevation", t.elevation],
-  ["spacing", t.spacing],
-  ["radius", t.radius],
-  ["material", t.material],
-  ["color", FIGMA_COLOR[t.id] ?? t.scheme],
+  ["shadow", t.elevation],
+  ["spacing", SPACING_WORDS[t.spacing]],
+  ["edges", t.radius],
+  ["texture", t.material],
+  ["color", t.tone],
   ["motion", t.motion],
 ]
 
@@ -118,13 +116,13 @@ export function Copy({
     <Page>
       <Header
         nav={<BackButton onClick={onBack} />}
-        title={<PageTitle>Copy a Theme</PageTitle>}
         actions={
           <ActionButton onClick={onContinue} disabled={!current}>
             Continue
           </ActionButton>
         }
       />
+      <PageTitle>Copy a Theme</PageTitle>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3" role="radiogroup" aria-label="Preset themes">
         {presets.map((t) => {
           const on = t.id === selected
@@ -136,7 +134,7 @@ export function Copy({
               aria-checked={on}
               onClick={() => onSelect(t.id)}
               className={cn(
-                "flex h-[155px] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 text-center text-[48px] leading-none outline-none transition-colors focus-visible:ring-[3px] focus-visible:ring-ring/50 max-sm:h-[96px] max-sm:text-[32px]",
+                "flex h-[155px] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 text-center leading-none outline-none transition-colors [container-type:inline-size] focus-visible:ring-[3px] focus-visible:ring-ring/50 max-sm:h-[96px]",
                 on ? "border-transparent" : "border-white/10 bg-gradient-to-b from-white/[0.02] to-white/[0.05] text-white/20 hover:text-white/40"
               )}
               style={
@@ -151,7 +149,8 @@ export function Copy({
                   : { fontFamily: `'${t.fonts.display.family}', serif`, fontWeight: t.fonts.display.weight }
               }
             >
-              {TILE_LABELS[t.id] ?? t.label}
+              {/* 18.5cqw is the size at which the longest name, Bootshaus, just fits the tile; every name takes it, up to 48px (32px on a phone) */}
+              <span className="text-[length:min(48px,18.5cqw)] max-sm:text-[length:min(32px,18.5cqw)]">{TILE_LABELS[t.id] ?? t.label}</span>
             </button>
           )
         })}

@@ -71,14 +71,16 @@ export function LinkTile({
       />
       <div className="relative flex w-full flex-col items-start justify-end gap-4 transition-[gap] duration-300 ease-out group-hover:gap-6 motion-reduce:transition-none">
         <p className={`${MIGRA} w-full [overflow-wrap:anywhere] text-[30px] leading-[1.14] font-extralight sm:text-[clamp(18px,2.8125vw,36px)]`}>{title}</p>
-        <div className={`flex w-full items-center gap-2 ${label ? "" : "justify-end"}`}>
-          {label && (
-            <p className={`${BODY} text-[16px] leading-[1.42] min-w-0 transition-[font-size] sm:text-[clamp(12px,1.25vw,16px)] duration-300 ease-out group-hover:text-[20px] motion-reduce:transition-none`}>
-              {label}
-            </p>
-          )}
-          {showArrow && <Arrow />}
-        </div>
+        {(label || showArrow) && (
+          <div className={`flex w-full items-center gap-2 ${label ? "" : "justify-end"}`}>
+            {label && (
+              <p className={`${BODY} text-[16px] leading-[1.42] min-w-0 transition-[font-size] sm:text-[clamp(12px,1.25vw,16px)] duration-300 ease-out group-hover:text-[20px] motion-reduce:transition-none`}>
+                {label}
+              </p>
+            )}
+            {showArrow && <Arrow />}
+          </div>
+        )}
       </div>
     </>
   )

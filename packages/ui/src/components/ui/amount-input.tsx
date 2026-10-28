@@ -267,15 +267,18 @@ const AmountInputRoot = ({
     }
   }, [editing]);
 
+  // an empty currency is a plain count (guests, nights): no symbol at all
   const currencySymbol = useMemo(
     () =>
-      new Intl.NumberFormat("en-US", {
-        currency,
-        minimumFractionDigits: 0,
-        style: "currency",
-      })
-        .formatToParts(0)
-        .find((part) => part.type === "currency")?.value ?? currency,
+      currency === ""
+        ? ""
+        : (new Intl.NumberFormat("en-US", {
+            currency,
+            minimumFractionDigits: 0,
+            style: "currency",
+          })
+            .formatToParts(0)
+            .find((part) => part.type === "currency")?.value ?? currency),
     [currency]
   );
 

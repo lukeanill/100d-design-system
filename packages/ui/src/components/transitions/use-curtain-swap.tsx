@@ -73,17 +73,23 @@ export function useCurtainSwap<T extends Element = HTMLDivElement>({
     ) => withTimeout(controls, ms)
 
     async function run() {
-      await sequenceRef.current({
-        scope,
-        animate,
-        settle,
-        duration,
-        swap: () => {
-          setDisplayedChildren(pendingChildrenRef.current)
-          setDisplayedKey(transitionKey)
-        },
-      })
-      runningRef.current = false
+      try {
+        await sequenceRef.current({
+          scope,
+          animate,
+          settle,
+          duration,
+          swap: () => {
+            setDisplayedChildren(pendingChildrenRef.current)
+            setDisplayedKey(transitionKey)
+          },
+        })
+      } catch (error) {
+        // Unmounted mid-run (the choice was changed while it played): there is no cover left to finish.
+        if (scope.current) throw error
+      } finally {
+        runningRef.current = false
+      }
     }
 
     run()

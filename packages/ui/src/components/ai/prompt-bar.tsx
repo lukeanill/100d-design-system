@@ -2,9 +2,11 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { ArrowUp, Check, ChevronDown, File, Globe, Layers, LineChart, Mic, Paperclip, Plus, X } from "lucide-react"
+import { ArrowUpIcon, CaretDownIcon, ChartLineIcon, CheckIcon, FileIcon, GlobeIcon, MicrophoneIcon, PaperclipIcon, PlusIcon, StackIcon, XIcon } from "@phosphor-icons/react"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { ThemedIcon } from "@workspace/ui/components/themed-icon"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 /* A composer with real controls: attach, @ data sources, / commands, a model
  * picker, and dictation. Type @ or / to open the menus; ↑↓ + Enter to pick.
@@ -12,10 +14,10 @@ import { cn } from "@workspace/ui/lib/utils"
  * change was dropped — it depended on an external canvas-shader package). */
 
 const GLYPHS: Record<string, ReactNode> = {
-  chart: <LineChart className="size-3.5" strokeWidth={1.8} />,
-  clip: <Paperclip className="size-3.5" strokeWidth={1.8} />,
-  globe: <Globe className="size-3.5" strokeWidth={1.8} />,
-  layers: <Layers className="size-3.5" strokeWidth={1.8} />,
+  chart: <ThemedIcon phosphor={ChartLineIcon} />,
+  clip: <ThemedIcon phosphor={PaperclipIcon} />,
+  globe: <ThemedIcon phosphor={GlobeIcon} />,
+  layers: <ThemedIcon phosphor={StackIcon} />,
 }
 
 type Source = {
@@ -44,16 +46,16 @@ const COMMANDS = [
 ]
 
 const MODELS = [
-  { key: "sprinkles-5", name: "Sprinkles 5", tag: "Flagship" },
-  { key: "vanilla-1", name: "Vanilla 1", tag: "Basic" },
-  { key: "freezer-burn", name: "Freezer Burn 0.4", tag: "Stale" },
+  { key: "slay-lane", name: "Slay Lane", tag: "Max" },
+  { key: "huh-ave", name: "Huh Ave", tag: "Pro" },
+  { key: "meh-way", name: "Meh Way", tag: "Basic" },
 ]
 
 const FILES = ["flavor-chart.png", "summer-menu.pdf", "pos-export.csv"]
 const DICTATION = "Compare pistachio weekends to last summer"
 
 const AUTO_STEPS: { draft: string; active?: number; connect?: boolean; modelOpen?: boolean; model?: string; hold: number }[] = [
-  { connect: false, draft: "", hold: 1100, model: "vanilla-1" },
+  { connect: false, draft: "", hold: 1100, model: "slay-lane" },
   { active: 0, draft: "@", hold: 900 },
   { active: 1, draft: "@", hold: 620 },
   { active: 3, draft: "@", hold: 620 },
@@ -65,7 +67,7 @@ const AUTO_STEPS: { draft: string; active?: number; connect?: boolean; modelOpen
   { active: 3, draft: "/", hold: 1000 },
   { draft: "", hold: 800 },
   { draft: "", hold: 1200, modelOpen: true },
-  { draft: "", hold: 2400, model: "sprinkles-5" },
+  { draft: "", hold: 2400, model: "slay-lane" },
   { draft: "", hold: 900 },
 ]
 
@@ -99,7 +101,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
   const [dismissed, setDismissed] = useState(false)
   const [plusOpen, setPlusOpen] = useState(false)
   const [modelOpen, setModelOpen] = useState(false)
-  const [model, setModel] = useState(MODELS[1])
+  const [model, setModel] = useState(MODELS[0])
   const [attachments, setAttachments] = useState<string[]>([])
   const [connected, setConnected] = useState(false)
   const [active, setActive] = useState(0)
@@ -238,21 +240,23 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
 
   return (
     <div data-promptbar className={demo ? "flex min-h-[384px] w-full max-w-105 flex-col justify-end pb-8" : "w-full"} onPointerDownCapture={takeOver} onKeyDownCapture={takeOver}>
+      {/* Elevation: the composer sits at shadow-xs, so the menus it opens sit one level up, at shadow-sm */}
       <div ref={composerAnchorRef} className="relative">
         {menu && (
           <div
             onMouseLeave={() => setEngaged(false)}
-            className="absolute inset-x-0 bottom-full z-10 mb-2 rounded-lg bg-card p-1 shadow-lg ring-1 ring-foreground/10"
+            className="absolute inset-x-0 bottom-full z-10 mb-2 rounded-(--edges-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
             style={{ animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom center" }}
           >
+            <SurfaceFill popup />
             <span
               aria-hidden
-              className="pointer-events-none absolute inset-x-1 rounded-md bg-muted"
+              className="pointer-events-none absolute inset-x-2 rounded-(--radius-inner) bg-(--control-hover)"
               style={{
                 height: rowBox?.height ?? 0,
                 opacity: rowBox && engaged && rows.length > 0 ? 1 : 0,
                 top: rowBox?.top ?? 0,
-                transition: "top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease",
+                transition: "top var(--motion-fast) var(--motion-transition-ease), height var(--motion-fast) var(--motion-transition-ease), opacity var(--motion-fast) var(--motion-transition-ease)",
               }}
             />
             {rows.map((row, i) => {
@@ -270,11 +274,11 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                     setEngaged(true)
                   }}
                   onClick={() => pick(row)}
-                  className="relative z-10 flex h-9 w-full items-center gap-2.5 rounded-md px-2 text-left"
+                  className="relative z-10 flex h-9 w-full items-center gap-2.5 rounded-(--radius-inner) px-2 text-left"
                 >
                   {source && <span className="flex size-5.5 shrink-0 items-center justify-center text-foreground/75">{GLYPHS[source.glyph ?? "clip"]}</span>}
-                  <span className="shrink-0 text-[12.5px] font-medium text-foreground">{row.name}</span>
-                  <span className="min-w-0 flex-1 truncate text-[12px] text-foreground/75">{row.desc}</span>
+                  <span className="text-body-md shrink-0 text-foreground">{row.name}</span>
+                  <span className="text-body-md min-w-0 flex-1 truncate text-foreground/75">{row.desc}</span>
                   {source?.connect && (
                     <span
                       role="button"
@@ -283,7 +287,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                         event.stopPropagation()
                         setConnected((current) => !current)
                       }}
-                      className={cn("shrink-0 text-[12px] font-medium transition-colors duration-100", connected ? "text-affirmative" : "text-primary hover:underline")}
+                      className="text-body-md shrink-0 rounded-(--radius-inner) bg-primary px-2 py-0.5 text-primary-foreground"
                     >
                       {connected ? "Connected" : "Connect"}
                     </span>
@@ -291,17 +295,18 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 </button>
               )
             })}
-            {rows.length === 0 && <div className="flex h-9 items-center px-2 text-[12px] text-foreground/75">No matches for "{query}"</div>}
-            <div className="mt-1 border-t border-border px-2 pt-1.5 pb-1 text-[11px] text-foreground/75">{menu === "at" ? "Type to search sources & files" : "Type to search commands"}</div>
+            {rows.length === 0 && <div className="text-body-md flex h-9 items-center px-2 text-foreground/75">No matches for "{query}"</div>}
+            <div className="mt-1 border-t border-(--control-edge) text-body-md px-2 pt-1.5 pb-1 text-foreground/75">{menu === "at" ? "Type to search sources & files" : "Type to search commands"}</div>
           </div>
         )}
 
         {modelOpen && (
           <div
             onMouseLeave={() => setModelHovered(null)}
-            className="absolute bottom-full left-0 z-10 mb-2 w-44 rounded-lg bg-card p-1 shadow-lg ring-1 ring-foreground/10"
+            className="absolute bottom-full left-0 z-10 mb-2 w-44 min-w-1/2 rounded-(--edges-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
             style={{ animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom left" }}
           >
+            <SurfaceFill popup />
             {MODELS.map((m, i) => (
               <button
                 key={m.key}
@@ -312,12 +317,12 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                   selectModel(m)
                   inputRef.current?.focus()
                 }}
-                className={cn("relative z-10 flex h-7.5 w-full items-center gap-2 rounded-md px-2 text-left", modelHovered === i && "bg-muted")}
+                className={cn("relative z-10 flex h-7.5 w-full items-center gap-2 rounded-(--radius-inner) px-2 text-left", modelHovered === i && "bg-(--control-hover)")}
               >
-                <span className="min-w-0 flex-1 truncate text-[12.5px] font-medium text-foreground">{m.name}</span>
-                <span className="shrink-0 text-[11px] text-foreground/75">{m.tag}</span>
+                <span className="text-body-md min-w-0 flex-1 truncate text-foreground">{m.name}</span>
+                <span className="text-body-md shrink-0 text-foreground/75">{m.tag}</span>
                 <span className={cn("shrink-0 text-foreground", m.key === model.key ? "" : "invisible")}>
-                  <Check className="size-3" strokeWidth={2.5} />
+                  <ThemedIcon phosphor={CheckIcon} />
                 </span>
               </button>
             ))}
@@ -326,12 +331,14 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
 
         <div
           className={cn(
-            "relative isolate flex flex-col overflow-hidden border border-border bg-card shadow-xs transition-[border-color,border-radius] duration-150 focus-within:border-foreground/20",
-            tall ? "gap-2.5 p-3.5" : "gap-1.5 p-1.5",
-            pill ? (attachments.length > 0 || wide ? "rounded-3xl" : "rounded-full") : tall ? "rounded-2xl" : "rounded-2xl"
+            "relative isolate flex flex-col overflow-hidden outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-xs transition-[border-color,border-radius] duration-150",
+            tall ? "gap-2.5 p-3.5" : "min-h-11 gap-1.5 p-1",
+            // outer corner = the inner corner + the padding between them (the outline sits on the edge, so it is not counted), never past the theme's outer maximum
+            pill ? (attachments.length > 0 || wide ? "rounded-3xl" : "rounded-full") : tall ? "rounded-[min(var(--radius-outer-max),calc(var(--radius-inner)+14px))]" : "rounded-[min(var(--radius-outer-max),calc(var(--radius-inner)+4px))]"
           )}
         >
-          <span ref={measureRef} aria-hidden="true" className="pointer-events-none invisible absolute text-[13px] leading-[18px] whitespace-pre">
+          <SurfaceFill />
+          <span ref={measureRef} aria-hidden="true" className="text-body-md pointer-events-none invisible absolute whitespace-pre">
             {draft}
           </span>
 
@@ -340,25 +347,25 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               {attachments.map((file, i) => (
                 <span
                   key={`${file}-${i}`}
-                  className={cn("flex h-6.5 items-center gap-1.5 bg-muted py-1 pr-1 pl-1.5 text-[11.5px] text-foreground/75 ring-1 ring-foreground/10", pill ? "rounded-full" : "rounded-md")}
+                  className={cn("flex h-6.5 items-center gap-1.5 bg-muted py-1 pr-1 pl-1.5 text-body-md text-foreground/75 ring-1 ring-(--control-edge)", pill ? "rounded-full" : "rounded-(--radius-inner)")}
                   style={{ animation: "pop-in 200ms cubic-bezier(0.23,1,0.32,1) both" }}
                 >
-                  <File className="size-3" strokeWidth={1.8} />
+                  <ThemedIcon phosphor={FileIcon} />
                   <span className="max-w-36 truncate">{file}</span>
                   <button
                     type="button"
                     aria-label={`Remove ${file}`}
                     onClick={() => setAttachments((current) => current.filter((_, j) => j !== i))}
-                    className={cn("-my-1 flex size-6 items-center justify-center text-foreground/75 transition-colors duration-100 hover:bg-border hover:text-foreground", pill ? "rounded-full" : "rounded-[5px]")}
+                    className={cn("-my-1 flex size-6 items-center justify-center text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)", pill ? "rounded-full" : "rounded-[5px]")}
                   >
-                    <X className="size-2.5" strokeWidth={2.5} />
+                    <ThemedIcon phosphor={XIcon} />
                   </button>
                 </span>
               ))}
             </div>
           )}
 
-          <div ref={controlsRef} className={cn("grid items-end gap-x-1 gap-y-1.5", wide ? "grid-cols-[28px_auto_minmax(0,1fr)_28px_28px]" : "grid-cols-[28px_minmax(0,1fr)_auto_28px_28px]")}>
+          <div ref={controlsRef} className={cn("grid items-end gap-x-1 gap-y-1.5", wide ? "grid-cols-[36px_auto_minmax(0,1fr)_36px_36px]" : "grid-cols-[36px_minmax(0,1fr)_auto_36px_36px]")}>
             <button
               type="button"
               aria-label="Add attachments and sources"
@@ -369,13 +376,13 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 inputRef.current?.focus()
               }}
               className={cn(
-                "flex size-7 shrink-0 items-center justify-center justify-self-start text-foreground/75 transition-[background-color,color,transform] duration-150 hover:bg-muted hover:text-foreground active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-md",
+                "flex size-9 shrink-0 items-center justify-center justify-self-start text-foreground/75 transition-[background-color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover) active:scale-[0.94]",
+                pill ? "rounded-full" : "rounded-(--radius-inner)",
                 plusOpen && "bg-muted text-foreground",
                 wide ? "col-start-1 row-start-2" : "col-start-1 row-start-1"
               )}
             >
-              <Plus className="size-4" strokeWidth={2} />
+              <ThemedIcon phosphor={PlusIcon} />
             </button>
 
             <textarea
@@ -415,7 +422,8 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               aria-label="Prompt"
               className={cn(
                 "w-full min-w-0 resize-none bg-transparent text-foreground outline-none [overflow-wrap:anywhere] placeholder:text-foreground/75",
-                tall ? "min-h-[68px] px-2 py-2 text-[14px] leading-5" : "min-h-7 px-1 py-[5px] text-[13px] leading-[18px]",
+                // an input inside a component takes double the component's padding at the sides: 8px in the 4px bar, 28px in the 14px tall one
+                tall ? "text-body-md min-h-[68px] px-7 py-2" : "text-body-md min-h-9 px-2 py-[calc((2.25rem-1lh)/2)]",
                 wide ? "col-span-full col-start-1 row-start-1" : "col-start-2 row-start-1"
               )}
             />
@@ -430,13 +438,13 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 setModelOpen((current) => !current)
               }}
               className={cn(
-                "flex h-7 shrink-0 items-center gap-1 px-1.5 text-[12px] font-medium text-foreground/75 transition-colors duration-150 hover:bg-muted hover:text-foreground",
-                pill ? "rounded-full" : "rounded-md",
+                "text-body-md flex h-9 shrink-0 items-center gap-1 px-2 text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)",
+                pill ? "rounded-full" : "rounded-(--radius-inner)",
                 wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
               )}
             >
               {model.name}
-              <ChevronDown className="size-2.5 text-foreground/75" strokeWidth={2.4} />
+              <ThemedIcon phosphor={CaretDownIcon} className="text-foreground/75" />
             </button>
 
             <button
@@ -445,9 +453,9 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               aria-pressed={listening}
               onClick={() => setListening((current) => !current)}
               className={cn(
-                "flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-150 active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-md",
-                listening ? "bg-primary/14 text-primary" : "text-foreground/75 hover:bg-muted hover:text-foreground",
+                "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) active:scale-[0.94]",
+                pill ? "rounded-full" : "rounded-(--radius-inner)",
+                listening ? "bg-primary/14 text-primary" : "text-foreground/75 hover:bg-(--control-hover)",
                 wide ? "col-start-4 row-start-2" : "col-start-4 row-start-1"
               )}
             >
@@ -458,7 +466,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                   ))}
                 </span>
               ) : (
-                <Mic className="size-3.5" strokeWidth={2} />
+                <ThemedIcon phosphor={MicrophoneIcon} />
               )}
             </button>
 
@@ -468,13 +476,13 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               disabled={!canSend}
               onClick={send}
               className={cn(
-                "flex size-7 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-md",
+                "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.94]",
+                pill ? "rounded-full" : "rounded-(--radius-inner)",
                 canSend ? "bg-foreground text-background" : "bg-border text-foreground/75",
                 wide ? "col-start-5 row-start-2" : "col-start-5 row-start-1"
               )}
             >
-              <ArrowUp className="size-4" strokeWidth={2.4} />
+              <ThemedIcon phosphor={ArrowUpIcon} />
             </button>
           </div>
         </div>

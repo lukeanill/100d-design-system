@@ -1,6 +1,6 @@
 "use client"
 
-import { AnimationOptions, motion } from "motion/react"
+import { motion, type AnimationOptions } from "motion/react"
 import {
   forwardRef,
   useCallback,

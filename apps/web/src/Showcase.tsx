@@ -2,6 +2,7 @@ import { useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { Popover, PopoverPanel } from "@workspace/ui/components/animate-ui/components/base/popover"
 import { GlassLayer, LiquidGlass, glassProps } from "@workspace/ui/components/liquid-glass"
 import { BODY, LinkTile, MIGRA } from "./LinkTile"
+import { Preview } from "./Preview"
 
 /* The homepage, built to the Figma "HOME" frame (Themes file, node 94:3232).
  * Sizes, gaps and colours are the frame's own values, not theme tokens. */
@@ -139,9 +140,9 @@ export function Showcase() {
     <div className="relative isolate flex min-h-svh flex-col items-center overflow-x-clip bg-black text-[#fbfbfc]">
       <Backdrop />
 
-      <div className="relative z-10 flex w-full flex-col">
+      <div className="relative z-10 flex w-full flex-col gap-[clamp(40px,6.25vw,80px)]">
         {/* Hero */}
-        <Section className="flex flex-col items-center gap-10 pt-[clamp(128px,15.625vw,200px)] pb-[clamp(36px,7.03125vw,90px)]">
+        <Section className="flex flex-col items-center gap-10 pt-[clamp(96px,12.5vw,160px)]">
           <div className="flex flex-col items-center text-center leading-[1.22]">
             <p className={`${MIGRA} text-[clamp(32px,3.75vw,48px)] font-extralight`}>A themeable</p>
             <p className={`${MIGRA} text-[clamp(40px,4.6875vw,60px)] font-extrabold`}>design system</p>
@@ -155,7 +156,7 @@ export function Showcase() {
         </Section>
 
         {/* Three link tiles */}
-        <Section className="pt-[clamp(12px,2.34375vw,30px)] pb-[clamp(24px,4.6875vw,60px)]">
+        <Section className="pb-[clamp(40px,6.25vw,80px)]">
           <Popover open={installOpen} onOpenChange={setInstallOpen}>
           <div ref={tilesRef} className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
           <LinkTile
@@ -183,8 +184,14 @@ export function Showcase() {
           </Popover>
         </Section>
 
+        {/* Preview */}
+        <Section className="flex flex-col items-start gap-10 pt-[clamp(12px,1.875vw,24px)] pb-[clamp(40px,6.25vw,80px)]">
+          <Pill>Preview</Pill>
+          <Preview />
+        </Section>
+
         {/* This is */}
-        <Section className="flex flex-col items-start gap-8 py-[clamp(24px,4.6875vw,60px)]">
+        <Section className="flex flex-col items-start gap-8">
           <Pill>This is</Pill>
           <div className="flex flex-col gap-1">
             <p className={H48}>An experiment of </p>
@@ -200,7 +207,7 @@ export function Showcase() {
         </Section>
 
         {/* Problem */}
-        <Section className="flex flex-col items-start gap-10 pt-[clamp(24px,4.6875vw,60px)] pb-[clamp(24px,4.6875vw,60px)]">
+        <Section className="flex flex-col items-start gap-10 pt-[clamp(12px,1.875vw,24px)]">
           <Pill>Problem</Pill>
           <div className="flex w-full flex-col gap-10 min-[1100px]:flex-row min-[1100px]:gap-20">
             <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -221,7 +228,7 @@ export function Showcase() {
         </Section>
 
         {/* Change */}
-        <Section className="flex flex-col items-start gap-10 pt-[clamp(12px,2.34375vw,30px)] pb-[clamp(24px,4.6875vw,60px)]">
+        <Section className="flex flex-col items-start gap-10 pt-[clamp(12px,1.875vw,24px)]">
           <Pill>Change</Pill>
           <div className="flex w-full flex-col gap-6 min-[1100px]:flex-row min-[1100px]:gap-0">
             <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -244,7 +251,7 @@ export function Showcase() {
         </Section>
 
         {/* Mission */}
-        <Section className="flex flex-col items-start gap-10 pt-[clamp(24px,4.6875vw,60px)] pb-[clamp(48px,9.375vw,120px)]">
+        <Section className="flex flex-col items-start gap-10 pt-[clamp(20px,3.125vw,40px)] pb-[clamp(96px,12.5vw,160px)]">
           <Pill>Mission</Pill>
           <div className="flex w-full flex-col gap-10 pb-6 min-[1100px]:flex-row min-[1100px]:gap-20">
             <div className="flex min-w-0 flex-1 flex-col justify-center pb-[6px]">

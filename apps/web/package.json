@@ -10,7 +10,7 @@
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc -b",
     "preview": "vite preview",
-    "stories": "storybook dev -p 6006",
+    "stories": "storybook dev -p ${PORT:-6006}",
     "stories:build": "storybook build",
     "test": "vitest",
     "chromatic": "chromatic"

@@ -1,8 +1,10 @@
-import { useEffect, useState, type ReactNode, type RefObject } from "react"
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react"
 import { MetalFx as MetalFxV1 } from "metal-fx"
 import { MetalFx as MetalFxV2 } from "metal-fx-v2"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { observeTheme } from "@workspace/ui/lib/observe-theme"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 /**
  * A liquid-metal ring around a single control (metal-fx, the libraries.dev "Metal" effect), or the
@@ -36,13 +38,28 @@ type MetalSurfaceProps = {
   className?: string
   /** Neighbours that catch a soft reflection of the ring (dark theme only). */
   reflectionTargets?: ReadonlyArray<RefObject<HTMLElement | null>>
+  /** Fill the control from the theme's texture and colour (see SurfaceFill) instead of the plain glass tint. */
+  themedFill?: boolean
+  /** Ring thickness in CSS px; the engine's own default when omitted (v1 only). */
+  ringWidth?: number
 }
 
 // The surface, quiet or active: glass, not a solid fill. A translucent tint of the theme's foreground
 // colour over a soft blur, with the text in that same foreground, so whatever is behind shows through and the
 // ring reads against it. `!` because metal-fx injects its own (unlayered) surface styles, which would
 // otherwise win over the utility layer.
+/** The same, with the fill left to the theme: the root is clear and the texture sits behind it. */
+const THEMED_SURFACE = cn(
+  "rounded-(--radius) bg-transparent!",
+  "hover:bg-(--control-hover)!",
+  "text-foreground! data-[quiet]:after:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_10%,transparent)]!",
+  "[&[data-quiet]_.metal-fx-inner]:shadow-none!",
+  // `!` because metal-fx sets its own transition inline, for its reveal
+  "transition-[background-color]! duration-(--motion-fast)! ease-(--motion-transition-ease)!"
+)
+
 const SURFACE = cn(
+  "rounded-(--radius)",
   "bg-[color-mix(in_srgb,var(--foreground)_8%,transparent)]! backdrop-blur-md",
   "hover:bg-[color-mix(in_srgb,var(--foreground)_12%,transparent)]!",
   "text-foreground! data-[quiet]:after:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_10%,transparent)]!",
@@ -50,20 +67,33 @@ const SURFACE = cn(
   "transition-colors"
 )
 
-function readDocumentTheme(): MetalTheme {
+/** The theme in force at an element: its CSS `color-scheme` (every theme sets one), else the `.dark` class. */
+function readTheme(el: Element | null): MetalTheme {
   if (typeof document === "undefined") return "dark"
+  const scheme = getComputedStyle(el ?? document.documentElement).colorScheme
+  if (scheme.includes("dark")) return "dark"
+  if (scheme.includes("light")) return "light"
   return document.documentElement.classList.contains("dark") ? "dark" : "light"
 }
 
-/** The document's light/dark theme, kept in sync with its `.dark` class. */
-function useDocumentTheme(): MetalTheme {
-  const [theme, setTheme] = useState<MetalTheme>(readDocumentTheme)
-  useEffect(() => {
-    const observer = new MutationObserver(() => setTheme(readDocumentTheme()))
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
-    return () => observer.disconnect()
-  }, [])
+/**
+ * The light/dark theme where `ref` sits, kept in sync as the page's theme class changes and read
+ * again on every render, so an ancestor that wears its own theme (a scoped preview) is followed too.
+ * Themes are named classes (`.berghain`), not `.dark`, so the class alone says nothing about them.
+ */
+function useScopedTheme(ref: RefObject<Element | null>): MetalTheme {
+  const [theme, setTheme] = useState<MetalTheme>(() => readTheme(null))
+  useLayoutEffect(() => {
+    const next = readTheme(ref.current)
+    if (next !== theme) setTheme(next)
+  })
+  useEffect(() => observeTheme(ref.current, () => setTheme(readTheme(ref.current))), [ref])
   return theme
+}
+
+/** The document's light/dark theme, kept in sync with its theme class. */
+function useDocumentTheme(): MetalTheme {
+  return useScopedTheme({ current: typeof document === "undefined" ? null : document.documentElement })
 }
 
 function MetalSurface({
@@ -77,23 +107,53 @@ function MetalSurface({
   strength = 0.9,
   className,
   reflectionTargets,
+  themedFill = false,
+  ringWidth,
 }: MetalSurfaceProps) {
-  const documentTheme = useDocumentTheme()
+  const anchor = useRef<HTMLSpanElement>(null)
+  const scopedTheme = useScopedTheme(anchor)
+  // the ring takes its corner from the host's radius once, when it starts, so a theme with another
+  // radius starts it again
+  const [radius, setRadius] = useState<string | null>(null)
+  useLayoutEffect(() => {
+    const next = anchor.current ? getComputedStyle(anchor.current).getPropertyValue("--radius").trim() : ""
+    if (next !== radius) setRadius(next)
+  })
+  useEffect(
+    () => observeTheme(anchor.current, () => setRadius(getComputedStyle(anchor.current!).getPropertyValue("--radius").trim())),
+    []
+  )
   const MetalFx = engine === "v2" ? MetalFxV2 : MetalFxV1
-  return (
+  // nothing starts until the radius is known, so the effect mounts once instead of once to be thrown away
+  const surface = radius === null ? null : (
     <MetalFx
+      key={radius}
+      {...(engine === "v1" && ringWidth !== undefined ? { ringCssPx: ringWidth } : {})}
       variant={variant}
       preset={preset}
       strength={active ? strength : 0}
-      theme={theme ?? documentTheme}
+      theme={theme ?? scopedTheme}
       disableGlow={!active || !halo}
       reflectionTargets={active ? reflectionTargets : undefined}
-      className={cn(SURFACE, className)}
+      className={cn(themedFill ? THEMED_SURFACE : SURFACE, className)}
       data-slot="metal-surface"
       data-quiet={active ? undefined : "true"}
     >
       {children}
     </MetalFx>
+  )
+  return (
+    <>
+      <span ref={anchor} hidden />
+      {themedFill ? (
+        <span className={cn("relative isolate inline-flex", variant === "circle" ? "rounded-full" : "rounded-(--radius)")}>
+          <SurfaceFill />
+          {surface}
+        </span>
+      ) : (
+        surface
+      )}
+    </>
   )
 }
 

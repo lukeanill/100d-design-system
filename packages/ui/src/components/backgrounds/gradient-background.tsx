@@ -47,6 +47,12 @@ export interface GradientBackgroundProps {
    * background.
    */
   useThemeColors?: boolean
+  /**
+   * With `useThemeColors`: swap the roles of background and foreground. The foreground is the base
+   * the field is drawn on and the background the highlight, so a light theme gets a dark field and a
+   * dark theme a light one. Set `scrimColor` to the foreground to match.
+   */
+  inverse?: boolean
   /** Lay the page background over the field for legibility; true is 0.65. */
   scrim?: boolean | number
   scrimColor?: string
@@ -55,6 +61,8 @@ export interface GradientBackgroundProps {
 
 /** Theme tokens a background is painted from, darkest role last for most themes. */
 const THEME_COLOR_TOKENS = ["--background", "--muted", "--secondary", "--accent", "--primary"]
+/** Inverse: the foreground takes the base's place and the background the highlight's. */
+const INVERSE_COLOR_TOKENS = ["--foreground", "--muted", "--secondary", "--accent", "--background"]
 
 /**
  * The theme's colours as seen from an element, as six-digit hex — Balsa only
@@ -64,7 +72,7 @@ const THEME_COLOR_TOKENS = ["--background", "--muted", "--secondary", "--accent"
  */
 let probe: CanvasRenderingContext2D | null | undefined
 
-function readThemeColors(element: Element | null): string {
+function readThemeColors(element: Element | null, inverse = false): string {
   if (!element) return ""
   probe ??= Object.assign(document.createElement("canvas"), { width: 1, height: 1 }).getContext("2d", {
     willReadFrequently: true,
@@ -85,7 +93,7 @@ function readThemeColors(element: Element | null): string {
     if (a < 128) return null
     return ("#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")).toUpperCase()
   }
-  const colors = [...new Set(THEME_COLOR_TOKENS.map(hex).filter((c): c is string => Boolean(c)))]
+  const colors = [...new Set((inverse ? INVERSE_COLOR_TOKENS : THEME_COLOR_TOKENS).map(hex).filter((c): c is string => Boolean(c)))]
   // a theme whose tokens collapse to one colour still needs two stops
   const foreground = hex("--foreground")
   if (colors.length < 2 && foreground && !colors.includes(foreground)) colors.push(foreground)
@@ -98,7 +106,7 @@ function readThemeColors(element: Element | null): string {
  * sets a class on <html>; the Themer paints tokens on a wrapper), or the
  * system colour scheme.
  */
-function useThemeColors(ref: React.RefObject<HTMLElement | null>, enabled: boolean) {
+function useThemeColors(ref: React.RefObject<HTMLElement | null>, enabled: boolean, inverse = false) {
   const subscribe = React.useCallback(
     (notify: () => void) => {
       if (!enabled) return () => {}
@@ -118,7 +126,7 @@ function useThemeColors(ref: React.RefObject<HTMLElement | null>, enabled: boole
   )
   const snapshot = React.useSyncExternalStore(
     subscribe,
-    () => (enabled ? readThemeColors(ref.current) : ""),
+    () => (enabled ? readThemeColors(ref.current, inverse) : ""),
     () => ""
   )
   return snapshot ? snapshot.split(",") : undefined
@@ -327,6 +335,7 @@ export function GradientBackground({
   preset,
   paused = false,
   useThemeColors: themed = false,
+  inverse = false,
   scrim = false,
   scrimColor = "var(--background)",
   className,
@@ -336,7 +345,7 @@ export function GradientBackground({
   const controllerRef = React.useRef<ReturnType<typeof createController> | null>(null)
   const [{ ready, contextLost }, setStatus] = React.useState({ ready: false, contextLost: false })
 
-  const themeColors = useThemeColors(rootRef, themed)
+  const themeColors = useThemeColors(rootRef, themed, inverse)
   const themeKey = themeColors?.join(",")
 
   const configuration = React.useMemo<BalsaBackgroundConfig>(() => {

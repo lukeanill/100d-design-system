@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Share2 } from 'lucide-react';
 import { GithubLogo, XLogo, FacebookLogo } from '@phosphor-icons/react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { HTMLMotionProps, motion, AnimatePresence } from 'motion/react';
+import { type HTMLMotionProps, motion, AnimatePresence } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
 

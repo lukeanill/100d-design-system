@@ -1,127 +1,198 @@
-import { CheckCircleIcon, DiamondIcon, PencilSimpleIcon } from "@phosphor-icons/react"
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { BeachBallIcon, CheckCircleIcon, DiamondIcon } from "@phosphor-icons/react"
+import { useEffect, useState, type ReactNode } from "react"
 
 import { cn } from "@workspace/ui/lib/utils"
 import {
-  ELEVATIONS,
-  ICON_STYLES,
-  ICON_WEIGHTS,
-  MATERIALS,
-  RADII,
-  SPACINGS,
+  BODY_FONTS,
+  HEADING_FONTS,
   VALUE_QUESTIONS,
   nearestWeight,
+  type Elevation,
+  type IconWeight,
+  type Material,
+  type Radius,
+  type Scale,
+  type Spacing,
   type ThemeDraft,
+  type Tone,
 } from "@workspace/ui/themes"
 
-import { AlpesCard } from "./AlpesCard"
 import { ActionButton, BackButton, Header, Page, Panel } from "./Chrome"
+import { ControlTile } from "./ControlTile"
+import { FeelTab } from "./Feel"
 import { checkFont, loadPickerFonts } from "./fontLoading"
-import { ChoicePicker, ColorPicker, FontPicker, WeightPicker, type Option } from "./Pickers"
-import { badColors, lookDone, valuesDone, type Tab } from "./state"
+import { ColorToken, FontToken, OptionGroup, OptionRow, StepToken, Swatch, TextToken, WeightToken } from "./Pickers"
+import { ProductPreview } from "./ProductPreview"
+import { badColors, feelDone, feelMissing, lookDone, lookMissing, valuesDone, valuesMissing, type Tab } from "./state"
 
-/* --- the small pictures inside the Styles pickers ---------------------------- */
+/* --- the choices of each tile, drawn as the Figma draws them ------------------ */
 
-const box = (style: React.CSSProperties) => <span className="block size-5 bg-[#1b1717]" style={style} />
-const SURFACES: Option<(typeof MATERIALS)[number]>[] = [
-  { value: "solid", label: "Solid", visual: box({}) },
-  { value: "glass", label: "Glass", visual: box({ background: "rgba(27,23,23,.35)", border: "1px solid #1b1717" }) },
-  { value: "gradient", label: "Gradient", visual: box({ background: "linear-gradient(180deg,#1b1717,#d9d9d9)" }) },
+const TEXTURES: { value: Material; label: string; style?: React.CSSProperties; className?: string }[] = [
+  { value: "solid", label: "Solid", className: "bg-white bg-none" },
+  { value: "gradient", label: "Gradient", style: { background: "linear-gradient(180deg, rgba(239,239,239,0.4), #ffffff)" } },
+  { value: "glass", label: "Glass" },
 ]
-const EDGES: Option<(typeof RADII)[number]>[] = [
-  { value: "sharp", label: "Sharp", visual: box({ borderRadius: 0 }) },
-  { value: "subtle", label: "Subtle", visual: box({ borderRadius: 3 }) },
-  { value: "strong", label: "Strong", visual: box({ borderRadius: 7 }) },
-  { value: "rounded", label: "Rounded", visual: box({ borderRadius: 12 }) },
+/** The Figma calls the square-cornered edge "Solid"; the theme's own name for it is "sharp". */
+const EDGES: { value: Radius; label: string; radius: number }[] = [
+  { value: "sharp", label: "Solid", radius: 0 },
+  { value: "subtle", label: "Subtle", radius: 8 },
+  { value: "strong", label: "Strong", radius: 16 },
+  { value: "rounded", label: "Rounded", radius: 9999 },
 ]
-const SHADOWS: Option<(typeof ELEVATIONS)[number]>[] = [
-  { value: "none", label: "None", visual: box({}) },
-  { value: "subtle", label: "Subtle", visual: box({ boxShadow: "0 3px 5px rgba(0,0,0,.4)" }) },
-  { value: "strong", label: "Strong", visual: box({ boxShadow: "5px 5px 0 rgba(0,0,0,.45)" }) },
+const SHADOWS: { value: Elevation; label: string; shadow: string }[] = [
+  { value: "none", label: "None", shadow: "none" },
+  { value: "subtle", label: "Subtle", shadow: "0 4px 4px rgba(0,0,0,0.25)" },
+  { value: "strong", label: "Strong", shadow: "0 8px 8px rgba(0,0,0,0.5)" },
 ]
-const gap = (n: number) => (
-  <span className="flex flex-col" style={{ gap: n }}>
-    <span className="block h-1.5 w-5 bg-[#1b1717]" />
-    <span className="block h-1.5 w-5 bg-[#1b1717]" />
-  </span>
-)
-const SPACING: Option<(typeof SPACINGS)[number]>[] = [
-  { value: "md", label: "Medium", visual: gap(3) },
-  { value: "lg", label: "Large", visual: gap(7) },
+/** Two squares whose gap is the spacing. The Figma gives Large's squares a shadow, so it is drawn here too. */
+const SPACINGS: { value: Spacing; label: string; gap: number; shadow?: string }[] = [
+  { value: "sm", label: "Small", gap: 8 },
+  { value: "md", label: "Medium", gap: 16 },
+  { value: "lg", label: "Large", gap: 24, shadow: "0 4px 4px rgba(0,0,0,0.25)" },
 ]
-const ICON_STYLE_OPTIONS: Option<(typeof ICON_STYLES)[number]>[] = [
-  { value: "phosphor", label: "Phosphor", visual: <span className="text-[11px] font-bold">Ph</span> },
-  { value: "lucide", label: "Lucide", visual: <span className="text-[11px] font-bold">Lu</span> },
+const ICONS: { value: IconWeight; label: string }[] = [
+  { value: "thin", label: "Thin" },
+  { value: "light", label: "Light" },
+  { value: "regular", label: "Regular" },
+  { value: "fill", label: "Filled" },
 ]
-const ICON_WEIGHT_OPTIONS: Option<(typeof ICON_WEIGHTS)[number]>[] = ICON_WEIGHTS.map((w) => ({ value: w, label: w[0].toUpperCase() + w.slice(1), visual: <span className="text-[11px] font-bold">{w[0].toUpperCase()}</span> }))
+/** The texture's tone: cards sit darker or lighter than the page, and glass is dark or light. */
+const TONES: { value: Tone; label: string; fill: string }[] = [
+  { value: "dark", label: "Dark", fill: "linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.85))" },
+  { value: "light", label: "Light", fill: "linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.9))" },
+]
+const SCALES: { value: Scale; label: string }[] = [
+  { value: "sm", label: "Small" },
+  { value: "md", label: "Medium" },
+  { value: "lg", label: "Large" },
+]
 
-/* --- one section: a title, a card, and its controls ------------------------- */
+/* --- the Look tab: a column of control tiles beside a live product page ------- */
 
-/** The card at a fixed scale, clipped to its own box. */
-function Scaled({ draft, scale, crop }: { draft: ThemeDraft; scale: number; crop?: { width: number; height: number; x: number } }) {
-  const width = crop?.width ?? 480 * scale
-  const height = crop?.height ?? 340 * scale
+type TileId = "name" | "color" | "type" | "texture" | "edges" | "shadow" | "spacing" | "icons"
+
+function LookTab({
+  draft,
+  set,
+  onNext,
+  missing,
+}: {
+  draft: ThemeDraft
+  set: (patch: Partial<ThemeDraft>) => void
+  onNext: () => void
+  /** What is still to do; NEXT stays shut until it is empty. */
+  missing: string[]
+}) {
+  const [open, setOpen] = useState<TileId | null>("name")
+  const tile = (id: TileId) => ({ open: open === id, onOpenChange: (o: boolean) => setOpen(o ? id : null) })
   return (
-    <div style={{ width, height, overflow: "hidden", flex: "none" }}>
-      <div style={{ transform: `translateX(${-(crop?.x ?? 0)}px) scale(${scale})`, transformOrigin: "top left", width: 480, height: 340 }}>
-        <AlpesCard draft={draft} />
+    <div className="grid items-start gap-10 min-[1180px]:grid-cols-[390px_minmax(0,640px)] min-[1180px]:gap-[clamp(40px,8.6vw,110px)]">
+      <div className="flex flex-col gap-4">
+        <ControlTile title="Theme name" {...tile("name")}>
+          <TextToken label="Theme name" placeholder="New theme name" value={draft.label} onChange={(label) => set({ label })} />
+        </ControlTile>
+
+        <ControlTile title="Color" {...tile("color")}>
+          <div className="flex flex-col gap-3">
+            <ColorToken label="Background" value={draft.background} onChange={(background) => set({ background })} />
+            <ColorToken label="Foreground" value={draft.foreground} onChange={(foreground) => set({ foreground })} />
+            <ColorToken label="Primary" value={draft.primary} onChange={(primary) => set({ primary })} />
+            <ColorToken label="Secondary" value={draft.secondary} onChange={(secondary) => set({ secondary })} />
+          </div>
+        </ControlTile>
+
+        <ControlTile title="Typography" {...tile("type")}>
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-[minmax(0,1fr)_104px] gap-2">
+              <FontToken label="Heading" fonts={HEADING_FONTS} value={draft.headingFont} weight={draft.headingWeight} onChange={(headingFont) => set({ headingFont, headingWeight: nearestWeight(headingFont, draft.headingWeight ?? 400) })} />
+              <WeightToken label="Weight" family={draft.headingFont} value={draft.headingWeight} onChange={(headingWeight) => set({ headingWeight })} />
+            </div>
+            <div className="grid grid-cols-[minmax(0,1fr)_104px] gap-2">
+              <FontToken label="Body" fonts={BODY_FONTS} value={draft.bodyFont} weight={draft.bodyWeight} onChange={(bodyFont) => set({ bodyFont, bodyWeight: nearestWeight(bodyFont, draft.bodyWeight ?? 400) })} />
+              <WeightToken label="Weight" family={draft.bodyFont} value={draft.bodyWeight} onChange={(bodyWeight) => set({ bodyWeight })} />
+            </div>
+            <StepToken label="Scale" value={draft.scale} options={SCALES} onChange={(scale) => set({ scale })} />
+          </div>
+        </ControlTile>
+
+        <ControlTile title="Texture" {...tile("texture")}>
+          <OptionGroup label="Texture" className="flex flex-col gap-2">
+            {TEXTURES.map((t) => (
+              <OptionRow key={t.value} label={t.label} selected={draft.material === t.value} onSelect={() => set({ material: t.value })}>
+                <Swatch selected={draft.material === t.value} className={t.className} style={t.style} />
+              </OptionRow>
+            ))}
+          </OptionGroup>
+          <OptionGroup label="Tone" className="mt-4 grid grid-cols-2 gap-2">
+            {TONES.map((t) => (
+              <OptionRow key={t.value} label={t.label} selected={draft.tone === t.value} onSelect={() => set({ tone: t.value })}>
+                <Swatch selected={draft.tone === t.value} style={{ background: t.fill }} />
+              </OptionRow>
+            ))}
+          </OptionGroup>
+        </ControlTile>
+
+        <ControlTile title="Edges" {...tile("edges")}>
+          <OptionGroup label="Edges" className="grid grid-cols-2 gap-2">
+            {EDGES.map((e) => (
+              <OptionRow key={e.value} label={e.label} selected={draft.radius === e.value} onSelect={() => set({ radius: e.value })}>
+                <Swatch selected={draft.radius === e.value} round={e.radius === 9999} radius={e.radius} />
+              </OptionRow>
+            ))}
+          </OptionGroup>
+        </ControlTile>
+
+        <ControlTile title="Shadow" lifted {...tile("shadow")}>
+          <OptionGroup label="Shadow" className="flex flex-col gap-4">
+            {SHADOWS.map((s) => (
+              <OptionRow key={s.value} label={s.label} selected={draft.elevation === s.value} onSelect={() => set({ elevation: s.value })}>
+                <Swatch selected={draft.elevation === s.value} style={{ boxShadow: s.shadow }} />
+              </OptionRow>
+            ))}
+          </OptionGroup>
+        </ControlTile>
+
+        <ControlTile title="Spacing" {...tile("spacing")}>
+          <OptionGroup label="Spacing" className="flex flex-col gap-4">
+            {SPACINGS.map((s) => (
+              <OptionRow key={s.value} labelFirst label={s.label} selected={draft.spacing === s.value} onSelect={() => set({ spacing: s.value })} className="w-full">
+                <span className="flex" style={{ gap: s.gap }}>
+                  <Swatch selected={draft.spacing === s.value} style={{ boxShadow: s.shadow }} />
+                  <Swatch selected={draft.spacing === s.value} style={{ boxShadow: s.shadow }} />
+                </span>
+              </OptionRow>
+            ))}
+          </OptionGroup>
+        </ControlTile>
+
+        <ControlTile title="Icons" {...tile("icons")}>
+          <OptionGroup label="Icons" className="grid grid-cols-2 gap-2">
+            {ICONS.map((i) => (
+              <OptionRow key={i.value} label={i.label} selected={draft.iconWeight === i.value} onSelect={() => set({ iconWeight: i.value, iconStyle: "phosphor" })}>
+                <Swatch round selected={draft.iconWeight === i.value}>
+                  <BeachBallIcon size={32} weight={i.value} aria-hidden />
+                </Swatch>
+              </OptionRow>
+            ))}
+          </OptionGroup>
+        </ControlTile>
+
+        {missing.length > 0 && (
+          <p role="status" className="px-2 text-center text-sm opacity-70">
+            Still to do: {missing.join(", ")}
+          </p>
+        )}
+        <button
+          type="button"
+          onClick={onNext}
+          disabled={missing.length > 0}
+          className="cursor-pointer rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/12 p-6 text-center text-[28px] leading-[1.14] italic outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-default disabled:opacity-50"
+        >
+          NEXT
+        </button>
       </div>
-    </div>
-  )
-}
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <Panel className="relative h-[460px] overflow-hidden max-lg:h-auto max-lg:pb-8">
-      <h3 className="pt-[44px] text-center text-[28px] leading-[1.14]">{title}</h3>
-      <div className="mt-[52px] flex items-start justify-center gap-12 px-6 max-lg:flex-col max-lg:items-center">{children}</div>
-    </Panel>
-  )
-}
-
-const Column = ({ children }: { children: ReactNode }) => <div className="flex flex-col items-center gap-8 pt-2">{children}</div>
-
-function LookSections({ draft, set }: { draft: ThemeDraft; set: (patch: Partial<ThemeDraft>) => void }) {
-  return (
-    <div className="flex flex-col gap-5">
-      <Section title="Colors">
-        <Column>
-          <ColorPicker label="Background" value={draft.background} onChange={(background) => set({ background })} />
-          <ColorPicker label="Primary" value={draft.primary} onChange={(primary) => set({ primary })} />
-          <ColorPicker label="Secondary" value={draft.secondary} onChange={(secondary) => set({ secondary })} />
-        </Column>
-        <AlpesCard draft={draft} />
-      </Section>
-
-      <Section title="Fonts">
-        <Scaled draft={draft} scale={0.81} />
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 pt-2">
-          <FontPicker label="Headings" value={draft.headingFont} onChange={(headingFont) => set({ headingFont, headingWeight: nearestWeight(headingFont, draft.headingWeight ?? 400) })} />
-          <WeightPicker label="Weight" family={draft.headingFont} value={draft.headingWeight} onChange={(headingWeight) => set({ headingWeight })} />
-          <FontPicker label="Body" value={draft.bodyFont} onChange={(bodyFont) => set({ bodyFont, bodyWeight: nearestWeight(bodyFont, draft.bodyWeight ?? 400) })} />
-          <WeightPicker label="Weight" family={draft.bodyFont} value={draft.bodyWeight} onChange={(bodyWeight) => set({ bodyWeight })} />
-        </div>
-      </Section>
-
-      <Section title="Styles">
-        <Column>
-          <ChoicePicker label="Surfaces" value={draft.material} options={SURFACES} onChange={(material) => set({ material })} />
-          <ChoicePicker label="Edges" value={draft.radius} options={EDGES} onChange={(radius) => set({ radius })} />
-        </Column>
-        <Scaled draft={draft} scale={0.81} />
-        <Column>
-          <ChoicePicker label="Shadows" value={draft.elevation} options={SHADOWS} onChange={(elevation) => set({ elevation })} />
-          <ChoicePicker label="Spacing" value={draft.spacing} options={SPACING} onChange={(spacing) => set({ spacing })} />
-        </Column>
-      </Section>
-
-      <Section title="Icons">
-        <Scaled draft={draft} scale={1.7} crop={{ width: 390, height: 262, x: 363 }} />
-        <Column>
-          <ChoicePicker shape="circle" label="Style" value={draft.iconStyle} options={ICON_STYLE_OPTIONS} onChange={(iconStyle) => set({ iconStyle })} />
-          <ChoicePicker shape="circle" label="Weight" value={draft.iconWeight} options={ICON_WEIGHT_OPTIONS} onChange={(iconWeight) => set({ iconWeight })} />
-        </Column>
-      </Section>
+      <ProductPreview draft={draft} className="min-[1180px]:sticky min-[1180px]:top-[137px]" />
     </div>
   )
 }
@@ -167,55 +238,38 @@ function ValuesSections({ draft, set }: { draft: ThemeDraft; set: (patch: Partia
 
 /* --- the screen ------------------------------------------------------------- */
 
-function TabButton({ id, tab, onTab, state, children }: { id: Tab; tab: Tab; onTab: (t: Tab) => void; state: "done" | "skipped" | "todo"; children: ReactNode }) {
+/** One of the bar's three words: the current one is full white, the rest half. */
+function TabButton({
+  id,
+  tab,
+  onTab,
+  state,
+  locked = false,
+  children,
+}: {
+  id: Tab
+  tab: Tab
+  onTab: (t: Tab) => void
+  state: "done" | "skipped" | "todo"
+  /** The page before it is not finished, so it cannot be opened yet. */
+  locked?: boolean
+  children: ReactNode
+}) {
   const active = tab === id
   return (
     <button
       type="button"
       role="tab"
       aria-selected={active}
+      aria-disabled={locked && !active}
+      disabled={locked && !active}
       onClick={() => onTab(id)}
-      className={cn(
-        "flex cursor-pointer items-center gap-1.5 text-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
-        active ? "text-white" : state === "done" ? "text-[#00bc7d]" : state === "skipped" ? "text-[#fe9a00]" : "text-white/50"
-      )}
+      className={cn("flex cursor-pointer items-center gap-1.5 text-base leading-[1.42] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-default", !active && "opacity-50")}
     >
       {children}
       {state === "done" && <CheckCircleIcon size={14} weight="fill" className="text-[#00bc7d]" />}
       {state === "skipped" && <DiamondIcon size={14} weight="fill" className="text-[#fe9a00]" />}
     </button>
-  )
-}
-
-/** The theme's name: a title you can type over. */
-export function NameField({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder: string }) {
-  const [editing, setEditing] = useState(false)
-  const ref = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    if (editing) ref.current?.select()
-  }, [editing])
-  return (
-    <div className="inline-flex flex-col items-center">
-      {editing ? (
-        <input
-          ref={ref}
-          aria-label="Theme name"
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onBlur={() => setEditing(false)}
-          onKeyDown={(e) => e.key === "Enter" && setEditing(false)}
-          className="w-[min(70vw,430px)] bg-transparent text-center text-[48px] leading-[1.22] outline-none max-sm:text-[32px]"
-          style={{ fontFamily: "var(--font-heading)", fontWeight: "var(--h2-weight)" }}
-        />
-      ) : (
-        <button type="button" onClick={() => setEditing(true)} aria-label="Rename theme" className="flex cursor-text items-start gap-2 text-[48px] leading-[1.22] max-sm:text-[32px]" style={{ fontFamily: "var(--font-heading)" }}>
-          {value || placeholder}
-          <PencilSimpleIcon size={18} className="mt-3" />
-        </button>
-      )}
-      <span className="mt-1 w-full border-b border-dashed border-white/70" />
-    </div>
   )
 }
 
@@ -248,31 +302,47 @@ export function Language({
   }, [draft.bodyFont, draft.bodyWeight])
 
   const bad = badColors(draft)
+  // each page has to be complete before the next: Look, then Feel, then Values
+  const lookGap = [...lookMissing(draft), ...bad.map((k) => `${k} colour`)]
+  const feelGap = [...lookGap, ...feelMissing(draft)]
+  const gap = tab === "look" ? lookGap : tab === "feel" ? feelGap : [...feelGap, ...valuesMissing(draft)]
   const stateOf = (id: Tab): "done" | "skipped" | "todo" => {
-    const done = id === "look" ? lookDone(draft) : valuesDone(draft)
+    const done = id === "look" ? lookDone(draft) : id === "feel" ? feelDone(draft) : valuesDone(draft)
     return done ? "done" : visited.has(id) && tab !== id ? "skipped" : "todo"
   }
 
   return (
-    <Page rings>
+    <Page glow={false} wide>
       <Header
         nav={<BackButton onClick={onBack} />}
-        title={<NameField placeholder="Your Design Language" value={draft.label} onChange={(label) => onChange({ label })} />}
+        center={
+          <div role="tablist" className="flex items-center justify-center gap-6">
+            <TabButton id="look" tab={tab} onTab={onTab} state={stateOf("look")}>
+              Look
+            </TabButton>
+            <TabButton id="feel" tab={tab} onTab={onTab} state={stateOf("feel")} locked={lookGap.length > 0}>
+              Feel
+            </TabButton>
+            <TabButton id="values" tab={tab} onTab={onTab} state={stateOf("values")} locked={feelGap.length > 0}>
+              Values
+            </TabButton>
+          </div>
+        }
         actions={
-          <ActionButton onClick={onContinue} disabled={bad.length > 0} title={bad.length ? "Fix the colour first" : undefined}>
+          <ActionButton onClick={onContinue} disabled={gap.length > 0} title={gap.length ? `Still to do: ${gap.join(", ")}` : undefined}>
             Continue
           </ActionButton>
         }
       />
-      <div role="tablist" className="mb-[60px] flex sm:-mt-12 justify-center gap-6">
-        <TabButton id="look" tab={tab} onTab={onTab} state={stateOf("look")}>
-          Look
-        </TabButton>
-        <TabButton id="values" tab={tab} onTab={onTab} state={stateOf("values")}>
-          Values
-        </TabButton>
-      </div>
-      {tab === "look" ? <LookSections draft={draft} set={onChange} /> : <ValuesSections draft={draft} set={onChange} />}
+      {tab === "look" ? (
+        <LookTab draft={draft} set={onChange} onNext={onContinue} missing={lookGap} />
+      ) : tab === "feel" ? (
+        <FeelTab draft={draft} set={onChange} missing={feelMissing(draft)} />
+      ) : (
+        <div className="mx-auto w-full max-w-[1040px]">
+          <ValuesSections draft={draft} set={onChange} />
+        </div>
+      )}
     </Page>
   )
 }

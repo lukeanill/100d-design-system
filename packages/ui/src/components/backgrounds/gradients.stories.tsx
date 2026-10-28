@@ -16,12 +16,16 @@ export default {
       control: "boolean",
       description: "Paint with the active theme's colours (switch themes in the toolbar)",
     },
+    inverse: {
+      control: "boolean",
+      description: "With theme colours: the foreground is the base and the background the highlight",
+    },
     scrim: { control: { type: "range", min: 0, max: 1, step: 0.05 } },
   },
-  args: { paused: false, useThemeColors: false, scrim: 0 },
+  args: { paused: false, useThemeColors: false, inverse: false, scrim: 0 },
 }
 
-type Args = { paused: boolean; useThemeColors: boolean; scrim: number }
+type Args = { paused: boolean; useThemeColors: boolean; inverse: boolean; scrim: number }
 
 /** A background with content above it, as it is meant to be used. */
 function Scene({
@@ -30,6 +34,7 @@ function Scene({
   dark = false,
   paused,
   useThemeColors,
+  inverse,
   scrim,
 }: Args & { config: BalsaBackgroundConfig; title: string; dark?: boolean }) {
   return (
@@ -38,6 +43,8 @@ function Scene({
         config={config}
         paused={paused}
         useThemeColors={useThemeColors}
+        inverse={inverse}
+        scrimColor={inverse ? "var(--foreground)" : undefined}
         scrim={scrim}
       />
       <div className="relative z-10 flex min-h-screen items-center justify-center p-8">

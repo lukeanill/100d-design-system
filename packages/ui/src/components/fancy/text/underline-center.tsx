@@ -1,7 +1,7 @@
 "use client"
 
-import { ElementType, useEffect, useRef, useMemo } from "react"
-import { motion, ValueAnimationTransition } from "motion/react"
+import { useEffect, useRef, useMemo, type ElementType } from "react"
+import { motion, type ValueAnimationTransition } from "motion/react"
 import { cn } from "@workspace/ui/lib/utils"
 
 interface UnderlineProps {

@@ -7,12 +7,12 @@ export default {
   title: "Components/Navigation/Fluid Tabs",
   component: FluidTabsImpl,
   argTypes: {
-    defaultActive: { control: "select", options: ["accounts", "deposits", "funds"] },
+    defaultActive: { control: "select", options: ["look", "feel", "rules"] },
     tabs: { table: { disable: true } },
     onChange: { table: { disable: true } },
   },
   args: {
-    defaultActive: "accounts",
+    defaultActive: "look",
     onChange: fn(),
   },
 }

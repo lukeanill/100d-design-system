@@ -12,7 +12,7 @@ const COLORS = {
 const SPEEDS = { slow: 0.9, medium: 0.45, fast: 0.25 }
 
 export default {
-  title: "Animation/Page Transitions/Step Curtain",
+  title: "Animation/Page Transitions/Curtain",
   component: StepCurtain,
   parameters: { layout: "fullscreen" },
   argTypes: {
@@ -26,7 +26,7 @@ export default {
   args: { color: "foreground", speed: "medium" },
 }
 
-export const StepCurtainDemo = (args: {
+export const CurtainDemo = (args: {
   color: keyof typeof COLORS
   speed: keyof typeof SPEEDS
 }) => {
@@ -50,3 +50,4 @@ export const StepCurtainDemo = (args: {
     </StepCurtain>
   )
 }
+CurtainDemo.storyName = "Curtain"

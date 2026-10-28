@@ -14,16 +14,16 @@ import { MetalSurface, type MetalEngine } from "@workspace/ui/components/metal-s
  *   ControlGroupItem.
  */
 const controlButtonVariants = cva(
-  "flex shrink-0 cursor-pointer items-center justify-center rounded-full bg-transparent font-inter text-inherit outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-default disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "flex shrink-0 cursor-pointer items-center justify-center rounded-[var(--mfx-radius,var(--radius))] bg-transparent text-inherit outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-default disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       shape: {
         circle: "",
-        pill: "gap-2 px-4 text-sm font-medium",
+        pill: "text-body-md gap-2 px-4",
       },
       size: {
-        default: "h-10 [&_svg]:size-[18px]",
-        lg: "h-11 [&_svg]:size-[18px]",
+        default: "h-10 [&_svg]:size-5",
+        lg: "h-11 [&_svg]:size-5",
       },
     },
     compoundVariants: [
@@ -55,7 +55,7 @@ function ControlButton({
   ...props
 }: ControlButtonProps) {
   return (
-    <MetalSurface variant={shape === "pill" ? "button" : "circle"} active={metal} halo={halo} engine={engine}>
+    <MetalSurface variant={shape === "pill" ? "button" : "circle"} active={metal} halo={halo} engine={engine} themedFill>
       <button
         type={type}
         data-slot="control-button"
@@ -83,7 +83,7 @@ function ControlGroup({ children, orientation = "vertical", metal = false, halo 
         role="group"
         data-slot="control-group"
         data-orientation={orientation}
-        className={cn("flex overflow-hidden rounded-full", orientation === "vertical" ? "w-10 flex-col" : "h-10", className)}
+        className={cn("flex overflow-hidden rounded-[var(--mfx-radius,var(--radius))]", orientation === "vertical" ? "w-10 flex-col" : "h-10", className)}
       >
         {children}
       </div>
@@ -97,7 +97,7 @@ function ControlGroupItem({ className, type = "button", ...props }: ComponentPro
       type={type}
       data-slot="control-group-item"
       className={cn(
-        "flex size-10 cursor-pointer items-center justify-center bg-transparent text-inherit outline-none transition-colors hover:bg-black/5 focus-visible:bg-black/10 disabled:cursor-default disabled:opacity-45 dark:hover:bg-white/6 dark:focus-visible:bg-white/10 [&_svg]:pointer-events-none [&_svg]:size-[18px] [&_svg]:shrink-0",
+        "flex size-10 cursor-pointer items-center justify-center bg-transparent text-inherit outline-none transition-colors hover:bg-black/5 focus-visible:bg-black/10 disabled:cursor-default disabled:opacity-45 dark:hover:bg-white/6 dark:focus-visible:bg-white/10 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0",
         className
       )}
       {...props}

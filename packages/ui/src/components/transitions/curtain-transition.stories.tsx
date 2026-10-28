@@ -12,7 +12,7 @@ const COLORS = {
 const SPEEDS = { slow: 1, medium: 0.55, fast: 0.3 }
 
 export default {
-  title: "Animation/Page Transitions/Curtain Transition",
+  title: "Animation/Page Transitions/Curtain + Iris",
   component: CurtainTransition,
   parameters: { layout: "fullscreen" },
   argTypes: {
@@ -25,7 +25,7 @@ export default {
   args: { color: "foreground", speed: "medium" },
 }
 
-export const CurtainTransitionDemo = (args: {
+export const CurtainIrisDemo = (args: {
   color: keyof typeof COLORS
   speed: keyof typeof SPEEDS
 }) => {
@@ -49,3 +49,4 @@ export const CurtainTransitionDemo = (args: {
     </CurtainTransition>
   )
 }
+CurtainIrisDemo.storyName = "Curtain + Iris"

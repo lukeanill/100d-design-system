@@ -19,6 +19,27 @@ export const slugify = (label: string) =>
 const fontLine = (role: string, f: Theme["fonts"]["display"]) =>
   ` *   ${role.padEnd(8)} ${f.family}, weight ${f.weight}${fontChoice(f.family)?.source === "bundled" ? " (bundled with the package)" : ""}`
 
+const feelLine = (label: string, value: string) => ` *   ${label.padEnd(22)}${value}`
+
+/** What the Feel page chose, in words; a style left at none says only that. */
+function feelLines(theme: Theme) {
+  const f = theme.feel
+  const lines = [
+    feelLine("page transition", f.transition === "none" ? "none" : `${f.transition}, ${f.transitionColor}, ${f.transitionSpeed}`),
+    feelLine(
+      "animated background",
+      f.animatedBackground === "none"
+        ? "none"
+        : `${f.animatedBackground}${f.animatedBackgroundThemeColors ? ", theme colors" : ""}${f.animatedBackgroundInverse ? ", inverse" : ""}, overlay ${f.animatedBackgroundOverlay}%`
+    ),
+    feelLine("hero heading", f.heroHeading),
+    feelLine("hero text entry", f.heroText),
+    feelLine("button click", f.buttonClick),
+    feelLine("link hover", f.linkHover),
+  ]
+  return [...lines, ` *   Each is also carried as a --theme-… token. Components do not read them yet.`]
+}
+
 /** The header comment: how to use the theme, and the UX direction it was made with. */
 export function themeHeader(theme: Theme, { unset = [] as string[] } = {}) {
   const lines = [
@@ -56,9 +77,16 @@ export function themeHeader(theme: Theme, { unset = [] as string[] } = {}) {
     ` *   ${theme.icons.style === "phosphor" ? "Phosphor" : "Lucide"}, ${theme.icons.weight} weight`,
     ` *`,
     ` * SETTINGS`,
-    ` *   spacing ${theme.spacing}, radius ${theme.radius}, elevation ${theme.elevation}, material ${theme.material}, motion ${theme.motion}`,
-    ` *   Components do not read spacing, motion or the gradient material yet. They are`,
-    ` *   carried as --theme-spacing, --theme-motion and --theme-material.`,
+    ` *   type scale ${theme.scale} (--type-scale multiplies heading and body sizes; medium is 1)`,
+    ` *   spacing ${theme.spacing}, radius ${theme.radius}, elevation ${theme.elevation}, material ${theme.material} (${theme.tone}), motion ${theme.motion}`,
+    ` *   Components do not read spacing or motion yet. They are carried as`,
+    ` *   --theme-spacing and --theme-motion. The texture tone shows on cards: --card is the`,
+    ` *   solid colour, --card-image the gradient (painted by bg-card), and the glass tint follows it.`,
+    ` *`,
+    ` * FEEL`,
+    ` *   component animations ${theme.motion}: --motion-ease, --motion-duration and --motion-spring-bounce`,
+    ` *   (springy runs as a spring where the library has one, and as --motion-ease where it has not)`,
+    ...feelLines(theme),
   ]
   if (unset.length) {
     lines.push(` *`, ` * NOT CHOSEN IN THE THEMER`, ` *   ${unset.join(", ")} were left empty and use Berghain's values.`)

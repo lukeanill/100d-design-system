@@ -79,7 +79,8 @@ export function CodePanel({ code, numbered }: { code: string; numbered?: boolean
 export function CodeScreen({ code, onHome, onDownload }: { code: string; onHome: () => void; onDownload: () => void }) {
   return (
     <Page glow="glow-code">
-      <Header nav={<HomeButton onClick={onHome} />} title={<PageTitle>Theme Code</PageTitle>} actions={<ActionButton onClick={onDownload}>Download</ActionButton>} />
+      <Header nav={<HomeButton onClick={onHome} />} actions={<ActionButton onClick={onDownload}>Download</ActionButton>} />
+      <PageTitle>Theme Code</PageTitle>
       <CodePanel code={code} numbered />
     </Page>
   )
@@ -87,23 +88,20 @@ export function CodeScreen({ code, onHome, onDownload }: { code: string; onHome:
 
 /** My theme: the code for the theme just made, with Download and Exit. */
 export function MyThemeScreen({
-  title,
   code,
   onBack,
   onDownload,
   onExit,
 }: {
-  title: React.ReactNode
   code: string
   onBack: () => void
   onDownload: () => void
   onExit: () => void
 }) {
   return (
-    <Page rings>
+    <Page glow={false}>
       <Header
         nav={<BackButton onClick={onBack} />}
-        title={title}
         actions={
           <>
             <ActionButton onClick={onDownload}>Download</ActionButton>
@@ -111,7 +109,7 @@ export function MyThemeScreen({
           </>
         }
       />
-      <h3 className="mb-[60px] text-center text-[28px] leading-[1.14]">Get your theme code</h3>
+      <h3 className="mb-[60px] pt-8 text-center text-[28px] leading-[1.14]">Get your theme code</h3>
       <CodePanel code={code} />
     </Page>
   )

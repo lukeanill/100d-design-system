@@ -24,7 +24,8 @@ export default {
   parameters: { layout: "fullscreen" },
   argTypes: {
     transition: {
-      control: "select",
+      // the id `curtain` is the Curtain + Iris transition (the story of that name); Curtain is StepCurtain
+      control: { type: "select", labels: { curtain: "curtain + iris" } },
       options: ["theme", "none", "fade", "blinds", "curtain", "iris"],
     },
   },

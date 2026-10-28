@@ -18,9 +18,9 @@ import { CodeScreen, MyThemeScreen } from "./Code"
 import { Copy } from "./Copy"
 import { downloadFile } from "./download"
 import { Landing, type LandingChoice } from "./Landing"
-import { Language, NameField } from "./Language"
+import { Language } from "./Language"
 import { notifySuccess } from "./notify"
-import { BASELINE, draftFromPreset, draftToTheme, emptyDraft, unsetLabels, type Step, type Tab } from "./state"
+import { BASELINE, draftFromPreset, draftToTheme, emptyDraft, feelDone, lookDone, unsetLabels, valuesDone, type Step, type Tab } from "./state"
 
 /** The generic template: Berghain, named my-theme, for someone to edit. */
 const TEMPLATE = themeToFile({ ...BASELINE, id: "my-theme", label: "My theme" })
@@ -44,6 +44,9 @@ export function Themer() {
     setDirty(true)
   }
   const showTab = (t: Tab) => {
+    // a page cannot be opened until the one before it is complete
+    if (t === "feel" && !lookDone(draft)) return
+    if (t === "values" && !(lookDone(draft) && feelDone(draft))) return
     setTab(t)
     setVisited((v) => new Set(v).add(t))
   }
@@ -108,14 +111,17 @@ export function Themer() {
           tab={tab}
           onTab={showTab}
           visited={visited}
-          onBack={() => (tab === "values" ? showTab("look") : leave(() => setStep(origin === "copy" ? "copy" : "landing")))}
-          onContinue={() => (tab === "look" ? showTab("values") : setStep("mytheme"))}
+          onBack={() =>
+            tab === "values" ? showTab("feel") : tab === "feel" ? showTab("look") : leave(() => setStep(origin === "copy" ? "copy" : "landing"))
+          }
+          onContinue={() =>
+            tab === "look" ? showTab("feel") : tab === "feel" ? showTab("values") : lookDone(draft) && feelDone(draft) && valuesDone(draft) && setStep("mytheme")
+          }
         />
       )}
 
       {step === "mytheme" && (
         <MyThemeScreen
-          title={<NameField placeholder="My theme" value={draft.label} onChange={(label) => patch({ label })} />}
           code={file}
           onBack={() => setStep("language")}
           onDownload={async () => {

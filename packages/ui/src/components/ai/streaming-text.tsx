@@ -1,9 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
+import { ArrowBendDownRightIcon } from "@phosphor-icons/react"
 import { ArrowDown, ArrowUp, Copy, CornerDownRight, RefreshCw } from "lucide-react"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { ThemedIcon } from "@workspace/ui/components/themed-icon"
 
 /* Streamed answer: words resolve in, an inline citation appears in context,
  * then actions and follow-up prompts become usable. Ported from beautifui.dev. */
@@ -63,11 +65,15 @@ export interface StreamingTextProps {
   appearance?: {
     fill?: boolean
     loop?: boolean
+    /** The version for a card: the paragraph beside `data.leading`, then the follow-ups, all in the theme's text and icon styles. No actions or sources. */
+    themed?: boolean
   }
   data?: {
     content?: StreamingToken[]
     followUps?: string[]
     sources?: StreamingSource[]
+    /** Shown before the paragraph (themed only), for example an image. A function is told when the text has finished streaming. */
+    leading?: ReactNode | ((state: { done: boolean }) => ReactNode)
   }
   labels?: Partial<StreamingLabels>
   actions?: {
@@ -98,6 +104,46 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count, done, loop])
+
+  if (appearance?.themed) {
+    return (
+      <div className={cn("w-full", className)}>
+        <div className="flex items-stretch gap-4">
+          {typeof data?.leading === "function" ? data.leading({ done }) : data?.leading}
+          {/* from the top, so the text grows down without moving what is already there */}
+          <div className="flex min-w-0 flex-1 flex-col justify-start">
+            <p className="text-body-sm text-foreground">
+              {content.slice(0, count).map((token, i) => (
+                <span key={i} className="inline">
+                  {token.text}{" "}
+                </span>
+              ))}
+              {!done && (
+                <span className="ml-0.5 inline-block h-[1em] w-0.5 translate-y-0.5 rounded-full bg-foreground" style={{ animation: "fade-in 150ms ease-out both" }} />
+              )}
+            </p>
+          </div>
+        </div>
+
+        <div
+          className="mt-4 flex flex-col transition-opacity duration-(--motion-fast) ease-(--motion-transition-ease)"
+          style={{ opacity: done ? 1 : 0, pointerEvents: done ? "auto" : "none" }}
+        >
+          {followUps.map((text, i) => (
+            <button
+              key={text}
+              type="button"
+              onClick={() => actions?.onFollowUp?.(text, i)}
+              className="text-body-md -mx-2 flex h-9 items-center gap-1 self-start rounded-(--radius-inner) px-2 text-left text-foreground transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)"
+            >
+              <ThemedIcon phosphor={ArrowBendDownRightIcon} />
+              {text}
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={cn(fill ? "w-full" : "min-h-[15.5rem] w-full max-w-95", className)}>
