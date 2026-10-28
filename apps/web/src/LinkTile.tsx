@@ -92,7 +92,7 @@ export function LinkTile({
     )
   if (href)
     return (
-      <a href={href} className={className}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
         {content}
       </a>
     )
