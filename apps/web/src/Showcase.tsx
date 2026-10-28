@@ -29,7 +29,7 @@ function Pill({ children }: { children: ReactNode }) {
     <div className="w-fit">
       <MetalSurface variant="button" engine="v2" className="rounded-full bg-transparent! backdrop-blur-none hover:bg-transparent!">
         <div className="flex items-center justify-center rounded-full px-4 py-2">
-          <p className={`${BODY} text-[18px] leading-[1.42] whitespace-nowrap`}>{children}</p>
+          <p className="text-body-sm whitespace-nowrap">{children}</p>
         </div>
       </MetalSurface>
     </div>

@@ -6,8 +6,8 @@ import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 /* The link tile from the Figma HOME frame, shared by the homepage and the Themer. */
 
 export const MIGRA = "font-[family-name:Migra]"
-// Inter Light stands in for the Figma's "Test Söhne"; Söhne sets about 2.5% narrower, so the tracking is pulled in to keep the same line breaks
-export const BODY = "font-[family-name:Inter] font-light tracking-[-0.025em]"
+// the theme's own body font, weight and letter spacing, so the page follows whichever theme is in force
+export const BODY = "font-[family-name:var(--font-body)] [font-weight:var(--font-body-weight)] tracking-[var(--font-body-letter-spacing)]"
 
 // the tiles' rim, softer than the system default: they sit on a dark page, where a white rim reads much stronger
 const TILE_EDGE = 0.35
