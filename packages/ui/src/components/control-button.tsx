@@ -42,6 +42,8 @@ type ControlButtonProps = ComponentProps<"button"> &
     /** The wandering halo around the metal ring. */
     halo?: boolean
     engine?: MetalEngine
+    /** The metal fills the whole button instead of ringing it. */
+    filled?: boolean
   }
 
 function ControlButton({
@@ -51,11 +53,12 @@ function ControlButton({
   metal = false,
   halo = false,
   engine,
+  filled = false,
   type = "button",
   ...props
 }: ControlButtonProps) {
   return (
-    <MetalSurface variant={shape === "pill" ? "button" : "circle"} active={metal} halo={halo} engine={engine} themedFill>
+    <MetalSurface variant={shape === "pill" ? "button" : "circle"} active={metal} halo={halo} engine={engine} filled={filled} ringWidth={filled ? (size === "lg" ? 22 : 20) : undefined} themedFill>
       <button
         type={type}
         data-slot="control-button"

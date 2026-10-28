@@ -42,6 +42,8 @@ type MetalSurfaceProps = {
   themedFill?: boolean
   /** Ring thickness in CSS px; the engine's own default when omitted (v1 only). */
   ringWidth?: number
+  /** The metal fills the whole control instead of ringing it, at a strength that keeps the content readable. v1 has no mask, so give it a `ringWidth` of half the control's height: a ring as thick as the control. */
+  filled?: boolean
 }
 
 // The surface, quiet or active: glass, not a solid fill. A translucent tint of the theme's foreground
@@ -66,6 +68,9 @@ const SURFACE = cn(
   "[&[data-quiet]_.metal-fx-inner]:shadow-none!",
   "transition-colors"
 )
+
+/** The metal's strength when it fills the control: low enough that the icon or label on it stays readable. */
+const FILLED_STRENGTH = 0.5
 
 /** The theme in force at an element: its CSS `color-scheme` (every theme sets one), else the `.dark` class. */
 function readTheme(el: Element | null): MetalTheme {
@@ -109,6 +114,7 @@ function MetalSurface({
   reflectionTargets,
   themedFill = false,
   ringWidth,
+  filled = false,
 }: MetalSurfaceProps) {
   const anchor = useRef<HTMLSpanElement>(null)
   const scopedTheme = useScopedTheme(anchor)
@@ -123,15 +129,24 @@ function MetalSurface({
     () => observeTheme(anchor.current, () => setRadius(getComputedStyle(anchor.current!).getPropertyValue("--radius").trim())),
     []
   )
+  // v2 fills through a mask: the whole box in the host's corner. v1 has no mask, so it gets a ring as thick as the control (see `filled`)
+  const fillMask = (ctx: CanvasRenderingContext2D, w: number, h: number, dpr: number) => {
+    const r = Math.min((parseFloat(radius ?? "") || 0) * dpr, w / 2, h / 2)
+    ctx.fillStyle = "#000"
+    ctx.beginPath()
+    ctx.roundRect(0, 0, w, h, r)
+    ctx.fill()
+  }
   const MetalFx = engine === "v2" ? MetalFxV2 : MetalFxV1
   // nothing starts until the radius is known, so the effect mounts once instead of once to be thrown away
   const surface = radius === null ? null : (
     <MetalFx
       key={radius}
       {...(engine === "v1" && ringWidth !== undefined ? { ringCssPx: ringWidth } : {})}
+      {...(engine === "v2" && filled ? { mask: fillMask, glowMode: "ring" as const } : {})}
       variant={variant}
       preset={preset}
-      strength={active ? strength : 0}
+      strength={active ? (filled ? Math.min(strength, FILLED_STRENGTH) : strength) : 0}
       theme={theme ?? scopedTheme}
       disableGlow={!active || !halo}
       reflectionTargets={active ? reflectionTargets : undefined}
