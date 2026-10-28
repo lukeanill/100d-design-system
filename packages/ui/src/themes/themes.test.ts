@@ -38,7 +38,7 @@ describe("font roles", () => {
     expect(BODY_FONTS.map((f) => f.family).sort()).toEqual([...bodyFaces].sort())
     // a sans or a serif: the themes' body faces and the serifs they use for emphasis
     expect(BODY_FONTS.map((f) => f.family)).toEqual(
-      expect.arrayContaining(["Inter", "DM Sans", "Archivo", "Karla", "EB Garamond", "Lora", "Newsreader"])
+      expect.arrayContaining(["Inter", "DM Sans", "Archivo", "Akkurat LL TT", "EB Garamond", "Lora", "Newsreader"])
     )
     expect(HEADING_FONTS.map((f) => f.family)).not.toContain("Inter")
     expect(BODY_FONTS.map((f) => f.family)).not.toContain("Migra")
@@ -129,7 +129,7 @@ describe("themeToCss", () => {
 
   it("gives themeStyle the same declarations as an inline style", () => {
     const style = themeStyle(getPreset("laroc")!)
-    expect(style.colorScheme).toBe("light")
+    expect(style.colorScheme).toBe("dark")
     expect(style["--radius"]).toBe("1.5rem")
   })
 })

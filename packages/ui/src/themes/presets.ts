@@ -56,7 +56,7 @@ export const presets: Theme[] = [
   preset({
     id: "laroc",
     label: "Laroc",
-    scheme: "light",
+    scheme: "dark",
     palette: {
       background: "#3a6be2", foreground: "#fbfbfc", primary: "#17347b", primaryForeground: "#fbfbfc",
       secondary: "#1b4bbe", secondaryForeground: "#a0b2df", destructive: "#e7000b", charts: LIGHT_CHARTS,
@@ -94,7 +94,7 @@ export const presets: Theme[] = [
     fonts: {
       // Migra Extralight, as you asked, rather than the PP Editorial New the Figma variable names
       display: { family: "Migra", weight: 200 },
-      body: { family: "Karla", weight: 400, lineHeight: 146 },
+      body: { family: "Akkurat LL TT", weight: 200, lineHeight: 146 },
       serif: { family: "Newsreader", weight: 500 },
     },
     spacing: "lg", radius: "subtle", elevation: "strong", material: "glass", motion: "ease", tone: "dark",

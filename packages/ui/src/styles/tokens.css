@@ -89,6 +89,54 @@
 }
 
 @font-face {
+  font-family: "Akkurat LL TT";
+  src: url("./fonts/akkurat-ll-tt-light.woff2") format("woff2");
+  font-weight: 200 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akkurat LL TT";
+  src: url("./fonts/akkurat-ll-tt-regular.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akkurat LL TT";
+  src: url("./fonts/akkurat-ll-tt-bold.woff2") format("woff2");
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akkurat LL TT";
+  src: url("./fonts/akkurat-ll-tt-light-italic.woff2") format("woff2");
+  font-weight: 200 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akkurat LL TT";
+  src: url("./fonts/akkurat-ll-tt-regular-italic.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akkurat LL TT";
+  src: url("./fonts/akkurat-ll-tt-bold-italic.woff2") format("woff2");
+  font-weight: 600 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Imbue";
   src: url("./fonts/imbue-variable.woff2") format("woff2");
   font-weight: 100 900;

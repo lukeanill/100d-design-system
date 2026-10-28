@@ -13,6 +13,7 @@ const g = (family: string, kind: FontChoice["kind"], weights: number[]): FontCho
 const b = (family: string, kind: FontChoice["kind"], weights: number[]): FontChoice => ({ family, source: "bundled", kind, weights })
 
 export const FONT_CHOICES: FontChoice[] = [
+  b("Akkurat LL TT", "sans", [200, 300, 400, 500, 600, 700]),
   b("Folio Std", "sans", [700]),
   b("ITC Garamond Std", "serif", [800]),
   b("PP Editorial New", "serif", [400]),

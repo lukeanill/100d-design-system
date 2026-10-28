@@ -13,7 +13,7 @@
   "fonts": {
     "primary": "PP Editorial New",
     "emphasis": "Newsreader",
-    "body": "Karla"
+    "body": "Akkurat LL TT"
   },
   "edges": "subtle",
   "overrides": {
@@ -28,7 +28,7 @@
   },
   "fontSource": "google",
   "tokens": {
-    "font-body-weight": "400",
+    "font-body-weight": "200",
     "font-body-line-height": "1.46",
     "font-body-letter-spacing": "0.0em",
     "background": "oklch(0.000 0.000 0.00)",
@@ -119,8 +119,8 @@
         "weight": 400
       },
       "sans": {
-        "family": "Karla",
-        "weight": 400
+        "family": "Akkurat LL TT",
+        "weight": 200
       },
       "serif": {
         "family": "Newsreader",

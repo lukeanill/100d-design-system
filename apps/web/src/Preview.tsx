@@ -17,9 +17,11 @@ import { DEFAULT_STYLING, themeScope } from "./explore/styling"
 
 const THEMES = [
   { id: "illuzion", label: "ILLUZION" },
+  { id: "laroc", label: "Laroc" },
   { id: "savaya", label: "Savaya" },
   { id: "pacha", label: "Pacha" },
   { id: "amnesia", label: "Amnesia" },
+  { id: "ushuaia", label: "Ushuaia" },
 ] as const
 
 type ThemeId = (typeof THEMES)[number]["id"]
@@ -40,7 +42,16 @@ function Grain({ className = "" }: { className?: string }) {
   )
 }
 
-/** The four themes' own faces, fetched once so each button can set its name in its theme's font. */
+/** Whether a theme's text is light, by its foreground colour: a light foreground means a dark page, so its inactive tiles carry light text. */
+function hasLightText(hex: string | undefined) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex ?? "")
+  if (!m) return true
+  const n = parseInt(m[1]!, 16)
+  const lum = (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255
+  return lum > 0.5
+}
+
+/** The themes' own faces, fetched once so each button can set its name in its theme's font. */
 let fontsRequested = false
 function requestThemeFonts() {
   if (fontsRequested || typeof document === "undefined") return
@@ -61,11 +72,14 @@ function ThemeButton({
   id,
   label,
   selected,
+  lightText,
   onClick,
 }: {
   id: ThemeId
   label: string
   selected: boolean
+  /** The preview's own text is light (a dark page), so an inactive tile's label is too. */
+  lightText: boolean
   onClick: () => void
 }) {
   const preset = getPreset(id)
@@ -73,7 +87,12 @@ function ThemeButton({
   const style: CSSProperties = {
     fontFamily: `"${preset.fonts.display.family}", serif`,
     fontWeight: preset.fonts.display.weight,
-    color: preset.palette.primaryForeground,
+    // active: the theme's own label colour; inactive: a dark or light wash of text by the page's light or dark
+    color: selected
+      ? preset.palette.primaryForeground
+      : lightText
+        ? "var(--alpha-light-md, rgba(246,244,244,0.24))"
+        : "var(--alpha-dark-lg, rgba(30,30,30,0.32))",
     backgroundColor: selected ? preset.palette.background : undefined,
     ["--radius" as string]: "16px",
   }
@@ -84,14 +103,14 @@ function ThemeButton({
       onClick={onClick}
       style={style}
       className={cn(
-        "relative flex h-32 w-full shrink-0 items-center justify-center overflow-clip rounded-[16px] border px-4 text-center text-[22px] leading-[1.14] min-[1100px]:w-[220px] min-[1100px]:px-10 min-[1100px]:text-[28px] transition-[background-color,border-color,backdrop-filter] duration-300 outline-none focus-visible:ring-2 focus-visible:ring-white/60 motion-reduce:transition-none",
+        "relative flex h-20 max-h-20 w-full shrink-0 items-center justify-center overflow-clip rounded-[16px] border px-4 text-center text-[22px] leading-[1.14] min-[1100px]:w-[220px] min-[1100px]:flex-1 min-[1100px]:px-10 min-[1100px]:text-[28px] transition-[background-color,border-color,backdrop-filter] duration-300 outline-none focus-visible:ring-2 focus-visible:ring-white/60 motion-reduce:transition-none",
         // the metal ring is the selected border; the fills are alpha overlays, light/sm when chosen, dark/xs otherwise
         selected
           ? // on a light theme the ring needs a darker line against it to read on the pale tile
             preset.scheme === "light"
             ? "border-[color:var(--alpha-dark-xs,rgba(0,0,0,0.04))]"
             : "border-transparent"
-          : "border-white/15 bg-[image:linear-gradient(var(--alpha-dark-xs,rgba(0,0,0,0.04)),var(--alpha-dark-xs,rgba(0,0,0,0.04)))]"
+          : "border-white/15 bg-[image:linear-gradient(var(--alpha-dark-sm,rgba(30,30,30,0.08)),var(--alpha-dark-sm,rgba(30,30,30,0.08)))]"
       )}
     >
       {selected && id === "savaya" && (
@@ -109,7 +128,7 @@ function ThemeButton({
       {selected && (
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[image:linear-gradient(var(--alpha-light-sm,rgba(255,255,255,0.12)),var(--alpha-light-sm,rgba(255,255,255,0.12)))]"
+          className="pointer-events-none absolute inset-0 bg-[image:linear-gradient(var(--alpha-light-md,rgba(246,244,244,0.24)),var(--alpha-light-md,rgba(246,244,244,0.24)))]"
         />
       )}
       <span className="relative">{label}</span>
@@ -117,10 +136,17 @@ function ThemeButton({
   )
 }
 
+/** A caption set above a tile column or a component, in the one body text style. */
+function Label({ children, className }: { children: string; className?: string }) {
+  return <p className={cn("text-body-md whitespace-nowrap text-center text-foreground", className)}>{children}</p>
+}
+
 export function Preview() {
   const [selected, setSelected] = useState<ThemeId | null>(null)
   useEffect(requestThemeFonts, [])
   const scope = themeScope(selected, DEFAULT_STYLING)
+  // the page's text is light unless the chosen theme's is dark
+  const lightText = hasLightText(selected ? getPreset(selected)?.palette.foreground : undefined)
 
   return (
     <div
@@ -155,44 +181,56 @@ export function Preview() {
         </div>
       ))}
 
-      <div
-        role="group"
-        aria-label="Theme"
-        className="relative grid grid-cols-2 gap-4 min-[1100px]:absolute min-[1100px]:top-[40px] min-[1100px]:left-[40px] min-[1100px]:flex min-[1100px]:flex-col"
-      >
-        {THEMES.map(({ id, label }) => (
-          <ThemeButton
-            key={id}
-            id={id}
-            label={label}
-            selected={selected === id}
-            onClick={() => setSelected((current) => (current === id ? null : id))}
-          />
-        ))}
-      </div>
-
-      {/* the four components, centred on the rows the Figma's examples sit in */}
-      <div className="relative flex flex-col items-center gap-10 min-[1100px]:static min-[1100px]:block">
-        <div className="min-[1100px]:absolute min-[1100px]:top-[123px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
-          <FluidTabs />
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 min-[1100px]:w-max min-[1100px]:flex-nowrap min-[1100px]:absolute min-[1100px]:top-[232px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
-          {(["v1", "v2"] as const).map((engine) => (
-            <div key={engine} className="flex items-center gap-3">
-              <ControlButton size="lg" engine={engine} metal halo filled aria-label={`Send (${engine})`}>
-                <ThemedIcon phosphor={ArrowUpIcon} />
-              </ControlButton>
-              <ControlButton size="lg" shape="pill" engine={engine} metal halo>
-                Upgrade to Pro
-              </ControlButton>
-            </div>
+      <div className="relative flex flex-col gap-2 min-[1100px]:absolute min-[1100px]:top-[40px] min-[1100px]:left-[40px] min-[1100px]:h-[560px] min-[1100px]:w-[220px]">
+        <Label className="pb-4">Theming</Label>
+        <div
+          role="group"
+          aria-label="Theme"
+          className="grid grid-cols-2 gap-4 min-[1100px]:flex min-[1100px]:min-h-0 min-[1100px]:flex-1 min-[1100px]:flex-col min-[1100px]:gap-2"
+        >
+          {THEMES.map(({ id, label }) => (
+            <ThemeButton
+              key={id}
+              id={id}
+              label={label}
+              selected={selected === id}
+              lightText={lightText}
+              onClick={() => setSelected((current) => (current === id ? null : id))}
+            />
           ))}
         </div>
-        <div className="min-[1100px]:absolute min-[1100px]:top-[313px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2">
+      </div>
+
+      {/* the four components, each under its label, spread down the Figma's 700 × 560 column */}
+      <div className="relative flex flex-col items-center gap-10 min-[1100px]:absolute min-[1100px]:top-[40px] min-[1100px]:left-[300px] min-[1100px]:h-[560px] min-[1100px]:w-[700px] min-[1100px]:justify-between min-[1100px]:gap-0">
+        <div className="flex flex-col items-center gap-4">
+          <Label>A core of shadcn/ui components</Label>
+          <FluidTabs />
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <Label>Collections of delightful components</Label>
+          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 min-[1100px]:w-max min-[1100px]:flex-nowrap">
+            {(["v1", "v2"] as const).map((engine) => (
+              <div key={engine} className="flex items-center gap-3">
+                <ControlButton size="lg" engine={engine} metal halo filled aria-label={`Send (${engine})`}>
+                  <ThemedIcon phosphor={ArrowUpIcon} />
+                </ControlButton>
+                <ControlButton size="lg" shape="pill" engine={engine} metal halo>
+                  Upgrade to Pro
+                </ControlButton>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <Label>Product + content patterns</Label>
           <StatCard />
         </div>
-        <div className="w-full max-w-[433px] min-[1100px]:absolute min-[1100px]:top-[552px] min-[1100px]:left-[calc(50%+130px)] min-[1100px]:-translate-x-1/2 min-[1100px]:-translate-y-1/2">
-          <PromptBar appearance={{ demo: false }} />
+        <div className="flex w-full max-w-[433px] flex-col items-center gap-4">
+          <Label>Advanced interaction components</Label>
+          <div className="w-full">
+            <PromptBar appearance={{ demo: false }} />
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { Popover, PopoverPanel } from "@workspace/ui/components/animate-ui/components/base/popover"
 import { GlassLayer, LiquidGlass, glassProps } from "@workspace/ui/components/liquid-glass"
+import { MetalSurface } from "@workspace/ui/components/metal-surface"
 import { BODY, LinkTile, MIGRA } from "./LinkTile"
 import { Preview } from "./Preview"
 
@@ -25,8 +26,12 @@ function Section({ children, className = "" }: { children: ReactNode; className?
 
 function Pill({ children }: { children: ReactNode }) {
   return (
-    <div className="flex w-fit items-center justify-center rounded-full px-4 py-2 ring-1 ring-inset ring-white/25">
-      <p className={`${BODY} text-[18px] leading-[1.42] whitespace-nowrap`}>{children}</p>
+    <div className="w-fit">
+      <MetalSurface variant="button" engine="v2" className="rounded-full bg-transparent! backdrop-blur-none hover:bg-transparent!">
+        <div className="flex items-center justify-center rounded-full px-4 py-2">
+          <p className={`${BODY} text-[18px] leading-[1.42] whitespace-nowrap`}>{children}</p>
+        </div>
+      </MetalSurface>
     </div>
   )
 }
