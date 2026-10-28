@@ -6,7 +6,7 @@ import { ThemedIcon } from "@workspace/ui/components/themed-icon"
 
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
   size?: "sm" | "default"
-  /** A chip by the component guidelines: the inner corner, the one text style, the theme's secondary fill, a hover wash and a themed caret. As wide as its longest option. */
+  /** A chip by the component guidelines: the inner corner, the one text style, no fill (ghost), a hover wash and a themed caret. As wide as its longest option. */
   themed?: boolean
 }
 
@@ -21,7 +21,7 @@ function NativeSelect({
       className={cn(
         "group/native-select relative w-fit has-[select:disabled]:opacity-50",
         themed &&
-          "isolate rounded-(--radius-inner) bg-secondary text-secondary-foreground before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-(--control-hover) before:opacity-0 before:transition-opacity before:duration-(--motion-fast) before:ease-(--motion-transition-ease) before:content-[''] hover:before:opacity-100 focus-within:ring-2 focus-within:ring-ring",
+          "isolate rounded-(--radius-inner) text-foreground before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-(--control-hover) before:opacity-0 before:transition-opacity before:duration-(--motion-fast) before:ease-(--motion-transition-ease) before:content-[''] hover:before:opacity-100 focus-within:ring-2 focus-within:ring-ring",
         className
       )}
       data-slot="native-select-wrapper"
