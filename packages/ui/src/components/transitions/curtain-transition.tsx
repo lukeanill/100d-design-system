@@ -1,6 +1,5 @@
 import * as React from "react"
 import { motion, useAnimate } from "motion/react"
-import { PAGE_TRANSITION_EASE as EASE, useThemeTransitionDuration } from "@workspace/ui/hooks/use-theme-page-transition"
 
 // A "curtains" page transition, hand-built with plain motion primitives
 // (no Motion+): the outgoing page is covered by a wipe, content swaps
@@ -12,6 +11,8 @@ import { PAGE_TRANSITION_EASE as EASE, useThemeTransitionDuration } from "@works
 // StepCurtain is the scoped sibling, for moving between steps inside one
 // page without disturbing the chrome around them.
 
+const DEFAULT_DURATION = 0.55
+const EASE: [number, number, number, number] = [0.65, 0, 0.35, 1]
 const FULL_CIRCLE = "circle(150% at 50% 50%)"
 const ZERO_CIRCLE = "circle(0% at 50% 50%)"
 
@@ -41,9 +42,8 @@ export function CurtainTransition({
   transitionKey,
   children,
   color = "var(--foreground)",
-  duration: durationProp,
+  duration = DEFAULT_DURATION,
 }: CurtainTransitionProps) {
-  const duration = useThemeTransitionDuration(durationProp)
   const [scope, animate] = useAnimate()
   const [displayedKey, setDisplayedKey] = React.useState(transitionKey)
   const [displayedChildren, setDisplayedChildren] = React.useState(children)

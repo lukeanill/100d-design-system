@@ -11,8 +11,9 @@ import * as React from "react"
 import { motion } from "motion/react"
 
 import { useCurtainSwap } from "@workspace/ui/components/transitions/use-curtain-swap"
-import { PAGE_TRANSITION_EASE as EASE, useThemeTransitionDuration } from "@workspace/ui/hooks/use-theme-page-transition"
 
+const DEFAULT_DURATION = 0.35
+const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1]
 
 export interface FadeTransitionProps {
   transitionKey: string
@@ -26,9 +27,8 @@ export function FadeTransition({
   transitionKey,
   children,
   color = "var(--foreground)",
-  duration: durationProp,
+  duration = DEFAULT_DURATION,
 }: FadeTransitionProps) {
-  const duration = useThemeTransitionDuration(durationProp)
   const { scope, displayedChildren } = useCurtainSwap<HTMLDivElement>({
     transitionKey,
     children,

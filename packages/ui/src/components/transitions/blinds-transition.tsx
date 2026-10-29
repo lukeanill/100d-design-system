@@ -11,9 +11,10 @@ import * as React from "react"
 import { motion, stagger } from "motion/react"
 
 import { useCurtainSwap } from "@workspace/ui/components/transitions/use-curtain-swap"
-import { PAGE_TRANSITION_EASE as EASE, useThemeTransitionDuration } from "@workspace/ui/hooks/use-theme-page-transition"
 
+const DEFAULT_DURATION = 0.45
 const DEFAULT_STRIPS = 6
+const EASE: [number, number, number, number] = [0.65, 0, 0.35, 1]
 // Strips overlap rather than run in series, so the whole sweep stays close to
 // `duration` however many there are.
 const STAGGER_FRACTION = 0.5
@@ -32,10 +33,9 @@ export function BlindsTransition({
   transitionKey,
   children,
   color = "var(--foreground)",
-  duration: durationProp,
+  duration = DEFAULT_DURATION,
   strips = DEFAULT_STRIPS,
 }: BlindsTransitionProps) {
-  const duration = useThemeTransitionDuration(durationProp)
   const stripDelay = (duration * STAGGER_FRACTION) / Math.max(strips, 1)
 
   const { scope, displayedChildren } = useCurtainSwap<HTMLDivElement>({

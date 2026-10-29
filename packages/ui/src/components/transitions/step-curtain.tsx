@@ -2,7 +2,6 @@ import * as React from "react"
 import { motion, useAnimate } from "motion/react"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { PAGE_TRANSITION_EASE as EASE, useThemeTransitionDuration } from "@workspace/ui/hooks/use-theme-page-transition"
 
 // A scoped curtain transition for moving between steps of a flow, matching
 // motion.dev's "Curtains: Scope" example
@@ -17,9 +16,11 @@ import { PAGE_TRANSITION_EASE as EASE, useThemeTransitionDuration } from "@works
 // surrounding chrome stays put. CurtainTransition is the full-page sibling,
 // with a wipe-and-iris look, for switching between whole pages.
 //
-// Timings taken from the reference: theme page-transition speed per half, the ease-in-out token,
+// Timings taken from the reference: roughly 0.45s per half, cubic ease-in-out,
 // with the swap happening while fully covered.
 
+const DEFAULT_DURATION = 0.45
+const EASE: [number, number, number, number] = [0.65, 0, 0.35, 1]
 
 // Backgrounded tabs can throttle frames enough that an animate() promise never
 // resolves, which would strand the sequence and the page swap it gates.
@@ -47,10 +48,9 @@ export function StepCurtain({
   transitionKey,
   children,
   color = "var(--foreground)",
-  duration: durationProp,
+  duration = DEFAULT_DURATION,
   className,
 }: StepCurtainProps) {
-  const duration = useThemeTransitionDuration(durationProp)
   const [scope, animate] = useAnimate()
   const [displayedKey, setDisplayedKey] = React.useState(transitionKey)
   const [displayedChildren, setDisplayedChildren] = React.useState(children)
