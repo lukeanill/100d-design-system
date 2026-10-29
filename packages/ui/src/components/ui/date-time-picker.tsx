@@ -416,7 +416,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                   }
                   disabled={!item.isCurrentMonth || !isAvailable}
                   className={cn(
-                    "relative size-10 rounded-full text-sm transition-all duration-200 flex items-center justify-center mx-auto",
+                    "relative size-10 rounded-full text-sm transition-all duration-(--motion-fast) flex items-center justify-center mx-auto",
                     !item.isCurrentMonth && "text-foreground/30",
                     item.isCurrentMonth &&
                       !isAvailable &&
@@ -514,7 +514,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
         {/* Time Slots Section - Visible on mobile when viewing times, animated on desktop */}
         <div
           className={cn(
-            "overflow-hidden transition-all duration-300 ease-out",
+            "overflow-hidden transition-all duration-(--motion-duration) ease-(--motion-transition-ease)",
             mobileView === "time"
               ? "block w-full md:w-[200px]"
               : "hidden md:block",
@@ -546,7 +546,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                     <button
                       onClick={() => handleTimeSelect(time)}
                       className={cn(
-                        "h-[52px] rounded-lg border text-sm font-semibold transition-all duration-200",
+                        "h-[52px] rounded-lg border text-sm font-semibold transition-all duration-(--motion-fast)",
                         isTimeSelected
                           ? "bg-muted-foreground text-background border-muted-foreground"
                           : "col-span-2 border-primary text-primary hover:bg-primary/5"
@@ -557,7 +557,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                     {isTimeSelected && (
                       <Button
                         onClick={handleNext}
-                        className="h-[52px] animate-in fade-in slide-in-from-left-2 duration-200"
+                        className="h-[52px] animate-in fade-in slide-in-from-left-2 duration-(--motion-fast)"
                       >
                         Next
                       </Button>

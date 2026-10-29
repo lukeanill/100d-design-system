@@ -89,7 +89,7 @@ interface TextRotateProps {
 
   /**
    * Animation transition configuration.
-   * @default { type: "spring", damping: 25, stiffness: 300 }
+   * @default the active theme's transition
    */
   transition?: Transition
 
@@ -193,7 +193,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
     {
       texts,
       as = "p",
-      transition = { type: "spring", damping: 25, stiffness: 300 },
+      transition,
       initial = { y: "100%", opacity: 0 },
       animate = { y: 0, opacity: 1 },
       exit = { y: "-120%", opacity: 0 },

@@ -20,7 +20,7 @@ function HighlightText({
   inView = false,
   inViewMargin = '0px',
   inViewOnce = true,
-  transition = { duration: 2, ease: 'easeInOut' },
+  transition,
   delay = 0,
   ...props
 }: HighlightTextProps) {

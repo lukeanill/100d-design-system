@@ -73,7 +73,7 @@ type AlertDialogBackdropProps = Omit<
   HTMLMotionProps<'div'>;
 
 function AlertDialogBackdrop({
-  transition = { duration: 0.2, ease: 'easeInOut' },
+  transition,
   ...props
 }: AlertDialogBackdropProps) {
   return (
@@ -107,7 +107,7 @@ function AlertDialogPopup({
   from = 'top',
   initialFocus,
   finalFocus,
-  transition = { type: 'spring', stiffness: 150, damping: 25 },
+  transition,
   ...props
 }: AlertDialogPopupProps) {
   const initialRotation =

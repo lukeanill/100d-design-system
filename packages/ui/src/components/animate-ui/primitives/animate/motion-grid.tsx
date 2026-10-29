@@ -4,6 +4,7 @@ import * as React from 'react';
 import { motion, type HTMLMotionProps } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
+import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
 import { getStrictContext } from '@workspace/ui/lib/get-strict-context';
 import { Slot, type WithAsChild } from '@workspace/ui/components/animate-ui/primitives/animate/slot';
 
@@ -86,6 +87,7 @@ function MotionGridCells({
   ...props
 }: MotionGridCellsProps) {
   const { animate, index, cols, rows, frames, duration } = useMotionGrid();
+  const fast = useFastTransition();
 
   const active = new Set<number>(
     frames[index]?.map(([x, y]) => y * cols + x) ?? [],
@@ -110,7 +112,7 @@ function MotionGridCells({
         key={i}
         data-active={isActive}
         data-animate={animate}
-        transition={{ duration, ease: 'easeInOut' }}
+        transition={{ ...fast, duration: fast.duration === 0 ? 0 : duration / 1000 }}
         {...props}
         {...componentProps}
       />

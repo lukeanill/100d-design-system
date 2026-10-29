@@ -331,7 +331,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
 
         <div
           className={cn(
-            "relative isolate flex flex-col overflow-hidden outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-xs transition-[border-color,border-radius] duration-150",
+            "relative isolate flex flex-col overflow-hidden outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-xs transition-[border-color,border-radius] duration-(--motion-fast)",
             tall ? "gap-2.5 p-3.5" : "min-h-11 gap-1.5 p-1",
             // outer corner = the inner corner + the padding between them (the outline sits on the edge, so it is not counted), never past the theme's outer maximum
             pill ? (attachments.length > 0 || wide ? "rounded-3xl" : "rounded-full") : tall ? "rounded-[min(var(--radius-outer-max),calc(var(--radius-inner)+14px))]" : "rounded-[min(var(--radius-outer-max),calc(var(--radius-inner)+4px))]"
@@ -476,7 +476,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               disabled={!canSend}
               onClick={send}
               className={cn(
-                "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.94]",
+                "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-(--motion-fast) enabled:active:scale-[0.94]",
                 pill ? "rounded-full" : "rounded-(--radius-inner)",
                 canSend ? "bg-foreground text-background" : "bg-border text-foreground/75",
                 wide ? "col-start-5 row-start-2" : "col-start-5 row-start-1"

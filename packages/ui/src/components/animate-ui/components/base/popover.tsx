@@ -19,6 +19,7 @@ import {
   type PopoverDescriptionProps as PopoverDescriptionPrimitiveProps,
 } from '@workspace/ui/components/animate-ui/primitives/base/popover';
 import { cn } from '@workspace/ui/lib/utils'
+import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition'
 import { glass } from "@workspace/ui/lib/glass";
 
 type PopoverProps = PopoverPrimitiveProps;
@@ -54,6 +55,7 @@ function PopoverPanel({
   children,
   ...props
 }: PopoverPanelProps) {
+  const fast = useFastTransition();
   return (
     <PopoverPortalPrimitive>
       <PopoverPositionerPrimitive
@@ -73,7 +75,7 @@ function PopoverPanel({
                 // Base UI keeps the panel on screen only while it sees a CSS/WAAPI animation, and a
                 // scale spring is neither, so the exit carries a fade that waits for the scale to
                 // be well under way: the glass keeps its backdrop for the first part of the exit.
-                exit: { scale: 0.5, opacity: 0, transition: { opacity: { delay: 0.1, duration: 0.12 } } },
+                exit: { scale: 0.5, opacity: 0, transition: { opacity: { ...fast, delay: 0.1 } } },
               })}
           className={cn(
             `${glass("overlay")} text-popover-foreground w-72 rounded-md border p-4 shadow-md outline-hidden origin-(--transform-origin)`,

@@ -22,23 +22,16 @@ const BUTTON_MOTION_CONFIG = {
     rest: { maxWidth: '40px' },
     hover: {
       maxWidth: '140px',
-      transition: { type: 'spring', stiffness: 200, damping: 35, delay: 0.15 },
+      transition: { delay: 0.15 },
     },
     tap: { scale: 0.95 },
   },
-  transition: { type: 'spring', stiffness: 250, damping: 25 },
 } as const;
 
 const LABEL_VARIANTS: Variants = {
   rest: { opacity: 0, x: 4 },
   hover: { opacity: 1, x: 0, visibility: 'visible' },
   tap: { opacity: 1, x: 0, visibility: 'visible' },
-};
-
-const LABEL_TRANSITION: Transition = {
-  type: 'spring',
-  stiffness: 200,
-  damping: 25,
 };
 
 function ManagementBar() {
@@ -97,7 +90,6 @@ function ManagementBar() {
               <Ban size={20} className="shrink-0" />
               <motion.span
                 variants={LABEL_VARIANTS}
-                transition={LABEL_TRANSITION}
                 className="invisible text-sm"
               >
                 Blacklist
@@ -112,7 +104,6 @@ function ManagementBar() {
               <X size={20} className="shrink-0" />
               <motion.span
                 variants={LABEL_VARIANTS}
-                transition={LABEL_TRANSITION}
                 className="invisible text-sm"
               >
                 Reject
@@ -127,7 +118,6 @@ function ManagementBar() {
               <IdCard size={20} className="shrink-0" />
               <motion.span
                 variants={LABEL_VARIANTS}
-                transition={LABEL_TRANSITION}
                 className="invisible text-sm"
               >
                 Hire
@@ -140,7 +130,7 @@ function ManagementBar() {
 
         <motion.button
           whileTap={{ scale: 0.975 }}
-          className="flex h-10 text-sm cursor-pointer items-center justify-center rounded-full bg-primary px-3 py-2 text-primary-foreground transition-colors duration-300 hover:bg-primary/90 w-full @xl/wrapper:w-auto"
+          className="flex h-10 text-sm cursor-pointer items-center justify-center rounded-full bg-primary px-3 py-2 text-primary-foreground transition-colors duration-(--motion-duration) hover:bg-primary/90 w-full @xl/wrapper:w-auto"
         >
           <span className="mr-1 text-primary-foreground/70">Move to:</span>
           <span>Interview I</span>

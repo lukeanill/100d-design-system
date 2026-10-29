@@ -45,7 +45,7 @@ interface GoesOutComesInUnderlineProps {
 
   /**
    * Animation transition configuration
-   * @default { duration: 0.5, ease: "easeOut" }
+   * @default the active theme's transition
    */
   transition?: ValueAnimationTransition
 }
@@ -57,10 +57,7 @@ const GoesOutComesInUnderline = ({
   className,
   underlineHeightRatio = 0.1,
   underlinePaddingRatio = 0.01,
-  transition = {
-    duration: 0.5,
-    ease: "easeOut",
-  },
+  transition,
   ...props
 }: GoesOutComesInUnderlineProps) => {
   const controls = useAnimationControls()

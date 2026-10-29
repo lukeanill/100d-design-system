@@ -22,7 +22,7 @@ interface UnderlineProps {
 
   /**
    * Animation transition configuration
-   * @default { type: "spring", damping: 30, stiffness: 300 }
+   * @default the active theme's transition
    */
   transition?: ValueAnimationTransition
 
@@ -48,7 +48,7 @@ const UnderlineToBackground = ({
   children,
   as,
   className,
-  transition = { type: "spring", damping: 30, stiffness: 300 },
+  transition,
   underlineHeightRatio = 0.1, // Default to 10% of font size
   underlinePaddingRatio = 0.01, // Default to 1% of font size
   targetTextColor = "#fef",

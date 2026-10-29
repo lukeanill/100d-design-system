@@ -158,7 +158,7 @@ type MenuHighlightProps = Omit<
 };
 
 function MenuHighlight({
-  transition = { type: 'spring', stiffness: 350, damping: 35 },
+  transition,
   ...props
 }: MenuHighlightProps) {
   const { highlightedValue } = useMenuActiveValue();
@@ -198,7 +198,7 @@ type MenuPopupProps = Omit<
 function MenuPopup({
   finalFocus,
   id,
-  transition = { duration: 0.2 },
+  transition,
   style,
   ...props
 }: MenuPopupProps) {

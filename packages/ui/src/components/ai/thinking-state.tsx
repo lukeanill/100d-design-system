@@ -124,7 +124,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
         type="button"
         aria-expanded={expanded}
         onClick={() => setManualExpanded((current) => !(current ?? autoExpanded))}
-        className="-mx-1.5 flex w-fit items-center gap-2 rounded-md px-1.5 py-1 transition-colors duration-100 hover:bg-muted"
+        className="-mx-1.5 flex w-fit items-center gap-2 rounded-md px-1.5 py-1 transition-colors duration-(--motion-fast) hover:bg-muted"
       >
         <Sparkle
           className="size-4"
@@ -147,20 +147,20 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
           ) : (
             <span
               className="text-[13px] font-medium whitespace-nowrap text-foreground/75"
-              style={{ animation: "fade-in 350ms ease-out both" }}
+              style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}
             >
               {v.done}
             </span>
           )}
         </span>
         <ChevronDown
-          className="size-3.5 text-foreground/75 transition-transform duration-300"
+          className="size-3.5 text-foreground/75 transition-transform duration-(--motion-duration)"
           style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)" }}
         />
       </button>
 
       <div
-        className="grid transition-[grid-template-rows,opacity] duration-400"
+        className="grid transition-[grid-template-rows,opacity] duration-(--motion-duration)"
         style={{
           gridTemplateRows: expanded ? "1fr" : "0fr",
           opacity: expanded ? 1 : 0,
@@ -221,7 +221,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
 
                 if (variant === "Search") {
                   return (
-                    <a key={row.primary} href={row.href} target="_blank" rel="noreferrer" className={cn(rowClass, "transition-colors duration-150 hover:bg-muted")} style={animation}>
+                    <a key={row.primary} href={row.href} target="_blank" rel="noreferrer" className={cn(rowClass, "transition-colors duration-(--motion-fast) hover:bg-muted")} style={animation}>
                       {content}
                     </a>
                   )
@@ -235,7 +235,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                       type="button"
                       aria-pressed={selected}
                       onClick={() => setSelectedTool(selected ? null : row.primary)}
-                      className={cn(rowClass, "transition-colors duration-150", selected ? "bg-muted" : "hover:bg-muted")}
+                      className={cn(rowClass, "transition-colors duration-(--motion-fast)", selected ? "bg-muted" : "hover:bg-muted")}
                       style={animation}
                     >
                       {content}
@@ -250,7 +250,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                 )
               })}
               {variant === "Search" && stage >= 3 && (
-                <span className="text-[12px] text-foreground/75" style={{ animation: "fade-in 300ms ease-out both" }}>
+                <span className="text-[12px] text-foreground/75" style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}>
                   +7 more
                 </span>
               )}

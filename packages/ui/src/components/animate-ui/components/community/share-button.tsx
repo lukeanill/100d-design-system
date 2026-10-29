@@ -1,5 +1,7 @@
 'use client';
 import * as React from 'react';
+import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { useThemeTransition } from '@workspace/ui/hooks/use-theme-motion';
 import { Share2 } from 'lucide-react';
 import { GithubLogo, XLogo, FacebookLogo } from '@phosphor-icons/react';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -49,6 +51,7 @@ function ShareButton({
   onIconClick,
   ...props
 }: ShareButtonProps) {
+  const fast = useFastTransition();
   const [hovered, setHovered] = React.useState(false);
   return (
     <motion.button
@@ -67,7 +70,7 @@ function ShareButton({
             initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.3 }}
+            transition={fast}
             className=" absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center gap-2"
           >
             {icon === 'prefix' && (
@@ -90,7 +93,7 @@ function ShareButton({
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
-            transition={{ duration: 0.3 }}
+            transition={fast}
             className=" absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center gap-2"
           >
             <ShareIconGroup size={size} onIconClick={onIconClick} />
@@ -129,6 +132,8 @@ function ShareIconGroup({
   onIconClick,
 }: ShareIconGroupProps) {
   const iconSize = iconSizeMap[size as keyof typeof iconSizeMap];
+  const theme = useThemeTransition();
+  const fast = useFastTransition();
 
   const handleIconClick = React.useCallback(
     (
@@ -147,10 +152,10 @@ function ShareIconGroup({
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0, duration: 0.5, type: 'spring', bounce: 0.4 }}
+        transition={{ ...theme, delay: 0 }}
         whileHover={{
           y: -8,
-          transition: { duration: 0.2, ease: 'easeOut' },
+          transition: fast,
         }}
         className="group-hover:opacity-100 cursor-pointer py-3 rounded-lg box-border"
         onClick={(event) => handleIconClick('github', event)}
@@ -160,10 +165,10 @@ function ShareIconGroup({
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.5, type: 'spring', bounce: 0.4 }}
+        transition={{ ...theme, delay: 0.1 }}
         whileHover={{
           y: -8,
-          transition: { duration: 0.2, ease: 'easeOut' },
+          transition: fast,
         }}
         className="group-hover:opacity-100 cursor-pointer py-3 rounded-lg box-border"
         onClick={(event) => handleIconClick('x', event)}
@@ -173,10 +178,10 @@ function ShareIconGroup({
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5, type: 'spring', bounce: 0.4 }}
+        transition={{ ...theme, delay: 0.2 }}
         whileHover={{
           y: -8,
-          transition: { duration: 0.2, ease: 'easeOut' },
+          transition: fast,
         }}
         className="group-hover:opacity-100 cursor-pointer py-3 rounded-lg box-border"
         onClick={(event) => handleIconClick('facebook', event)}

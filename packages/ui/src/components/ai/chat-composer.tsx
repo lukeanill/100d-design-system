@@ -37,7 +37,7 @@ const DEFAULT_LABELS: ChatComposerLabels = {
 function Section({ label, sub, time, body, resolving }: { label: string; sub: string; time: string; body: string; resolving?: boolean }) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 transition-[opacity,filter,transform] duration-400"
+      className="flex w-full flex-col gap-1.5 transition-[opacity,filter,transform] duration-(--motion-duration)"
       style={{
         animation: "fade-up 400ms cubic-bezier(0.23,1,0.32,1) both",
         filter: resolving ? "blur(0.5px)" : "blur(0)",
@@ -110,7 +110,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
               type="button"
               aria-pressed={tab === item}
               onClick={() => setTab(item)}
-              className={cn("rounded-md px-2 py-[3px] text-[13px] text-foreground transition-[background-color,opacity] duration-100", tab === item ? "bg-muted" : "opacity-50 hover:opacity-75")}
+              className={cn("rounded-md px-2 py-[3px] text-[13px] text-foreground transition-[background-color,opacity] duration-(--motion-fast)", tab === item ? "bg-muted" : "opacity-50 hover:opacity-75")}
             >
               {item}
             </button>
@@ -118,7 +118,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
         </div>
         <div className="flex items-center gap-1">
           {[Plus, Clock, Ellipsis].map((Icon, i) => (
-            <button key={i} type="button" aria-label="Action" className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-colors duration-100 hover:bg-muted hover:text-foreground">
+            <button key={i} type="button" aria-label="Action" className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-colors duration-(--motion-fast) hover:bg-muted hover:text-foreground">
               <Icon className="size-3.5" strokeWidth={2} />
             </button>
           ))}
@@ -128,7 +128,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
       <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto px-3 pt-2.5 pb-1">
         <div className="flex justify-end pl-14">
           <div
-            className="rounded-xl bg-muted px-3 py-1.5 text-[13px] leading-[1.4] text-foreground transition-[opacity,transform] duration-300"
+            className="rounded-xl bg-muted px-3 py-1.5 text-[13px] leading-[1.4] text-foreground transition-[opacity,transform] duration-(--motion-duration)"
             style={{ opacity: sent ? 1 : 0, transform: sent ? "translateY(0)" : "translateY(10px)", transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
           >
             {submitted}
@@ -147,7 +147,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
         <div
           role="presentation"
           onClick={() => inputRef.current?.focus()}
-          className="flex cursor-text flex-col gap-2 rounded-md border border-border bg-muted p-2.5 shadow-xs transition-[border-color,box-shadow] duration-150 focus-within:border-foreground/20"
+          className="flex cursor-text flex-col gap-2 rounded-md border border-border bg-muted p-2.5 shadow-xs transition-[border-color,box-shadow] duration-(--motion-fast) focus-within:border-foreground/20"
         >
           <input
             ref={inputRef}
@@ -167,7 +167,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
               disabled={!canSend}
               onClick={send}
               className={cn(
-                "flex size-7 items-center justify-center rounded-md transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.96]",
+                "flex size-7 items-center justify-center rounded-md transition-[background-color,color,transform] duration-(--motion-fast) enabled:active:scale-[0.96]",
                 canSend ? "bg-foreground text-background" : "bg-border text-foreground/75"
               )}
             >

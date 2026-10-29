@@ -24,13 +24,7 @@ type AutoHeightProps = WithAsChild<
 function AutoHeight({
   children,
   deps = [],
-  transition = {
-    type: 'spring',
-    stiffness: 300,
-    damping: 30,
-    bounce: 0,
-    restDelta: 0.01,
-  },
+  transition,
   style,
   animate,
   asChild = false,

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { debounce } from "lodash"
 import { AnimationOptions, motion, stagger, useAnimate } from "motion/react"
+import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
 
 interface TextProps {
   label: string
@@ -19,16 +20,15 @@ const VariableFontHoverByLetter = ({
   label,
   fromFontVariationSettings = "'wght' 400, 'slnt' 0",
   toFontVariationSettings = "'wght' 900, 'slnt' -10",
-  transition = {
-    type: "spring",
-    duration: 0.7,
-  },
+  transition: transitionProp,
   staggerDuration = 0.03,
   staggerFrom = "first",
   className,
   onClick,
   ...props
 }: TextProps) => {
+  const themeTransition = useThemeTransition()
+  const transition = (transitionProp ?? themeTransition) as AnimationOptions
   const [scope, animate] = useAnimate()
   const [isHovered, setIsHovered] = useState(false)
 

@@ -22,7 +22,7 @@ type BlurProps = WithAsChild<
 
 function Blur({
   ref,
-  transition = { type: 'spring', stiffness: 200, damping: 20 },
+  transition,
   delay = 0,
   inView = false,
   inViewMargin = '0px',

@@ -66,7 +66,7 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
 
   return (
     <div className={cn("flex w-full max-w-95 flex-col gap-2", className)}>
-      <div className="flex items-center gap-2 px-0.5" style={{ animation: "fade-in 400ms ease-out both" }}>
+      <div className="flex items-center gap-2 px-0.5" style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}>
         <span className="text-[13px] font-semibold text-foreground">{copy.header}</span>
         <span className="inline-flex h-5 items-center rounded-md bg-muted px-1.5 text-[11.5px] font-medium text-foreground/75 ring-1 ring-foreground/10 tabular-nums">{copy.count}</span>
       </div>
@@ -83,7 +83,7 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
           <p className="px-3 pt-2 pb-1 text-[12.5px] leading-relaxed text-foreground/75">{chunk.body}</p>
           <div className="px-3 pb-3">
             <span
-              className="inline-flex h-6 items-center gap-1.5 rounded-full bg-muted px-2 text-[12px] font-medium text-foreground/75 shadow-xs transition-[opacity,transform,background-color] duration-300 hover:bg-muted/70"
+              className="inline-flex h-6 items-center gap-1.5 rounded-full bg-muted px-2 text-[12px] font-medium text-foreground/75 shadow-xs transition-[opacity,transform,background-color] duration-(--motion-duration) hover:bg-muted/70"
               style={{
                 opacity: chipsShown ? 1 : 0,
                 transform: chipsShown ? "scale(1)" : "scale(0.95)",

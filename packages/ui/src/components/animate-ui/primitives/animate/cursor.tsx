@@ -247,7 +247,7 @@ function CursorFollow({
   align = 'end',
   alignOffset = 0,
   style,
-  transition = { stiffness: 500, damping: 50, bounce: 0 },
+  transition,
   ...props
 }: CursorFollowProps) {
   const { cursorPos, active, cursorRef, global } = useCursor();

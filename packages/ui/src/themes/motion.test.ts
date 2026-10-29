@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url"
 
 import { describe, expect, it } from "vitest"
 
-import { EASING, MOTION_STYLES, SPRING, TIMING, TRANSITION_SPEEDS, easeVar, motionCssTokens, springEasing } from "./motion"
+import { EASING, MOTION_STYLES, SPRING, TIMING, TRANSITION_SPEEDS, easeVar, motionCssTokens, motionTransition, springEasing } from "./motion"
 
 const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "../styles/tokens.css"), "utf8")
 
@@ -46,4 +46,14 @@ describe("motion tokens", () => {
   it("set the page-transition speeds from the timings", () => {
     expect(TRANSITION_SPEEDS).toEqual({ slow: 1.2, medium: 0.8, fast: 0.4 })
   })
+})
+
+describe("motionTransition: the four Component Animations choices", () => {
+  it("None is instant", () => expect(motionTransition("none")).toEqual({ duration: 0 }))
+  it("Ease is ease-out over the long timing", () =>
+    expect(motionTransition("ease")).toEqual({ duration: TIMING.long, ease: [...EASING["ease-out"].normal] }))
+  it("Emphatic is ease-in-out over the faster timing", () =>
+    expect(motionTransition("emphatic")).toEqual({ duration: TIMING.faster, ease: [...EASING["ease-in-out"].normal] }))
+  it("Springy is the spring's bounce", () =>
+    expect(motionTransition("springy")).toEqual({ type: "spring", duration: TIMING.long, bounce: SPRING.normal }))
 })

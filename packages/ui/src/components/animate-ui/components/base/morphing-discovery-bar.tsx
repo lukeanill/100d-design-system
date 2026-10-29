@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useFastTransition } from "@workspace/ui/components/animate-ui/fast-transition"
 import type { FC, ReactNode } from "react"
 import { AnimatePresence, LayoutGroup, motion } from "motion/react"
 import { Search, X } from "lucide-react"
@@ -29,9 +30,8 @@ export interface MorphingDiscoveryBarProps {
   className?: string
 }
 
-const transition = { damping: 32, mass: 1, stiffness: 520, type: "spring" } as const
-
 export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories, defaultActive, onChange, className = "" }) => {
+  const fast = useFastTransition()
   const [isSearching, setIsSearching] = useState(false)
   const [activeTab, setActiveTab] = useState(defaultActive ?? categories[0]?.id)
   const [searchValue, setSearchValue] = useState("")
@@ -45,19 +45,18 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
   }, [isSearching])
 
   return (
-    <div className={`flex w-full flex-col items-center justify-center bg-transparent p-2 transition-colors duration-500 sm:p-4 ${className}`}>
+    <div className={`flex w-full flex-col items-center justify-center bg-transparent p-2 transition-colors duration-(--motion-duration) sm:p-4 ${className}`}>
       <div className="flex h-14 w-full max-w-full items-center justify-center">
         <LayoutGroup>
-          <motion.div layout transition={transition} className={`flex max-w-full items-center gap-1.5 rounded-[32px] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
+          <motion.div layout className={`flex max-w-full items-center gap-1.5 rounded-[32px] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
             <motion.div
               layout
-              transition={transition}
               className={`relative flex h-11 items-center overflow-hidden rounded-full border border-border bg-card shadow-xs transition-colors ${
                 isSearching ? "xs:w-64 w-[calc(100vw-80px)] sm:w-80" : "w-11"
               }`}
             >
               <div className="flex h-full w-full items-center justify-center px-3 sm:px-4">
-                <motion.div layout="position" transition={transition}>
+                <motion.div layout="position">
                   <Search size={16} strokeWidth={2.25} className="shrink-0 text-foreground transition-colors" />
                 </motion.div>
 
@@ -69,7 +68,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                       initial={{ opacity: 0, x: -5 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -5 }}
-                      transition={{ duration: 0.15 }}
+                      transition={fast}
                       placeholder="Search"
                       className="ml-2 w-full border-none bg-transparent text-sm font-medium text-foreground outline-none placeholder:text-foreground/75 sm:text-base"
                       value={searchValue}
@@ -90,7 +89,6 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   initial={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
                   animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
                   exit={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
-                  transition={transition}
                   className="flex h-11 items-center gap-1 overflow-hidden rounded-full border border-border bg-card p-1"
                 >
                   {categories.map((cat) => {
@@ -110,7 +108,6 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                           <motion.div
                             layoutId="discovery-pill-bg"
                             className="absolute inset-0 z-[-1] rounded-full bg-foreground shadow-xs"
-                            transition={transition}
                           />
                         )}
                         <span className="relative z-10 flex items-center">{cat.icon}</span>
@@ -126,7 +123,6 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
                   animate={{ opacity: 1, rotate: 0, scale: 1 }}
                   exit={{ opacity: 0, rotate: -90, scale: 0.8 }}
-                  transition={transition}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => {
                     setIsSearching(false)

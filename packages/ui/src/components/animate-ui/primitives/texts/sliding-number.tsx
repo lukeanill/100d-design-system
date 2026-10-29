@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useThemeSpring } from '@workspace/ui/hooks/use-theme-motion';
 import {
   useSpring,
   useTransform,
@@ -146,11 +147,13 @@ function SlidingNumber({
   decimalSeparator = '.',
   decimalPlaces = 0,
   thousandSeparator,
-  transition = { stiffness: 200, damping: 20, mass: 0.4 },
+  transition: transitionProp,
   delay = 0,
   initiallyStable = false,
   ...props
 }: SlidingNumberProps) {
+  const themeSpring = useThemeSpring();
+  const transition = transitionProp ?? themeSpring;
   const { ref: localRef, isInView } = useIsInView(
     ref as React.Ref<HTMLElement>,
     {
@@ -170,7 +173,7 @@ function SlidingNumber({
   const motionVal = useMotionValue(
     initiallyStable ? initialNumeric : (fromNumber ?? 0),
   );
-  const springVal = useSpring(motionVal, { stiffness: 90, damping: 50 });
+  const springVal = useSpring(motionVal, themeSpring);
 
   const skippedInitialWhenStable = React.useRef(false);
 

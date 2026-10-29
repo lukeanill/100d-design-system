@@ -23,10 +23,7 @@ const VariableFontHoverByRandomLetter = ({
   label,
   fromFontVariationSettings = "'wght' 400, 'slnt' 0",
   toFontVariationSettings = "'wght' 900, 'slnt' -10",
-  transition = {
-    type: "spring",
-    duration: 0.7,
-  },
+  transition,
   staggerDuration = 0.03,
   className,
   onClick,

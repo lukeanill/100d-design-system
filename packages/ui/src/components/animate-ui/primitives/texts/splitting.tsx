@@ -46,7 +46,7 @@ const SplittingText: React.FC<SplittingTextProps> = ({
   type = 'chars',
   initial = { x: 150, opacity: 0 },
   animate = { x: 0, opacity: 1 },
-  transition = { duration: 0.7, ease: 'easeOut' },
+  transition,
   stagger,
   delay = 0,
   inView = false,

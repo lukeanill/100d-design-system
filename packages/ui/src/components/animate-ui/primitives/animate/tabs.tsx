@@ -111,7 +111,7 @@ function Tabs({
 type TabsHighlightProps = Omit<HighlightProps, 'controlledItems' | 'value'>;
 
 function TabsHighlight({
-  transition = { type: 'spring', stiffness: 200, damping: 25 },
+  transition,
   ...props
 }: TabsHighlightProps) {
   const { activeValue } = useTabs();
@@ -188,13 +188,7 @@ type TabsContentsProps = HTMLMotionProps<'div'> & {
 
 function TabsContents({
   children,
-  transition = {
-    type: 'spring',
-    stiffness: 300,
-    damping: 30,
-    bounce: 0,
-    restDelta: 0.01,
-  },
+  transition,
   ...props
 }: TabsContentsProps) {
   const { activeValue } = useTabs();
@@ -329,7 +323,6 @@ function TabsContent({
       initial={{ filter: 'blur(0px)' }}
       animate={{ filter: isActive ? 'blur(0px)' : 'blur(4px)' }}
       exit={{ filter: 'blur(0px)' }}
-      transition={{ type: 'spring', stiffness: 200, damping: 25 }}
       {...props}
     />
   );

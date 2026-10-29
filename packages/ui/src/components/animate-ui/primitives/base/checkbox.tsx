@@ -8,6 +8,8 @@ import {
   type SVGMotionProps,
 } from 'motion/react';
 
+import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { TIMING } from '@workspace/ui/themes/motion';
 import { getStrictContext } from '@workspace/ui/lib/get-strict-context';
 import { useControlledState } from '@workspace/ui/hooks/use-controlled-state';
 
@@ -83,6 +85,7 @@ type CheckboxIndicatorProps = SVGMotionProps<SVGSVGElement>;
 
 function CheckboxIndicator(props: CheckboxIndicatorProps) {
   const { isChecked, isIndeterminate } = useCheckbox();
+  const fast = useFastTransition();
 
   return (
     <CheckboxPrimitive.Indicator
@@ -110,7 +113,7 @@ function CheckboxIndicator(props: CheckboxIndicatorProps) {
               animate={{
                 pathLength: 1,
                 opacity: 1,
-                transition: { duration: 0.2 },
+                transition: fast,
               }}
             />
           ) : (
@@ -122,17 +125,12 @@ function CheckboxIndicator(props: CheckboxIndicatorProps) {
                 checked: {
                   pathLength: 1,
                   opacity: 1,
-                  transition: {
-                    duration: 0.2,
-                    delay: 0.2,
-                  },
+                  transition: { ...fast, delay: TIMING.fast },
                 },
                 unchecked: {
                   pathLength: 0,
                   opacity: 0,
-                  transition: {
-                    duration: 0.2,
-                  },
+                  transition: fast,
                 },
               }}
             />

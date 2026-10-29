@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { motion, stagger, useAnimate, type AnimationOptions } from "motion/react"
+import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
 
 interface TextProps {
   label: string
@@ -14,16 +15,15 @@ interface TextProps {
 const LetterSwapForward = ({
   label,
   reverse = true,
-  transition = {
-    type: "spring",
-    duration: 0.7,
-  },
+  transition: transitionProp,
   staggerDuration = 0.03,
   staggerFrom = "first",
   className,
   onClick,
   ...props
 }: TextProps) => {
+  const themeTransition = useThemeTransition()
+  const transition = (transitionProp ?? themeTransition) as AnimationOptions
   const [scope, animate] = useAnimate()
   const [blocked, setBlocked] = useState(false)
 

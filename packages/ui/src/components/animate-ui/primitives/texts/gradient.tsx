@@ -15,7 +15,7 @@ function GradientText({
   style,
   gradient = 'linear-gradient(90deg, #3b82f6 0%, #a855f7 20%, #ec4899 50%, #a855f7 80%, #3b82f6 100%)',
   neon = false,
-  transition = { duration: 50, repeat: Infinity, ease: 'linear' },
+  transition,
   ...props
 }: GradientTextProps) {
   const baseStyle: React.CSSProperties = {

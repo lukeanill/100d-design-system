@@ -52,7 +52,7 @@ const DEFAULT_BLUR_BLUR: number = 0;
 
 function Effect({
   ref,
-  transition = { type: 'spring', stiffness: 200, damping: 20 },
+  transition,
   delay = 0,
   inView = false,
   inViewMargin = '0px',

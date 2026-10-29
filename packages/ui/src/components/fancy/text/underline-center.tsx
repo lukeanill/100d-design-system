@@ -23,7 +23,7 @@ interface UnderlineProps {
 
   /**
    * Animation transition configuration
-   * @default { duration: 0.25, ease: "easeInOut" }
+   * @default the active theme's transition
    */
   transition?: ValueAnimationTransition
 
@@ -44,7 +44,7 @@ const CenterUnderline = ({
   children,
   as,
   className,
-  transition = { duration: 0.25, ease: "easeInOut" },
+  transition,
   underlineHeightRatio = 0.1,
   underlinePaddingRatio = 0.01,
   ...props

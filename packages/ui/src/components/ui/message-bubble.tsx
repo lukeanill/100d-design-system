@@ -599,7 +599,7 @@ export const VoiceMessageBubble = ({
           <div className="flex-1 flex items-center gap-2">
             <div className="flex-1 h-1 bg-current/20 rounded-full overflow-hidden">
               <div
-                className="h-full bg-current rounded-full transition-all duration-100"
+                className="h-full bg-current rounded-full transition-all duration-(--motion-fast)"
                 style={{ width: `${progress || 33}%` }}
               />
             </div>

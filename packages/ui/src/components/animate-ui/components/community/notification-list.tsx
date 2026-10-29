@@ -1,7 +1,8 @@
 'use client';
 
 import { RotateCcw, ArrowUpRight } from 'lucide-react';
-import { motion, type Transition } from 'motion/react';
+import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { motion } from 'motion/react';
 
 export type NotificationItem = {
   id: number;
@@ -33,12 +34,6 @@ const notifications: NotificationItem[] = [
   },
 ];
 
-const transition: Transition = {
-  type: 'spring',
-  stiffness: 300,
-  damping: 26,
-};
-
 const getCardVariants = (i: number) => ({
   collapsed: {
     marginTop: i === 0 ? 0 : -44,
@@ -49,11 +44,6 @@ const getCardVariants = (i: number) => ({
     scaleX: 1,
   },
 });
-
-const textSwitchTransition: Transition = {
-  duration: 0.22,
-  ease: 'easeInOut',
-};
 
 const notificationTextVariants = {
   collapsed: { opacity: 1, y: 0, pointerEvents: 'auto' },
@@ -66,6 +56,7 @@ const viewAllTextVariants = {
 };
 
 function NotificationList({ items = notifications }: { items?: NotificationItem[] }) {
+  const fast = useFastTransition();
   return (
     <motion.div
       className="bg-muted p-3 rounded-lg w-xs space-y-3 shadow-md"
@@ -76,9 +67,8 @@ function NotificationList({ items = notifications }: { items?: NotificationItem[
         {items.map((notification, i) => (
           <motion.div
             key={notification.id}
-            className="bg-card rounded-xl px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-200 relative"
+            className="bg-card rounded-xl px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-(--motion-fast) relative"
             variants={getCardVariants(i)}
-            transition={transition}
             style={{
               zIndex: items.length - i,
             }}
@@ -109,14 +99,14 @@ function NotificationList({ items = notifications }: { items?: NotificationItem[
           <motion.span
             className="text-sm font-medium text-foreground row-start-1 col-start-1"
             variants={notificationTextVariants}
-            transition={textSwitchTransition}
+            transition={fast}
           >
             Notifications
           </motion.span>
           <motion.span
             className="text-sm font-medium text-foreground flex items-center gap-1 cursor-pointer select-none row-start-1 col-start-1"
             variants={viewAllTextVariants}
-            transition={textSwitchTransition}
+            transition={fast}
           >
             View all <ArrowUpRight className="size-4" />
           </motion.span>

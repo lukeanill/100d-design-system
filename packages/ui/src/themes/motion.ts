@@ -3,6 +3,8 @@
 // motion.test.ts holds the two together. Cubic béziers are [x1, y1, x2, y2], as the `motion`
 // library takes them.
 
+import type { Transition } from "motion/react"
+
 export type Bezier = readonly [number, number, number, number]
 
 /** Easing/ease-in-out, ease-in, ease-out and ease-out-in, by strength. */
@@ -88,3 +90,15 @@ export function springEasing(bounce: number, duration: number, points = 48): str
   })
   return `linear(${samples.join(", ")})`
 }
+
+/**
+ * A Component Animations choice as a `motion` transition, made only of the motion tokens:
+ * None is instant, Ease and Emphatic are their curve and duration, Springy is the spring's bounce.
+ */
+export function motionTransition(choice: keyof typeof MOTION_STYLES): Transition {
+  const style = MOTION_STYLES[choice]
+  if (style.duration === 0) return { duration: 0 }
+  if (style.spring !== null) return { type: "spring", duration: style.duration, bounce: style.spring }
+  return { duration: style.duration, ease: [...style.curve!] as [number, number, number, number] }
+}
+

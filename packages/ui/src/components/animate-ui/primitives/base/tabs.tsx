@@ -53,7 +53,7 @@ function Tabs(props: TabsProps) {
 type TabsHighlightProps = Omit<HighlightProps, 'controlledItems' | 'value'>;
 
 function TabsHighlight({
-  transition = { type: 'spring', stiffness: 200, damping: 25 },
+  transition,
   ...props
 }: TabsHighlightProps) {
   const { value } = useTabs();
@@ -96,7 +96,7 @@ type TabsPanelProps = React.ComponentProps<typeof TabsPrimitive.Panel> &
 function TabsPanel({
   value,
   keepMounted,
-  transition = { duration: 0.5, ease: 'easeInOut' },
+  transition,
   ...props
 }: TabsPanelProps) {
   return (
@@ -135,12 +135,6 @@ type TabsPanelsLayoutProps = Omit<HTMLMotionProps<'div'>, 'children'> & {
 
 type TabsPanelsProps = TabsPanelsAutoProps | TabsPanelsLayoutProps;
 
-const defaultTransition: Transition = {
-  type: 'spring',
-  stiffness: 200,
-  damping: 30,
-};
-
 function isAutoMode(props: TabsPanelsProps): props is TabsPanelsAutoProps {
   return !props.mode || props.mode === 'auto-height';
 }
@@ -149,7 +143,7 @@ function TabsPanels(props: TabsPanelsProps) {
   const { value } = useTabs();
 
   if (isAutoMode(props)) {
-    const { children, transition = defaultTransition, ...autoProps } = props;
+    const { children, transition, ...autoProps } = props;
 
     return (
       <AutoHeight
@@ -166,7 +160,7 @@ function TabsPanels(props: TabsPanelsProps) {
   const {
     children,
     style,
-    transition = defaultTransition,
+    transition,
     ...layoutProps
   } = props;
 

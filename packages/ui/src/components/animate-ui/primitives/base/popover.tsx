@@ -83,7 +83,7 @@ type PopoverPopupProps = Omit<
 function PopoverPopup({
   initialFocus,
   finalFocus,
-  transition = { type: 'spring', stiffness: 300, damping: 25 },
+  transition,
   ...props
 }: PopoverPopupProps) {
   return (

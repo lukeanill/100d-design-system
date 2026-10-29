@@ -168,7 +168,7 @@ type FolderIconProps = HTMLMotionProps<'span'> & {
 function FolderIcon({
   closeIcon,
   openIcon,
-  transition = { duration: 0.15 },
+  transition,
   ...props
 }: FolderIconProps) {
   const { isOpen } = useFolder();

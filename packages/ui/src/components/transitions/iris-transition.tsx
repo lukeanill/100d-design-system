@@ -12,9 +12,8 @@ import * as React from "react"
 import { motion } from "motion/react"
 
 import { useCurtainSwap } from "@workspace/ui/components/transitions/use-curtain-swap"
+import { PAGE_TRANSITION_EASE as EASE, useThemeTransitionDuration } from "@workspace/ui/hooks/use-theme-page-transition"
 
-const DEFAULT_DURATION = 0.5
-const EASE: [number, number, number, number] = [0.65, 0, 0.35, 1]
 
 /** 150% rather than 100%: the circle has to clear the far corner from any origin. */
 const COVERED = 150
@@ -42,9 +41,10 @@ export function IrisTransition({
   transitionKey,
   children,
   color = "var(--foreground)",
-  duration = DEFAULT_DURATION,
+  duration: durationProp,
   origin = null,
 }: IrisTransitionProps) {
+  const duration = useThemeTransitionDuration(durationProp)
   // Read at sequence time, so a click updates the origin for its own run.
   const originRef = React.useRef(origin)
   React.useEffect(() => {

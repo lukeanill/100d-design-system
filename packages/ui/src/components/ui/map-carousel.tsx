@@ -362,14 +362,14 @@ const FilterSection = ({
         <span>{title}</span>
         <ChevronDown
           className={cn(
-            "size-4 text-foreground/75 transition-transform duration-200",
+            "size-4 text-foreground/75 transition-transform duration-(--motion-fast)",
             expanded && "rotate-180"
           )}
         />
       </button>
       <div
         className={cn(
-          "grid transition-all duration-200 ease-out",
+          "grid transition-all duration-(--motion-fast) ease-(--motion-transition-ease)",
           expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         )}
       >
@@ -434,7 +434,7 @@ const FilterPanel = ({
         type="button"
         aria-label="Close filters"
         className={cn(
-          "absolute inset-0 bg-background/60 backdrop-blur-[2px] transition-opacity duration-300 z-10",
+          "absolute inset-0 bg-background/60 backdrop-blur-[2px] transition-opacity duration-(--motion-duration) z-10",
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
         onClick={onClose}
@@ -443,7 +443,7 @@ const FilterPanel = ({
       {/* Panel */}
       <div
         className={cn(
-          "absolute inset-0 bg-background z-20 flex flex-col transition-all duration-300 ease-out",
+          "absolute inset-0 bg-background z-20 flex flex-col transition-all duration-(--motion-duration) ease-(--motion-transition-ease)",
           isOpen
             ? "opacity-100 translate-x-0"
             : "opacity-0 -translate-x-4 pointer-events-none"

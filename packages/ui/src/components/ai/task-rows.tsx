@@ -154,11 +154,11 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
       return <span className="inline-flex h-5.5 items-center rounded-full bg-affirmative/15 px-2 text-[11.5px] font-medium text-affirmative-foreground">{copy.completed}</span>
     if (row.status === "running") return null
     return row2 === "failed" ? (
-      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-destructive/10 px-2 text-[11.5px] font-medium text-destructive" style={{ animation: "fade-in 200ms ease-out both" }}>
+      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-destructive/10 px-2 text-[11.5px] font-medium text-destructive" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
         {copy.failed} <RefreshCw className="size-3" style={{ animation: "spin 1.2s linear infinite" }} />
       </span>
     ) : row2 === "done" ? (
-      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-affirmative/15 px-2 text-[11.5px] font-medium text-affirmative-foreground" style={{ animation: "fade-in 200ms ease-out both" }}>
+      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-affirmative/15 px-2 text-[11.5px] font-medium text-affirmative-foreground" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
         {copy.completed}
       </span>
     ) : null
@@ -173,7 +173,7 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
           <div
             key={row.key}
             className={cn(
-              "self-stretch overflow-hidden transition-[border-radius,background-color] duration-300 hover:bg-muted",
+              "self-stretch overflow-hidden transition-[border-radius,background-color] duration-(--motion-duration) hover:bg-muted",
               list ? "border-b border-border last:border-0" : "bg-card ring-1 ring-foreground/10"
             )}
             style={{ animation: `fade-up 450ms cubic-bezier(0.23,1,0.32,1) ${i * 80}ms both`, borderRadius: list ? 0 : open ? 14 : 22 }}
@@ -192,12 +192,12 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
               <span className="text-[12.5px] text-foreground/75 tabular-nums">{row.amount}</span>
               {pillFor(row)}
               <span aria-hidden="true" className="-ml-2 flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75">
-                <ChevronDown className="size-3.5 transition-transform duration-300" style={{ transform: open ? "rotate(180deg)" : "rotate(0)" }} />
+                <ChevronDown className="size-3.5 transition-transform duration-(--motion-duration)" style={{ transform: open ? "rotate(180deg)" : "rotate(0)" }} />
               </span>
             </button>
 
             <div
-              className="grid transition-[grid-template-rows,opacity] duration-300"
+              className="grid transition-[grid-template-rows,opacity] duration-(--motion-duration)"
               style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0, transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
             >
               <div className="overflow-hidden">

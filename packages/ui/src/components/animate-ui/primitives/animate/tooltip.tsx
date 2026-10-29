@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useThemeTransition } from '@workspace/ui/hooks/use-theme-motion';
 import {
   motion,
   AnimatePresence,
@@ -96,8 +97,10 @@ function TooltipProvider({
   id,
   openDelay = 700,
   closeDelay = 300,
-  transition = { type: 'spring', stiffness: 300, damping: 35 },
+  transition: transitionProp,
 }: TooltipProviderProps) {
+  const themeTransition = useThemeTransition();
+  const transition = transitionProp ?? themeTransition;
   const globalId = React.useId();
   const [currentTooltip, setCurrentTooltip] =
     React.useState<TooltipData | null>(null);

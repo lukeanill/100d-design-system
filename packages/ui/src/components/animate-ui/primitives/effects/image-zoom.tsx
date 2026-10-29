@@ -18,7 +18,7 @@ type ImageZoomProps = {
 export function ImageZoom({
   children,
   zoomScale = 3,
-  transition = { type: 'spring', stiffness: 200, damping: 28 },
+  transition,
   style,
   zoomOnClick = true,
   zoomOnHover = true,
