@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
-import type { ReactNode } from "react"
+import type { ReactNode, RefObject } from "react"
 import { ArrowUpIcon, CaretDownIcon, ChartLineIcon, CheckIcon, FileIcon, GlobeIcon, MicrophoneIcon, PaperclipIcon, PlusIcon, StackIcon, XIcon } from "@phosphor-icons/react"
 
 import { cn } from "@workspace/ui/lib/utils"
@@ -85,6 +85,8 @@ export interface PromptBarProps {
   }
   data?: {
     placeholder?: string
+    /** Plain text in place of the model picker (no menu), e.g. "Agent" when there is only one thing to talk to. */
+    modelLabel?: string
   }
   actions?: {
     onSend?: (text: string) => void
@@ -428,24 +430,36 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               )}
             />
 
-            <button
-              ref={modelRef}
-              type="button"
-              aria-expanded={modelOpen}
-              aria-label="Choose model"
-              onClick={() => {
-                setPlusOpen(false)
-                setModelOpen((current) => !current)
-              }}
-              className={cn(
-                "text-body-md flex h-9 shrink-0 items-center gap-1 px-2 text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)",
-                pill ? "rounded-full" : "rounded-(--radius-inner)",
-                wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
-              )}
-            >
-              {model.name}
-              <ThemedIcon phosphor={CaretDownIcon} className="text-foreground/75" />
-            </button>
+            {data?.modelLabel ? (
+              <span
+                ref={modelRef as unknown as RefObject<HTMLSpanElement>}
+                className={cn(
+                  "text-body-md flex h-9 shrink-0 items-center px-2 text-foreground/75",
+                  wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
+                )}
+              >
+                {data.modelLabel}
+              </span>
+            ) : (
+              <button
+                ref={modelRef}
+                type="button"
+                aria-expanded={modelOpen}
+                aria-label="Choose model"
+                onClick={() => {
+                  setPlusOpen(false)
+                  setModelOpen((current) => !current)
+                }}
+                className={cn(
+                  "text-body-md flex h-9 shrink-0 items-center gap-1 px-2 text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)",
+                  pill ? "rounded-full" : "rounded-(--radius-inner)",
+                  wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
+                )}
+              >
+                {model.name}
+                <ThemedIcon phosphor={CaretDownIcon} className="text-foreground/75" />
+              </button>
+            )}
 
             <button
               type="button"
