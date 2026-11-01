@@ -102,9 +102,9 @@ describe("the 6.0 theme model", () => {
   })
 
   it("reads the secondary heading font into the theme, and follows the primary when empty", () => {
-    const text = draftToText(emptyDraft()).replace("heading primary font:", "heading primary font: Intan").replace("heading secondary font:", "heading secondary font: Karla")
+    const text = draftToText(emptyDraft()).replace("heading primary font:", "heading primary font: Intan").replace("heading secondary font:", "heading secondary font: Newsreader")
     const { draft } = textToDraft(text, emptyDraft())
-    expect(draftToTheme(draft).fonts.secondary.family).toBe("Karla")
+    expect(draftToTheme(draft).fonts.secondary.family).toBe("Newsreader")
     const same = textToDraft(draftToText(emptyDraft()).replace("heading primary font:", "heading primary font: Intan"), emptyDraft()).draft
     expect(draftToTheme(same).fonts.secondary.family).toBe("Intan")
   })
