@@ -12,7 +12,6 @@
   },
   "fonts": {
     "primary": "ITC Garamond Std",
-    "emphasis": "Lora",
     "body": "Inter"
   },
   "radius": "strong",

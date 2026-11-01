@@ -306,7 +306,7 @@
     font-family: var(--h1-family, var(--font-heading));
     font-size: var(--h1-size, 4.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h1-weight, 400);
     /*
       A theme can fill its H1s with an animated gradient. Every property below
@@ -330,7 +330,7 @@
     font-family: var(--h2-family, var(--font-heading));
     font-size: var(--h2-size, 3.75rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h2-weight, 400);
   }
 
@@ -338,7 +338,7 @@
     font-family: var(--h3-family, var(--font-heading));
     font-size: var(--h3-size, 3rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h3-weight, 400);
   }
 
@@ -346,7 +346,7 @@
     font-family: var(--h4-family, var(--font-heading));
     font-size: var(--h4-size, 2.25rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h4-weight, 400);
   }
 
@@ -354,7 +354,7 @@
     font-family: var(--h5-family, var(--font-heading));
     font-size: var(--h5-size, 1.875rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h5-weight, 400);
   }
 
@@ -362,7 +362,7 @@
     font-family: var(--h6-family, var(--font-heading));
     font-size: var(--h6-size, 1.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h6-weight, 400);
   }
 
@@ -393,7 +393,7 @@
     font-style: normal;
     font-size: var(--typescale-md, 1rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/xs/bold */
@@ -403,7 +403,7 @@
     font-style: normal;
     font-size: var(--typescale-xs, 0.75rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/xs/italic */
@@ -413,7 +413,7 @@
     font-style: italic;
     font-size: var(--typescale-xs, 0.75rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/sm/bold */
@@ -423,7 +423,7 @@
     font-style: normal;
     font-size: var(--typescale-sm, 0.875rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/sm/italic */
@@ -433,7 +433,7 @@
     font-style: italic;
     font-size: var(--typescale-sm, 0.875rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/md/bold */
@@ -443,7 +443,7 @@
     font-style: normal;
     font-size: var(--typescale-md, 1rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/md/italic */
@@ -453,7 +453,7 @@
     font-style: italic;
     font-size: var(--typescale-md, 1rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/lg/bold */
@@ -463,7 +463,7 @@
     font-style: normal;
     font-size: var(--typescale-lg, 1.125rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* body/lg/italic */
@@ -473,7 +473,7 @@
     font-style: italic;
     font-size: var(--typescale-lg, 1.125rem);
     line-height: 1.6;
-    letter-spacing: 0;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   /* comp/action/sm: the text inside a button; the weight is font/body/action/weight and the line is 100% */
@@ -543,7 +543,7 @@
     font-style: normal;
     font-size: var(--typescale-h1, 4.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   /* pri/reg/h2 */
@@ -553,7 +553,7 @@
     font-style: normal;
     font-size: var(--typescale-h2, 3.75rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   /* pri/reg/h3: the theme's heading face for a figure inside a card (the h3 element is larger) */
@@ -563,7 +563,7 @@
     font-style: normal;
     font-size: var(--typescale-h3, 3rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   /* pri/reg/h4 */
@@ -573,7 +573,7 @@
     font-style: normal;
     font-size: var(--typescale-h4, 2.25rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   /* pri/reg/h5 */
@@ -583,7 +583,7 @@
     font-style: normal;
     font-size: var(--typescale-h5, 1.875rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   /* pri/reg/h6 */
@@ -593,7 +593,7 @@
     font-style: normal;
     font-size: var(--typescale-h6, 1.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   /* pri/emp/h1 */
@@ -603,7 +603,7 @@
     font-style: normal;
     font-size: var(--typescale-h1, 4.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   .text-h2-pri-bold {
@@ -612,7 +612,7 @@
     font-style: normal;
     font-size: var(--typescale-h2, 3.75rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   .text-h3-pri-bold {
@@ -621,7 +621,7 @@
     font-style: normal;
     font-size: var(--typescale-h3, 3rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   .text-h4-pri-bold {
@@ -630,7 +630,7 @@
     font-style: normal;
     font-size: var(--typescale-h4, 2.25rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   .text-h5-pri-bold {
@@ -639,7 +639,7 @@
     font-style: normal;
     font-size: var(--typescale-h5, 1.875rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   .text-h6-pri-bold {
@@ -648,7 +648,7 @@
     font-style: normal;
     font-size: var(--typescale-h6, 1.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
   /* sec/reg/h1 */
@@ -658,7 +658,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h1, 4.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h2-sec {
@@ -667,7 +667,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h2, 3.75rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h3-sec {
@@ -676,7 +676,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h3, 3rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h4-sec {
@@ -685,7 +685,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h4, 2.25rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h5-sec {
@@ -694,7 +694,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h5, 1.875rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h6-sec {
@@ -703,7 +703,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h6, 1.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   /* sec/emp/h1 */
@@ -713,7 +713,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h1, 4.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h2-sec-bold {
@@ -722,7 +722,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h2, 3.75rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h3-sec-bold {
@@ -731,7 +731,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h3, 3rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h4-sec-bold {
@@ -740,7 +740,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h4, 2.25rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h5-sec-bold {
@@ -749,7 +749,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h5, 1.875rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   .text-h6-sec-bold {
@@ -758,7 +758,7 @@
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h6, 1.5rem);
     line-height: 1.4;
-    letter-spacing: 0;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   /*
@@ -769,6 +769,7 @@
   .text-xs, .text-sm, .text-base, .text-lg, .text-xl {
     font-family: var(--font-body);
     font-weight: var(--font-body-weight);
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   .mapboxgl-popup-content, .maplibregl-popup-content {

@@ -12,7 +12,6 @@
   },
   "fonts": {
     "primary": "Imbue",
-    "emphasis": "Lora",
     "body": "Inter"
   },
   "radius": "rounded",

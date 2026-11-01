@@ -12,8 +12,7 @@
   },
   "fonts": {
     "primary": "Folio Std",
-    "emphasis": "EB Garamond",
-    "body": "Inter"
+    "body": "EB Garamond"
   },
   "radius": "sharp",
   "overrides": {
@@ -28,9 +27,9 @@
   },
   "fontSource": "google",
   "tokens": {
-    "font-body-weight": "300",
+    "font-body-weight": "400",
     "font-body-line-height": "1.42",
-    "font-body-letter-spacing": "0.0em",
+    "font-body-letter-spacing": "0.02em",
     "background": "oklch(0.395 0.117 278.39)",
     "foreground": "oklch(0.988 0.001 286.38)",
     "card": "var(--background)",
@@ -142,8 +141,8 @@
         "weight": 700
       },
       "sans": {
-        "family": "Inter",
-        "weight": 300
+        "family": "EB Garamond",
+        "weight": 400
       }
     }
   }

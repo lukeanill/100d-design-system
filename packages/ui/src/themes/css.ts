@@ -113,10 +113,12 @@ export function themeDeclarations(theme: Theme): string[] {
   set("font-body-weight-action", String(fonts.body.actionWeight ?? fonts.body.weight))
   set("font-primary-weight-regular", String(fonts.display.weight))
   set("font-primary-weight-emphasis", String(fonts.display.emphasis ?? fonts.display.weight))
+  set("font-primary-letter-spacing", `${(fonts.display.letterSpacing ?? 0) / 100}em`)
   set("font-secondary", stack(fonts.secondary.family, SERIF))
   set("font-secondary-style", fonts.secondary.italic ? "italic" : "normal")
   set("font-secondary-weight-regular", String(fonts.secondary.weight))
   set("font-secondary-weight-emphasis", String(fonts.secondary.emphasis ?? fonts.secondary.weight))
+  set("font-secondary-letter-spacing", `${(fonts.secondary.letterSpacing ?? 0) / 100}em`)
   // Figma Font/Sans/line-height and letter-spacing: percents, written as a unitless line height and an em spacing
   set("font-body-line-height", String((fonts.body.lineHeight ?? 142) / 100))
   set("font-body-letter-spacing", `${(fonts.body.letterSpacing ?? 0) / 100}em`)

@@ -12,7 +12,6 @@
   },
   "fonts": {
     "primary": "DM Serif Display",
-    "emphasis": "Lora",
     "body": "DM Sans"
   },
   "radius": "rounded",

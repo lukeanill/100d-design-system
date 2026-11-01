@@ -12,7 +12,6 @@
   },
   "fonts": {
     "primary": "GT Pressura Mono Trial",
-    "emphasis": "Lora",
     "body": "Archivo"
   },
   "radius": "rounded",

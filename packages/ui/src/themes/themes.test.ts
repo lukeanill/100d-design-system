@@ -69,6 +69,20 @@ describe("themeToCss", () => {
     expect(themeDeclarations(getPreset("berghain")!).find((l) => l.startsWith("--shadow-md"))).toContain("0px 20px 40px")
   })
 
+  it("writes each font role's Figma letter spacing", () => {
+    const decl = (id: string) => themeDeclarations(getPreset(id)!)
+    expect(decl("bootshaus")).toContain("--font-primary-letter-spacing: -0.02em;")
+    expect(decl("bootshaus")).toContain("--font-secondary-letter-spacing: -0.02em;")
+    expect(decl("berghain")).toContain("--font-primary-letter-spacing: 0em;")
+    expect(decl("fabrik")).toContain("--font-body-letter-spacing: 0.02em;")
+    expect(decl("savaya")).toContain("--font-body-letter-spacing: 0.01em;")
+  })
+
+  it("uses the Figma body faces for Fabrik and Savaya", () => {
+    expect(getPreset("fabrik")!.fonts.body).toMatchObject({ family: "EB Garamond", weight: 400 })
+    expect(getPreset("savaya")!.fonts.body).toMatchObject({ family: "Newsreader", weight: 400 })
+  })
+
   it("writes the Figma strong shadow variables, with no horizontal offset", () => {
     const shadows = themeDeclarations(getPreset("berghain")!).filter((l) => /^--shadow-(xs|sm|md|lg):/.test(l))
     expect(shadows).toEqual([

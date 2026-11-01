@@ -55,7 +55,7 @@ export interface ThemeFont {
   italic?: boolean
   /** The body font's line height as a percent: the Figma `Font/Sans/line-height`. Defaults to 142. */
   lineHeight?: number
-  /** The body font's letter spacing as a percent of the size: the Figma `Font/Sans/letter-spacing`. Defaults to 0. */
+  /** The font's letter spacing as a percent of the size: the Figma `font/<role>/letter-spacing`. Defaults to 0. */
   letterSpacing?: number
 }
 
