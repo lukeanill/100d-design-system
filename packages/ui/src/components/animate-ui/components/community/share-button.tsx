@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { useThemeTransition } from '@workspace/ui/hooks/use-theme-motion';
 import { Share2 } from 'lucide-react';
 import { GithubLogo, XLogo, FacebookLogo } from '@phosphor-icons/react';

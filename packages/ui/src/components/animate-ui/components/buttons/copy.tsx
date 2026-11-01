@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'motion/react';
 import { CheckIcon, CopyIcon } from 'lucide-react';

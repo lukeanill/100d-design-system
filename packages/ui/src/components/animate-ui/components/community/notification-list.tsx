@@ -1,7 +1,7 @@
 'use client';
 
 import { RotateCcw, ArrowUpRight } from 'lucide-react';
-import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { motion } from 'motion/react';
 
 export type NotificationItem = {

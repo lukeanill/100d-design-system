@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useFastTransition } from "@workspace/ui/components/animate-ui/fast-transition"
+import { useFastTransition } from "@workspace/ui/hooks/use-fast-transition"
 import type { FC, ReactNode } from "react"
 import { motion } from "motion/react"
 import { FilmScriptIcon, ScribbleIcon, SwatchesIcon } from "@phosphor-icons/react"

@@ -15,7 +15,6 @@ import {
 } from "@workspace/ui/themes"
 
 export type Step = "landing" | "copy" | "language" | "mytheme" | "code"
-export type Tab = "look" | "feel" | "values"
 
 export const BASELINE = getPreset("berghain")!
 

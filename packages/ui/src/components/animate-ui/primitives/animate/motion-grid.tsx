@@ -4,7 +4,7 @@ import * as React from 'react';
 import { motion, type HTMLMotionProps } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
-import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { getStrictContext } from '@workspace/ui/lib/get-strict-context';
 import { Slot, type WithAsChild } from '@workspace/ui/components/animate-ui/primitives/animate/slot';
 

@@ -8,7 +8,7 @@ import {
   type SVGMotionProps,
 } from 'motion/react';
 
-import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition';
+import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { TIMING } from '@workspace/ui/themes/motion';
 import { getStrictContext } from '@workspace/ui/lib/get-strict-context';
 import { useControlledState } from '@workspace/ui/hooks/use-controlled-state';

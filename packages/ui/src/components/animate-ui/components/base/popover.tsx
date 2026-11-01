@@ -19,7 +19,7 @@ import {
   type PopoverDescriptionProps as PopoverDescriptionPrimitiveProps,
 } from '@workspace/ui/components/animate-ui/primitives/base/popover';
 import { cn } from '@workspace/ui/lib/utils'
-import { useFastTransition } from '@workspace/ui/components/animate-ui/fast-transition'
+import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition'
 import { glass } from "@workspace/ui/lib/glass";
 
 type PopoverProps = PopoverPrimitiveProps;
