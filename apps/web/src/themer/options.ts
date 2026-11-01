@@ -6,7 +6,6 @@ import {
   BACKGROUNDS,
   BODY_FONTS,
   CLICKS,
-  ELEVATIONS,
   HERO_HEADINGS,
   HERO_TEXTS,
   HEADING_FONTS,
@@ -15,10 +14,10 @@ import {
   MOTIONS,
   OVERLAYS,
   RADII,
+  SHADOW_LEVELS,
   SCALES,
   SPACINGS,
   SPEEDS,
-  TONES,
   TRANSITIONS,
   TRANSITION_COLORS,
   VALUE_QUESTIONS,
@@ -75,8 +74,10 @@ export const GROUPS: Group[] = [
   {
     title: "Typography",
     options: [
-      { name: "heading font", field: "headingFont", kind: { type: "font", families: HEADING_FONTS.map((f) => f.family) }, description: "The typeface for titles and large text." },
-      { name: "heading weight", field: "headingWeight", kind: { type: "weight" }, description: "How heavy headings are. A weight the font does not have snaps to the closest one it has." },
+      { name: "heading primary font", field: "headingFont", kind: { type: "font", families: HEADING_FONTS.map((f) => f.family) }, description: "The main heading typeface, for titles and large text." },
+      { name: "heading primary weight", field: "headingWeight", kind: { type: "weight" }, description: "How heavy primary headings are. A weight the font does not have snaps to the closest one it has." },
+      { name: "heading secondary font", field: "headingSecondaryFont", kind: { type: "font", families: [...new Set([...HEADING_FONTS, ...BODY_FONTS].map((f) => f.family))] }, description: "The second heading typeface, for emphasis and accents in headings. Left empty it is the primary one." },
+      { name: "heading secondary weight", field: "headingSecondaryWeight", kind: { type: "weight" }, description: "How heavy secondary headings are. Left empty it follows the primary weight." },
       { name: "body font", field: "bodyFont", kind: { type: "font", families: BODY_FONTS.map((f) => f.family) }, description: "The typeface for paragraphs, buttons and labels." },
       { name: "body weight", field: "bodyWeight", kind: { type: "weight" }, description: "How heavy body text is. A weight the font does not have snaps to the closest one it has." },
       { name: "type scale", field: "scale", kind: choice(SCALES), description: "How big text is overall: sm is compact, md is the design system's own sizes, lg is roomy." },
@@ -86,19 +87,18 @@ export const GROUPS: Group[] = [
     title: "Texture",
     options: [
       { name: "texture", field: "material", kind: choice(MATERIALS), description: "What cards and panels are made of: flat colour, a soft gradient, or see-through glass." },
-      { name: "texture tone", field: "tone", kind: choice(TONES), description: "Whether cards and glass lean dark or light against the page." },
     ],
   },
   {
-    title: "Edges",
+    title: "Radius",
     options: [
-      { name: "edges", field: "radius", kind: choice(RADII), description: "How round corners are: sharp is square, rounded is a pill." },
+      { name: "radius", field: "radius", kind: choice(RADII), description: "How round corners are: sharp is square, rounded is a pill." },
     ],
   },
   {
     title: "Shadow",
     options: [
-      { name: "shadow", field: "elevation", kind: choice(ELEVATIONS), description: "How much cards and menus lift off the page." },
+      { name: "shadow", field: "shadow", kind: choice(SHADOW_LEVELS), description: "How much cards and menus lift off the page." },
     ],
   },
   {

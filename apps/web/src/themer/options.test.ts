@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest"
 import { getPreset } from "@workspace/ui/themes"
 
 import { GROUPS, OPTIONS, draftToText, textToDraft } from "./options"
-import { draftFromPreset, emptyDraft, feelDone, lookDone, valuesDone } from "./state"
+import { draftFromPreset, draftToTheme, emptyDraft, feelDone, lookDone, valuesDone } from "./state"
 
 describe("the theming options", () => {
   it("each has a description and says what it accepts", () => {
@@ -17,7 +17,7 @@ describe("the theming options", () => {
 
   it("are grouped as the Themer groups them", () => {
     expect(GROUPS.map((g) => g.title)).toEqual([
-      "Name", "Color", "Typography", "Texture", "Edges", "Shadow", "Spacing", "Icons",
+      "Name", "Color", "Typography", "Texture", "Radius", "Shadow", "Spacing", "Icons",
       "Component Animations", "Page Transitions", "Animated Background", "Hero Section", "Values",
     ])
   })
@@ -66,9 +66,9 @@ describe("typing in the block", () => {
   })
 
   it("flags a choice that is not on the list, and unknown options", () => {
-    const text = draftToText(emptyDraft()).replace("edges:", "edges: pointy") + "\nzoom: 3"
+    const text = draftToText(emptyDraft()).replace("radius:", "radius: pointy") + "\nzoom: 3"
     const { errors } = textToDraft(text, emptyDraft())
-    expect(errors.map((e) => e.name)).toEqual(["edges", "zoom"])
+    expect(errors.map((e) => e.name)).toEqual(["radius", "zoom"])
   })
 
   it("reads numbers, yes/no and the two-way questions", () => {
@@ -76,7 +76,7 @@ describe("typing in the block", () => {
       .replace("background overlay:", "background overlay: 40%")
       .replace("background inverse colors:", "background inverse colors: yes")
       .replace("decisions:", "decisions: In control")
-      .replace("heading weight:", "heading weight: 700")
+      .replace("heading primary weight:", "heading primary weight: 700")
     const { draft, errors } = textToDraft(text, emptyDraft())
     expect(errors).toEqual([])
     expect(draft.animatedBackgroundOverlay).toBe(40)
@@ -87,7 +87,25 @@ describe("typing in the block", () => {
 
   it("clearing a line clears the option", () => {
     const set = { ...emptyDraft(), radius: "strong" as const }
-    const { draft } = textToDraft(draftToText(set).replace("edges: strong", "edges:"), set)
+    const { draft } = textToDraft(draftToText(set).replace("radius: strong", "radius:"), set)
     expect(draft.radius).toBeUndefined()
+  })
+})
+
+describe("the 6.0 theme model", () => {
+  it("has a primary and a secondary heading font, and no texture tone", () => {
+    const names = OPTIONS.map((o) => o.name)
+    expect(names).toContain("heading primary font")
+    expect(names).toContain("heading secondary font")
+    expect(names).not.toContain("texture tone")
+    expect(names).not.toContain("edges")
+  })
+
+  it("reads the secondary heading font into the theme, and follows the primary when empty", () => {
+    const text = draftToText(emptyDraft()).replace("heading primary font:", "heading primary font: Intan").replace("heading secondary font:", "heading secondary font: Karla")
+    const { draft } = textToDraft(text, emptyDraft())
+    expect(draftToTheme(draft).fonts.secondary.family).toBe("Karla")
+    const same = textToDraft(draftToText(emptyDraft()).replace("heading primary font:", "heading primary font: Intan"), emptyDraft()).draft
+    expect(draftToTheme(same).fonts.secondary.family).toBe("Intan")
   })
 })

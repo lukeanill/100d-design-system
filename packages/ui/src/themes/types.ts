@@ -147,6 +147,9 @@ export interface ThemeDraft extends Partial<ThemeFeel> {
   secondary?: string
   headingFont?: string
   headingWeight?: number
+  /** The Figma `font/secondary`. Left empty it is the heading font. */
+  headingSecondaryFont?: string
+  headingSecondaryWeight?: number
   bodyFont?: string
   bodyWeight?: number
   scale?: Scale
