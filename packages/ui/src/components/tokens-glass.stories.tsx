@@ -60,7 +60,7 @@ export const Glass = ({ edge }: { edge: number }) => (
           style={{ height: 241 }}
         >
           <div
-            className="text-body-small"
+            className="text-sm"
             style={{
               display: "flex",
               alignItems: "center",
@@ -97,7 +97,7 @@ export const Playground = ({ weight, tone, edge, radius, width, height }: Playgr
     <Background />
     <LiquidGlass radius={radius} edge={edge} {...glassProps(weight, tone)} style={{ width, height }}>
       <div
-        className="text-body-small"
+        className="text-sm"
         style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, height: "100%", color: "white", textTransform: "capitalize" }}
       >
         <span>{tone}</span>

@@ -12,11 +12,11 @@ const TYPE_SCALE = [
 ] as const
 
 const BODY_STYLES = [
-  { className: "text-body-small", label: "Body Small", meta: "14px · body face · leading 160%" },
-  { className: "text-body", label: "Body", meta: "16px · body face · leading 160%" },
-  { className: "text-body-serif", label: "Body Serif", meta: "17px · Louize Trial Italic · leading 160%" },
-  { className: "text-body-lg", label: "Body Large", meta: "20px · body face · leading 160% · tracking 1%" },
-  { className: "text-body-lg-serif", label: "Body Large Serif", meta: "21px · Louize Trial Regular · leading 160% · tracking -1%" },
+  { className: "text-sm", label: "Body Small", meta: "typescale sm · body face · line-height 160%" },
+  { className: "text-md", label: "Body", meta: "typescale md · body face · line-height 160%" },
+  { className: "text-md-italic", label: "Body Italic", meta: "typescale md · body face italic · line-height 160%" },
+  { className: "text-lg", label: "Body Large", meta: "typescale lg · body face · line-height 160%" },
+  { className: "text-lg-italic", label: "Body Large Italic", meta: "typescale lg · body face italic · line-height 160%" },
 ] as const
 
 const GRADIENT_TOKENS = [

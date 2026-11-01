@@ -46,7 +46,7 @@ function FigureRow({
 } & ComponentProps<"div">) {
   return (
     <div className={cn("flex items-center gap-2", className)} {...props}>
-      {figure ?? <span className="text-heading-h3 invisible">{period.value.toLocaleString("en-US")}</span>}
+      {figure ?? <span className="text-h3-pri invisible">{period.value.toLocaleString("en-US")}</span>}
       <div
         className={cn(
           "flex items-center gap-1 text-chart-2 transition-opacity duration-(--motion-fast) ease-(--motion-transition-ease)",
@@ -54,7 +54,7 @@ function FigureRow({
         )}
       >
         <ThemedIcon phosphor={TrendUpIcon} />
-        <span className="text-body-md">{period.change.toLocaleString("en-US")}</span>
+        <span className="text-md">{period.change.toLocaleString("en-US")}</span>
       </div>
     </div>
   )
@@ -70,7 +70,7 @@ export function StatCard({ label = "New followers", periods = PERIODS, defaultPe
     <ThemedCard ref={seen} className={cn("min-w-[325px]", className)}>
       {/* the label holds the left edge and the select the right, whatever width the card is */}
       <div className="flex items-center justify-between gap-2">
-        <p className="text-body-md whitespace-nowrap">{label}</p>
+        <p className="text-md whitespace-nowrap">{label}</p>
         <NativeSelect themed aria-label="Period" value={id} onChange={(event) => setId(event.target.value)}>
           {periods.map((p) => (
             <NativeSelectOption key={p.id} value={p.id}>
@@ -88,7 +88,7 @@ export function StatCard({ label = "New followers", periods = PERIODS, defaultPe
         ))}
         <FigureRow
           period={period}
-          figure={started ? <SlidingNumber number={period.value} thousandSeparator="," className="text-heading-h3 text-foreground" /> : null}
+          figure={started ? <SlidingNumber number={period.value} thousandSeparator="," className="text-h3-pri text-foreground" /> : null}
           trendHidden={!started}
           className="col-start-1 row-start-1"
         />

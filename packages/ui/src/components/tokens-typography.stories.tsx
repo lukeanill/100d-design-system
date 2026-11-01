@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 
 import { Rule, Sheet, SHEET, sheetText } from "./tokens-sheet"
 
-/** The three specimens: the heading face, the emphasis face, and the body face. */
+/** The three specimens: the heading face, the secondary face, and the body face. */
 const FONT_FAMILIES = [
   { label: "Primary", token: "font-heading" },
-  { label: "Emphasis", token: "font-serif" },
+  { label: "Secondary", token: "font-serif" },
   { label: "Body", token: "font-body" },
 ] as const
 
@@ -36,9 +36,9 @@ const HEADINGS = [1, 2, 3, 4, 5, 6] as const
 const GLYPHS = ["£123$4567€890", "!#@;-?", "“ty**”"]
 
 const BODY_STYLES = [
-  { className: "text-body-lg", label: "Body Large" },
-  { className: "text-body", label: "Body" },
-  { className: "text-body-small", label: "Body Small" },
+  { className: "text-lg", label: "Body Large" },
+  { className: "text-md", label: "Body" },
+  { className: "text-sm", label: "Body Small" },
 ] as const
 
 export default { title: "Tokens/Typography", parameters: { layout: "fullscreen" } }

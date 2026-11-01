@@ -1,0 +1,29 @@
+{
+  "name": "qa",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test shared/*.test.ts server/*.test.ts",
+    "cli": "node server/cli.ts"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@workspace/ui": "workspace:*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router": "^8.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6",
+    "typescript": "~6",
+    "vite": "^8"
+  }
+}

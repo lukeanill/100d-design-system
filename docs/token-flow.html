@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token flow: Figma, Themer, shadcn/ui</title>
+<style>
+  :root {
+    --bg: #f6f5f2; --panel: #ffffff; --ink: #1b1a18; --ink-2: #5d5a54; --line: #e3e0d8;
+    --ok: #1f8a4c; --warn: #b7791f; --code: #2b5fd9; --bad: #c0392b; --idle: #8a867c;
+    --ok-bg: #e4f4ea; --warn-bg: #fbf0d9; --code-bg: #e3ebfc; --bad-bg: #fbe4e1; --idle-bg: #eceae4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121110; --panel: #1b1a18; --ink: #f1efe9; --ink-2: #a7a399; --line: #2e2c28;
+      --ok: #5fcf8b; --warn: #e5b04f; --code: #7ea2ff; --bad: #ff8a7d; --idle: #8a867c;
+      --ok-bg: #16301f; --warn-bg: #352a12; --code-bg: #172345; --bad-bg: #3a1a16; --idle-bg: #262421;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font-size: 28px; line-height: 1.15; margin: 0 0 6px; letter-spacing: -.01em; }
+  h2 { font-size: 20px; margin: 44px 0 4px; letter-spacing: -.005em; }
+  h3 { font-size: 14px; margin: 0 0 8px; }
+  .sub { color: var(--ink-2); margin: 0 0 18px; max-width: 720px; }
+  code, .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--ink-2); margin-top: 14px; }
+  .legend span::before, .dot::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; background: var(--c); }
+  .ok { --c: var(--ok); } .warn { --c: var(--warn); } .code { --c: var(--code); } .bad { --c: var(--bad); } .idle { --c: var(--idle); }
+
+  /* flow */
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 18px; position: relative; }
+  .stage { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; position: relative; }
+  .stage:not(:last-child)::after { content: "→"; position: absolute; right: -24px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--ink-2); }
+  .stage .n { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  .stage h3 { font-size: 17px; margin: 2px 0 2px; }
+  .stage p { margin: 4px 0 10px; color: var(--ink-2); font-size: 13px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; font-size: 12px; background: var(--bg); }
+  .chip b { font-weight: 600; margin-left: 5px; color: var(--ink-2); }
+  .chip.dot::before { margin-right: 6px; }
+  .note { font-size: 12.5px; color: var(--ink-2); margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
+  @media (max-width: 980px) {
+    .flow { grid-template-columns: 1fr; gap: 30px; }
+    .stage:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -27px; transform: translateX(50%); }
+  }
+
+  /* table */
+  .tablewrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+  table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .pill { display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: 11.5px; font-weight: 600; }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); } .pill.warn { background: var(--warn-bg); color: var(--warn); }
+  .pill.code { background: var(--code-bg); color: var(--code); } .pill.bad { background: var(--bad-bg); color: var(--bad); }
+  .pill.idle { background: var(--idle-bg); color: var(--idle); }
+
+  /* live preview */
+  .picker { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+  .picker button { border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 6px 12px 6px 8px; font: inherit; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .picker button[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+  .picker i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(128,128,128,.4); display: inline-block; }
+  .live { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+  @media (max-width: 860px) { .live { grid-template-columns: 1fr; } }
+  .stagebox { border-radius: 14px; border: 1px solid var(--line); padding: 18px; background: var(--background); color: var(--foreground); transition: background .2s, color .2s; }
+  .ui-card { background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px); padding: 18px; box-shadow: var(--shadow-md); }
+  .ui-card h4 { margin: 0 0 2px; font-size: 18px; }
+  .ui-card p { margin: 0 0 12px; color: var(--muted-foreground); font-size: 13.5px; }
+  .ui-input { width: 100%; background: transparent; color: inherit; border: 1px solid var(--input); border-radius: var(--radius); padding: 8px 10px; font: inherit; font-size: 14px; }
+  .ui-input:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .btn { border: 1px solid transparent; border-radius: var(--radius); padding: 7px 14px; font: inherit; font-size: 14px; font-weight: 500; cursor: default; }
+  .btn.pri { background: var(--primary); color: var(--primary-foreground); }
+  .btn.sec { background: var(--secondary); color: var(--secondary-foreground); }
+  .btn.des { background: var(--destructive); color: #fff; }
+  .btn.out { background: transparent; color: inherit; border-color: var(--border); }
+  .badge { display: inline-block; border-radius: 999px; padding: 1px 10px; font-size: 12px; background: var(--accent); color: var(--accent-foreground); }
+  .tabs { display: inline-flex; background: var(--muted); border-radius: var(--radius); padding: 3px; gap: 2px; margin-bottom: 12px; }
+  .tabs span { padding: 4px 12px; font-size: 13px; border-radius: calc(var(--radius) - 2px); color: var(--muted-foreground); }
+  .tabs span.on { background: var(--background); color: var(--foreground); }
+  .bars { display: flex; align-items: flex-end; gap: 8px; height: 64px; margin-top: 12px; }
+  .bars i { flex: 1; border-radius: calc(var(--radius) / 2); }
+  .vars { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 6px 4px; }
+  .vars div { display: grid; grid-template-columns: 22px 1.2fr 1fr; gap: 8px; align-items: center; padding: 3px 10px; font-size: 12.5px; }
+  .vars i { width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(128,128,128,.4); }
+  .vars span:last-child { color: var(--ink-2); }
+  .vars .grp { display: block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); padding: 8px 10px 2px; }
+
+  /* issues */
+  .issues { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+  .issue { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .issue h3 { display: flex; gap: 8px; align-items: baseline; }
+  .issue p { margin: 0; color: var(--ink-2); font-size: 13px; }
+  .issue .num { font-weight: 700; color: var(--bad); }
+  .foot { margin-top: 40px; color: var(--ink-2); font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Token flow: Figma, Themer, shadcn/ui</h1>
+  <p class="sub">How a Figma variable becomes a themed component. Figma is the source of truth, so every status below is read as “does the code follow Figma?” Audited 31 Oct 2026 from the <b>Themes</b> file (270 variables) against <span class="mono">packages/ui</span>.</p>
+  <div class="legend">
+    <span class="ok dot">Matches Figma</span><span class="warn dot">Differs from Figma</span><span class="code dot">Code only, not in Figma</span><span class="bad dot">Broken or misleading in Figma</span><span class="idle dot">Not in code yet</span>
+  </div>
+
+  <h2>The pipeline</h2>
+  <p class="sub">Four stages, left to right. Nothing is stored on a server: the Themer and the app share one generator, so a downloaded theme file is what the app renders.</p>
+  <div class="flow">
+    <div class="stage">
+      <div class="n">1 · Source</div>
+      <h3>Figma variables</h3>
+      <p>Themes file, 11 collections. The <b>theme</b> collection has one mode per theme (9 + <span class="mono">_lukeportfolio</span>).</p>
+      <div class="chips">
+        <span class="chip dot ok">theme<b>60</b></span>
+        <span class="chip dot bad">typescale<b>10</b></span>
+        <span class="chip dot ok">motion<b>25</b></span>
+        <span class="chip dot warn">dimensions<b>19</b></span>
+        <span class="chip dot ok">radius<b>29</b></span>
+        <span class="chip dot warn">shadow<b>32</b></span>
+        <span class="chip dot warn">alpha<b>24</b></span>
+        <span class="chip dot warn">values<b>30</b></span>
+        <span class="chip dot idle">spacing<b>17</b></span>
+        <span class="chip dot idle">icons<b>8</b></span>
+        <span class="chip dot idle">size-controls<b>16</b></span>
+      </div>
+      <div class="note">0 of 270 have code syntax. 160 are <span class="mono">ALL_SCOPES</span>.</div>
+    </div>
+    <div class="stage">
+      <div class="n">2 · Authoring</div>
+      <h3>Themer</h3>
+      <p><span class="mono">/themes</span>. Copy a preset, build from scratch, or take a template.</p>
+      <div class="chips">
+        <span class="chip dot ok">Colour</span><span class="chip dot warn">Typography</span><span class="chip dot warn">Spacing</span>
+        <span class="chip dot ok">Radius</span><span class="chip dot warn">Shadow</span><span class="chip dot ok">Texture</span>
+        <span class="chip dot code">Scale</span><span class="chip dot code">Icons</span><span class="chip dot code">Feel tab</span>
+      </div>
+      <div class="note"><span class="mono">presets.ts</span> holds the nine themes from Figma. <span class="mono">themeToCss()</span> is the one generator; <span class="mono">themeToFile()</span> adds the header and font import.</div>
+    </div>
+    <div class="stage">
+      <div class="n">3 · Contract</div>
+      <h3>CSS variables</h3>
+      <p>shadcn’s variable contract. <span class="mono">tokens.css</span> maps <span class="mono">--color-*</span> to them for Tailwind.</p>
+      <div class="chips">
+        <span class="chip mono">--background</span><span class="chip mono">--foreground</span><span class="chip mono">--card</span>
+        <span class="chip mono">--primary</span><span class="chip mono">--secondary</span><span class="chip mono">--muted</span>
+        <span class="chip mono">--accent</span><span class="chip mono">--destructive</span><span class="chip mono">--border</span>
+        <span class="chip mono">--input</span><span class="chip mono">--ring</span><span class="chip mono">--chart-1…5</span>
+        <span class="chip mono">--sidebar-*</span><span class="chip mono">--radius</span>
+      </div>
+      <div class="note">Plus code-only: <span class="mono">--affirmative</span>, <span class="mono">--glass-*</span>, <span class="mono">--control-*</span>, <span class="mono">--theme-*</span>.</div>
+    </div>
+    <div class="stage">
+      <div class="n">4 · Components</div>
+      <h3>shadcn/ui</h3>
+      <p>Style <span class="mono">base-maia</span>, <span class="mono">cssVariables: true</span>. Lives in <span class="mono">@workspace/ui</span>, published as <span class="mono">@lukeanill/ui</span> (5.0.0).</p>
+      <div class="chips">
+        <span class="chip">Button</span><span class="chip">Card</span><span class="chip">Input</span><span class="chip">Select</span>
+        <span class="chip">Tabs</span><span class="chip">Dialog</span><span class="chip">Badge</span><span class="chip">Charts</span><span class="chip">Sidebar</span>
+        <span class="chip dot code">PromptBar</span><span class="chip dot code">Voice</span><span class="chip dot code">MetalSurface</span>
+      </div>
+      <div class="note">Components read variables, never hex. Glass and metal layers are code-only.</div>
+    </div>
+  </div>
+
+  <h2>Figma variable → CSS variable → shadcn</h2>
+  <p class="sub">Colours are identical across all nine themes. The count is how many nodes bind the Figma variable directly (Home, Themer, Audit).</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Figma variable</th><th>Resolves to</th><th>CSS / Tailwind</th><th>Bound</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">Semantic/background</td><td class="mono">Primitive/color-100</td><td class="mono">--background · bg-background</td><td>386</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/foreground</td><td class="mono">Primitive/color-200</td><td class="mono">--foreground · text-foreground</td><td>2,211</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/primary</td><td class="mono">Primitive/color-300</td><td class="mono">--primary · bg-primary</td><td>94</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/primary-foreground</td><td class="mono">Primitive/color-400 (Berghain: color-100)</td><td class="mono">--primary-foreground</td><td>50</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/secondary, -foreground</td><td class="mono">Primitive/color-500, color-600</td><td class="mono">--secondary, --secondary-foreground</td><td>21 · 13</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/card</td><td class="mono">alias of background</td><td class="mono">--card (code mixes 20% toward black or white)</td><td>3</td><td><span class="pill warn">Differs</span></td></tr>
+        <tr><td class="mono">Semantic/popover, -foreground</td><td class="mono">alias of background, foreground</td><td class="mono">--popover, --popover-foreground</td><td>0</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/muted, accent</td><td class="mono">alias of secondary (<span class="mono">_lukeportfolio</span> accent: color-400)</td><td class="mono">--muted, --accent</td><td>65 · 0</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/muted-foreground</td><td class="mono">foreground at 65%</td><td class="mono">--muted-foreground</td><td>0</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/border, input, ring</td><td class="mono">foreground at 15%, 20%, 70%</td><td class="mono">--border, --input, --ring</td><td>0</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/destructive</td><td class="mono">#ff6467 (#e7000b on Laroc, Pacha, Ushuaia)</td><td class="mono">--destructive</td><td>2</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/chart-1…5</td><td class="mono">two sets: dark and light</td><td class="mono">--chart-1…5</td><td>25 (chart-2)</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Semantic/sidebar-*</td><td class="mono">aliases of the semantics above</td><td class="mono">--sidebar-*</td><td>0</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">Settings/radius</td><td class="mono">string: sharp, subtle, strong, rounded</td><td class="mono">--radius, --radius-lg, --radius-button</td><td>1 (label)</td><td><span class="pill bad">Drives nothing in Figma</span></td></tr>
+        <tr><td class="mono">Settings/shadow, texture, motion, color-mode</td><td class="mono">strings</td><td class="mono">shadow, material, motion, color-mode</td><td>1 each (label)</td><td><span class="pill ok">Values match</span></td></tr>
+        <tr><td class="mono">Settings/vert-spacing</td><td class="mono">string: lg or xl</td><td class="mono">--theme-spacing: md or lg</td><td>1 (label)</td><td><span class="pill warn">Shifted one step</span></td></tr>
+        <tr><td class="mono">Font/Display, Body</td><td class="mono">family, weight, letter-spacing, line-height</td><td class="mono">--font-primary, --font-body-*</td><td>58 · 1,430</td><td><span class="pill warn">Fabrik, Savaya body differ</span></td></tr>
+        <tr><td class="mono">Font/Heading</td><td class="mono">same as Display in 9 of 10 modes</td><td class="mono">no role (headings use display)</td><td>588</td><td><span class="pill warn">Missing in code</span></td></tr>
+        <tr><td class="mono">typescale/Default/*</td><td class="mono">xs 12 … h1 72; Small and Large modes</td><td class="mono">h1 96 … h6 24, ×0.875 / ×1.125</td><td>218</td><td><span class="pill bad">Code follows deleted <span class="mono">impact/*</span> (2,040 bound)</span></td></tr>
+        <tr><td class="mono">radius/*</td><td class="mono">via dimensions</td><td class="mono">--radius-*</td><td>348</td><td><span class="pill ok">Matches</span> <span class="pill warn">xl missing; --radius-* unread</span></td></tr>
+        <tr><td class="mono">shadow/*</td><td class="mono">x, y, blur, colour × 8 sets</td><td class="mono">--shadow-*</td><td>swatches</td><td><span class="pill warn">strong xs, sm, lg differ</span></td></tr>
+        <tr><td class="mono">alpha/*</td><td class="mono">dark and light washes, blur 320 / 1200</td><td class="mono">--alpha-*</td><td>~150</td><td><span class="pill warn">Only blur sm in code</span></td></tr>
+        <tr><td class="mono">motion/*</td><td class="mono">easings, springs, timings</td><td class="mono">--ease-*, --duration-*</td><td>prototype only</td><td><span class="pill ok">Matches</span></td></tr>
+        <tr><td class="mono">dimensions/max</td><td class="mono">9999</td><td class="mono">--dimensions-max: 169px</td><td>0</td><td><span class="pill warn">Differs</span></td></tr>
+        <tr><td class="mono">values/*, Principles/*</td><td class="mono">6 questions, 4 principles (always the left answer)</td><td class="mono">VALUE_QUESTIONS (4)</td><td>text only</td><td><span class="pill warn">2 questions missing</span></td></tr>
+        <tr><td class="mono">spacing, icons, size-controls</td><td class="mono">41 variables</td><td class="mono">docs/figma-size-tokens.json only</td><td>0</td><td><span class="pill idle">Not in code</span></td></tr>
+        <tr><td class="mono">(none)</td><td class="mono">—</td><td class="mono">--affirmative, glass, control-*, Feel, icons, scale</td><td>—</td><td><span class="pill code">Code only</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>See it: one theme through the whole pipeline</h2>
+  <p class="sub">Pick a theme. The left side is shadcn-style components reading only the CSS variables on the right, which come from that theme’s Figma mode. Card follows Figma (an alias of background), so it differs from the app in solid and gradient themes.</p>
+  <div class="picker" id="picker" role="group" aria-label="Theme"></div>
+  <div class="live">
+    <div class="stagebox" id="stage">
+      <div class="ui-card">
+        <div class="tabs"><span class="on">Account</span><span>Billing</span><span>Team</span></div>
+        <h4 id="t-name">Theme</h4>
+        <p id="t-meta">—</p>
+        <input class="ui-input" placeholder="Search the design system" aria-label="Demo input">
+        <div class="btns">
+          <span class="btn pri">Primary</span><span class="btn sec">Secondary</span><span class="btn des">Delete</span><span class="btn out">Outline</span>
+        </div>
+        <span class="badge">Accent badge</span>
+        <div class="bars" id="bars"></div>
+      </div>
+    </div>
+    <div class="vars" id="vars"></div>
+  </div>
+
+  <h2>What to fix in Figma first</h2>
+  <p class="sub">Full list in the audit; these are the ones that change what the design and the code can follow.</p>
+  <div class="issues">
+    <div class="issue"><h3><span class="num">1</span> Deleted type scale still bound</h3><p>About 2,040 text nodes use <span class="mono">typescale/impact/*</span>, which no longer exists. Only 218 use the live <span class="mono">Default/*</span> scale. The code follows the deleted one.</p></div>
+    <div class="issue"><h3><span class="num">2</span> Settings drive nothing</h3><p>Radius, shadow, texture, motion and spacing are plain strings. Components bind <span class="mono">radius/rounded/sm</span> (316) and <span class="mono">shadow/strong/md</span> directly, so a theme’s radius and shadow never change in Figma.</p></div>
+    <div class="issue"><h3><span class="num">3</span> Principles can’t vary</h3><p>All four alias the left-hand answer in every mode, so no theme can choose the right. Six questions exist; four principles map to them by different names.</p></div>
+    <div class="issue"><h3><span class="num">4</span> Scopes and code syntax</h3><p>160 of 270 variables are <span class="mono">ALL_SCOPES</span>; none has code syntax; 154 have no description. Dev Mode can’t show the CSS name.</p></div>
+    <div class="issue"><h3><span class="num">5</span> Newest collections unused</h3><p>spacing, icons and size-controls (41) have no bindings. The file uses remote <span class="mono">Size/Space/*</span> and <span class="mono">Size/Stroke/Border</span> instead.</p></div>
+    <div class="issue"><h3><span class="num">6</span> Font and colour tidy-up</h3><p>Body is named <span class="mono">font</span> not <span class="mono">family</span>; Display and Heading duplicate; some primitives repeat (Berghain 300 and 400, Bootshaus 400 and 500); Fabrik is “light” with a dark background.</p></div>
+  </div>
+
+  <p class="foot">Counts are direct node bindings on the Home, Themer and Audit pages; variables used through text or effect styles, or in prototypes, are not counted. Source: Figma Themes file RUommmb1rQZk7X7TxbFPCC.</p>
+</div>
+
+<script>
+  const DARK = ["#1447e6", "#00bc7d", "#fe9a00", "#ad46ff", "#ff2056"];
+  const LIGHT = ["#f54900", "#009689", "#104e64", "#ffb900", "#fe9a00"];
+  const RADIUS = { sharp: 0, subtle: 8, strong: 16, rounded: 24 };
+  const SHADOW = {
+    none: "none",
+    subtle: "0 8px 16px rgba(68,68,68,.06)",
+    strong: "0 20px 40px rgba(34,34,34,.16)"
+  };
+  const T = [
+    { id: "fabrik", mode: "light", bg: "#3a3c83", fg: "#fbfbfc", pri: "#2e3067", prif: "#ff8081", sec: "#4d4fad", secf: "#80a8ff", des: "#ff6467", r: "sharp", s: "subtle", tex: "solid", font: "Folio Std / EB Garamond", ch: DARK },
+    { id: "illuzion", mode: "light", bg: "#f7cae7", fg: "#1b1717", pri: "#f2aeda", prif: "#ff4901", sec: "#812961", secf: "#ee98d0", des: "#ff6467", r: "strong", s: "none", tex: "solid", font: "Intan / DM Sans", ch: DARK },
+    { id: "laroc", mode: "dark", bg: "#3a6be2", fg: "#fbfbfc", pri: "#17347b", prif: "#fbfbfc", sec: "#1b4bbe", secf: "#a0b2df", des: "#e7000b", r: "rounded", s: "none", tex: "solid", font: "GT Pressura Mono / Archivo", ch: LIGHT },
+    { id: "bootshaus", mode: "dark", bg: "#214c56", fg: "#ffffff", pri: "#1e363c", prif: "#ffc937", sec: "#ffc937", secf: "#1e363c", des: "#ff6467", r: "strong", s: "strong", tex: "glass", font: "ITC Garamond / Inter", ch: DARK },
+    { id: "berghain", mode: "dark", bg: "#000000", fg: "#fbfbfc", pri: "#ffffff", prif: "#000000", sec: "#363636", secf: "#ffffff", des: "#ff6467", r: "subtle", s: "strong", tex: "glass", font: "Migra / Akkurat LL", ch: DARK },
+    { id: "savaya", mode: "dark", bg: "#84699b", fg: "#ffffff", pri: "#6f59bb", prif: "#ffffff", sec: "#a56a62", secf: "#734a45", des: "#ff6467", r: "subtle", s: "strong", tex: "glass", font: "Gloock / Newsreader", ch: DARK },
+    { id: "pacha", mode: "light", bg: "#ffe9e9", fg: "#1b1717", pri: "#ffffff", prif: "#e22700", sec: "#831a04", secf: "#b38b83", des: "#e7000b", r: "rounded", s: "none", tex: "solid", font: "Khaviax / DM Sans", ch: LIGHT },
+    { id: "amnesia", mode: "dark", bg: "#224f4a", fg: "#f8f8f8", pri: "#122a27", prif: "#f8f8f8", sec: "#23786e", secf: "#0c1d1b", des: "#ff6467", r: "rounded", s: "subtle", tex: "gradient", font: "Swear Display / Inter", ch: DARK },
+    { id: "ushuaia", mode: "light", bg: "#edebe3", fg: "#0f0e0e", pri: "#222222", prif: "#0f0e0e", sec: "#ffffff", secf: "#222222", des: "#e7000b", r: "strong", s: "strong", tex: "gradient", font: "Migra / Archivo", ch: LIGHT }
+  ];
+  const $ = (id) => document.getElementById(id);
+  const stage = $("stage"), picker = $("picker"), vars = $("vars"), bars = $("bars");
+
+  function apply(t) {
+    const set = (k, v) => stage.style.setProperty(k, v);
+    set("--background", t.bg); set("--foreground", t.fg); set("--card", t.bg); set("--card-foreground", t.fg);
+    set("--popover", t.bg); set("--popover-foreground", t.fg);
+    set("--primary", t.pri); set("--primary-foreground", t.prif);
+    set("--secondary", t.sec); set("--secondary-foreground", t.secf);
+    set("--muted", t.sec); set("--muted-foreground", `color-mix(in srgb, ${t.fg} 65%, transparent)`);
+    set("--accent", t.sec); set("--accent-foreground", t.secf);
+    set("--destructive", t.des);
+    set("--border", `color-mix(in srgb, ${t.fg} 15%, transparent)`);
+    set("--input", `color-mix(in srgb, ${t.fg} 20%, transparent)`);
+    set("--ring", `color-mix(in srgb, ${t.fg} 70%, transparent)`);
+    set("--radius", RADIUS[t.r] + "px"); set("--shadow-md", SHADOW[t.s]);
+    $("t-name").textContent = t.id[0].toUpperCase() + t.id.slice(1);
+    $("t-meta").textContent = `${t.mode} · radius ${t.r} · shadow ${t.s} · ${t.tex} · ${t.font}`;
+    bars.innerHTML = t.ch.map((c, i) => `<i style="background:${c};height:${40 + ((i * 37) % 60)}%"></i>`).join("");
+
+    const row = (hex, name, note) => `<div><i style="background:${hex}"></i><span class="mono">${name}</span><span class="mono">${note}</span></div>`;
+    vars.innerHTML =
+      `<span class="grp">Figma mode · ${t.id}</span>` +
+      row(t.bg, "--background", "Primitive/color-100 · " + t.bg) +
+      row(t.fg, "--foreground", "Primitive/color-200 · " + t.fg) +
+      row(t.pri, "--primary", "Primitive/color-300 · " + t.pri) +
+      row(t.prif, "--primary-foreground", (t.id === "berghain" ? "Primitive/color-100 · " : "Primitive/color-400 · ") + t.prif) +
+      row(t.sec, "--secondary", "Primitive/color-500 · " + t.sec) +
+      row(t.secf, "--secondary-foreground", "Primitive/color-600 · " + t.secf) +
+      row(t.des, "--destructive", t.des) +
+      `<span class="grp">Aliases and washes</span>` +
+      row(t.bg, "--card · --popover", "→ background") +
+      row(t.sec, "--muted · --accent", "→ secondary") +
+      row(t.fg + "a6", "--muted-foreground", "foreground 65%") +
+      row(t.fg + "26", "--border", "foreground 15%") +
+      row(t.fg + "33", "--input", "foreground 20%") +
+      row(t.fg + "b3", "--ring", "foreground 70%") +
+      `<span class="grp">Charts</span>` +
+      t.ch.map((c, i) => row(c, "--chart-" + (i + 1), c)).join("") +
+      `<span class="grp">Settings (strings in Figma)</span>` +
+      row("transparent", "--radius", `${t.r} → ${RADIUS[t.r]}px`) +
+      row("transparent", "--shadow-md", t.s);
+  }
+  T.forEach((t, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("aria-pressed", "false");
+    b.innerHTML = `<i style="background:linear-gradient(135deg,${t.bg} 50%,${t.pri} 50%)"></i>${t.id}`;
+    b.onclick = () => { [...picker.children].forEach((c) => c.setAttribute("aria-pressed", "false")); b.setAttribute("aria-pressed", "true"); apply(t); };
+    picker.appendChild(b);
+    if (t.id === "berghain") b.click();
+  });
+</script>
+</body>
+</html>

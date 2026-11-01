@@ -34,9 +34,8 @@ export function draftFromPreset(theme: Theme): ThemeDraft {
     bodyWeight: theme.fonts.body.weight,
     scale: theme.scale,
     material: theme.material,
-    tone: theme.tone,
     radius: theme.radius,
-    elevation: theme.elevation,
+    shadow: theme.shadow,
     spacing: theme.spacing,
     iconStyle: theme.icons.style,
     iconWeight: theme.icons.weight,
@@ -48,7 +47,7 @@ export function draftFromPreset(theme: Theme): ThemeDraft {
 
 const LOOK_KEYS = [
   "background", "foreground", "primary", "secondary", "headingFont", "headingWeight", "bodyFont", "bodyWeight",
-  "scale", "material", "tone", "radius", "elevation", "spacing", "iconWeight",
+  "scale", "material", "radius", "shadow", "spacing", "iconWeight",
 ] as const satisfies readonly (keyof ThemeDraft)[]
 
 /** The Look values still empty. */
@@ -62,8 +61,8 @@ export const badColors = (d: ThemeDraft) =>
 /** Names for the empty values, as the file's header lists them. */
 const LABELS: Record<(typeof LOOK_KEYS)[number], string> = {
   background: "background", foreground: "foreground", primary: "primary", secondary: "secondary", headingFont: "heading font",
-  headingWeight: "heading weight", bodyFont: "body font", bodyWeight: "body weight", scale: "type scale", material: "texture", tone: "texture tone",
-  radius: "edges", elevation: "shadows", spacing: "spacing", iconWeight: "icons",
+  headingWeight: "heading weight", bodyFont: "body font", bodyWeight: "body weight", scale: "type scale", material: "texture",
+  radius: "radius", shadow: "shadow", spacing: "spacing", iconWeight: "icons",
 }
 export const unsetLabels = (d: ThemeDraft) => {
   const labels = unsetLook(d).map((k) => LABELS[k])
@@ -120,13 +119,15 @@ export function draftToTheme(d: ThemeDraft, base: Theme = BASELINE): Theme {
   const chosenFg = d.foreground && isHex(d.foreground) ? normalizeHex(d.foreground) : undefined
   const heading = d.headingFont ?? base.fonts.display.family
   const body = d.bodyFont ?? base.fonts.body.family
+  const headingWeight = nearestWeight(heading, d.headingWeight ?? base.fonts.display.weight)
+  const bodyWeight = nearestWeight(body, d.bodyWeight ?? base.fonts.body.weight)
   const fg = onColor(bg)
   const dark = fg === "#ffffff"
-  const scheme = d.background ? (dark ? "dark" : "light") : base.scheme
+  const colorMode = d.background ? (dark ? "dark" : "light") : base.colorMode
   return {
     id: slugify(d.label),
     label: d.label.trim() || "My theme",
-    scheme,
+    colorMode,
     palette: {
       background: bg,
       foreground: chosenFg ?? (d.background ? fg : base.palette.foreground),
@@ -134,20 +135,19 @@ export function draftToTheme(d: ThemeDraft, base: Theme = BASELINE): Theme {
       primaryForeground: d.primary ? onColor(primary) : base.palette.primaryForeground,
       secondary,
       secondaryForeground: d.secondary ? onColor(secondary) : base.palette.secondaryForeground,
-      destructive: scheme === "dark" ? "#ff6467" : "#e7000b",
+      destructive: colorMode === "dark" ? "#ff6467" : "#e7000b",
       charts: base.palette.charts,
     },
     fonts: {
-      display: { family: heading, weight: nearestWeight(heading, d.headingWeight ?? base.fonts.display.weight) },
-      body: { family: body, weight: nearestWeight(body, d.bodyWeight ?? base.fonts.body.weight) },
-      serif: base.fonts.serif,
+      display: { family: heading, weight: headingWeight, emphasis: headingWeight },
+      body: { family: body, weight: bodyWeight, actionWeight: bodyWeight },
+      secondary: { family: heading, weight: headingWeight, emphasis: headingWeight },
     },
     scale: d.scale ?? base.scale,
     spacing: d.spacing ?? base.spacing,
     radius: d.radius ?? base.radius,
-    elevation: d.elevation ?? base.elevation,
+    shadow: d.shadow ?? base.shadow,
     material: d.material ?? base.material,
-    tone: d.tone ?? base.tone,
     motion: d.motion ?? base.motion,
     feel: { ...base.feel, ...Object.fromEntries(FEEL_KEYS.flatMap((k) => (d[k] === undefined ? [] : [[k, d[k]]]))) } as ThemeFeel,
     icons: { style: d.iconStyle ?? base.icons.style, weight: d.iconWeight ?? base.icons.weight },
@@ -162,7 +162,7 @@ export const ALPES: Theme = {
   ...BASELINE,
   id: "alpes",
   label: "Alpes",
-  scheme: "light",
+  colorMode: "light",
   palette: {
     background: "#fcf9f8",
     foreground: "#000000",
@@ -173,14 +173,16 @@ export const ALPES: Theme = {
     destructive: "#e7000b",
     charts: BASELINE.palette.charts,
   },
-  fonts: { display: { family: "Migra", weight: 200 }, body: { family: "Karla", weight: 400 }, serif: BASELINE.fonts.serif },
+  fonts: {
+    display: { family: "Migra", weight: 200 },
+    body: { family: "Karla", weight: 400 },
+    secondary: { family: "Migra", weight: 200 },
+  },
   scale: "md",
   spacing: "md",
   radius: "strong",
-  elevation: "none",
+  shadow: "none",
   material: "solid",
-  // the Figma's Page Product card is a step lighter than its cream page
-  tone: "light",
 }
 
 /**

@@ -3,7 +3,7 @@
   "label": "Fabrik",
   "order": 1,
   "selector": ".fabrik",
-  "scheme": "light",
+  "colorMode": "light",
   "seeds": {
     "background": "#3a3c83",
     "foreground": "#fbfbfc",
@@ -12,10 +12,9 @@
   },
   "fonts": {
     "primary": "Folio Std",
-    "emphasis": "EB Garamond",
-    "body": "Inter"
+    "body": "EB Garamond"
   },
-  "edges": "square",
+  "radius": "sharp",
   "overrides": {
     "primary-foreground": "#ff8081",
     "secondary-foreground": "#80a8ff",
@@ -28,9 +27,9 @@
   },
   "fontSource": "google",
   "tokens": {
-    "font-body-weight": "300",
+    "font-body-weight": "400",
     "font-body-line-height": "1.42",
-    "font-body-letter-spacing": "0.0em",
+    "font-body-letter-spacing": "0.02em",
     "background": "oklch(0.395 0.117 278.39)",
     "foreground": "oklch(0.988 0.001 286.38)",
     "card": "var(--background)",
@@ -78,12 +77,13 @@
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
     "radius": "0",
     "radius-container": "0",
-    "dimensions-max": "169px",
-    "radius-inner": "0",
+    "dimensions-max": "9999px",
+    "radius-button": "0",
     "radius-outer-max": "0",
-    "edges-sm": "0",
-    "edges-xs": "0",
-    "edges-md": "0",
+    "radius-sm": "0",
+    "radius-xs": "0",
+    "radius-md": "0",
+    "radius-xl": "0",
     "sidebar": "var(--background)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",
@@ -134,17 +134,13 @@
     "spacing": "lg",
     "motion": "expressive",
     "material": "solid",
-    "elevation": "subtle",
+    "shadow": "subtle",
     "fonts": {
       "display": {
         "family": "Folio Std",
         "weight": 700
       },
       "sans": {
-        "family": "Inter",
-        "weight": 300
-      },
-      "serif": {
         "family": "EB Garamond",
         "weight": 400
       }

@@ -30,10 +30,10 @@ const TYPE_STYLES = [
   { label: "h4", tag: "h4" },
   { label: "h5", tag: "h5" },
   { label: "h6", tag: "h6" },
-  { label: "body large", className: "text-body-lg" },
-  { label: "body", className: "text-body" },
-  { label: "body small", className: "text-body-small" },
-  { label: "footnote", className: "text-footnote" },
+  { label: "body large", className: "text-lg" },
+  { label: "body", className: "text-md" },
+  { label: "body small", className: "text-sm" },
+  { label: "footnote", className: "text-xs" },
 ] as const
 
 /** Bumps whenever the page's theme changes, so values are read again. */
@@ -106,7 +106,7 @@ function readRoot(names: string[]) {
   return names.map((name) => ({ name, value: css.getPropertyValue(`--${name}`).trim() }))
 }
 
-/** Text on the page is the Body style (`text-body`), so its size follows the token. */
+/** Text on the page is the Body style (`text-md`), so its size follows the token. */
 const PAGE: React.CSSProperties = { color: "var(--foreground)" }
 
 const RULE = "1px solid var(--foreground)"
@@ -163,7 +163,7 @@ function PairedTable({ rows, columns }: { rows: Row[]; columns: string[] }) {
     )
 
   return (
-    <Table className="text-body">
+    <Table className="text-md">
       <TableBody>
         {left.map((row, i) => (
           <TableRow key={row.name} style={ROW}>
@@ -180,7 +180,7 @@ function PairedTable({ rows, columns }: { rows: Row[]; columns: string[] }) {
 /** One token per row: its name, then its value across the rest. */
 function ValueTable({ rows }: { rows: Row[] }) {
   return (
-    <Table className="text-body">
+    <Table className="text-md">
       <TableBody>
         {rows.map((row) => (
           <TableRow key={row.name} style={ROW}>
@@ -217,7 +217,7 @@ export const AllTokens = () => {
 
   return (
     <div className="min-h-screen w-full bg-background">
-      <div className="text-body" style={{ ...PAGE, maxWidth: 1440, margin: "0 auto", padding: "48px 80px 160px" }}>
+      <div className="text-md" style={{ ...PAGE, maxWidth: 1440, margin: "0 auto", padding: "48px 80px 160px" }}>
         {state && (
           <>
             <Section title="Color">
@@ -232,7 +232,7 @@ export const AllTokens = () => {
             </Section>
 
             <Section title="Typography">
-              <Table className="text-body">
+              <Table className="text-md">
                 <TableHeader>
                   <TableRow style={ROW}>
                     {["", "font name", "font size", "font weight", "line height", "letter spacing"].map((heading) => (

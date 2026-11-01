@@ -4,28 +4,23 @@
 
 import { oklch } from "./color"
 import { MOTION_STYLES, TRANSITION_SPEEDS, cubicBezier, springEasing } from "./motion"
-import type { Elevation, Radius, Scale, Theme, Tone } from "./types"
-
-/** What each step multiplies heading and body sizes by. Medium leaves them as shipped. */
-export const SCALE_FACTOR: Record<Scale, number> = { sm: 0.875, md: 1, lg: 1.125 }
-
-/** Tailwind's own text-xs…text-xl sizes, which the scale moves along with the design system's. */
-const TEXT_SIZES: Record<string, string> = { xs: "0.75rem", sm: "0.875rem", base: "1rem", lg: "1.125rem", xl: "1.25rem" }
+import { TAILWIND_TEXT, TYPESCALE, TYPE_STEPS, rem, tailwindLineHeight } from "./typescale"
+import type { ColorMode, Shadow, Radius, Theme } from "./types"
 
 const SANS = "ui-sans-serif, system-ui, sans-serif"
 const SERIF = "ui-serif, Georgia, serif"
 
-// `inner` is the Figma edges/button step (4 on subtle, 8 on strong, 0 on sharp, `dimensions/max` on rounded): what an element inside a
+// `button` is the Figma radius/button step (4 on subtle, 8 on strong, 0 on sharp, `dimensions/max` on rounded): what an element inside a
 // padded component wears. The component's own corner is that plus its padding, up to `outerMax`: square on sharp, a pill on rounded.
-const EDGES: Record<Radius, { radius: string; container: string; inner: string; outerMax: string; sm: string; xs: string; md: string }> = {
-  sharp: { radius: "0", container: "0", inner: "0", outerMax: "0", sm: "0", xs: "0", md: "0" },
-  subtle: { radius: "0.5rem", container: "0.75rem", inner: "0.25rem", outerMax: "0.5rem", sm: "0.25rem", xs: "0.125rem", md: "0.5rem" },
-  strong: { radius: "1rem", container: "1.5rem", inner: "0.5rem", outerMax: "1rem", sm: "0.5rem", xs: "0.25rem", md: "1rem" },
-  rounded: { radius: "1.5rem", container: "2rem", inner: "var(--dimensions-max)", outerMax: "var(--dimensions-max)", sm: "1rem", xs: "0.5rem", md: "1.5rem" },
+const RADIUS: Record<Radius, { radius: string; lg: string; button: string; outerMax: string; sm: string; xs: string; md: string; xl: string }> = {
+  sharp: { radius: "0", lg: "0", button: "0", outerMax: "0", sm: "0", xs: "0", md: "0", xl: "0" },
+  subtle: { radius: "0.5rem", lg: "0.75rem", button: "0.25rem", outerMax: "0.5rem", sm: "0.25rem", xs: "0.125rem", md: "0.5rem", xl: "1rem" },
+  strong: { radius: "1rem", lg: "1.5rem", button: "0.5rem", outerMax: "1rem", sm: "0.5rem", xs: "0.25rem", md: "1rem", xl: "2rem" },
+  rounded: { radius: "1.5rem", lg: "2rem", button: "var(--dimensions-max)", outerMax: "var(--dimensions-max)", sm: "1rem", xs: "0.5rem", md: "1.5rem", xl: "2.5rem" },
 }
 
 type Layer = [x: number, y: number, blur: number, color: string]
-const SHADOWS: Record<Exclude<Elevation, "none">, Record<"xs" | "sm" | "md" | "lg", Layer>> = {
+const SHADOWS: Record<Exclude<Shadow, "none">, Record<"xs" | "sm" | "md" | "lg", Layer>> = {
   subtle: {
     xs: [0, 2, 4, "rgb(68 68 68 / 6%)"],
     sm: [0, 4, 8, "rgb(68 68 68 / 6%)"],
@@ -33,16 +28,16 @@ const SHADOWS: Record<Exclude<Elevation, "none">, Record<"xs" | "sm" | "md" | "l
     lg: [0, 16, 24, "rgb(68 68 68 / 8%)"],
   },
   strong: {
-    xs: [5, 5, 10, "rgb(34 34 34 / 8%)"],
-    sm: [10, 10, 20, "rgb(34 34 34 / 12%)"],
-    md: [20, 20, 40, "rgb(34 34 34 / 16%)"],
-    lg: [30, 30, 60, "rgb(34 34 34 / 24%)"],
+    xs: [0, 4, 8, "rgb(34 34 34 / 8%)"],
+    sm: [0, 12, 20, "rgb(34 34 34 / 12%)"],
+    md: [0, 20, 40, "rgb(34 34 34 / 16%)"],
+    lg: [0, 40, 80, "rgb(34 34 34 / 24%)"],
   },
 }
 
 const layer = ([x, y, b, c]: Layer) => `${x}px ${y}px ${b}px ${c}`
 
-function shadowTokens(level: Elevation): Record<string, string> {
+function shadowTokens(level: Shadow): Record<string, string> {
   const names = ["shadow-2xs", "shadow-xs", "shadow-sm", "shadow", "shadow-md", "shadow-lg", "shadow-xl", "shadow-2xl"]
   if (level === "none") return Object.fromEntries(names.map((n) => [n, "none"]))
   const s = SHADOWS[level]
@@ -53,22 +48,22 @@ function shadowTokens(level: Elevation): Record<string, string> {
 }
 
 /** Glass material: heavy blur, a dark or light tint, on cards. Refraction stays off. */
-const glass = (tone: Tone = "dark") => [
+const glass = (colorMode: ColorMode = "dark") => [
   `--glass-card-layer: "";`,
   `--glass-card-blur: 64px;`,
   `--glass-card-saturate: 180%;`,
-  `--glass-card-surface: color-mix(in oklab, color-mix(in oklab, var(--card) 90%, ${tone === "light" ? "oklch(1 0 0)" : "oklch(0 0 0)"}) 55%, transparent);`,
+  `--glass-card-surface: color-mix(in oklab, color-mix(in oklab, var(--card) 90%, ${colorMode === "light" ? "oklch(1 0 0)" : "oklch(0 0 0)"}) 55%, transparent);`,
 ]
 
 /**
- * What a card is made of, from the theme's tone (the Figma's Settings/color): solid is the background
+ * What a card is made of, from the theme's color-mode (the Figma's settings/color-mode): solid is the background
  * 20% toward white or black, and gradient runs 10% to 20% (the card colour is the middle, and
  * `--card-image` is the gradient, which `.bg-card` paints). Glass keeps the card the background and
- * takes its tint from the tone.
+ * takes its tint from the color-mode.
  */
 function cardTokens(theme: Theme): string[] {
-  const { tone, material } = theme
-  const toward = tone === "light" ? "white" : "black"
+  const { colorMode, material } = theme
+  const toward = colorMode === "light" ? "white" : "black"
   const mix = (pct: number) => `color-mix(in oklab, var(--background), ${toward} ${pct}%)`
   if (material === "glass") return ["--card: var(--background);", "--card-image: none;"]
   if (material === "gradient") return [`--card: ${mix(15)};`, `--card-image: linear-gradient(180deg, ${mix(10)}, ${mix(20)});`]
@@ -87,7 +82,7 @@ const ALPHA: Record<"dark" | "light", { base: string; steps: Record<string, numb
  * fill of its own, because the glass layer is the surface.
  */
 function controlFill(theme: Theme): string {
-  const tone = theme.tone === "light" ? "light" : "dark"
+  const tone = theme.colorMode
   if (theme.material === "glass") return "transparent"
   if (theme.material === "gradient") return `linear-gradient(180deg, var(--alpha-${tone}-md), var(--alpha-${tone}-lg))`
   const wash = tone === "dark" ? "sm" : "md"
@@ -105,22 +100,36 @@ const stack = (family: string, fallback: string) => `'${family}', ${fallback}`
 
 /** The custom properties of a theme, in the order they are written. */
 export function themeDeclarations(theme: Theme): string[] {
-  const { palette: p, fonts, scheme } = theme
-  const dark = scheme === "dark"
-  const edge = EDGES[theme.radius]
-  const lines: string[] = [`color-scheme: ${scheme};`]
+  const { palette: p, fonts, colorMode } = theme
+  const dark = colorMode === "dark"
+  const step = RADIUS[theme.radius]
+  const lines: string[] = [`color-scheme: ${colorMode};`]
   const set = (name: string, value: string) => lines.push(`--${name}: ${value};`)
 
   set("font-primary", stack(fonts.display.family, SANS))
-  set("font-emphasis", stack(fonts.serif.family, SERIF))
   set("font-body-token", stack(fonts.body.family, SANS))
   set("font-body-weight", String(fonts.body.weight))
+  // the Figma font/primary, font/secondary and font/body/action weights: the text classes and the buttons read these
+  set("font-body-weight-action", String(fonts.body.actionWeight ?? fonts.body.weight))
+  set("font-primary-weight-regular", String(fonts.display.weight))
+  set("font-primary-weight-emphasis", String(fonts.display.emphasis ?? fonts.display.weight))
+  set("font-primary-letter-spacing", `${(fonts.display.letterSpacing ?? 0) / 100}em`)
+  set("font-secondary", stack(fonts.secondary.family, SERIF))
+  set("font-secondary-style", fonts.secondary.italic ? "italic" : "normal")
+  set("font-secondary-weight-regular", String(fonts.secondary.weight))
+  set("font-secondary-weight-emphasis", String(fonts.secondary.emphasis ?? fonts.secondary.weight))
+  set("font-secondary-letter-spacing", `${(fonts.secondary.letterSpacing ?? 0) / 100}em`)
   // Figma Font/Sans/line-height and letter-spacing: percents, written as a unitless line height and an em spacing
   set("font-body-line-height", String((fonts.body.lineHeight ?? 142) / 100))
   set("font-body-letter-spacing", `${(fonts.body.letterSpacing ?? 0) / 100}em`)
   for (const level of ["h1", "h2", "h3", "h4", "h5", "h6"]) set(`${level}-weight`, String(fonts.display.weight))
-  set("type-scale", String(SCALE_FACTOR[theme.scale]))
-  for (const [name, size] of Object.entries(TEXT_SIZES)) set(`text-${name}`, `calc(${size} * var(--type-scale))`)
+  // the Figma typescale mode this theme uses (settings/typescale): every size written out, no multiplier
+  for (const step of TYPE_STEPS) set(`typescale-${step}`, rem(TYPESCALE[theme.scale][step]))
+  for (const [name, step] of Object.entries(TAILWIND_TEXT)) {
+    set(`text-${name}`, `var(--typescale-${step})`)
+    set(`text-${name}--line-height`, String(tailwindLineHeight(name)))
+  }
+  for (const n of [1, 2, 3, 4, 5, 6]) set(`h${n}-size`, `var(--typescale-h${n})`)
 
   set("background", oklch(p.background))
   set("foreground", oklch(p.foreground))
@@ -153,8 +162,8 @@ export function themeDeclarations(theme: Theme): string[] {
   // a control's 1px outline (the Figma nav-bar's): the dark xs wash on a light theme, the light xs wash on a dark one;
   // glass has none, because the glass is the edge. And what a hover adds: the dark md wash on a light theme, the light md
   // wash on a dark one, so a hover is always a visible step away from the surface
-  set("control-edge", theme.material === "glass" ? "transparent" : `var(--alpha-${scheme === "light" ? "dark" : "light"}-xs)`)
-  set("control-hover", `var(--alpha-${scheme === "light" ? "dark" : "light"}-sm)`)
+  set("control-edge", theme.material === "glass" ? "transparent" : `var(--alpha-${colorMode === "light" ? "dark" : "light"}-xs)`)
+  set("control-hover", `var(--alpha-${colorMode === "light" ? "dark" : "light"}-sm)`)
   p.charts.forEach((hex, i) => set(`chart-${i + 1}`, oklch(hex)))
 
   set("gradient-downlight", "linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%)")
@@ -162,21 +171,22 @@ export function themeDeclarations(theme: Theme): string[] {
   set("gradient-set", "linear-gradient(180deg, var(--background) 0%, var(--card) 100%)")
   set("gradient-headline", "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)")
 
-  set("radius", edge.radius)
-  set("radius-container", edge.container)
+  set("radius", step.radius)
+  set("radius-lg", step.lg)
   // fully rounded is the Figma `dimensions/max` step: every other size in the system is a `dimensions` step too
-  set("dimensions-max", "169px")
-  set("radius-inner", edge.inner)
-  set("radius-outer-max", edge.outerMax)
-  // the Figma `edges` steps a card and the things inside it take (a controls takes `inner`, the `button` step)
-  set("edges-sm", edge.sm)
-  set("edges-xs", edge.xs)
-  set("edges-md", edge.md)
+  set("dimensions-max", "9999px")
+  set("radius-button", step.button)
+  set("radius-outer-max", step.outerMax)
+  // the Figma `radius` steps a card and the things inside it take (a control takes `button`)
+  set("radius-sm", step.sm)
+  set("radius-xs", step.xs)
+  set("radius-md", step.md)
+  set("radius-xl", step.xl)
   for (const side of ["", "-foreground", "-primary", "-primary-foreground", "-accent", "-accent-foreground", "-border", "-ring"]) {
     const target = side === "" ? "background" : side === "-foreground" ? "foreground" : side.slice(1)
     set(`sidebar${side}`, `var(--${target})`)
   }
-  for (const [name, value] of Object.entries(shadowTokens(theme.elevation))) set(name, value)
+  for (const [name, value] of Object.entries(shadowTokens(theme.shadow))) set(name, value)
 
   // Settings the stylesheet carries for the AI and for components that read
   // them. Components do not read these yet.
@@ -185,8 +195,8 @@ export function themeDeclarations(theme: Theme): string[] {
   set("theme-icon-style", theme.icons.style)
   set("theme-icon-weight", theme.icons.weight)
   set("theme-material", theme.material)
-  set("theme-elevation", theme.elevation)
-  set("theme-tone", theme.tone)
+  set("theme-shadow", theme.shadow)
+  set("theme-color-mode", theme.colorMode)
 
   // Component Animations: the easing and duration the choice is made of, and the spring's bounce.
   const motion = MOTION_STYLES[theme.motion]
@@ -216,7 +226,7 @@ export function themeDeclarations(theme: Theme): string[] {
 
   // The default theme is also `:root`, so a theme that is not glass has to say
   // so, or it inherits the default's glass.
-  lines.push(...(theme.material === "glass" ? glass(theme.tone) : GLASS_OFF))
+  lines.push(...(theme.material === "glass" ? glass(theme.colorMode) : GLASS_OFF))
   return lines
 }
 
@@ -230,7 +240,7 @@ export function themeToCss(theme: Theme, { asDefault = false }: { asDefault?: bo
 export const themeFamilies = (theme: Theme) => [
   { family: theme.fonts.display.family },
   { family: theme.fonts.body.family },
-  { family: theme.fonts.serif.family },
+  { family: theme.fonts.secondary.family },
 ]
 
 /** The same declarations as an inline style, to scope a theme to one element. */

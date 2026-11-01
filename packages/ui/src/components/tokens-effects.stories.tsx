@@ -4,7 +4,7 @@ import { NAME, NAME_SIZE, OUTLINE, ROW, Sheet, SHEET, SheetLabel, sheetText } fr
 
 /**
  * The Effects column of the Figma sheet, on the same frame as Typography and
- * Colors: how the theme shapes things (edges and shadows) and moves them (its
+ * Colors: how the theme shapes things (radius and shadows) and moves them (its
  * page transition and animated background). Radius and Shadows used to be
  * separate pages; they are the first two groups here.
  *
@@ -71,7 +71,7 @@ export const Effects = () => {
   return (
     <Sheet gap={SHEET.groups}>
       <section>
-        <SheetLabel>Edges</SheetLabel>
+        <SheetLabel>Radius</SheetLabel>
         <div style={{ marginTop: 8 }}>
           <div style={ROW}>
             <span style={NAME}>{edgeName(radius)}</span>

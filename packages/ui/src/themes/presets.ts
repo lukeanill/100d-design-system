@@ -12,11 +12,9 @@ import { NO_FEEL, type Theme, type ThemePalette } from "./types"
 const DARK_CHARTS: ThemePalette["charts"] = ["#1447e6", "#00bc7d", "#fe9a00", "#ad46ff", "#ff2056"]
 const LIGHT_CHARTS: ThemePalette["charts"] = ["#f54900", "#009689", "#104e64", "#ffb900", "#fe9a00"]
 
-// `tone` is the Figma's Settings/color and `motion` its Settings/motion, both per theme. Every other
-// Feel choice is none.
-const preset = (theme: Omit<Theme, "icons" | "values" | "scale" | "feel">): Theme => ({
+// `motion` is the Figma's settings/motion, per theme. Every other Feel choice is none.
+const preset = (theme: Omit<Theme, "icons" | "values" | "feel">): Theme => ({
   ...theme,
-  scale: "md",
   feel: NO_FEEL,
   icons: { style: "phosphor", weight: "regular" },
   values: [...DEFAULT_VALUES],
@@ -26,138 +24,138 @@ export const presets: Theme[] = [
   preset({
     id: "fabrik",
     label: "Fabrik",
-    scheme: "light",
+    colorMode: "light",
     palette: {
       background: "#3a3c83", foreground: "#fbfbfc", primary: "#2e3067", primaryForeground: "#ff8081",
       secondary: "#4d4fad", secondaryForeground: "#80a8ff", destructive: "#ff6467", charts: DARK_CHARTS,
     },
     fonts: {
-      display: { family: "Folio Std", weight: 700 },
-      body: { family: "Inter", weight: 300 },
-      serif: { family: "EB Garamond", weight: 400 },
+      display: { family: "Folio Std", weight: 700, emphasis: 700 },
+      body: { family: "EB Garamond", weight: 400, letterSpacing: 2, actionWeight: 400 },
+      secondary: { family: "Folio Std", weight: 700, emphasis: 700 },
     },
-    spacing: "lg", radius: "sharp", elevation: "subtle", material: "solid", motion: "emphatic", tone: "light",
+    scale: "md", spacing: "lg", radius: "sharp", shadow: "subtle", material: "solid", motion: "emphatic",
   }),
   preset({
     id: "illuzion",
     label: "Illuzion",
-    scheme: "light",
+    colorMode: "light",
     palette: {
       background: "#f7cae7", foreground: "#1b1717", primary: "#f2aeda", primaryForeground: "#ff4901",
       secondary: "#812961", secondaryForeground: "#ee98d0", destructive: "#ff6467", charts: DARK_CHARTS,
     },
     fonts: {
-      display: { family: "Intan", weight: 400 },
-      body: { family: "DM Sans", weight: 500, letterSpacing: 1 },
-      serif: { family: "Lora", weight: 500 },
+      display: { family: "Intan", weight: 400, emphasis: 400 },
+      body: { family: "DM Sans", weight: 500, letterSpacing: 1, actionWeight: 500 },
+      secondary: { family: "Intan", weight: 400, emphasis: 400 },
     },
-    spacing: "md", radius: "strong", elevation: "none", material: "solid", motion: "ease", tone: "light",
+    scale: "lg", spacing: "md", radius: "strong", shadow: "none", material: "solid", motion: "ease",
   }),
   preset({
     id: "laroc",
     label: "Laroc",
-    scheme: "dark",
+    colorMode: "dark",
     palette: {
       background: "#3a6be2", foreground: "#fbfbfc", primary: "#17347b", primaryForeground: "#fbfbfc",
       secondary: "#1b4bbe", secondaryForeground: "#a0b2df", destructive: "#e7000b", charts: LIGHT_CHARTS,
     },
     fonts: {
-      display: { family: "GT Pressura Mono Trial", weight: 700 },
-      body: { family: "Archivo", weight: 400 },
-      serif: { family: "Lora", weight: 500 },
+      display: { family: "GT Pressura Mono Trial", weight: 700, emphasis: 700 },
+      body: { family: "Archivo", weight: 400, actionWeight: 400 },
+      secondary: { family: "GT Pressura Mono Trial", weight: 700, emphasis: 700 },
     },
-    spacing: "md", radius: "rounded", elevation: "none", material: "solid", motion: "none", tone: "light",
+    scale: "sm", spacing: "md", radius: "rounded", shadow: "none", material: "solid", motion: "none",
   }),
   preset({
     id: "bootshaus",
     label: "Bootshaus",
-    scheme: "dark",
+    colorMode: "dark",
     palette: {
       background: "#214c56", foreground: "#ffffff", primary: "#1e363c", primaryForeground: "#ffc937",
       secondary: "#ffc937", secondaryForeground: "#1e363c", destructive: "#ff6467", charts: DARK_CHARTS,
     },
     fonts: {
-      display: { family: "ITC Garamond Std", weight: 800 },
-      body: { family: "Inter", weight: 500 },
-      serif: { family: "Lora", weight: 500 },
+      display: { family: "ITC Garamond Std", weight: 800, emphasis: 800, letterSpacing: -2 },
+      body: { family: "Inter", weight: 500, actionWeight: 500 },
+      secondary: { family: "ITC Garamond Std", weight: 800, emphasis: 800, letterSpacing: -2 },
     },
-    spacing: "md", radius: "strong", elevation: "strong", material: "glass", motion: "ease", tone: "dark",
+    scale: "lg", spacing: "md", radius: "strong", shadow: "strong", material: "glass", motion: "ease",
   }),
   preset({
     id: "berghain",
     label: "Berghain",
-    scheme: "dark",
+    colorMode: "dark",
     palette: {
       background: "#000000", foreground: "#fbfbfc", primary: "#ffffff", primaryForeground: "#000000",
       secondary: "#363636", secondaryForeground: "#ffffff", destructive: "#ff6467", charts: DARK_CHARTS,
     },
     fonts: {
       // Migra Extralight, as you asked, rather than the PP Editorial New the Figma variable names
-      display: { family: "Migra", weight: 200 },
-      body: { family: "Akkurat LL TT", weight: 200, lineHeight: 146 },
-      serif: { family: "Newsreader", weight: 500 },
+      display: { family: "Migra", weight: 200, emphasis: 800 },
+      body: { family: "Akkurat LL TT", weight: 200, lineHeight: 146, actionWeight: 400 },
+      secondary: { family: "Migra", weight: 200, emphasis: 800, italic: true },
     },
-    spacing: "lg", radius: "subtle", elevation: "strong", material: "glass", motion: "ease", tone: "dark",
+    scale: "md", spacing: "lg", radius: "subtle", shadow: "strong", material: "glass", motion: "ease",
   }),
   preset({
     id: "savaya",
     label: "Savaya",
-    scheme: "dark",
+    colorMode: "dark",
     palette: {
       background: "#84699b", foreground: "#ffffff", primary: "#6f59bb", primaryForeground: "#ffffff",
       secondary: "#a56a62", secondaryForeground: "#734a45", destructive: "#ff6467", charts: DARK_CHARTS,
     },
     fonts: {
-      display: { family: "Gloock", weight: 400 },
-      body: { family: "Archivo", weight: 500 },
-      serif: { family: "Newsreader", weight: 600 },
+      display: { family: "Gloock", weight: 400, emphasis: 400 },
+      body: { family: "Newsreader", weight: 400, letterSpacing: 1, actionWeight: 400 },
+      secondary: { family: "Gloock", weight: 400, emphasis: 400 },
     },
-    spacing: "md", radius: "subtle", elevation: "strong", material: "glass", motion: "emphatic", tone: "dark",
+    scale: "md", spacing: "md", radius: "subtle", shadow: "strong", material: "glass", motion: "emphatic",
   }),
   preset({
     id: "pacha",
     label: "Pacha",
-    scheme: "light",
+    colorMode: "light",
     palette: {
       background: "#ffe9e9", foreground: "#1b1717", primary: "#ffffff", primaryForeground: "#e22700",
       secondary: "#831a04", secondaryForeground: "#b38b83", destructive: "#e7000b", charts: LIGHT_CHARTS,
     },
     fonts: {
-      display: { family: "Khaviax", weight: 400 },
-      body: { family: "DM Sans", weight: 500, letterSpacing: 1 },
-      serif: { family: "Lora", weight: 500 },
+      display: { family: "Khaviax", weight: 400, emphasis: 400 },
+      body: { family: "DM Sans", weight: 500, letterSpacing: 1, actionWeight: 500 },
+      secondary: { family: "Khaviax", weight: 400, emphasis: 400 },
     },
-    spacing: "lg", radius: "rounded", elevation: "none", material: "solid", motion: "springy", tone: "light",
+    scale: "lg", spacing: "lg", radius: "rounded", shadow: "none", material: "solid", motion: "springy",
   }),
   preset({
     id: "amnesia",
     label: "Amnesia",
-    scheme: "dark",
+    colorMode: "dark",
     palette: {
       background: "#224f4a", foreground: "#f8f8f8", primary: "#122a27", primaryForeground: "#f8f8f8",
       secondary: "#23786e", secondaryForeground: "#0c1d1b", destructive: "#ff6467", charts: DARK_CHARTS,
     },
     fonts: {
-      display: { family: "Swear Display Demo", weight: 500 },
-      body: { family: "Inter", weight: 400 },
-      serif: { family: "Lora", weight: 500 },
+      display: { family: "Swear Display Demo", weight: 500, emphasis: 500 },
+      body: { family: "Inter", weight: 400, actionWeight: 400 },
+      secondary: { family: "Swear Display Demo", weight: 500, emphasis: 500 },
     },
-    spacing: "md", radius: "rounded", elevation: "subtle", material: "gradient", motion: "ease", tone: "dark",
+    scale: "md", spacing: "md", radius: "rounded", shadow: "subtle", material: "gradient", motion: "ease",
   }),
   preset({
     id: "ushuaia",
     label: "Ushuaia",
-    scheme: "light",
+    colorMode: "light",
     palette: {
       background: "#edebe3", foreground: "#0f0e0e", primary: "#222222", primaryForeground: "#0f0e0e",
       secondary: "#ffffff", secondaryForeground: "#222222", destructive: "#e7000b", charts: LIGHT_CHARTS,
     },
     fonts: {
-      display: { family: "Migra", weight: 800 },
-      body: { family: "Archivo", weight: 400 },
-      serif: { family: "Newsreader", weight: 500 },
+      display: { family: "Migra", weight: 800, emphasis: 800 },
+      body: { family: "Archivo", weight: 400, actionWeight: 400 },
+      secondary: { family: "Migra", weight: 800, emphasis: 800 },
     },
-    spacing: "lg", radius: "strong", elevation: "strong", material: "gradient", motion: "ease", tone: "light",
+    scale: "md", spacing: "lg", radius: "strong", shadow: "strong", material: "gradient", motion: "ease",
   }),
 ]
 
@@ -175,5 +173,5 @@ const rolesOf = (...picks: ((t: Theme) => string)[]): FontChoice[] => {
   return FONT_CHOICES.filter((f) => used.has(f.family))
 }
 export const HEADING_FONTS = rolesOf((t) => t.fonts.display.family)
-// body text can be set in a sans or a serif: the themes' body faces and the serifs they use for emphasis
-export const BODY_FONTS = rolesOf((t) => t.fonts.body.family, (t) => t.fonts.serif.family)
+// body text can be set in a sans or a serif: the themes' body faces
+export const BODY_FONTS = rolesOf((t) => t.fonts.body.family)

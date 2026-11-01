@@ -19,7 +19,7 @@ const controlButtonVariants = cva(
     variants: {
       shape: {
         circle: "",
-        pill: "text-body-md gap-2 px-4",
+        pill: "text-md gap-2 px-4",
       },
       size: {
         default: "h-10 [&_svg]:size-5",

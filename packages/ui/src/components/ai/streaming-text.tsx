@@ -112,7 +112,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
           {typeof data?.leading === "function" ? data.leading({ done }) : data?.leading}
           {/* from the top, so the text grows down without moving what is already there */}
           <div className="flex min-w-0 flex-1 flex-col justify-start">
-            <p className="text-body-sm text-foreground">
+            <p className="text-sm text-foreground">
               {content.slice(0, count).map((token, i) => (
                 <span key={i} className="inline">
                   {token.text}{" "}
@@ -134,7 +134,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
               key={text}
               type="button"
               onClick={() => actions?.onFollowUp?.(text, i)}
-              className="text-body-md -mx-2 flex h-9 items-center gap-1 self-start rounded-(--radius-inner) px-2 text-left text-foreground transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)"
+              className="text-md -mx-2 flex h-9 items-center gap-1 self-start rounded-(--radius-button) px-2 text-left text-foreground transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)"
             >
               <ThemedIcon phosphor={ArrowBendDownRightIcon} />
               {text}

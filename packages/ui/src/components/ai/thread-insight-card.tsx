@@ -17,7 +17,7 @@ const CONTENT = "Fish pics are your top trending content thread – averaging 56
   .map((text) => ({ text }))
 
 export interface ThreadInsightCardProps {
-  /** The picture; it is the `edges/xs` corner at 64px square. */
+  /** The picture; it is the `radius/xs` corner at 64px square. */
   image: string
   content?: StreamingToken[]
   followUps?: string[]
@@ -43,12 +43,12 @@ export function ThreadInsightCard({ image, content = CONTENT, followUps = ["Do p
             // a skeleton holds the place until the sentence has finished, then the picture fades in over it
             leading: ({ done }: { done: boolean }) => (
               <div className="relative size-16 shrink-0">
-                <Skeleton className="absolute inset-0 rounded-(--edges-xs)" />
+                <Skeleton className="absolute inset-0 rounded-(--radius-xs)" />
                 <img
                   src={image}
                   alt=""
                   className={cn(
-                    "absolute inset-0 size-full rounded-(--edges-xs) object-cover transition-opacity duration-(--motion-fast) ease-(--motion-transition-ease)",
+                    "absolute inset-0 size-full rounded-(--radius-xs) object-cover transition-opacity duration-(--motion-fast) ease-(--motion-transition-ease)",
                     done ? "opacity-100" : "opacity-0"
                   )}
                 />
@@ -60,7 +60,7 @@ export function ThreadInsightCard({ image, content = CONTENT, followUps = ["Do p
       ) : (
         // the card's shape holds its place while it waits, with the picture's skeleton already showing
         <div className="h-[116px]">
-          <Skeleton className="size-16 rounded-(--edges-xs)" />
+          <Skeleton className="size-16 rounded-(--radius-xs)" />
         </div>
       )}
     </ThemedCard>

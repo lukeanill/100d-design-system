@@ -1,0 +1,9 @@
+@import "@workspace/ui/globals.css";
+
+@source "./**/*.{ts,tsx}";
+@source "../fixtures/**/*.tsx";
+
+body {
+  margin: 0;
+  background: var(--background);
+}

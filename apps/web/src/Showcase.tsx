@@ -1,8 +1,8 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { Popover, PopoverPanel } from "@workspace/ui/components/animate-ui/components/base/popover"
 import { GlassLayer, LiquidGlass, glassProps } from "@workspace/ui/components/liquid-glass"
-import { MetalSurface } from "@workspace/ui/components/metal-surface"
 import { BODY, LinkTile, MIGRA } from "./LinkTile"
+import { Pill } from "./Pill"
 import { Preview } from "./Preview"
 
 /* The homepage, built to the Figma "HOME" frame (Themes file, node 94:3232).
@@ -21,18 +21,6 @@ function Section({ children, className = "" }: { children: ReactNode; className?
     <section className={`w-full ${PAD}`}>
       <div className={`mx-auto w-full max-w-[1040px] ${className}`}>{children}</div>
     </section>
-  )
-}
-
-function Pill({ children }: { children: ReactNode }) {
-  return (
-    <div className="w-fit">
-      <MetalSurface variant="button" engine="v2" className="rounded-full bg-transparent! backdrop-blur-none hover:bg-transparent!">
-        <div className="flex items-center justify-center rounded-full px-4 py-2">
-          <p className="text-body-sm whitespace-nowrap">{children}</p>
-        </div>
-      </MetalSurface>
-    </div>
   )
 }
 
@@ -135,6 +123,7 @@ const It = ({ children }: { children: ReactNode }) => <em className={`${MIGRA} f
 
 const H48 = `${MIGRA} text-[clamp(32px,3.75vw,48px)] leading-[1.22] font-extralight`
 const H36 = `${MIGRA} text-[clamp(26px,2.8125vw,36px)] leading-[1.22] font-extralight`
+const H28 = `${MIGRA} text-[clamp(22px,2.1875vw,28px)] leading-[1.22] font-extralight`
 const BODY20 = `${BODY} text-[20px] leading-[1.42]`
 
 export function Showcase() {
@@ -191,7 +180,6 @@ export function Showcase() {
 
         {/* Preview */}
         <Section className="flex flex-col items-start gap-10 pt-[clamp(12px,1.875vw,24px)] pb-[clamp(40px,6.25vw,80px)]">
-          <Pill>Preview</Pill>
           <Preview />
         </Section>
 
@@ -216,11 +204,11 @@ export function Showcase() {
           <Pill>Problem</Pill>
           <div className="flex w-full flex-col gap-10 min-[1100px]:flex-row min-[1100px]:gap-20">
             <div className="flex min-w-0 flex-1 flex-col gap-1">
-              <p className={H48}>AI can build a</p>
-              <p className={H48}>
-                <Wash angle={6.34}>very useful, yet generic</Wash>
+              <p className={H36}>AI can build a</p>
+              <p className={H36}>
+                <Wash angle={4.74}>very useful, yet generic</Wash>
               </p>
-              <p className={H48}>prototype in minutes.</p>
+              <p className={H36}>prototype in minutes.</p>
             </div>
             <div className={`${BODY20} flex w-full flex-col gap-6 opacity-90 min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
               <p>Moving AI from generic outputs to custom ones takes significant time and effort – chipping away at the time benefit offered.</p>
@@ -237,16 +225,16 @@ export function Showcase() {
           <Pill>Change</Pill>
           <div className="flex w-full flex-col gap-6 min-[1100px]:flex-row min-[1100px]:gap-0">
             <div className="flex min-w-0 flex-1 flex-col gap-1">
-              <p className={`${H36} flex flex-wrap gap-x-2`}>
+              <p className={`${H28} flex flex-wrap gap-x-2`}>
                 <span>AI can use a</span>
-                <Wash angle={14.43}>purpose built</Wash>
+                <Wash angle={14.28}>purpose built</Wash>
                 <span>system</span>
               </p>
-              <p className={`${H36} flex flex-wrap gap-x-2`}>
+              <p className={`${H28} flex flex-wrap gap-x-2`}>
                 <span>to produce </span>
-                <Wash angle={13.44}>highly credible</Wash>
+                <Wash angle={13.31}>highly credible</Wash>
               </p>
-              <p className={H36}>prototypes in minutes.</p>
+              <p className={H28}>prototypes in minutes.</p>
             </div>
             <p className={`${BODY20} w-full min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
               How? to walk the walk. Building the system and many diverse prototypes with it – Iterating to the point of
@@ -260,7 +248,7 @@ export function Showcase() {
           <Pill>Mission</Pill>
           <div className="flex w-full flex-col gap-10 pb-6 min-[1100px]:flex-row min-[1100px]:gap-20">
             <div className="flex min-w-0 flex-1 flex-col justify-center pb-[6px]">
-              <div className={`${H48} [text-box:trim-both_cap_alphabetic]`}>
+              <div className={`${H36} [text-box:trim-both_cap_alphabetic]`}>
                 <p>
                   Helping <It>product builders</It>
                 </p>

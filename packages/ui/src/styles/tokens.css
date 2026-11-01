@@ -215,7 +215,6 @@
 
 @theme inline {
   --font-primary: ui-sans-serif, system-ui, sans-serif;
-  --font-emphasis: ui-serif, Georgia, serif;
   --font-fira-code: 'Fira Code Variable', monospace;
   --font-bricolage-grotesque: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
   --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -223,7 +222,7 @@
   --font-body-token: ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-body-token);
   --font-body-small: var(--font-body-token);
-  --font-serif: var(--font-emphasis);
+  --font-serif: var(--font-secondary);
   --font-mono: var(--font-fira-code);
   --font-sans: var(--font-body-token);
   --font-family: var(--font-body-token);
@@ -268,14 +267,9 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --radius-sm: 0.5rem;
-  --radius-md: 0.625rem;
-  /* Containers follow the theme's base size, but on their own scale: twice the
-     control radius, capped at 32px. A card taken to the control's radius reads
-     as a pill, and at `round` there is no sane container value at all, which is
-     what the cap is for. Controls use rounded-(--radius). */
-  --radius-lg: var(--radius-container);
-  --radius-xl: 1.25rem;
+  /* Tailwind's rounded-xs, -sm, -md, -lg and -xl are the Figma radius steps of the same name. The theme sets
+     --radius-xs to --radius-xl itself, so they are not redefined here. Cards take rounded-lg and never the
+     control's radius, which on a rounded theme is a pill; controls use rounded-(--radius-button). */
   --radius-full: 9999px;
 
   --shadow-2xs: var(--shadow-2xs);
@@ -310,9 +304,9 @@
   */
   h1 {
     font-family: var(--h1-family, var(--font-heading));
-    font-size: calc(var(--h1-size, 6rem) * var(--type-scale, 1));
-    line-height: 1.2;
-    letter-spacing: 0;
+    font-size: var(--h1-size, 4.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h1-weight, 400);
     /*
       A theme can fill its H1s with an animated gradient. Every property below
@@ -334,41 +328,41 @@
 
   h2 {
     font-family: var(--h2-family, var(--font-heading));
-    font-size: calc(var(--h2-size, 5rem) * var(--type-scale, 1));
-    line-height: 1.2;
-    letter-spacing: 0;
+    font-size: var(--h2-size, 3.75rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h2-weight, 400);
   }
 
   h3 {
     font-family: var(--h3-family, var(--font-heading));
-    font-size: calc(var(--h3-size, 4rem) * var(--type-scale, 1));
-    line-height: 1.2;
-    letter-spacing: 0;
+    font-size: var(--h3-size, 3rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h3-weight, 400);
   }
 
   h4 {
     font-family: var(--h4-family, var(--font-heading));
-    font-size: calc(var(--h4-size, 3rem) * var(--type-scale, 1));
-    line-height: 1.2;
-    letter-spacing: 0;
+    font-size: var(--h4-size, 2.25rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h4-weight, 400);
   }
 
   h5 {
     font-family: var(--h5-family, var(--font-heading));
-    font-size: calc(var(--h5-size, 2rem) * var(--type-scale, 1));
-    line-height: 1.2;
-    letter-spacing: 0;
+    font-size: var(--h5-size, 1.875rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h5-weight, 400);
   }
 
   h6 {
     font-family: var(--h6-family, var(--font-heading));
-    font-size: calc(var(--h6-size, 1.5rem) * var(--type-scale, 1));
-    line-height: 1.2;
-    letter-spacing: 0;
+    font-size: var(--h6-size, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h6-weight, 400);
   }
 
@@ -381,90 +375,390 @@
     font-family: var(--font-mono);
   }
 
-  .text-footnote {
-    font-family: var(--font-body);
-    font-weight: var(--font-body-weight);
-    font-size: calc(0.6875rem * var(--type-scale, 1));
-    line-height: 1.6;
-    letter-spacing: 0;
-  }
+  /*
+    The design system's text classes, one for each Figma text style, all named text-<step>-<kind>:
+    text-md is body/md/regular, text-md-bold and text-md-italic its bold and italic, text-action-md is
+    comp/action/md and text-label-md comp/label/md, text-h1-pri is pri/reg/h1, text-h1-pri-bold
+    pri/emp/h1, text-h1-sec sec/reg/h1 and text-h1-sec-bold sec/emp/h1. A style gives the size step, the
+    line-height, the letter-spacing and the weight; the theme gives the faces.
 
-  .text-body-small {
-    font-family: var(--font-body);
-    font-weight: var(--font-body-weight);
-    font-size: calc(0.8125rem * var(--type-scale, 1));
-    line-height: 1.6;
-    letter-spacing: 0;
-  }
-
-  /* Figma body/sans/md/regular: the one style for text inside controls (tabs, prompt bar, buttons) */
-  .text-body-md {
+    The regular body styles text-xs, text-sm and text-lg are Tailwind's own classes: the theme sets
+    their size and line-height to body/xs, sm and lg (see themes/css.ts), and the rule below gives
+    them the body face and weight. text-xl takes the lg step too.
+  */
+  /* body/md/regular (Tailwind's text-base is the same style) */
+  .text-md {
     font-family: var(--font-body);
     font-weight: var(--font-body-weight);
     font-style: normal;
-    font-size: calc(1rem * var(--type-scale, 1));
-    line-height: var(--font-body-line-height, 1.42);
-    letter-spacing: var(--font-body-letter-spacing, 0);
+    font-size: var(--typescale-md, 1rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
-  /* Figma body/sans/sm/regular: the same style one step down the typescale, for text inside a card */
-  .text-body-sm {
+  /* body/xs/bold */
+  .text-xs-bold {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-style: normal;
+    font-size: var(--typescale-xs, 0.75rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+  }
+
+  /* body/xs/italic */
+  .text-xs-italic {
     font-family: var(--font-body);
     font-weight: var(--font-body-weight);
-    font-style: normal;
-    font-size: calc(0.875rem * var(--type-scale, 1));
-    line-height: var(--font-body-line-height, 1.42);
-    letter-spacing: var(--font-body-letter-spacing, 0);
+    font-style: italic;
+    font-size: var(--typescale-xs, 0.75rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
-  /* Figma heading/h3: the theme's heading face for a figure inside a card (the h3 element is larger) */
-  .text-heading-h3 {
-    font-family: var(--h3-family, var(--font-heading));
-    font-weight: var(--h3-weight, 400);
+  /* body/sm/bold */
+  .text-sm-bold {
+    font-family: var(--font-body);
+    font-weight: 700;
     font-style: normal;
-    font-size: calc(3.75rem * var(--type-scale, 1));
-    line-height: 1.22;
+    font-size: var(--typescale-sm, 0.875rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+  }
+
+  /* body/sm/italic */
+  .text-sm-italic {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight);
+    font-style: italic;
+    font-size: var(--typescale-sm, 0.875rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+  }
+
+  /* body/md/bold */
+  .text-md-bold {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-style: normal;
+    font-size: var(--typescale-md, 1rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+  }
+
+  /* body/md/italic */
+  .text-md-italic {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight);
+    font-style: italic;
+    font-size: var(--typescale-md, 1rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+  }
+
+  /* body/lg/bold */
+  .text-lg-bold {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-style: normal;
+    font-size: var(--typescale-lg, 1.125rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+  }
+
+  /* body/lg/italic */
+  .text-lg-italic {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight);
+    font-style: italic;
+    font-size: var(--typescale-lg, 1.125rem);
+    line-height: 1.6;
+    letter-spacing: var(--font-body-letter-spacing, 0em);
+  }
+
+  /* comp/action/sm: the text inside a button; the weight is font/body/action/weight and the line is 100% */
+  .text-action-sm {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight-action);
+    font-style: normal;
+    font-size: var(--typescale-sm, 0.875rem);
+    line-height: 1;
     letter-spacing: 0;
   }
 
-  .text-body {
+  /* comp/action/md: the text inside a button; the weight is font/body/action/weight and the line is 100% */
+  .text-action-md {
     font-family: var(--font-body);
-    font-weight: var(--font-body-weight);
-    font-size: calc(0.9375rem * var(--type-scale, 1));
-    line-height: 1.6;
+    font-weight: var(--font-body-weight-action);
+    font-style: normal;
+    font-size: var(--typescale-md, 1rem);
+    line-height: 1;
     letter-spacing: 0;
   }
 
-  .text-body-serif {
-    font-family: var(--font-serif);
+  /* comp/action/lg: the text inside a button; the weight is font/body/action/weight and the line is 100% */
+  .text-action-lg {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight-action);
     font-style: normal;
-    font-size: calc(1rem * var(--type-scale, 1));
-    line-height: 1.6;
+    font-size: var(--typescale-lg, 1.125rem);
+    line-height: 1;
     letter-spacing: 0;
   }
 
-  .text-body-lg {
+  /* comp/label/sm: a label, with a 100% line */
+  .text-label-sm {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-style: normal;
+    font-size: var(--typescale-sm, 0.875rem);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  /* comp/label/md: a label, with a 100% line */
+  .text-label-md {
     font-family: var(--font-body);
     font-weight: var(--font-body-weight);
-    font-size: calc(1.125rem * var(--type-scale, 1));
-    line-height: 1.6;
-    letter-spacing: 0.01em;
-  }
-
-  .text-body-lg-serif {
-    font-family: var(--font-serif);
     font-style: normal;
-    font-size: calc(1.1875rem * var(--type-scale, 1));
-    line-height: 1.6;
-    letter-spacing: -0.01em;
+    font-size: var(--typescale-md, 1rem);
+    line-height: 1;
+    letter-spacing: 0;
   }
 
-  .text-title-serif {
-    font-family: var(--font-serif);
-    text-transform: uppercase;
-    font-size: calc(1.75rem * var(--type-scale, 1));
-    line-height: 1.2;
-    letter-spacing: 0.013em;
+  /* comp/label/lg: a label, with a 100% line */
+  .text-label-lg {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight);
+    font-style: normal;
+    font-size: var(--typescale-lg, 1.125rem);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  /* pri/reg/h1 */
+  .text-h1-pri {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-regular);
+    font-style: normal;
+    font-size: var(--typescale-h1, 4.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  /* pri/reg/h2 */
+  .text-h2-pri {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-regular);
+    font-style: normal;
+    font-size: var(--typescale-h2, 3.75rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  /* pri/reg/h3: the theme's heading face for a figure inside a card (the h3 element is larger) */
+  .text-h3-pri {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-regular);
+    font-style: normal;
+    font-size: var(--typescale-h3, 3rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  /* pri/reg/h4 */
+  .text-h4-pri {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-regular);
+    font-style: normal;
+    font-size: var(--typescale-h4, 2.25rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  /* pri/reg/h5 */
+  .text-h5-pri {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-regular);
+    font-style: normal;
+    font-size: var(--typescale-h5, 1.875rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  /* pri/reg/h6 */
+  .text-h6-pri {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-regular);
+    font-style: normal;
+    font-size: var(--typescale-h6, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  /* pri/emp/h1 */
+  .text-h1-pri-bold {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-emphasis);
+    font-style: normal;
+    font-size: var(--typescale-h1, 4.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  .text-h2-pri-bold {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-emphasis);
+    font-style: normal;
+    font-size: var(--typescale-h2, 3.75rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  .text-h3-pri-bold {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-emphasis);
+    font-style: normal;
+    font-size: var(--typescale-h3, 3rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  .text-h4-pri-bold {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-emphasis);
+    font-style: normal;
+    font-size: var(--typescale-h4, 2.25rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  .text-h5-pri-bold {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-emphasis);
+    font-style: normal;
+    font-size: var(--typescale-h5, 1.875rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  .text-h6-pri-bold {
+    font-family: var(--font-primary);
+    font-weight: var(--font-primary-weight-emphasis);
+    font-style: normal;
+    font-size: var(--typescale-h6, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-primary-letter-spacing, 0em);
+  }
+
+  /* sec/reg/h1 */
+  .text-h1-sec {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-regular);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h1, 4.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h2-sec {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-regular);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h2, 3.75rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h3-sec {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-regular);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h3, 3rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h4-sec {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-regular);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h4, 2.25rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h5-sec {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-regular);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h5, 1.875rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h6-sec {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-regular);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h6, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  /* sec/emp/h1 */
+  .text-h1-sec-bold {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-emphasis);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h1, 4.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h2-sec-bold {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-emphasis);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h2, 3.75rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h3-sec-bold {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-emphasis);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h3, 3rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h4-sec-bold {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-emphasis);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h4, 2.25rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h5-sec-bold {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-emphasis);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h5, 1.875rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
+  }
+
+  .text-h6-sec-bold {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-secondary-weight-emphasis);
+    font-style: var(--font-secondary-style, normal);
+    font-size: var(--typescale-h6, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
   /*
@@ -475,6 +769,7 @@
   .text-xs, .text-sm, .text-base, .text-lg, .text-xl {
     font-family: var(--font-body);
     font-weight: var(--font-body-weight);
+    letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
   .mapboxgl-popup-content, .maplibregl-popup-content {

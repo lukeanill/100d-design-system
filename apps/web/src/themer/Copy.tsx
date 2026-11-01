@@ -41,11 +41,11 @@ const SPACING_WORDS = { sm: "small", md: "medium", lg: "large" } as const
 
 /** What the Preview panel says about a theme's six settings, in Figma's order. */
 const settingsOf = (t: Theme) => [
-  ["shadow", t.elevation],
+  ["shadow", t.shadow],
   ["spacing", SPACING_WORDS[t.spacing]],
-  ["edges", t.radius],
+  ["radius", t.radius],
   ["texture", t.material],
-  ["color", t.tone],
+  ["color", t.colorMode],
   ["motion", t.motion],
 ]
 
@@ -77,10 +77,6 @@ function Preview({ theme }: { theme: Theme }) {
         </p>
         <p className="text-sm" style={{ fontFamily: "var(--font-body-token)", fontWeight: "var(--font-body-weight)" }}>
           {theme.fonts.body.family}.<br />
-          {sample}
-        </p>
-        <p className="text-sm" style={{ fontFamily: "var(--font-emphasis)" }}>
-          {theme.fonts.serif.family}.<br />
           {sample}
         </p>
         <div className="grid grid-cols-2 gap-2" style={{ color: "var(--secondary)" }}>
