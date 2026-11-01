@@ -162,11 +162,6 @@ export function Design({
               ))}
             </ul>
           )}
-          {gap.length > 0 && (
-            <p role="status" className="mt-4 text-sm opacity-70">
-              Still to do: {gap.join(", ")}
-            </p>
-          )}
         </div>
       ) : (
         <ProductPreview draft={draft} />
