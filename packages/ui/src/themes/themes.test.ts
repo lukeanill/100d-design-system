@@ -64,41 +64,79 @@ describe("themeToCss", () => {
     expect(themeDeclarations(getPreset("pacha")!)).toContain("--motion-fast: var(--duration-fast);")
   })
 
-  it("scales the shadows with elevation", () => {
+  it("scales the shadows with the shadow setting", () => {
     expect(themeDeclarations(getPreset("illuzion")!)).toContain("--shadow-md: none;")
-    expect(themeDeclarations(getPreset("berghain")!).find((l) => l.startsWith("--shadow-md"))).toContain("20px 20px 40px")
+    expect(themeDeclarations(getPreset("berghain")!).find((l) => l.startsWith("--shadow-md"))).toContain("0px 20px 40px")
   })
 
-  it("scales heading and body sizes with --type-scale, and medium is the sizes as shipped", () => {
-    const scaleOf = (id: string, scale: "sm" | "md" | "lg") =>
-      themeDeclarations({ ...getPreset(id)!, scale }).filter((l) => l.startsWith("--type-scale") || l.startsWith("--text-"))
-    expect(scaleOf("berghain", "md")).toContain("--type-scale: 1;")
-    expect(scaleOf("berghain", "sm")).toContain("--type-scale: 0.875;")
-    expect(scaleOf("berghain", "lg")).toContain("--type-scale: 1.125;")
-    expect(scaleOf("berghain", "md")).toContain("--text-sm: calc(0.875rem * var(--type-scale));")
-    for (const t of presets) expect(t.scale, t.id).toBe("md")
+  it("writes the Figma strong shadow variables, with no horizontal offset", () => {
+    const shadows = themeDeclarations(getPreset("berghain")!).filter((l) => /^--shadow-(xs|sm|md|lg):/.test(l))
+    expect(shadows).toEqual([
+      "--shadow-xs: 0px 4px 8px rgb(34 34 34 / 8%);",
+      "--shadow-sm: 0px 12px 20px rgb(34 34 34 / 12%);",
+      "--shadow-md: 0px 20px 40px rgb(34 34 34 / 16%);",
+      "--shadow-lg: 0px 40px 80px rgb(34 34 34 / 24%);",
+    ])
   })
 
-  it("gives each preset the tone and motion the Figma gives it, and nothing else of the feel", () => {
+  it("writes the Figma typescale sizes for the theme's mode, with no multiplier", () => {
+    const sizesOf = (id: string, scale: "sm" | "md" | "lg") => themeDeclarations({ ...getPreset(id)!, scale })
+    expect(sizesOf("berghain", "sm")).toContain("--typescale-h1: 3.75rem;")
+    expect(sizesOf("berghain", "md")).toContain("--typescale-h1: 4.5rem;")
+    expect(sizesOf("berghain", "lg")).toContain("--typescale-h1: 5.5rem;")
+    expect(sizesOf("berghain", "md")).toContain("--typescale-sm: 0.875rem;")
+    expect(sizesOf("berghain", "md")).toContain("--text-sm: var(--typescale-sm);")
+    expect(sizesOf("berghain", "md")).toContain("--text-base: var(--typescale-md);")
+    expect(sizesOf("berghain", "md")).toContain("--h1-size: var(--typescale-h1);")
+    // Tailwind's text sizes take the Figma line-heights: 160% for body steps, 140% for heading steps
+    expect(sizesOf("berghain", "md")).toContain("--text-sm--line-height: 1.6;")
+    expect(sizesOf("berghain", "md")).toContain("--text-xl: var(--typescale-lg);")
+    expect(sizesOf("berghain", "md")).toContain("--text-xl--line-height: 1.6;")
+    expect(sizesOf("berghain", "md")).toContain("--text-2xl--line-height: 1.4;")
+    expect(sizesOf("berghain", "md")).toContain("--text-7xl--line-height: 1.4;")
+    expect(sizesOf("berghain", "md").join("\n")).not.toContain("type-scale")
+  })
+
+  it("writes the Figma primary, secondary and action weights for each theme", () => {
+    const decl = (id: string) => themeDeclarations(getPreset(id)!).join("\n")
+    const berghain = decl("berghain")
+    expect(berghain).toContain("--font-primary-weight-regular: 200;")
+    expect(berghain).toContain("--font-primary-weight-emphasis: 800;")
+    expect(berghain).toContain("--font-secondary-weight-emphasis: 800;")
+    expect(berghain).toContain("--font-secondary-style: italic;")
+    expect(berghain).toContain("--font-body-weight-action: 400;")
+    expect(decl("illuzion")).toContain("--font-body-weight-action: 500;")
+    expect(decl("illuzion")).toContain("--font-secondary-style: normal;")
+    expect(decl("bootshaus")).toContain("--font-primary-weight-emphasis: 800;")
+  })
+
+  it("gives each preset the typescale mode the Figma's settings/typescale gives it", () => {
+    const figma: Record<string, string> = {
+      fabrik: "md", illuzion: "lg", laroc: "sm", bootshaus: "lg", berghain: "md", savaya: "md", pacha: "lg", amnesia: "md", ushuaia: "md",
+    }
+    for (const t of presets) expect(t.scale, t.id).toBe(figma[t.id])
+  })
+
+  it("gives each preset the color-mode and motion the Figma gives it, and nothing else of the feel", () => {
     const figma: Record<string, [string, string]> = {
-      fabrik: ["emphatic", "light"], illuzion: ["ease", "light"], laroc: ["none", "light"], bootshaus: ["ease", "dark"],
+      fabrik: ["emphatic", "light"], illuzion: ["ease", "light"], laroc: ["none", "dark"], bootshaus: ["ease", "dark"],
       berghain: ["ease", "dark"], savaya: ["emphatic", "dark"], pacha: ["springy", "light"], amnesia: ["ease", "dark"], ushuaia: ["ease", "light"],
     }
     for (const t of presets) {
-      expect([t.motion, t.tone], t.id).toEqual(figma[t.id])
+      expect([t.motion, t.colorMode], t.id).toEqual(figma[t.id])
       expect(t.feel, t.id).toEqual(NO_FEEL)
     }
   })
 
-  it("makes a card from the tone: solid 20%, gradient 10% to 20%, glass the background", () => {
+  it("makes a card from the color-mode: solid 20%, gradient 10% to 20%, glass the background", () => {
     const base = getPreset("fabrik")! // solid
-    const solid = (tone: "dark" | "light") => themeDeclarations({ ...base, material: "solid", tone })
+    const solid = (colorMode: "dark" | "light") => themeDeclarations({ ...base, material: "solid", colorMode })
     expect(solid("light")).toContain("--card: color-mix(in oklab, var(--background), white 20%);")
     expect(solid("dark")).toContain("--card: color-mix(in oklab, var(--background), black 20%);")
     expect(solid("dark")).toContain("--card-image: none;")
-    const grad = themeDeclarations({ ...base, material: "gradient", tone: "dark" })
+    const grad = themeDeclarations({ ...base, material: "gradient", colorMode: "dark" })
     expect(grad).toContain("--card-image: linear-gradient(180deg, color-mix(in oklab, var(--background), black 10%), color-mix(in oklab, var(--background), black 20%));")
-    const glass = (tone: "dark" | "light") => themeDeclarations({ ...base, material: "glass", tone }).join("\n")
+    const glass = (colorMode: "dark" | "light") => themeDeclarations({ ...base, material: "glass", colorMode }).join("\n")
     expect(glass("dark")).toContain("oklch(0 0 0)")
     expect(glass("light")).toContain("oklch(1 0 0)")
     expect(glass("light")).toContain("--card: var(--background);")
@@ -132,6 +170,17 @@ describe("themeToCss", () => {
     expect(style.colorScheme).toBe("dark")
     expect(style["--radius"]).toBe("1.5rem")
   })
+
+  it("emits the Figma radius steps xs to xl for each radius", () => {
+    const steps = (id: string) => {
+      const s = themeStyle(getPreset(id)!)
+      return ["--radius-xs", "--radius-sm", "--radius-md", "--radius-lg", "--radius-xl"].map((k) => s[k])
+    }
+    expect(steps("berghain")).toEqual(["0.125rem", "0.25rem", "0.5rem", "0.75rem", "1rem"])
+    expect(steps("illuzion")).toEqual(["0.25rem", "0.5rem", "1rem", "1.5rem", "2rem"])
+    expect(steps("laroc")).toEqual(["0.5rem", "1rem", "1.5rem", "2rem", "2.5rem"])
+    expect(steps("fabrik")).toEqual(["0", "0", "0", "0", "0"])
+  })
 })
 
 describe("themeToFile", () => {
@@ -160,7 +209,7 @@ describe("themeToFile", () => {
   })
 
   it("says which values were left empty", () => {
-    expect(themeToFile(theme, { unset: ["edges", "spacing"] })).toContain("edges, spacing were left empty")
+    expect(themeToFile(theme, { unset: ["radius", "spacing"] })).toContain("radius, spacing were left empty")
   })
 
   it("says the type scale and accepts the small spacing", () => {

@@ -3,7 +3,7 @@
   "label": "Illuzion",
   "order": 2,
   "selector": ".illuzion",
-  "scheme": "light",
+  "colorMode": "light",
   "seeds": {
     "background": "#f7cae7",
     "foreground": "#1b1717",
@@ -15,7 +15,7 @@
     "emphasis": "Lora",
     "body": "DM Sans"
   },
-  "edges": "strong",
+  "radius": "strong",
   "overrides": {
     "primary-foreground": "#ff4901",
     "secondary-foreground": "#ee98d0",
@@ -78,12 +78,13 @@
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
     "radius": "1rem",
     "radius-container": "1.5rem",
-    "dimensions-max": "169px",
-    "radius-inner": "0.5rem",
+    "dimensions-max": "9999px",
+    "radius-button": "0.5rem",
     "radius-outer-max": "1rem",
-    "edges-sm": "0.5rem",
-    "edges-xs": "0.25rem",
-    "edges-md": "1rem",
+    "radius-sm": "0.5rem",
+    "radius-xs": "0.25rem",
+    "radius-md": "1rem",
+    "radius-xl": "2rem",
     "sidebar": "var(--background)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",
@@ -106,7 +107,7 @@
     "spacing": "md",
     "motion": "smooth",
     "material": "solid",
-    "elevation": "none",
+    "shadow": "none",
     "fonts": {
       "display": {
         "family": "Intan",

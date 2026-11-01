@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Component theming guidelines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo&family=Bricolage+Grotesque&family=DM+Sans&family=DM+Serif+Display&family=EB+Garamond&family=Folio+Std&family=GT+Pressura+Mono+Trial&family=Gloock&family=ITC+Garamond+Std&family=Imbue&family=Inter&family=Karla&family=Lora&family=Migra&family=Newsreader&family=PP+Editorial+New&display=swap">
+<style>
+.th-berghain {
+  color-scheme: dark;
+  --font-body-weight: 400;
+  --font-body-line-height: 1.46;
+  --font-body-letter-spacing: 0.0em;
+  --background: oklch(0.000 0.000 0.00);
+  --foreground: oklch(0.988 0.001 286.38);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(1.000 0.000 0.00);
+  --primary-foreground: oklch(0.000 0.000 0.00);
+  --secondary: oklch(0.333 0.000 0.00);
+  --secondary-foreground: oklch(1.000 0.000 0.00);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.988 0.001 286.38 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.702 0.189 22.23);
+  --affirmative: oklch(0.847 0.117 143.45);
+  --border: oklch(0.988 0.001 286.38 / 15%);
+  --input: oklch(0.988 0.001 286.38 / 20%);
+  --ring: oklch(0.988 0.001 286.38 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: transparent;
+  --control-edge: transparent;
+  --control-hover: var(--alpha-light-sm);
+  --affirmative-foreground: oklch(0.145 0.000 0.00);
+  --chart-1: oklch(0.488 0.243 264.40);
+  --chart-2: oklch(0.702 0.158 160.44);
+  --chart-3: oklch(0.772 0.173 65.37);
+  --chart-4: oklch(0.622 0.259 305.31);
+  --chart-5: oklch(0.643 0.245 16.50);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --dimensions-max: 169px;
+  --radius-button: 0.25rem;
+  --radius-outer-max: 0.5rem;
+  --radius-sm: 0.25rem;
+  --radius-xs: 0.125rem;
+  --radius-md: 0.5rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-sm: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow-md: 20px 20px 40px rgb(34 34 34 / 16%);
+  --shadow-lg: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-2xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --font-body: "Karla", sans-serif;
+  --font-heading: "PP Editorial New", serif;
+}
+.th-fabrik {
+  color-scheme: light;
+  --font-body-weight: 300;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.0em;
+  --background: oklch(0.395 0.117 278.39);
+  --foreground: oklch(0.988 0.001 286.38);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.339 0.094 278.52);
+  --primary-foreground: oklch(0.745 0.155 21.03);
+  --secondary: oklch(0.478 0.147 278.36);
+  --secondary-foreground: oklch(0.739 0.134 264.58);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.988 0.001 286.38 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.702 0.189 22.23);
+  --affirmative: oklch(0.548 0.150 145.00);
+  --border: oklch(0.988 0.001 286.38 / 15%);
+  --input: oklch(0.988 0.001 286.38 / 20%);
+  --ring: oklch(0.988 0.001 286.38 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: linear-gradient(var(--alpha-light-md), var(--alpha-light-md)), var(--card);
+  --control-edge: var(--alpha-dark-xs);
+  --control-hover: var(--alpha-dark-sm);
+  --affirmative-foreground: oklch(1 0 0);
+  --chart-1: oklch(0.488 0.243 264.40);
+  --chart-2: oklch(0.702 0.158 160.44);
+  --chart-3: oklch(0.772 0.173 65.37);
+  --chart-4: oklch(0.622 0.259 305.31);
+  --chart-5: oklch(0.643 0.245 16.50);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 0;
+  --radius-lg: 0;
+  --dimensions-max: 169px;
+  --radius-button: 0;
+  --radius-outer-max: 0;
+  --radius-sm: 0;
+  --radius-xs: 0;
+  --radius-md: 0;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: 0px 2px 4px rgb(68 68 68 / 6%);
+  --shadow-xs: 0px 2px 4px rgb(68 68 68 / 6%);
+  --shadow-sm: 0px 4px 8px rgb(68 68 68 / 6%);
+  --shadow: 0px 4px 8px rgb(68 68 68 / 6%);
+  --shadow-md: 0px 8px 16px rgb(68 68 68 / 6%);
+  --shadow-lg: 0px 16px 24px rgb(68 68 68 / 8%);
+  --shadow-xl: 0px 16px 24px rgb(68 68 68 / 8%);
+  --shadow-2xl: 0px 16px 24px rgb(68 68 68 / 8%);
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Folio Std", serif;
+}
+.th-illuzion {
+  color-scheme: light;
+  --font-body-weight: 500;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.01em;
+  --background: oklch(0.886 0.063 339.66);
+  --foreground: oklch(0.209 0.006 17.68);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.828 0.097 340.41);
+  --primary-foreground: oklch(0.664 0.226 36.11);
+  --secondary: oklch(0.432 0.136 345.17);
+  --secondary-foreground: oklch(0.783 0.124 340.98);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.209 0.006 17.68 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.702 0.189 22.23);
+  --affirmative: oklch(0.548 0.150 145.00);
+  --border: oklch(0.209 0.006 17.68 / 15%);
+  --input: oklch(0.209 0.006 17.68 / 20%);
+  --ring: oklch(0.209 0.006 17.68 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: linear-gradient(var(--alpha-light-md), var(--alpha-light-md)), var(--card);
+  --control-edge: var(--alpha-dark-xs);
+  --control-hover: var(--alpha-dark-sm);
+  --affirmative-foreground: oklch(1.000 0.000 0.00);
+  --chart-1: oklch(0.488 0.243 264.40);
+  --chart-2: oklch(0.702 0.158 160.44);
+  --chart-3: oklch(0.772 0.173 65.37);
+  --chart-4: oklch(0.622 0.259 305.31);
+  --chart-5: oklch(0.643 0.245 16.50);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 1rem;
+  --radius-lg: 1.5rem;
+  --dimensions-max: 169px;
+  --radius-button: 0.5rem;
+  --radius-outer-max: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-xs: 0.25rem;
+  --radius-md: 1rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
+  --font-body: "DM Sans", sans-serif;
+  --font-heading: "Bricolage Grotesque", serif;
+}
+.th-laroc {
+  color-scheme: dark;
+  --font-body-weight: 400;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.0em;
+  --background: oklch(0.562 0.189 264.28);
+  --foreground: oklch(0.988 0.001 286.38);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.350 0.126 264.12);
+  --primary-foreground: oklch(0.988 0.001 286.38);
+  --secondary: oklch(0.458 0.188 263.51);
+  --secondary-foreground: oklch(0.766 0.068 267.77);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.988 0.001 286.38 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.583 0.239 28.48);
+  --affirmative: oklch(0.847 0.117 143.45);
+  --border: oklch(0.988 0.001 286.38 / 15%);
+  --input: oklch(0.988 0.001 286.38 / 20%);
+  --ring: oklch(0.988 0.001 286.38 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: linear-gradient(var(--alpha-light-md), var(--alpha-light-md)), var(--card);
+  --control-edge: var(--alpha-light-xs);
+  --control-hover: var(--alpha-light-sm);
+  --affirmative-foreground: oklch(0.145 0.000 0.00);
+  --chart-1: oklch(0.647 0.217 36.85);
+  --chart-2: oklch(0.605 0.107 184.17);
+  --chart-3: oklch(0.397 0.070 227.19);
+  --chart-4: oklch(0.829 0.171 81.04);
+  --chart-5: oklch(0.772 0.173 65.37);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 1.5rem;
+  --radius-lg: 2rem;
+  --dimensions-max: 169px;
+  --radius-button: var(--dimensions-max);
+  --radius-outer-max: var(--dimensions-max);
+  --radius-sm: 1rem;
+  --radius-xs: 0.5rem;
+  --radius-md: 1.5rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
+  --font-body: "Archivo", sans-serif;
+  --font-heading: "GT Pressura Mono Trial", serif;
+}
+.th-bootshaus {
+  color-scheme: dark;
+  --font-body-weight: 500;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.0em;
+  --background: oklch(0.390 0.050 215.11);
+  --foreground: oklch(1.000 0.000 0.00);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.316 0.032 215.45);
+  --primary-foreground: oklch(0.861 0.162 86.83);
+  --secondary: oklch(0.861 0.162 86.83);
+  --secondary-foreground: oklch(0.316 0.032 215.45);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(1.000 0.000 0.00 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.702 0.189 22.23);
+  --affirmative: oklch(0.847 0.117 143.45);
+  --border: oklch(1.000 0.000 0.00 / 15%);
+  --input: oklch(1.000 0.000 0.00 / 20%);
+  --ring: oklch(1.000 0.000 0.00 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: transparent;
+  --control-edge: transparent;
+  --control-hover: var(--alpha-light-sm);
+  --affirmative-foreground: oklch(0.145 0.000 0.00);
+  --chart-1: oklch(0.488 0.243 264.40);
+  --chart-2: oklch(0.702 0.158 160.44);
+  --chart-3: oklch(0.772 0.173 65.37);
+  --chart-4: oklch(0.622 0.259 305.31);
+  --chart-5: oklch(0.643 0.245 16.50);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 1rem;
+  --radius-lg: 1.5rem;
+  --dimensions-max: 169px;
+  --radius-button: 0.5rem;
+  --radius-outer-max: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-xs: 0.25rem;
+  --radius-md: 1rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-sm: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow-md: 20px 20px 40px rgb(34 34 34 / 16%);
+  --shadow-lg: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-2xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --font-body: "Inter", sans-serif;
+  --font-heading: "ITC Garamond Std", serif;
+}
+.th-savaya {
+  color-scheme: dark;
+  --font-body-weight: 500;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.0em;
+  --background: oklch(0.566 0.081 308.64);
+  --foreground: oklch(1.000 0.000 0.00);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.534 0.148 290.85);
+  --primary-foreground: oklch(1.000 0.000 0.00);
+  --secondary: oklch(0.585 0.077 28.07);
+  --secondary-foreground: oklch(0.454 0.057 27.15);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(1.000 0.000 0.00 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.702 0.189 22.23);
+  --affirmative: oklch(0.847 0.117 143.45);
+  --border: oklch(1.000 0.000 0.00 / 15%);
+  --input: oklch(1.000 0.000 0.00 / 20%);
+  --ring: oklch(1.000 0.000 0.00 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: transparent;
+  --control-edge: transparent;
+  --control-hover: var(--alpha-light-sm);
+  --affirmative-foreground: oklch(0.145 0.000 0.00);
+  --chart-1: oklch(0.488 0.243 264.40);
+  --chart-2: oklch(0.702 0.158 160.44);
+  --chart-3: oklch(0.772 0.173 65.37);
+  --chart-4: oklch(0.622 0.259 305.31);
+  --chart-5: oklch(0.643 0.245 16.50);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --dimensions-max: 169px;
+  --radius-button: 0.25rem;
+  --radius-outer-max: 0.5rem;
+  --radius-sm: 0.25rem;
+  --radius-xs: 0.125rem;
+  --radius-md: 0.5rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-sm: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow-md: 20px 20px 40px rgb(34 34 34 / 16%);
+  --shadow-lg: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-2xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --font-body: "Archivo", sans-serif;
+  --font-heading: "Gloock", serif;
+}
+.th-pacha {
+  color-scheme: light;
+  --font-body-weight: 500;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.01em;
+  --background: oklch(0.952 0.024 17.58);
+  --foreground: oklch(0.209 0.006 17.68);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(1.000 0.000 0.00);
+  --primary-foreground: oklch(0.587 0.223 31.95);
+  --secondary: oklch(0.399 0.143 32.96);
+  --secondary-foreground: oklch(0.672 0.051 31.38);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.209 0.006 17.68 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.583 0.239 28.48);
+  --affirmative: oklch(0.548 0.150 145.00);
+  --border: oklch(0.209 0.006 17.68 / 15%);
+  --input: oklch(0.209 0.006 17.68 / 20%);
+  --ring: oklch(0.209 0.006 17.68 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: linear-gradient(var(--alpha-light-md), var(--alpha-light-md)), var(--card);
+  --control-edge: var(--alpha-dark-xs);
+  --control-hover: var(--alpha-dark-sm);
+  --affirmative-foreground: oklch(1.000 0.000 0.00);
+  --chart-1: oklch(0.647 0.217 36.85);
+  --chart-2: oklch(0.605 0.107 184.17);
+  --chart-3: oklch(0.397 0.070 227.19);
+  --chart-4: oklch(0.829 0.171 81.04);
+  --chart-5: oklch(0.772 0.173 65.37);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 1.5rem;
+  --radius-lg: 2rem;
+  --dimensions-max: 169px;
+  --radius-button: var(--dimensions-max);
+  --radius-outer-max: var(--dimensions-max);
+  --radius-sm: 1rem;
+  --radius-xs: 0.5rem;
+  --radius-md: 1.5rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
+  --font-body: "DM Sans", sans-serif;
+  --font-heading: "DM Serif Display", serif;
+}
+.th-amnesia {
+  color-scheme: dark;
+  --font-body-weight: 400;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.0em;
+  --background: oklch(0.394 0.050 185.74);
+  --foreground: oklch(0.979 0.000 0.00);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.264 0.031 185.06);
+  --primary-foreground: oklch(0.979 0.000 0.00);
+  --secondary: oklch(0.520 0.081 183.80);
+  --secondary-foreground: oklch(0.215 0.023 185.93);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.979 0.000 0.00 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.702 0.189 22.23);
+  --affirmative: oklch(0.847 0.117 143.45);
+  --border: oklch(0.979 0.000 0.00 / 15%);
+  --input: oklch(0.979 0.000 0.00 / 20%);
+  --ring: oklch(0.979 0.000 0.00 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: linear-gradient(180deg, var(--alpha-dark-md), var(--alpha-dark-lg));
+  --control-edge: var(--alpha-light-xs);
+  --control-hover: var(--alpha-light-sm);
+  --affirmative-foreground: oklch(0.145 0.000 0.00);
+  --chart-1: oklch(0.488 0.243 264.40);
+  --chart-2: oklch(0.702 0.158 160.44);
+  --chart-3: oklch(0.772 0.173 65.37);
+  --chart-4: oklch(0.622 0.259 305.31);
+  --chart-5: oklch(0.643 0.245 16.50);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 1.5rem;
+  --radius-lg: 2rem;
+  --dimensions-max: 169px;
+  --radius-button: var(--dimensions-max);
+  --radius-outer-max: var(--dimensions-max);
+  --radius-sm: 1rem;
+  --radius-xs: 0.5rem;
+  --radius-md: 1.5rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: 0px 2px 4px rgb(68 68 68 / 6%);
+  --shadow-xs: 0px 2px 4px rgb(68 68 68 / 6%);
+  --shadow-sm: 0px 4px 8px rgb(68 68 68 / 6%);
+  --shadow: 0px 4px 8px rgb(68 68 68 / 6%);
+  --shadow-md: 0px 8px 16px rgb(68 68 68 / 6%);
+  --shadow-lg: 0px 16px 24px rgb(68 68 68 / 8%);
+  --shadow-xl: 0px 16px 24px rgb(68 68 68 / 8%);
+  --shadow-2xl: 0px 16px 24px rgb(68 68 68 / 8%);
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Imbue", serif;
+}
+.th-ushuaia {
+  color-scheme: light;
+  --font-body-weight: 400;
+  --font-body-line-height: 1.42;
+  --font-body-letter-spacing: 0.0em;
+  --background: oklch(0.939 0.011 95.17);
+  --foreground: oklch(0.165 0.002 17.33);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.252 0.000 0.00);
+  --primary-foreground: oklch(0.165 0.002 17.33);
+  --secondary: oklch(1.000 0.000 0.00);
+  --secondary-foreground: oklch(0.252 0.000 0.00);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.165 0.002 17.33 / 65%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: oklch(0.583 0.239 28.48);
+  --affirmative: oklch(0.548 0.150 145.00);
+  --border: oklch(0.165 0.002 17.33 / 15%);
+  --input: oklch(0.165 0.002 17.33 / 20%);
+  --ring: oklch(0.165 0.002 17.33 / 70%);
+  --alpha-dark-none: oklch(0.235 0.000 89.88 / 0%);
+  --alpha-dark-xs: oklch(0.235 0.000 89.88 / 4%);
+  --alpha-dark-sm: oklch(0.235 0.000 89.88 / 8%);
+  --alpha-dark-md: oklch(0.235 0.000 89.88 / 16%);
+  --alpha-dark-lg: oklch(0.235 0.000 89.88 / 32%);
+  --alpha-dark-xl: oklch(0.235 0.000 89.88 / 80%);
+  --alpha-light-xs: oklch(0.969 0.002 17.20 / 6%);
+  --alpha-light-sm: oklch(0.969 0.002 17.20 / 12%);
+  --alpha-light-md: oklch(0.969 0.002 17.20 / 24%);
+  --alpha-light-lg: oklch(0.969 0.002 17.20 / 48%);
+  --alpha-light-xl: oklch(0.969 0.002 17.20 / 96%);
+  --alpha-blur-320-sm: 40px;
+  --alpha-blur-1200-sm: 120px;
+  --control-fill: linear-gradient(180deg, var(--alpha-light-md), var(--alpha-light-lg));
+  --control-edge: var(--alpha-dark-xs);
+  --control-hover: var(--alpha-dark-sm);
+  --affirmative-foreground: oklch(1.000 0.000 0.00);
+  --chart-1: oklch(0.647 0.217 36.85);
+  --chart-2: oklch(0.605 0.107 184.17);
+  --chart-3: oklch(0.397 0.070 227.19);
+  --chart-4: oklch(0.829 0.171 81.04);
+  --chart-5: oklch(0.772 0.173 65.37);
+  --gradient-downlight: linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%);
+  --gradient-rise: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  --gradient-set: linear-gradient(180deg, var(--background) 0%, var(--card) 100%);
+  --gradient-headline: linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%);
+  --radius: 1rem;
+  --radius-lg: 1.5rem;
+  --dimensions-max: 169px;
+  --radius-button: 0.5rem;
+  --radius-outer-max: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-xs: 0.25rem;
+  --radius-md: 1rem;
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --shadow-2xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-xs: 5px 5px 10px rgb(34 34 34 / 8%);
+  --shadow-sm: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow: 10px 10px 20px rgb(34 34 34 / 12%);
+  --shadow-md: 20px 20px 40px rgb(34 34 34 / 16%);
+  --shadow-lg: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --shadow-2xl: 30px 30px 60px rgb(34 34 34 / 24%);
+  --font-body: "Archivo", sans-serif;
+  --font-heading: "Migra", serif;
+}
+
+:root {
+  color-scheme: light dark;
+  --page: #f4f3f1; --ink: #1c1b1a; --muted: #6a6762; --line: #dcdad5; --card-bg: #ffffff; --accent: #2b2a8f;
+  --duration-none: 0s;
+  --duration-instant: 0s;
+  --duration-fast: 0.2s;
+  --duration-faster: 0.4s;
+  --duration-long: 0.8s;
+  --duration-longer: 1.2s;
+  --duration-longest: 2.4s;
+  --control-h: 44px;
+--control-h-inner: 36px;
+--icon-box: 20px;
+--pad-min: 4px;
+--pad-card: 16px;
+--pad-popup: 8px;
+--border-w: 1px;
+  --glass-soft-blur: 2px;
+--glass-soft-dark: rgba(0,0,0,0.4);
+--glass-soft-light: rgba(255,255,255,0.16);
+--glass-medium-blur: 10px;
+--glass-medium-dark: rgba(0,0,0,0.48);
+--glass-medium-light: rgba(255,255,255,0.24);
+--glass-heavy-blur: 40px;
+--glass-heavy-dark: rgba(0,0,0,0.48);
+--glass-heavy-light: rgba(255,255,255,0.32);
+  --popup-blur: var(--alpha-blur-320-sm, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root { --page: #161514; --ink: #ecebe8; --muted: #9a968f; --line: #34322f; --card-bg: #201f1d; --accent: #aab0ff; }
+}
+@media (min-width: 1200px) { .th, [class*="th-"] { --popup-blur: var(--alpha-blur-1200-sm, 120px); } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+h1.title { font-size: 26px; margin: 0 0 8px; }
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; max-width: 1180px; margin: 0 auto; padding: 24px; }
+nav.toc { position: sticky; top: 24px; align-self: start; max-height: calc(100vh - 48px); overflow: auto; font-size: 13px; }
+nav.toc a { display: block; color: var(--muted); text-decoration: none; padding: 3px 0; }
+nav.toc a:hover { color: var(--ink); }
+nav.toc .g { margin-top: 12px; font-weight: 650; color: var(--ink); text-transform: uppercase; font-size: 11px; letter-spacing: .06em; }
+main { min-width: 0; }
+main > p.lede { color: var(--muted); max-width: 70ch; }
+h2.group { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 56px 0 4px; padding-top: 16px; border-top: 2px solid var(--ink); }
+h3.sub { font-size: 22px; margin: 36px 0 8px; }
+.rule { background: var(--card-bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+.rule .head { display: flex; gap: 12px; align-items: baseline; } .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 18px; align-items: start; margin: 14px 0; } .extext { margin: 0; font-size: 14px; } .extext span { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; } @media (max-width: 700px) { .pair { grid-template-columns: 1fr; } } .rule.exception { border-left: 4px solid #b45309; } h4.app { font-size: 15px; margin: 22px 0 4px; color: var(--muted); font-weight: 650; } .topic-eg { background: transparent; border-style: dashed; }
+.rid { font: 600 12px ui-monospace, monospace; background: var(--ink); color: var(--page); border-radius: 6px; padding: 1px 7px; flex: none; }
+.intro { max-width: 70ch; color: var(--muted); } .rule p { margin: 0; } .rule ul { margin: 8px 0 0; padding-left: 20px; } .rule li { margin: 5px 0; }
+.rule code, .cap code, .note code { font: 12.5px ui-monospace, monospace; background: color-mix(in srgb, var(--ink) 9%, transparent); border-radius: 4px; padding: 1px 5px; }
+.open { border-style: dashed; }
+.tbd { display: inline-block; font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: #b45309; margin-right: 6px; }
+.eg { margin-top: 14px; }
+.cap { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+.row { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+.cell { margin: 0; flex: 1 1 200px; min-width: 0; }
+.cell figcaption { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.flags li { margin: 8px 0; }
+footer { color: var(--muted); font-size: 13px; padding: 40px 0 80px; }
+
+/* ---- the examples: only custom properties from the theme, the Timing set and the size tokens ---- */
+.demo { background: var(--background); color: var(--foreground); font-family: var(--font-body); font-weight: var(--font-body-weight); line-height: var(--font-body-line-height); letter-spacing: var(--font-body-letter-spacing); padding: 20px; border-radius: var(--radius); position: relative; isolation: isolate; overflow: hidden; }
+.demo.tight { padding: 16px; }
+.demo[data-texture="glass"] :is(.navbar, .shell, .card-ex, .elev) { background: var(--glass-soft-dark); backdrop-filter: blur(var(--glass-soft-blur)); outline: none; }
+.demo[data-texture="glass"][data-tone="light"] :is(.navbar, .shell, .card-ex, .elev) { background: var(--glass-soft-light); }
+.demo[data-texture="glass"] .popup { background: var(--glass-medium-dark); backdrop-filter: blur(var(--popup-blur)); outline: none; }
+.demo[data-texture="glass"][data-tone="light"] .popup { background: var(--glass-medium-light); }
+.behind { padding-bottom: 8px; } .behind p { margin: 0 0 .4em; max-width: 46ch; } .behind + .popup { margin-top: -54px; margin-left: 40px; }
+.t-md { font-size: 1rem; margin: 0 0 .4em; } .t-sm { font-size: .875rem; margin: 0; }
+.swatches { display: flex; gap: 8px; flex-wrap: wrap; } .swatches span { padding: 14px 12px; border-radius: var(--radius-xs); font-size: 12px; border: 1px solid var(--border); }
+.chip { display: inline-flex; align-items: center; height: var(--control-h-inner); padding: 0 calc(var(--pad-min) * 2); border-radius: var(--radius-button); background: var(--secondary); color: var(--secondary-foreground); position: relative; isolation: isolate; font-size: 1rem; }
+.chip.hov::before, .hov.shell::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--control-hover); z-index: -1; }
+.chip.ctl { background: var(--secondary); }
+.card-ex { position: relative; isolation: isolate; border-radius: var(--radius-md); padding: var(--pad-card); background: var(--control-fill); box-shadow: var(--shadow-xs); outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); min-width: 140px; }
+.card-ex.mini { padding: 8px 14px; min-width: 0; min-height: 72px; display: flex; align-items: center; } .card-ex.tall { min-height: 110px; display: flex; align-items: center; }
+.card-ex.pic { display: flex; gap: 12px; align-items: center; max-width: 340px; min-width: 0; border-radius: min(var(--radius-outer-max), calc(var(--radius-xs) + var(--pad-card))); } .photo { width: 64px; height: 64px; flex: none; border-radius: var(--radius-xs); background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+.card-ex.guide, .navbar.guide { background-image: linear-gradient(color-mix(in srgb, var(--primary) 22%, transparent), color-mix(in srgb, var(--primary) 22%, transparent)); background-clip: padding-box; }
+.padtag { position: absolute; top: 2px; right: 8px; font-size: 11px; opacity: .8; }
+.navbar { display: inline-flex; gap: calc(var(--pad-min) / 2); padding: var(--pad-min); height: var(--control-h); align-items: center; border-radius: min(var(--radius-outer-max), calc(var(--radius-button) + var(--pad-min))); background: var(--control-fill); outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); box-shadow: var(--shadow-sm); position: relative; isolation: isolate; }
+.tab { height: var(--control-h-inner); padding: 0 calc(var(--pad-min) * 3); display: inline-flex; align-items: center; gap: 4px; border-radius: var(--radius-button); position: relative; isolation: isolate; font-size: 1rem; }
+.tab.on { background: var(--foreground); color: var(--background); }
+.navbar.hovered .tab:nth-child(2)::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--control-hover); z-index: -1; }
+.navbar .input { padding: 0 calc(var(--pad-min) * 2); outline: 1px dashed var(--primary); height: var(--control-h-inner); display: inline-flex; align-items: center; opacity: .85; min-width: 180px; } .navbar .plus { width: var(--control-h-inner); text-align: center; }
+.heights .h44 { position: relative; } .tag { display: block; font-size: 11px; opacity: .7; margin-bottom: 4px; } .tab.h36 em { font-size: 10px; margin-left: 6px; opacity: .7; font-style: normal; }
+.swatch { height: 76px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 13px; outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); }
+.field { height: var(--control-h); display: inline-flex; align-items: center; padding: 0 calc(var(--pad-min) * 3); border-radius: var(--radius-button); background: var(--control-fill); outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); min-width: 190px; opacity: .9; } .specs { display: grid; gap: 4px; margin-top: 10px; font-size: 13px; } .spec { display: flex; gap: 10px; align-items: baseline; } .spec code { font: 12px ui-monospace, monospace; opacity: .8; min-width: 190px; } .stack { display: grid; gap: 10px; } .matrix { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 8px; align-items: stretch; } .mh { font-size: 12.5px; color: var(--muted); font-weight: 600; } .ml { font-size: 13px; font-weight: 600; align-self: center; } .demo.mcell { padding: 22px 16px; display: flex; justify-content: center; } .mwrap { display: grid; gap: 4px; } .mname { font-size: 12px; color: var(--muted); } .mempty { border: 1px dashed var(--line); border-radius: 10px; display: grid; place-items: center; font-size: 12.5px; color: var(--muted); padding: 16px; text-align: center; }
+.ladder { display: flex; gap: 6px; padding: 10px; border-radius: 8px; } .checker { background: repeating-conic-gradient(#bbb 0 25%, #eee 0 50%) 0 0 / 16px 16px; }
+.step { text-align: center; font-size: 11px; color: #222; } .step i { display: block; width: 40px; height: 40px; border-radius: 6px; margin-bottom: 3px; }
+.shell { position: relative; isolation: isolate; padding: 20px; border-radius: var(--radius-md); background: var(--control-fill); outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); text-align: center; }
+.shell.glassy { background: var(--glass-soft-dark); backdrop-filter: blur(var(--glass-soft-blur)); outline: none; }
+.shell.centred { height: 110px; outline-width: 3px; outline-offset: -1.5px; outline-color: var(--primary); padding: 0; } .padband { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 var(--pad-card) color-mix(in srgb, var(--primary) 18%, transparent); display: grid; place-items: center; font-size: 12px; } .padband span { background: var(--background); padding: 0 6px; }
+.iconrow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; } .iconbox { width: var(--icon-box); height: var(--icon-box); outline: 1px dashed var(--primary); display: inline-flex; } .ico { width: 100%; height: 100%; } .note { font-size: 13px; opacity: .8; }
+.timing, .trow { display: grid; grid-template-columns: 150px 1fr; gap: 10px; align-items: center; margin: 6px 0; } .track { height: 16px; border-radius: var(--radius-button); background: color-mix(in srgb, var(--foreground) 10%, transparent); position: relative; } .dot { position: absolute; left: 0; top: 2px; width: 12px; height: 12px; border-radius: var(--radius-button); background: var(--primary); transition-property: left; transition-timing-function: linear; } .dot.noanim { transition: none !important; } .track.go .dot, .go .dot { left: calc(100% - 12px); } .trow code { font-size: 12px; }
+.play { margin-top: 10px; font: inherit; padding: 4px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card-bg); color: var(--ink); cursor: pointer; }
+.stage { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-start; padding: 24px; border-radius: var(--radius); }
+.elev { padding: 18px 22px; border-radius: var(--radius-md); background: var(--control-fill); outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); }
+.e-xs { box-shadow: var(--shadow-xs); } .e-sm { box-shadow: var(--shadow-sm); } .e-md { box-shadow: var(--shadow-md); } .e-lg { box-shadow: var(--shadow-lg); } .elev.wide { min-width: 230px; } .elev.up { margin-left: 24px; }
+.ring { position: relative; display: inline-flex; align-items: center; justify-content: center; height: var(--control-h); padding: 0 24px; border-radius: var(--radius-button); background: color-mix(in srgb, var(--foreground) 8%, transparent); isolation: isolate; }
+.ring::before { content: ""; position: absolute; inset: 0; padding: 2px; border-radius: inherit; background: conic-gradient(from 0deg, #fff, #8cf, #f9c, #fc8, #fff); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; z-index: 1; }
+.ring.on-light { outline: var(--border-w) solid var(--alpha-dark-xs); outline-offset: 0; } .ring.solid { background: #fff; color: #222; } @property --a { syntax: '<angle>'; initial-value: 0deg; inherits: false; } .ring::before { background: conic-gradient(from var(--a), #fff, #8cf, #f9c, #fc8, #fff); } .ring.spin::before { animation: spin 3s linear infinite; } @keyframes spin { to { --a: 360deg; } }
+.opener { position: relative; padding: 12px 18px; border-radius: var(--radius-md); background: var(--control-fill); outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); min-width: 200px; border: 0; color: inherit; font: inherit; text-align: left; box-shadow: var(--shadow-xs); }
+.popup { position: relative; isolation: isolate; padding: var(--pad-popup); border-radius: var(--radius-md); min-width: 180px; background: linear-gradient(var(--alpha-dark-sm), var(--alpha-dark-sm)), var(--control-fill); backdrop-filter: blur(var(--popup-blur)); box-shadow: var(--shadow-sm); outline: var(--border-w) solid var(--control-edge); outline-offset: calc(var(--border-w) / -2); }
+.popup.noblur { backdrop-filter: none; } .popup.small { min-width: 140px; } .popup.halfw { min-width: 100px; width: 50%; }
+.prow { display: flex; justify-content: space-between; align-items: center; height: var(--control-h-inner); padding: 0 var(--pad-popup); border-radius: var(--radius-button); position: relative; gap: 12px; } .prow.sel::before, .prow:hover::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--control-hover); z-index: -1; } .prow .ico { width: var(--icon-box); }
+.popup.guide { background-image: linear-gradient(color-mix(in srgb, var(--primary) 22%, transparent), color-mix(in srgb, var(--primary) 22%, transparent)); }
+.rule-line { height: var(--border-w); background: var(--control-edge); margin: 4px 0; } .prow.foot { opacity: .75; }
+.linkbtn { background: var(--primary); color: var(--primary-foreground); border-radius: var(--radius-button); padding: 2px calc(var(--pad-min) * 2); font-size: 14px; }
+.popup.anim { position: absolute; margin-top: 8px; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity var(--duration-fast), transform var(--duration-fast); } .popup.anim.open { opacity: 1; transform: none; pointer-events: auto; transition-duration: var(--duration-faster); } .stage:has(.popup.anim) { min-height: 190px; display: block; }
+.nativewrap { position: relative; display: inline-block; isolation: isolate; border-radius: var(--radius-button); background: var(--secondary); color: var(--secondary-foreground); } .nativewrap .native { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; height: var(--control-h-inner); padding: 0 calc(var(--pad-min) * 7) 0 calc(var(--pad-min) * 2); border-radius: inherit; } .nativewrap .caret { position: absolute; right: calc(var(--pad-min) * 2); top: 50%; width: var(--icon-box); height: var(--icon-box); transform: translateY(-50%); pointer-events: none; }
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } nav.toc { display: none; } }
+
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc" aria-label="Contents"><a href="#thow-this-guidance-stays-true-when-a-token-changes">How this guidance stays true when a token changes</a><a class="g" href="#all-components">All Components</a><a href="#t1-tokens">1 Tokens</a><a href="#t2-texture-color-mode">2 Texture &amp; color-mode</a><a href="#t3-lines">3 Lines</a><a href="#t4-corners">4 Corners</a><a href="#t5-spacing">5 Spacing</a><a href="#t6-icons">6 Icons</a><a href="#t7-hover-states">7 Hover states</a><a href="#t8-motion-transitions">8 Motion / transitions</a><a href="#t9-shadow-elevation">9 Shadow / elevation</a><a class="g" href="#core-interactive-components">Core Interactive Components</a><a href="#t10-size">10 Size</a><a class="g" href="#components-with-popups">Components With Popups</a><a href="#t11-popups">11 Popups</a><a class="g" href="#component-specific-guidelines">Component Specific Guidelines</a><a href="#t12-metal">12 Metal</a><a class="g" href="#collaboration-guidelines">Collaboration Guidelines</a><a href="#t13-feedback">13 Feedback</a></nav>
+<main>
+<h1 class="title">Component theming guidelines</h1>
+<p class="lede">The guidelines, with an example under each point where one can be drawn. The examples are built from the theme files, the Timing set and the size tokens, so they change when the tokens do. Each example is a real theme drawn with its own tokens, named where it matters. Glass and the metal ring are approximations, not the real effects.</p>
+<h3 class="sub" id="thow-this-guidance-stays-true-when-a-token-changes">How this guidance stays true when a token changes</h3><p class="intro">This guidance never contains a value of its own. A rule names the token it uses (<code>alpha/dark/xs</code>, <code>radius/button</code>, <code>radius/border-width/md</code>, <code>Timing/fast</code>, <code>shadow</code>, <code>size-controls/interactive-component/min-height/component</code>). A token whose name carries its size (<code>alpha/blur/320/sm</code>) is referred to by that name, which is how you named it. Where no token exists yet, the rule says what the number is for and a ? point asks for the token (see 11.1.4?). Because of that, changing a token&#x27;s value in Figma changes the components and needs no edit here. If a rule ever does need a number, that is a missing token: it becomes a ? point, not text.</p><h2 class="group" id="all-components">ALL COMPONENTS</h2><h3 class="sub" id="t1-tokens">1 Tokens</h3><h4 class="app">1.1 Theme tokens</h4><div class="rule" id="r1-1-1"><div class="head"><span class="rid">1.1.1</span><div class="rtext">Use theme tokens and styles only. Nothing is written by hand: no hex colour, no pixel radius, no shadow value, no duration.<ul><li>Sizes and numbers: every size or number is a <code>dimensions</code> token, directly or through another token set (<code>edges</code>, <code>spacing</code>, <code>icons</code> and <code>size-controls</code> are all <code>dimensions</code> steps in Figma). A component never has a number of its own.</li></ul></div></div></div><div class="rule" id="r1-1-2"><div class="head"><span class="rid">1.1.2</span><div class="rtext">Every token applied to a component starts from the theme&#x27;s settings, where they apply.</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span><code>radius=sharp</code> means no border radius anywhere.</p><div><div class="row"><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="row"><span class="chip ">Button</span><div class="card-ex mini">Card</div></div></div><figcaption>fabrik: <code>radius=sharp</code></figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="row"><span class="chip ">Button</span><div class="card-ex mini">Card</div></div></div><figcaption>berghain: <code>radius=subtle</code></figcaption></figure><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="row"><span class="chip ">Button</span><div class="card-ex mini">Card</div></div></div><figcaption>illuzion: <code>radius=strong</code></figcaption></figure><figure class="cell"><div class="demo th-pacha " data-texture="solid" data-tone="light"><div class="row"><span class="chip ">Button</span><div class="card-ex mini">Card</div></div></div><figcaption>pacha: <code>radius=rounded</code></figcaption></figure></div></div></div><div class="pair"><p class="extext"><span>Example</span><code>shadow=none</code> means no shadow anywhere.</p><div><div class="row"><figure class="cell"><div class="demo th-illuzion stage" data-texture="solid" data-tone="light"><div class="elev e-sm">Card</div></div><figcaption>Illuzion: <code>shadow=none</code></figcaption></figure><figure class="cell"><div class="demo th-ushuaia stage" data-texture="gradient" data-tone="light"><div class="elev e-sm">Card</div></div><figcaption>Ushuaia: <code>shadow=strong</code></figcaption></figure></div></div></div><div class="pair"><p class="extext"><span>Example</span><code>motion=none</code> means no transitions.</p><div><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="trow"><code>Laroc · motion=none</code><div class="track"><i class="dot" style="transition-duration:var(--duration-instant)"></i></div></div><div class="trow"><code>Illuzion · motion=ease</code><div class="track"><i class="dot" style="transition-duration:var(--duration-fast)"></i></div></div></div><button class="play" onclick="playTiming(this)">Play</button></div></div></div></div><div class="rule exception" id="r1-1-3"><div class="head"><span class="rid">1.1.3*</span><div class="rtext">Exception: a component can use different tokens or styles only if that style is fundamental to the component&#x27;s purpose.</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span>the metal components have a unique animated border.</p><div><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="ring spin"><span>Metal</span></div></div><p class="cap">The ring&#x27;s animation is part of what the component is.</p></div></div></div></div><h4 class="app">1.2 Text</h4><div class="rule" id="r1-2-1"><div class="head"><span class="rid">1.2.1</span><div class="rtext">Text only uses the theme styles defined in the <code>theme</code> tokens and the text sizes defined in the <code>typescale</code> tokens. The default size for all core interactive elements and for paragraph text is <code>(body) md</code>.</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span>core interactive elements (a button, an input, a select and a nav) use <code>(body) md</code>.</p><div><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="row"><span class="chip ">Button</span><div class="field">Write a message…</div><div class="nativewrap"><select class="native"><option>this month</option></select><span class="caret"><svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></div><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div></div><p class="cap">Each of these reads <code>(body) md</code> from the theme.</p></div></div><div class="pair"><p class="extext"><span>Example</span>paragraph text uses <code>(body) md</code>.</p><div><div class="demo th-illuzion " data-texture="solid" data-tone="light"><p class="t-md">A paragraph of text, in the theme's body font and weight, at the same size as the controls above.</p></div></div></div></div></div><div class="rule" id="r1-2-2"><div class="head"><span class="rid">1.2.2</span><div class="rtext">The font, weight, line height and letter spacing come from the theme&#x27;s variables (<code>Font/Sans/font</code>, <code>weight</code>, <code>line-height</code>, <code>letter-spacing</code>). A component never sets its own size, weight or letter spacing.</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span><code>body/sans/md/regular</code> is the theme&#x27;s body font, weight, line height and letter spacing at the <code>(body) md</code> size.</p><div><div class="demo th-illuzion " data-texture="solid" data-tone="light"><p class="t-md">body/sans/md/regular: the sentence you are reading, in Illuzion.</p><div class="specs"><div class="spec"><code>Font/Sans/font</code><span>DM Sans</span></div><div class="spec"><code>Font/Sans/weight</code><span>500</span></div><div class="spec"><code>Font/Sans/line-height</code><span>1.42</span></div><div class="spec"><code>Font/Sans/letter-spacing</code><span>0.01em</span></div></div></div></div></div></div></div><div class="rule" id="r1-2-3"><div class="head"><span class="rid">1.2.3</span><div class="rtext">A theme&#x27;s letter spacing is a percentage of the font size (<code>Font/Sans/letter-spacing</code>), not a pixel value.</div></div></div><h3 class="sub" id="t2-texture-color-mode">2 Texture &amp; color-mode</h3><h4 class="app">2.1 Colour-mode</h4><div class="rule" id="r2-1-1"><div class="head"><span class="rid">2.1.1</span><div class="rtext"><code>color-mode</code> (light or dark) is one setting per theme, whether the theme is defined in Figma or generated in the app. It dictates which colour tokens a component uses, within a theme, and which glass style is used. There is no second light or dark setting.</div></div></div><div class="rule" id="r2-1-2"><div class="head"><span class="rid">2.1.2</span><div class="rtext">Fabrik is <code>color-mode=light</code>, as in Figma. Laroc is <code>color-mode=dark</code>. The code follows Figma.</div></div></div><h4 class="app">2.2 Texture</h4><div class="rule" id="r2-2-1"><div class="head"><span class="rid">2.2.1</span><div class="rtext">Solid <code>texture</code>: the <code>card</code> token with an alpha overlay. Dark colour-mode: <code>alpha/dark/sm</code>. Light colour-mode: <code>alpha/light/md</code>.</div></div></div><div class="rule" id="r2-2-2"><div class="head"><span class="rid">2.2.2</span><div class="rtext">Gradient <code>texture</code>: a top-to-bottom gradient from the <code>md</code> alpha step to the <code>lg</code> alpha step. Dark colour-mode: <code>alpha/dark/md</code> to <code>alpha/dark/lg</code>. Light colour-mode: <code>alpha/light/md</code> to <code>alpha/light/lg</code>.</div></div></div><div class="rule" id="r2-2-3"><div class="head"><span class="rid">2.2.3</span><div class="rtext">Glass <code>texture</code>: the Soft glass from the Glass sheet, in its dark or light tone to match the colour-mode. It is the component&#x27;s base background layer, with no fill colour and no alpha wash under it, and it overrides any rule that clashes with it (see 3.1.2*).</div></div></div><div class="rule topic-eg"><div class="eg"><div class="matrix"><div class="mh"></div><div class="mh">Light colour-mode</div><div class="mh">Dark colour-mode</div><div class="ml">Solid</div><div class="mwrap"><div class="demo th-fabrik mcell" data-texture="solid" data-tone="light"><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><span class="mname">Fabrik</span></div><div class="mempty">No theme has this combination yet</div><div class="ml">Gradient</div><div class="mwrap"><div class="demo th-ushuaia mcell" data-texture="gradient" data-tone="light"><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><span class="mname">Ushuaia</span></div><div class="mwrap"><div class="demo th-amnesia mcell" data-texture="gradient" data-tone="dark"><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><span class="mname">Amnesia</span></div><div class="ml">Glass</div><div class="mempty">No theme has this combination yet</div><div class="mwrap"><div class="demo th-berghain mcell" data-texture="glass" data-tone="dark"><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><span class="mname">Berghain</span></div></div><p class="cap">Each cell is a real theme with its own background, drawn with its own tokens. Glass is an approximation of the Glass sheet: a tint and a blur, without the refraction.</p></div></div><h3 class="sub" id="t3-lines">3 Lines</h3><h4 class="app">3.1 Borders</h4><div class="rule" id="r3-1-1"><div class="head"><span class="rid">3.1.1</span><div class="rtext">The outer shell has a border of <code>radius/border-width/md</code>. Light colour-mode: <code>alpha/dark/xs</code>. Dark colour-mode: <code>alpha/light/xs</code>.</div></div></div><div class="rule exception" id="r3-1-2"><div class="head"><span class="rid">3.1.2*</span><div class="rtext">Exceptions: a glass texture has no border, and a component whose border is part of its effect (the metal ring) keeps its own.</div></div></div><div class="rule" id="r3-1-3"><div class="head"><span class="rid">3.1.3</span><div class="rtext">The border is centred on the edge, so it never takes space from the padding. Padding and corners are worked out without it.</div></div></div><h4 class="app">3.2 Other lines</h4><div class="rule" id="r3-2-1"><div class="head"><span class="rid">3.2.1</span><div class="rtext">Every other line a component has uses the same colour rule as the border (3.1.1).</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span>a divider.</p><div><div class="demo th-amnesia " data-texture="gradient" data-tone="dark"><div class="popup small"><div class="prow">today</div><div class="rule-line"></div><div class="prow foot">Type to search</div></div></div><p class="cap">The divider is the border colour (Amnesia).</p></div></div><div class="pair"><p class="extext"><span>Example</span>the outline of its popup.</p><div><div class="demo th-amnesia " data-texture="gradient" data-tone="dark"><div class="popup small"><div class="prow">today</div><div class="prow sel">this month</div></div></div><p class="cap">The outline is the border colour (Amnesia).</p></div></div></div></div><div class="rule topic-eg"><div class="eg"><div class="row"><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="shell">Component</div></div><figcaption>Light colour-mode: <code>alpha/dark/xs</code> (Illuzion)</figcaption></figure><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="shell">Component</div></div><figcaption>Dark colour-mode: <code>alpha/light/xs</code> (Fabrik)</figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="shell">Component</div></div><figcaption>Glass: no border (Berghain)</figcaption></figure><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="shell centred"><div class="padband"><span>padding</span></div></div></div><figcaption>Centred on the edge, zoomed: half the line is outside the box, half inside, and the padding (shaded) is measured from the edge</figcaption></figure></div></div></div><h3 class="sub" id="t4-corners">4 Corners</h3><h4 class="app">4.1 Corners</h4><div class="rule" id="r4-1-1"><div class="head"><span class="rid">4.1.1</span><div class="rtext">Controls and the elements inside a component (buttons, inputs, selects, tabs, the nav bar, menu rows, chips) wear the theme&#x27;s <code>radius/button</code> step. The step resolves per theme <code>radius</code>: <code>sharp</code> is square, <code>rounded</code> is fully rounded.</div></div><div class="eg"><div class="row"><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><span class="chip ">Control</span></div><figcaption><code>radius=sharp</code>: <code>radius/button</code></figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><span class="chip ">Control</span></div><figcaption><code>radius=subtle</code>: <code>radius/button</code></figcaption></figure><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><span class="chip ">Control</span></div><figcaption><code>radius=strong</code>: <code>radius/button</code></figcaption></figure><figure class="cell"><div class="demo th-pacha " data-texture="solid" data-tone="light"><span class="chip ">Control</span></div><figcaption><code>radius=rounded</code>: <code>radius/button</code></figcaption></figure></div></div></div><div class="rule exception" id="r4-1-2"><div class="head"><span class="rid">4.1.2*</span><div class="rtext">Exception to 4.1.1: cards and other surfaces are not fully rounded on a rounded theme. They follow the numbered <code>edges</code> steps (<code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>) for the theme&#x27;s <code>radius</code>.</div></div><div class="eg"><div class="row"><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="card-ex tall">Card</div></div><figcaption><code>radius=sharp</code>: <code>radius/md</code></figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="card-ex tall">Card</div></div><figcaption><code>radius=subtle</code>: <code>radius/md</code></figcaption></figure><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="card-ex tall">Card</div></div><figcaption><code>radius=strong</code>: <code>radius/md</code></figcaption></figure><figure class="cell"><div class="demo th-pacha " data-texture="solid" data-tone="light"><div class="card-ex tall">Card</div></div><figcaption><code>radius=rounded</code>: <code>radius/md</code></figcaption></figure></div></div></div><div class="rule" id="r4-1-3"><div class="head"><span class="rid">4.1.3</span><div class="rtext">The outer corner of a component that contains elements is the inner corner plus the padding of the outer component. The border is not counted. A card follows the same rule: a card that contains a card, a picture or a control takes its corner from this sum. A card with nothing inside it that has a corner of its own is <code>radius/md</code>.</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span>a nav bar. Its tabs are <code>radius/button</code>, so the bar is that plus its padding.</p><div><div class="row"><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><figcaption><code>radius=sharp</code>: <code>radius/button</code> + padding</figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><figcaption><code>radius=subtle</code>: <code>radius/button</code> + padding</figcaption></figure><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><figcaption><code>radius=strong</code>: <code>radius/button</code> + padding</figcaption></figure><figure class="cell"><div class="demo th-pacha " data-texture="solid" data-tone="light"><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><figcaption><code>radius=rounded</code>: <code>radius/button</code> + padding</figcaption></figure></div></div></div><div class="pair"><p class="extext"><span>Example</span>a card with a picture in it. The picture is <code>radius/xs</code>, so the card is that plus its padding.</p><div><div class="row"><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="card-ex pic"><i class="photo"></i><span>Card</span></div></div><figcaption><code>radius=sharp</code>: <code>radius/xs</code> + padding</figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="card-ex pic"><i class="photo"></i><span>Card</span></div></div><figcaption><code>radius=subtle</code>: <code>radius/xs</code> + padding</figcaption></figure><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="card-ex pic"><i class="photo"></i><span>Card</span></div></div><figcaption><code>radius=strong</code>: <code>radius/xs</code> + padding</figcaption></figure><figure class="cell"><div class="demo th-pacha " data-texture="solid" data-tone="light"><div class="card-ex pic"><i class="photo"></i><span>Card</span></div></div><figcaption><code>radius=rounded</code>: <code>radius/xs</code> + padding</figcaption></figure></div></div></div></div></div><div class="rule exception" id="r4-1-4"><div class="head"><span class="rid">4.1.4*</span><div class="rtext">Exception: the outer corner never goes past the theme&#x27;s maximum for the control, <code>radius/button</code>.</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span><code>radius=sharp</code> is always square, whatever the padding.</p><div><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><p class="cap">Fabrik: the padding never rounds it.</p></div></div><div class="pair"><p class="extext"><span>Example</span><code>radius=rounded</code> is always fully rounded.</p><div><div class="demo th-pacha " data-texture="solid" data-tone="light"><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div><p class="cap">Pacha: it stays a pill.</p></div></div></div></div><div class="rule exception" id="r4-1-5"><div class="head"><span class="rid">4.1.5*</span><div class="rtext">Exception: a card is never fully rounded, unless it is designed that way in Figma. When the sum in 4.1.3 would make a card fully rounded (a card that contains a pill-shaped control on a rounded theme), the card&#x27;s corner is capped below fully rounded.</div></div></div><div class="rule" id="r4-1-6"><div class="head"><span class="rid">4.1.6</span><div class="rtext">Fully rounded is <code>dimensions/max</code>. <code>radius/rounded/button</code> resolves to it, and the code follows it exactly, not a very large radius of its own.</div></div></div><div class="rule open" id="r4-1-7"><div class="head"><span class="rid">4.1.7?</span><div class="rtext">Which <code>edges</code> step is that cap for a card: <code>sm</code>, <code>md</code>, <code>lg</code> or <code>xl</code>?</div></div></div><div class="rule open" id="r4-1-8"><div class="head"><span class="rid">4.1.8?</span><div class="rtext">Which <code>edges</code> step do other surfaces use, besides a card?</div></div></div><h3 class="sub" id="t5-spacing">5 Spacing</h3><h4 class="app">5.1 Padding</h4><div class="rule" id="r5-1-1"><div class="head"><span class="rid">5.1.1</span><div class="rtext">A core interactive component&#x27;s padding is at least <code>size-controls/interactive-component/min-padding/component</code>, and is always an even number.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="navbar guide"><span class="tab on">Look</span><span class="tab">Feel</span></div></div><p class="cap">The shaded band is the padding: at least <code>size-controls/interactive-component/min-padding/component</code>.</p></div></div><div class="rule" id="r5-1-2"><div class="head"><span class="rid">5.1.2</span><div class="rtext">An input field inside a component has double that component&#x27;s padding at the sides.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="navbar bar guide"><span class="plus">+</span><span class="input">Write a message…</span></div></div><p class="cap">The input&#x27;s own side padding (marked) is twice the bar&#x27;s padding.</p></div></div><div class="rule" id="r5-1-3"><div class="head"><span class="rid">5.1.3</span><div class="rtext">A card&#x27;s default padding is <code>size-controls/card/padding/padding-md</code>, and it is always an even number (5.1.1).</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="card-ex guide"><span class="padtag">card padding</span>Card content</div></div></div></div><div class="rule" id="r5-1-4"><div class="head"><span class="rid">5.1.4</span><div class="rtext">The theme&#x27;s <code>spacing</code> setting drives layout between components only. Component padding stays at the fixed tokens (5.1.1, 11.1.1, 5.1.3), so a control is the same size in every theme. (Figma has <code>mg</code> for Amnesia&#x27;s <code>spacing</code>, which looks like a typo for <code>md</code>.)</div></div></div><h3 class="sub" id="t6-icons">6 Icons</h3><h4 class="app">6.1 Icon</h4><div class="rule" id="r6-1-1"><div class="head"><span class="rid">6.1.1</span><div class="rtext">Use an icon from the Phosphor set, in the theme&#x27;s selected icon weight, in a box of <code>size-controls/interactive-component/min-height/icon-within-component</code> by <code>size-controls/interactive-component/min-width/icon-within-component</code> (both resolve to <code>icons/container/md</code>).</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="iconrow"><span class="iconbox"><svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span><span class="iconbox"><svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span><span class="note">Each icon sits in an <code>icon-within-component</code> box (outlined). The weight comes from the theme and is drawn by the app.</span></div></div></div></div><div class="rule exception" id="r6-1-2"><div class="head"><span class="rid">6.1.2*</span><div class="rtext">Exception: a Figma file provides a different or unique icon.</div></div></div><h3 class="sub" id="t7-hover-states">7 Hover states</h3><h4 class="app">7.1 Hover</h4><div class="rule" id="r7-1-1"><div class="head"><span class="rid">7.1.1</span><div class="rtext">One formula based on colour-mode, for every texture. Light colour-mode: add <code>alpha/dark/sm</code> over the background. Dark colour-mode: add <code>alpha/light/sm</code>.</div></div><div class="eg"><div class="row"><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="row"><span class="chip ">Rest</span><span class="chip hov">Hover</span></div></div><figcaption>Light colour-mode: <code>alpha/dark/sm</code></figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="row"><span class="chip ">Rest</span><span class="chip hov">Hover</span></div></div><figcaption>Dark colour-mode: <code>alpha/light/sm</code></figcaption></figure></div></div></div><div class="rule" id="r7-1-2"><div class="head"><span class="rid">7.1.2</span><div class="rtext">A state (hover, focus, press) only changes the background layer. It never changes the colour of text or an icon, a border, or a shadow.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="row"><div class="navbar "><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div><div class="navbar hovered"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div></div><p class="cap">Left: rest. Right: hovering the second tab. The text, the icon and the border are untouched; only the background gains the wash.</p></div></div><div class="rule open" id="r7-1-3"><div class="head"><span class="rid">7.1.3?</span><div class="rtext">The hover wash (7.1.1) is a shared token, so a change to it applies to every component that uses it, not only the three flagship ones. Is that what you want?</div></div></div><h3 class="sub" id="t8-motion-transitions">8 Motion / transitions</h3><h4 class="app">8.1 Duration and easing</h4><div class="rule" id="r8-1-1"><div class="head"><span class="rid">8.1.1</span><div class="rtext">Follow Material Design&#x27;s &quot;choosing a duration&quot; guidance, and use a variable from the <code>Timing</code> set only (<code>instant</code>, <code>fast</code>, <code>faster</code>, <code>long</code>, <code>longer</code>, <code>longest</code>). A hover or press is <code>fast</code>.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="trow"><code>Timing/instant</code><div class="track"><i class="dot" style="transition-duration:var(--duration-instant)"></i></div></div><div class="trow"><code>Timing/fast</code><div class="track"><i class="dot" style="transition-duration:var(--duration-fast)"></i></div></div><div class="trow"><code>Timing/faster</code><div class="track"><i class="dot" style="transition-duration:var(--duration-faster)"></i></div></div><div class="trow"><code>Timing/long</code><div class="track"><i class="dot" style="transition-duration:var(--duration-long)"></i></div></div><div class="trow"><code>Timing/longer</code><div class="track"><i class="dot" style="transition-duration:var(--duration-longer)"></i></div></div><div class="trow"><code>Timing/longest</code><div class="track"><i class="dot" style="transition-duration:var(--duration-longest)"></i></div></div></div><button class="play" onclick="playTiming(this)">Play</button></div></div><div class="rule" id="r8-1-2"><div class="head"><span class="rid">8.1.2</span><div class="rtext">The theme&#x27;s <code>motion</code> setting supplies the easing. <code>motion=none</code> is <code>instant</code>.</div></div></div><div class="rule exception" id="r8-1-3"><div class="head"><span class="rid">8.1.3*</span><div class="rtext">Exception: where the animation is the component&#x27;s core identity (metal is &quot;the point&quot; of the effect), it keeps its own timing.</div></div><div class="eg"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="ring spin"><span>Metal</span></div></div><p class="cap">The ring&#x27;s own animation is the component&#x27;s identity, so it keeps its own timing.</p></div></div><div class="rule open" id="r8-1-4"><div class="head"><span class="rid">8.1.4?</span><div class="rtext">Which <code>Timing</code> step should the nav bar&#x27;s active-tab pill moving, and the active text colour changing, use? They are not on the <code>Timing</code> set yet. (Menus and popups are settled in 11.3.1.)</div></div></div><div class="rule open" id="r8-1-5"><div class="head"><span class="rid">8.1.5?</span><div class="rtext">The Material Design wording in 8.1.1 is my reading of the guidance, written without opening the pages. Please check it against how you read it.</div></div></div><h3 class="sub" id="t9-shadow-elevation">9 Shadow / elevation</h3><h4 class="app">9.1 Shadow</h4><div class="rule" id="r9-1-1"><div class="head"><span class="rid">9.1.1</span><div class="rtext">Use the <code>shadow</code> tokens only, at the strength of the theme&#x27;s <code>shadow</code> setting (subtle or strong).</div></div><div class="eg"><div class="demo th-ushuaia stage" data-texture="gradient" data-tone="light"><div class="row"><div class="elev e-xs">xs</div><div class="elev e-sm">sm</div><div class="elev e-md">md</div><div class="elev e-lg">lg</div></div></div><p class="cap">The theme&#x27;s <code>shadow</code> setting picks how strong these are (Ushuaia). A theme with <code>shadow=none</code> draws none.</p></div></div><div class="rule" id="r9-1-2"><div class="head"><span class="rid">9.1.2</span><div class="rtext">Follow Material Design&#x27;s elevation principles: elevation shows which surface sits above which.</div></div></div><div class="rule" id="r9-1-3"><div class="head"><span class="rid">9.1.3</span><div class="rtext">A popup is always one level above the component that opens it.</div></div><div class="eg"><div class="pair"><p class="extext"><span>Example</span>the component is <code>xs</code>, its popup is <code>sm</code>.</p><div><div class="demo th-ushuaia stage" data-texture="gradient" data-tone="light"><div class="stack"><div class="elev e-xs wide">Component · <code>xs</code></div><div class="elev e-sm wide up">Its popup · <code>sm</code></div></div></div></div></div></div></div><div class="rule open" id="r9-1-4"><div class="head"><span class="rid">9.1.4?</span><div class="rtext">The Material Design wording in 9.1.2 is my reading of the guidance, written without opening the pages. Please check it against how you read it.</div></div></div><h2 class="group" id="core-interactive-components">CORE INTERACTIVE COMPONENTS</h2><p class="intro">For example: button, input, select.</p><h3 class="sub" id="t10-size">10 Size</h3><h4 class="app">10.1 Control size</h4><div class="rule" id="r10-1-1"><div class="head"><span class="rid">10.1.1</span><div class="rtext">The default minimum height is <code>size-controls/interactive-component/min-height/component</code>, and the default minimum width is <code>size-controls/interactive-component/min-width/component</code>.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="heights"><div class="h44"><span class="tag">component height</span><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div></div></div></div><p class="cap">The nav bar, the prompt bar and the metal buttons are all <code>size-controls/interactive-component/min-height/component</code>.</p></div></div><div class="rule exception" id="r10-1-2"><div class="head"><span class="rid">10.1.2*</span><div class="rtext">Exception: a core interactive component inside another component has a default minimum height of <code>size-controls/interactive-component/min-height/component-within-component</code> and a default minimum width of <code>size-controls/interactive-component/min-width/component-within-component</code>. The component it sits in keeps the <code>component</code> minimums in 10.1.1.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="heights"><div class="h44"><span class="tag">component</span><div class="navbar tall"><span class="tab on h36">Look<em>within component</em></span><span class="tab h36">Feel</span><span class="tab h36">Rules</span></div></div></div></div><p class="cap">The tabs inside the nav bar are <code>component-within-component</code>.</p></div></div><div class="rule" id="r10-1-3"><div class="head"><span class="rid">10.1.3</span><div class="rtext">A core interactive component&#x27;s height is a minimum: it grows when its content needs more room.</div></div></div><div class="rule open" id="r10-1-4"><div class="head"><span class="rid">10.1.4?</span><div class="rtext">What counts as a core interactive component besides a button, input, select and nav?</div></div></div><h2 class="group" id="components-with-popups">COMPONENTS WITH POPUPS</h2><p class="intro">A popup is a menu, popover or dropdown that a component opens.</p><h3 class="sub" id="t11-popups">11 Popups</h3><h4 class="app">11.1 Layout</h4><div class="rule" id="r11-1-1"><div class="head"><span class="rid">11.1.1</span><div class="rtext">Padding: at least <code>spacing/padding/sm</code>, always an even number.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="stage"><div class="popup guide"><div class="prow">today</div><div class="prow">this month</div></div></div></div></div></div><div class="rule" id="r11-1-2"><div class="head"><span class="rid">11.1.2</span><div class="rtext">Width: at least the system&#x27;s minimum popup width, as a share of the width of the component that opens it (see 11.1.4?).</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="stage"><div class="opener">Component</div><div class="popup halfw"><div class="prow">today</div><div class="prow">this month</div></div></div></div><p class="cap">The popup is at least half the width of the component that opens it (never narrower than its own rows).</p></div></div><div class="rule" id="r11-1-3"><div class="head"><span class="rid">11.1.3</span><div class="rtext">Corners: a popup is a card, so its corner is the card corner, <code>radius/md</code> (4.1.2, 4.1.3), and never the fully rounded control corner.</div></div><div class="eg"><div class="row"><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="popup small"><div class="prow">today</div><div class="prow sel">this month</div></div></div><figcaption><code>radius=sharp</code>: popup <code>radius/md</code>, rows <code>radius/button</code></figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="popup small"><div class="prow">today</div><div class="prow sel">this month</div></div></div><figcaption><code>radius=subtle</code>: popup <code>radius/md</code>, rows <code>radius/button</code></figcaption></figure><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="popup small"><div class="prow">today</div><div class="prow sel">this month</div></div></div><figcaption><code>radius=strong</code>: popup <code>radius/md</code>, rows <code>radius/button</code></figcaption></figure><figure class="cell"><div class="demo th-pacha " data-texture="solid" data-tone="light"><div class="popup small"><div class="prow">today</div><div class="prow sel">this month</div></div></div><figcaption><code>radius=rounded</code>: popup <code>radius/md</code>, rows <code>radius/button</code></figcaption></figure></div></div></div><div class="rule open" id="r11-1-4"><div class="head"><span class="rid">11.1.4?</span><div class="rtext">The minimum popup width has no token. Should the share of the component&#x27;s width become a token, and what should it be called?</div></div></div><h4 class="app">11.2 Surface</h4><div class="rule" id="r11-2-1"><div class="head"><span class="rid">11.2.1</span><div class="rtext">Fill: the component&#x27;s own fill (2.2) plus <code>alpha/dark/sm</code> on top. On a glass texture there is no wash, and the glass goes up one weight (the component&#x27;s Soft is Medium in the popup, Medium is Heavy).</div></div><div class="eg"><div class="row"><figure class="cell"><div class="demo th-fabrik " data-texture="solid" data-tone="light"><div class="stack"><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div><div class="popup"><div class="prow">today</div><div class="prow sel">this month</div><div class="prow">this year</div></div></div></div><figcaption>Solid (Fabrik): the fill, then the fill + <code>alpha/dark/sm</code></figcaption></figure><figure class="cell"><div class="demo th-ushuaia " data-texture="gradient" data-tone="light"><div class="stack"><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div><div class="popup"><div class="prow">today</div><div class="prow sel">this month</div><div class="prow">this year</div></div></div></div><figcaption>Gradient (Ushuaia): the same</figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="stack"><div class="navbar"><span class="tab on">Look</span><span class="tab">Feel</span><span class="tab">Rules</span></div><div class="popup"><div class="prow">today</div><div class="prow sel">this month</div><div class="prow">this year</div></div></div></div><figcaption>Glass (Berghain): one weight up, no wash</figcaption></figure></div></div></div><div class="rule" id="r11-2-2"><div class="head"><span class="rid">11.2.2</span><div class="rtext">Blur: a heavy blur of what is behind it, from the <code>alpha/blur</code> variables at the <code>sm</code> step. A page narrower than the width in the name <code>1200</code> uses <code>alpha/blur/320/sm</code>; a page at least that wide uses <code>alpha/blur/1200/sm</code>.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="behind"><p>Behind the popup: a paragraph of the page&#x27;s own text, so the blur has something to soften.</p><p>The quick brown fox jumps over the lazy dog, and the popup blurs all of it.</p></div><div class="popup frost"><div class="prow">today</div><div class="prow sel">this month</div><div class="prow">this year</div></div></div><p class="cap">The blur is <code>alpha/blur/320/sm</code> on a page narrower than the width in its name, and <code>alpha/blur/1200/sm</code> from that width up. This page is using the one for its current width.</p></div></div><div class="rule" id="r11-2-3"><div class="head"><span class="rid">11.2.3</span><div class="rtext">A link or ghost button inside a popup has a <code>primary</code> background and a <code>primary-foreground</code> colour for its text.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="popup"><div class="prow">Add photos &amp; files</div><div class="prow">Gmail<span class="linkbtn">Connect</span></div></div></div><p class="cap">A link or ghost button inside a popup: <code>primary</code> background, <code>primary-foreground</code> text.</p></div></div><div class="rule open" id="r11-2-4"><div class="head"><span class="rid">11.2.4?</span><div class="rtext">The Medium glass used for a popup on a glass theme shows what is behind it quite clearly. 11.2.1 follows your rule, but you may want Heavy for readability.</div></div></div><h4 class="app">11.3 Motion</h4><div class="rule" id="r11-3-1"><div class="head"><span class="rid">11.3.1</span><div class="rtext">A popup opens at <code>Timing/faster</code> and closes at <code>Timing/fast</code>, so leaving is quicker than arriving.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="stage"><button class="opener click" onclick="this.nextElementSibling.classList.toggle('open')">Click to open and close</button><div class="popup anim"><div class="prow">today</div><div class="prow sel">this month</div></div></div></div><p class="cap">Opens at <code>Timing/faster</code>, closes at <code>Timing/fast</code>.</p></div></div><h4 class="app">11.4 Native select</h4><div class="rule exception" id="r11-4-1"><div class="head"><span class="rid">11.4.1*</span><div class="rtext">Exception: a native select&#x27;s dropdown is drawn by the browser, so 11.1 to 11.2 cannot apply to it. A component that needs a themed popup uses a custom one; a native select keeps the themed chip (corner, text, fill, hover, caret) and leaves the dropdown to the browser.</div></div><div class="eg"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="nativewrap"><select class="native"><option>today</option><option selected>this month</option><option>this year</option></select><span class="caret"><svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></div></div><p class="cap">The chip is themed; open it to see the dropdown the browser draws.</p></div></div><h2 class="group" id="component-specific-guidelines">COMPONENT SPECIFIC GUIDELINES</h2><h3 class="sub" id="t12-metal">12 Metal</h3><h4 class="app">12.1 Ring</h4><div class="rule" id="r12-1-1"><div class="head"><span class="rid">12.1.1</span><div class="rtext">On a light colour-mode, a metal ring sits on a darker line outside it, <code>alpha/dark/xs</code>, so the ring reads on a pale surface.</div></div><div class="eg"><div class="row"><figure class="cell"><div class="demo th-illuzion " data-texture="solid" data-tone="light"><div class="ring on-light"><span>Upgrade</span></div></div><figcaption>Ring on a light surface, with the darker line outside</figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="ring"><span>Upgrade</span></div></div><figcaption>Ring on a dark surface</figcaption></figure></div><p class="cap">An illustration: the real effect is the metal-fx shader.</p></div></div><h4 class="app">12.2 Fill and effect</h4><div class="rule" id="r12-2-1"><div class="head"><span class="rid">12.2.1</span><div class="rtext">The fill under the effect must be translucent, never solid white, or the effect can&#x27;t be seen.</div></div><div class="eg"><div class="row"><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="ring"><span>Metal</span></div></div><figcaption>Translucent fill: the effect shows</figcaption></figure><figure class="cell"><div class="demo th-berghain " data-texture="glass" data-tone="dark"><div class="ring solid"><span>Metal</span></div></div><figcaption>Solid white fill: the effect is hidden</figcaption></figure></div></div></div><div class="rule" id="r12-2-2"><div class="head"><span class="rid">12.2.2</span><div class="rtext">The effect must show and animate on every metal control, and metal controls shown together are the same height.</div></div></div><h2 class="group" id="collaboration-guidelines">COLLABORATION GUIDELINES</h2><h3 class="sub" id="t13-feedback">13 Feedback</h3><h4 class="app">13.1 Issues</h4><div class="rule" id="r13-1-1"><div class="head"><span class="rid">13.1.1</span><div class="rtext">Always give feedback when there is an issue, or an expected issue, applying a theme token to a component (for example, a theme with no value for something a component needs).</div></div></div>
+<footer>Built by docs/build-guidelines-page.py from component-theming-guidelines.md and the token files. Run it again after changing either.</footer>
+</main>
+</div>
+<script>
+
+function playTiming(btn) {
+  // back to the start with no transition, then run: so each press shows the whole move, however fast it is
+  const rows = btn.previousElementSibling;
+  const tracks = [...rows.querySelectorAll('.track')];
+  tracks.forEach(t => { t.querySelector('.dot').classList.add('noanim'); t.classList.remove('go'); });
+  void rows.offsetWidth;
+  tracks.forEach(t => t.querySelector('.dot').classList.remove('noanim'));
+  requestAnimationFrame(() => tracks.forEach(t => t.classList.add('go')));
+}
+
+</script>
+</body>
+</html>

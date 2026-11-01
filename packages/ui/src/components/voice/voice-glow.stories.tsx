@@ -43,7 +43,7 @@ export const VoiceGlowStory = ({ source, ...args }: Args) => {
       </VoiceGlow>
       <button
         type="button"
-        className="text-body-md cursor-pointer rounded-(--radius-inner) px-3 py-1 outline-1 -outline-offset-[0.5px] outline-(--control-edge) hover:bg-(--control-hover)"
+        className="text-md cursor-pointer rounded-(--radius-button) px-3 py-1 outline-1 -outline-offset-[0.5px] outline-(--control-edge) hover:bg-(--control-hover)"
         onClick={() => (live ? (mic.state === "live" ? mic.stop() : void mic.start()) : setListening((value) => !value))}
       >
         {live ? (mic.state === "live" ? "Stop microphone" : mic.state === "denied" ? "Microphone blocked" : "Listen") : listening ? "Pause demo voice" : "Play demo voice"}
@@ -74,7 +74,7 @@ export const PillStory = ({ source, look, colorVariant, active, sensitivity, str
     >
       <button
         type="button"
-        className="text-body-md relative isolate flex h-16 min-w-[150px] cursor-pointer items-center justify-center gap-1 rounded-(--dimensions-max) pr-6 pl-2 text-foreground outline-1 -outline-offset-[0.5px] outline-(--control-edge) before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-(--control-hover) before:opacity-0 before:transition-opacity before:duration-(--motion-fast) before:ease-(--motion-transition-ease) before:content-[''] hover:before:opacity-100"
+        className="text-md relative isolate flex h-16 min-w-[150px] cursor-pointer items-center justify-center gap-1 rounded-(--dimensions-max) pr-6 pl-2 text-foreground outline-1 -outline-offset-[0.5px] outline-(--control-edge) before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-(--control-hover) before:opacity-0 before:transition-opacity before:duration-(--motion-fast) before:ease-(--motion-transition-ease) before:content-[''] hover:before:opacity-100"
         onClick={() => (live ? (mic.state === "live" ? mic.stop() : void mic.start()) : setListening((value) => !value))}
       >
         <SurfaceFill />
@@ -133,7 +133,7 @@ export const MobileStory = ({ source, look, colorVariant, active, sensitivity, s
       </div>
       <button
         type="button"
-        className="text-body-md cursor-pointer rounded-(--radius-inner) px-3 py-1 outline-1 -outline-offset-[0.5px] outline-(--control-edge) hover:bg-(--control-hover)"
+        className="text-md cursor-pointer rounded-(--radius-button) px-3 py-1 outline-1 -outline-offset-[0.5px] outline-(--control-edge) hover:bg-(--control-hover)"
         onClick={() => (live ? (mic.state === "live" ? mic.stop() : void mic.start()) : setListening((value) => !value))}
       >
         {live ? (mic.state === "live" ? "Stop microphone" : mic.state === "denied" ? "Microphone blocked" : "Listen") : listening ? "Pause demo voice" : "Play demo voice"}

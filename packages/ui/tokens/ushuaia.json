@@ -3,7 +3,7 @@
   "label": "Ushuaia",
   "order": 8,
   "selector": ".ushuaia",
-  "scheme": "light",
+  "colorMode": "light",
   "seeds": {
     "background": "#edebe3",
     "foreground": "#0f0e0e",
@@ -15,7 +15,7 @@
     "emphasis": "Newsreader",
     "body": "Archivo"
   },
-  "edges": "strong",
+  "radius": "strong",
   "overrides": {
     "primary-foreground": "#0f0e0e",
     "secondary-foreground": "#222222",
@@ -78,12 +78,13 @@
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
     "radius": "1rem",
     "radius-container": "1.5rem",
-    "dimensions-max": "169px",
-    "radius-inner": "0.5rem",
+    "dimensions-max": "9999px",
+    "radius-button": "0.5rem",
     "radius-outer-max": "1rem",
-    "edges-sm": "0.5rem",
-    "edges-xs": "0.25rem",
-    "edges-md": "1rem",
+    "radius-sm": "0.5rem",
+    "radius-xs": "0.25rem",
+    "radius-md": "1rem",
+    "radius-xl": "2rem",
     "sidebar": "var(--background)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",
@@ -92,14 +93,14 @@
     "sidebar-accent-foreground": "var(--accent-foreground)",
     "sidebar-border": "var(--border)",
     "sidebar-ring": "var(--ring)",
-    "shadow-2xs": "5px 5px 10px rgb(34 34 34 / 8%)",
-    "shadow-xs": "5px 5px 10px rgb(34 34 34 / 8%)",
-    "shadow-sm": "10px 10px 20px rgb(34 34 34 / 12%)",
-    "shadow": "10px 10px 20px rgb(34 34 34 / 12%)",
-    "shadow-md": "20px 20px 40px rgb(34 34 34 / 16%)",
-    "shadow-lg": "30px 30px 60px rgb(34 34 34 / 24%)",
-    "shadow-xl": "30px 30px 60px rgb(34 34 34 / 24%)",
-    "shadow-2xl": "30px 30px 60px rgb(34 34 34 / 24%)"
+    "shadow-2xs": "0px 4px 8px rgb(34 34 34 / 8%)",
+    "shadow-xs": "0px 4px 8px rgb(34 34 34 / 8%)",
+    "shadow-sm": "0px 12px 20px rgb(34 34 34 / 12%)",
+    "shadow": "0px 12px 20px rgb(34 34 34 / 12%)",
+    "shadow-md": "0px 20px 40px rgb(34 34 34 / 16%)",
+    "shadow-lg": "0px 40px 80px rgb(34 34 34 / 24%)",
+    "shadow-xl": "0px 40px 80px rgb(34 34 34 / 24%)",
+    "shadow-2xl": "0px 40px 80px rgb(34 34 34 / 24%)"
   },
   "typography": {
     "headings": {
@@ -134,7 +135,7 @@
     "spacing": "lg",
     "motion": "smooth",
     "material": "gradient",
-    "elevation": "strong",
+    "shadow": "strong",
     "fonts": {
       "display": {
         "family": "Migra",

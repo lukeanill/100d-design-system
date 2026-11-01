@@ -26,7 +26,7 @@ function readSurface(el: HTMLElement | null): Surface {
   if (!el) return fallback
   const css = getComputedStyle(el)
   const material = css.getPropertyValue("--theme-material").trim()
-  const tone = css.getPropertyValue("--theme-tone").trim()
+  const tone = css.getPropertyValue("--theme-color-mode").trim()
   const parent = el.parentElement
   const box = parent?.getBoundingClientRect()
   const corner = parent ? parseFloat(getComputedStyle(parent).borderTopLeftRadius) || 0 : 0

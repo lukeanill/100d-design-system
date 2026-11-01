@@ -3,13 +3,11 @@
 // (component motion, page transitions, an animated background and the hero).
 
 export const RADII = ["sharp", "subtle", "strong", "rounded"] as const
-export const ELEVATIONS = ["none", "subtle", "strong"] as const
+export const SHADOW_LEVELS = ["none", "subtle", "strong"] as const
 export const MATERIALS = ["solid", "glass", "gradient"] as const
 export const SPACINGS = ["sm", "md", "lg"] as const
-/** The type scale: heading and body sizes together. Medium is the sizes the design system ships with. */
+/** The Figma `typescale` modes: the set of heading and body sizes a theme uses (see typescale.ts). */
 export const SCALES = ["sm", "md", "lg"] as const
-/** Whether a card sits darker or lighter than the page, or its glass is dark or light. */
-export const TONES = ["dark", "light"] as const
 /** The Figma's Settings/motion: none, ease (ease-out, slower), emphatic (ease-in-out, faster), springy. */
 export const MOTIONS = ["none", "ease", "emphatic", "springy"] as const
 
@@ -27,11 +25,10 @@ export const ICON_STYLES = ["phosphor", "lucide"] as const
 export const ICON_WEIGHTS = ["thin", "light", "regular", "bold", "fill", "duotone"] as const
 
 export type Radius = (typeof RADII)[number]
-export type Elevation = (typeof ELEVATIONS)[number]
+export type Shadow = (typeof SHADOW_LEVELS)[number]
 export type Material = (typeof MATERIALS)[number]
 export type Spacing = (typeof SPACINGS)[number]
 export type Scale = (typeof SCALES)[number]
-export type Tone = (typeof TONES)[number]
 export type Motion = (typeof MOTIONS)[number]
 export type TransitionStyle = (typeof TRANSITIONS)[number]
 export type TransitionColor = (typeof TRANSITION_COLORS)[number]
@@ -44,11 +41,18 @@ export type ButtonClick = (typeof CLICKS)[number]
 export type LinkHover = (typeof LINK_HOVERS)[number]
 export type IconStyle = (typeof ICON_STYLES)[number]
 export type IconWeight = (typeof ICON_WEIGHTS)[number]
-export type Scheme = "light" | "dark"
+export type ColorMode = "light" | "dark"
 
 export interface ThemeFont {
   family: string
+  /** The regular weight: Figma `font/<role>/weight/regular` (body: `font/body/regular/weight`). */
   weight: number
+  /** The emphasis weight, Figma `font/primary|secondary/weight/emphasis`. Defaults to `weight`. */
+  emphasis?: number
+  /** The weight a button's text takes, Figma `font/body/action/weight` (body only). Defaults to `weight`. */
+  actionWeight?: number
+  /** The face is the italic of its family (Figma writes it into the name, "Migra Italic"). */
+  italic?: boolean
   /** The body font's line height as a percent: the Figma `Font/Sans/line-height`. Defaults to 142. */
   lineHeight?: number
   /** The body font's letter spacing as a percent of the size: the Figma `Font/Sans/letter-spacing`. Defaults to 0. */
@@ -117,19 +121,15 @@ export interface Theme {
   /** Slug. Also the CSS class the theme is scoped to. */
   id: string
   label: string
-  scheme: Scheme
+  colorMode: ColorMode
   palette: ThemePalette
-  fonts: { display: ThemeFont; body: ThemeFont; serif: ThemeFont }
+  /** display is the Figma `font/primary`, secondary its `font/secondary`; serif is the code's own emphasis face. */
+  fonts: { display: ThemeFont; body: ThemeFont; serif: ThemeFont; secondary: ThemeFont }
   scale: Scale
   spacing: Spacing
   radius: Radius
-  elevation: Elevation
+  shadow: Shadow
   material: Material
-  /**
-   * The texture's tone, the Figma's `Settings/color`. Cards are the background 20% toward white
-   * (light) or black (dark) when solid, 10% to 20% when gradient, and the glass is light or dark.
-   */
-  tone: Tone
   /** The Figma `Settings/motion` value: Component Animations. Carried in the output. */
   motion: Motion
   feel: ThemeFeel
@@ -151,9 +151,8 @@ export interface ThemeDraft extends Partial<ThemeFeel> {
   bodyWeight?: number
   scale?: Scale
   material?: Material
-  tone?: Tone
   radius?: Radius
-  elevation?: Elevation
+  shadow?: Shadow
   spacing?: Spacing
   iconStyle?: IconStyle
   iconWeight?: IconWeight

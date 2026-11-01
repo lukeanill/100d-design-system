@@ -20,7 +20,19 @@
         "web",
         "stories"
       ],
-      "port": 6006
+      "port": 6006,
+      "autoPort": true
+    },
+    {
+      "name": "qa",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "qa",
+        "dev"
+      ],
+      "port": 5174,
+      "autoPort": true
     }
   ]
 }

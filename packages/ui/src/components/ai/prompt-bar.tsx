@@ -247,13 +247,13 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
         {menu && (
           <div
             onMouseLeave={() => setEngaged(false)}
-            className="absolute inset-x-0 bottom-full z-10 mb-2 rounded-(--edges-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
+            className="absolute inset-x-0 bottom-full z-10 mb-2 rounded-(--radius-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
             style={{ animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom center" }}
           >
             <SurfaceFill popup />
             <span
               aria-hidden
-              className="pointer-events-none absolute inset-x-2 rounded-(--radius-inner) bg-(--control-hover)"
+              className="pointer-events-none absolute inset-x-2 rounded-(--radius-button) bg-(--control-hover)"
               style={{
                 height: rowBox?.height ?? 0,
                 opacity: rowBox && engaged && rows.length > 0 ? 1 : 0,
@@ -276,11 +276,11 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                     setEngaged(true)
                   }}
                   onClick={() => pick(row)}
-                  className="relative z-10 flex h-9 w-full items-center gap-2.5 rounded-(--radius-inner) px-2 text-left"
+                  className="relative z-10 flex h-9 w-full items-center gap-2.5 rounded-(--radius-button) px-2 text-left"
                 >
                   {source && <span className="flex size-5.5 shrink-0 items-center justify-center text-foreground/75">{GLYPHS[source.glyph ?? "clip"]}</span>}
-                  <span className="text-body-md shrink-0 text-foreground">{row.name}</span>
-                  <span className="text-body-md min-w-0 flex-1 truncate text-foreground/75">{row.desc}</span>
+                  <span className="text-md shrink-0 text-foreground">{row.name}</span>
+                  <span className="text-md min-w-0 flex-1 truncate text-foreground/75">{row.desc}</span>
                   {source?.connect && (
                     <span
                       role="button"
@@ -289,7 +289,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                         event.stopPropagation()
                         setConnected((current) => !current)
                       }}
-                      className="text-body-md shrink-0 rounded-(--radius-inner) bg-primary px-2 py-0.5 text-primary-foreground"
+                      className="text-md shrink-0 rounded-(--radius-button) bg-primary px-2 py-0.5 text-primary-foreground"
                     >
                       {connected ? "Connected" : "Connect"}
                     </span>
@@ -297,15 +297,15 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 </button>
               )
             })}
-            {rows.length === 0 && <div className="text-body-md flex h-9 items-center px-2 text-foreground/75">No matches for "{query}"</div>}
-            <div className="mt-1 border-t border-(--control-edge) text-body-md px-2 pt-1.5 pb-1 text-foreground/75">{menu === "at" ? "Type to search sources & files" : "Type to search commands"}</div>
+            {rows.length === 0 && <div className="text-md flex h-9 items-center px-2 text-foreground/75">No matches for "{query}"</div>}
+            <div className="mt-1 border-t border-(--control-edge) text-md px-2 pt-1.5 pb-1 text-foreground/75">{menu === "at" ? "Type to search sources & files" : "Type to search commands"}</div>
           </div>
         )}
 
         {modelOpen && (
           <div
             onMouseLeave={() => setModelHovered(null)}
-            className="absolute bottom-full left-0 z-10 mb-2 w-44 min-w-1/2 rounded-(--edges-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
+            className="absolute bottom-full left-0 z-10 mb-2 w-44 min-w-1/2 rounded-(--radius-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
             style={{ animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom left" }}
           >
             <SurfaceFill popup />
@@ -319,10 +319,10 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                   selectModel(m)
                   inputRef.current?.focus()
                 }}
-                className={cn("relative z-10 flex h-7.5 w-full items-center gap-2 rounded-(--radius-inner) px-2 text-left", modelHovered === i && "bg-(--control-hover)")}
+                className={cn("relative z-10 flex h-7.5 w-full items-center gap-2 rounded-(--radius-button) px-2 text-left", modelHovered === i && "bg-(--control-hover)")}
               >
-                <span className="text-body-md min-w-0 flex-1 truncate text-foreground">{m.name}</span>
-                <span className="text-body-md shrink-0 text-foreground/75">{m.tag}</span>
+                <span className="text-md min-w-0 flex-1 truncate text-foreground">{m.name}</span>
+                <span className="text-md shrink-0 text-foreground/75">{m.tag}</span>
                 <span className={cn("shrink-0 text-foreground", m.key === model.key ? "" : "invisible")}>
                   <ThemedIcon phosphor={CheckIcon} />
                 </span>
@@ -336,11 +336,11 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
             "relative isolate flex flex-col overflow-hidden outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-xs transition-[border-color,border-radius] duration-150",
             tall ? "gap-2.5 p-3.5" : "min-h-11 gap-1.5 p-1",
             // outer corner = the inner corner + the padding between them (the outline sits on the edge, so it is not counted), never past the theme's outer maximum
-            pill ? (attachments.length > 0 || wide ? "rounded-3xl" : "rounded-full") : tall ? "rounded-[min(var(--radius-outer-max),calc(var(--radius-inner)+14px))]" : "rounded-[min(var(--radius-outer-max),calc(var(--radius-inner)+4px))]"
+            pill ? (attachments.length > 0 || wide ? "rounded-3xl" : "rounded-full") : tall ? "rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+14px))]" : "rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))]"
           )}
         >
           <SurfaceFill />
-          <span ref={measureRef} aria-hidden="true" className="text-body-md pointer-events-none invisible absolute whitespace-pre">
+          <span ref={measureRef} aria-hidden="true" className="text-md pointer-events-none invisible absolute whitespace-pre">
             {draft}
           </span>
 
@@ -349,7 +349,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               {attachments.map((file, i) => (
                 <span
                   key={`${file}-${i}`}
-                  className={cn("flex h-6.5 items-center gap-1.5 bg-muted py-1 pr-1 pl-1.5 text-body-md text-foreground/75 ring-1 ring-(--control-edge)", pill ? "rounded-full" : "rounded-(--radius-inner)")}
+                  className={cn("flex h-6.5 items-center gap-1.5 bg-muted py-1 pr-1 pl-1.5 text-md text-foreground/75 ring-1 ring-(--control-edge)", pill ? "rounded-full" : "rounded-(--radius-button)")}
                   style={{ animation: "pop-in 200ms cubic-bezier(0.23,1,0.32,1) both" }}
                 >
                   <ThemedIcon phosphor={FileIcon} />
@@ -379,7 +379,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               }}
               className={cn(
                 "flex size-9 shrink-0 items-center justify-center justify-self-start text-foreground/75 transition-[background-color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover) active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-(--radius-inner)",
+                pill ? "rounded-full" : "rounded-(--radius-button)",
                 plusOpen && "bg-muted text-foreground",
                 wide ? "col-start-1 row-start-2" : "col-start-1 row-start-1"
               )}
@@ -425,7 +425,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               className={cn(
                 "w-full min-w-0 resize-none bg-transparent text-foreground outline-none [overflow-wrap:anywhere] placeholder:text-foreground/75",
                 // an input inside a component takes double the component's padding at the sides: 8px in the 4px bar, 28px in the 14px tall one
-                tall ? "text-body-md min-h-[68px] px-7 py-2" : "text-body-md min-h-9 px-2 py-[calc((2.25rem-1lh)/2)]",
+                tall ? "text-md min-h-[68px] px-7 py-2" : "text-md min-h-9 px-2 py-[calc((2.25rem-1lh)/2)]",
                 wide ? "col-span-full col-start-1 row-start-1" : "col-start-2 row-start-1"
               )}
             />
@@ -434,7 +434,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               <span
                 ref={modelRef as unknown as RefObject<HTMLSpanElement>}
                 className={cn(
-                  "text-body-md flex h-9 shrink-0 items-center px-2 text-foreground/75",
+                  "text-md flex h-9 shrink-0 items-center px-2 text-foreground/75",
                   wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
                 )}
               >
@@ -451,8 +451,8 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                   setModelOpen((current) => !current)
                 }}
                 className={cn(
-                  "text-body-md flex h-9 shrink-0 items-center gap-1 px-2 text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)",
-                  pill ? "rounded-full" : "rounded-(--radius-inner)",
+                  "text-md flex h-9 shrink-0 items-center gap-1 px-2 text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)",
+                  pill ? "rounded-full" : "rounded-(--radius-button)",
                   wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
                 )}
               >
@@ -468,7 +468,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               onClick={() => setListening((current) => !current)}
               className={cn(
                 "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-(--radius-inner)",
+                pill ? "rounded-full" : "rounded-(--radius-button)",
                 listening ? "bg-primary/14 text-primary" : "text-foreground/75 hover:bg-(--control-hover)",
                 wide ? "col-start-4 row-start-2" : "col-start-4 row-start-1"
               )}
@@ -491,7 +491,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               onClick={send}
               className={cn(
                 "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-(--radius-inner)",
+                pill ? "rounded-full" : "rounded-(--radius-button)",
                 canSend ? "bg-foreground text-background" : "bg-border text-foreground/75",
                 wide ? "col-start-5 row-start-2" : "col-start-5 row-start-1"
               )}

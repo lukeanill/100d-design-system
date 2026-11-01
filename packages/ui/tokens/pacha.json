@@ -3,7 +3,7 @@
   "label": "Pacha",
   "order": 6,
   "selector": ".pacha",
-  "scheme": "light",
+  "colorMode": "light",
   "seeds": {
     "background": "#ffe9e9",
     "foreground": "#1b1717",
@@ -15,7 +15,7 @@
     "emphasis": "Lora",
     "body": "DM Sans"
   },
-  "edges": "round",
+  "radius": "rounded",
   "overrides": {
     "primary-foreground": "#e22700",
     "secondary-foreground": "#b38b83",
@@ -78,12 +78,13 @@
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
     "radius": "1.5rem",
     "radius-container": "2rem",
-    "dimensions-max": "169px",
-    "radius-inner": "var(--dimensions-max)",
+    "dimensions-max": "9999px",
+    "radius-button": "var(--dimensions-max)",
     "radius-outer-max": "var(--dimensions-max)",
-    "edges-sm": "1rem",
-    "edges-xs": "0.5rem",
-    "edges-md": "1.5rem",
+    "radius-sm": "1rem",
+    "radius-xs": "0.5rem",
+    "radius-md": "1.5rem",
+    "radius-xl": "2.5rem",
     "sidebar": "var(--background)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",
@@ -106,7 +107,7 @@
     "spacing": "lg",
     "motion": "spring",
     "material": "solid",
-    "elevation": "none",
+    "shadow": "none",
     "fonts": {
       "display": {
         "family": "Khaviax",

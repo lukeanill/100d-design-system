@@ -65,7 +65,7 @@ function VoiceDirection({ pan, probabilities, active = true, className }: VoiceD
         </g>
         <circle cx="100" cy="100" r="6" fill="currentColor" />
       </svg>
-      <p className="text-body-md">{LABEL[side]}</p>
+      <p className="text-md">{LABEL[side]}</p>
       {probabilities ? (
         <div className="flex w-full justify-between gap-2" aria-hidden>
           {SIDES.map((id) => (
@@ -73,7 +73,7 @@ function VoiceDirection({ pan, probabilities, active = true, className }: VoiceD
               <div className="h-1 w-full overflow-clip rounded-full bg-current/15">
                 <div className="h-full rounded-full bg-current transition-[width] duration-300" style={{ width: `${Math.round(probabilities[id] * 100)}%` }} />
               </div>
-              <span className="text-body-sm opacity-60">{LABEL[id]}</span>
+              <span className="text-sm opacity-60">{LABEL[id]}</span>
             </div>
           ))}
         </div>

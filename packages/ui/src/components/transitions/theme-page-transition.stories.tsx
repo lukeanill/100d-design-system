@@ -53,7 +53,7 @@ export const ThemeSetting = ({ transition }: Args) => {
       >
         <section className="flex flex-1 flex-col gap-4 p-10">
           <h2>{current.name}</h2>
-          <p className="text-body-lg">{current.body}</p>
+          <p className="text-lg">{current.body}</p>
         </section>
       </ThemePageTransition>
     </div>

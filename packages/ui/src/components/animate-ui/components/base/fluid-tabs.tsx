@@ -42,7 +42,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
   // Figma nav-bar: 44px high, 4px of padding to a tab, with the 1px outline centred on the edge, 2px between tabs;
   // a tab is 36px high with 12px at the sides, a 20px icon and 4px before the label
   return (
-    <div className="relative isolate flex h-11 w-fit items-center gap-0.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-inner)+4px))] outline-1 -outline-offset-[0.5px] outline-(--control-edge) p-1 shadow-sm transition-colors">
+    <div className="relative isolate flex h-11 w-fit items-center gap-0.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] outline-1 -outline-offset-[0.5px] outline-(--control-edge) p-1 shadow-sm transition-colors">
       <SurfaceFill />
       {tabs.map((tab) => {
         const isActive = active === tab.id
@@ -52,7 +52,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
             key={tab.id}
             type="button"
             onClick={() => handleChange(tab.id)}
-            className="group relative h-9 rounded-(--radius-inner) px-3 py-1.5 outline-none transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)"
+            className="group relative h-9 rounded-(--radius-button) px-3 py-1.5 outline-none transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)"
           >
             {isActive && (
               <motion.div
@@ -69,7 +69,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
             >
               <span className="flex size-5 shrink-0 items-center justify-center overflow-clip">{tab.icon}</span>
 
-              <span className="text-body-md whitespace-nowrap">{tab.label}</span>
+              <span className="text-md whitespace-nowrap">{tab.label}</span>
             </motion.div>
           </button>
         )

@@ -21,7 +21,7 @@ function NativeSelect({
       className={cn(
         "group/native-select relative w-fit has-[select:disabled]:opacity-50",
         themed &&
-          "isolate rounded-(--radius-inner) text-foreground before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-(--control-hover) before:opacity-0 before:transition-opacity before:duration-(--motion-fast) before:ease-(--motion-transition-ease) before:content-[''] hover:before:opacity-100 focus-within:ring-2 focus-within:ring-ring",
+          "isolate rounded-(--radius-button) text-foreground before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:bg-(--control-hover) before:opacity-0 before:transition-opacity before:duration-(--motion-fast) before:ease-(--motion-transition-ease) before:content-[''] hover:before:opacity-100 focus-within:ring-2 focus-within:ring-ring",
         className
       )}
       data-slot="native-select-wrapper"
@@ -32,7 +32,7 @@ function NativeSelect({
         data-size={size}
         className={
           themed
-            ? "text-body-md h-9 w-full min-w-0 cursor-pointer appearance-none rounded-[inherit] border-0 bg-transparent py-1 pr-7 pl-2 text-inherit outline-none select-none disabled:pointer-events-none disabled:cursor-not-allowed"
+            ? "text-md h-9 w-full min-w-0 cursor-pointer appearance-none rounded-[inherit] border-0 bg-transparent py-1 pr-7 pl-2 text-inherit outline-none select-none disabled:pointer-events-none disabled:cursor-not-allowed"
             : "h-9 w-full min-w-0 appearance-none rounded-(--radius) border border-foreground bg-transparent py-2 pr-8 pl-3 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-foreground hover:bg-muted focus-visible:border-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 data-[size=sm]:h-8 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40"
         }
         {...props}

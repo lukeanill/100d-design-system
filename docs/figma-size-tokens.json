@@ -1,0 +1,15 @@
+{
+  "note": "A snapshot of the Figma variables that no theme file carries (size-controls, icons, spacing, border width), read from the Themes file on 2026-10-28. The guidelines page is built from this file and the theme files in packages/ui/tokens, so updating them and rebuilding the page is the only edit a token change needs.",
+  "size-controls": {
+    "interactive-component/min-height/component": 44,
+    "interactive-component/min-width/component": 44,
+    "interactive-component/min-height/component-within-component": 36,
+    "interactive-component/min-width/component-within-component": 36,
+    "interactive-component/min-height/icon-within-component": 20,
+    "interactive-component/min-width/icon-within-component": 20,
+    "interactive-component/min-padding/component": 4,
+    "card/padding/padding-md": 16
+  },
+  "spacing": { "padding/xs": 4, "padding/sm": 8, "padding/md": 12, "padding/lg": 16 },
+  "radius": { "border-width/md": 1 }
+}

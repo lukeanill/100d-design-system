@@ -17,7 +17,7 @@ import {
   PopoverTrigger,
 } from "@workspace/ui/components/animate-ui/components/base/popover"
 
-import { EDGE_OPTIONS, TEXT_SIZE_OPTIONS, type Styling } from "./styling"
+import { RADIUS_OPTIONS, TEXT_SIZE_OPTIONS, type Styling } from "./styling"
 
 const THEMES = presets
 
@@ -31,7 +31,7 @@ function MenuLabel({
 }) {
   const Caret = open ? CaretUpIcon : CaretDownIcon
   return (
-    <span className="text-body flex items-center gap-2 text-primary opacity-65">
+    <span className="text-md flex items-center gap-2 text-primary opacity-65">
       {children}
       <Caret weight="fill" className="size-2.5" />
     </span>
@@ -40,7 +40,7 @@ function MenuLabel({
 
 function MenuHeading({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-body px-3 pt-3 pb-1.5 leading-[1.2] text-primary opacity-50">
+    <p className="text-md px-3 pt-3 pb-1.5 leading-[1.2] text-primary opacity-50">
       {children}
     </p>
   )
@@ -59,7 +59,7 @@ function MenuRow({
     <button
       type="button"
       onClick={onSelect}
-      className="text-body flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left leading-[1.2] text-primary hover:bg-foreground/5"
+      className="text-md flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left leading-[1.2] text-primary hover:bg-foreground/5"
     >
       {children}
       {selected && <CheckIcon className="ml-auto size-5" />}
@@ -94,12 +94,12 @@ function StylingMenu({
         sideOffset={4}
         className="w-[220px] gap-0 overflow-clip rounded-2xl border border-black/[0.04] bg-card p-0 py-2 shadow-[0_16px_32px_-4px_rgba(12,12,13,0.1),0_4px_4px_-4px_rgba(12,12,13,0.05)]"
       >
-        <MenuHeading>Edges</MenuHeading>
-        {EDGE_OPTIONS.map((edge) => (
+        <MenuHeading>Radius</MenuHeading>
+        {RADIUS_OPTIONS.map((edge) => (
           <MenuRow
             key={edge.id}
-            selected={draft.edges === edge.id}
-            onSelect={() => setDraft({ ...draft, edges: edge.id })}
+            selected={draft.radius === edge.id}
+            onSelect={() => setDraft({ ...draft, radius: edge.id })}
           >
             <span
               aria-hidden
@@ -115,7 +115,7 @@ function StylingMenu({
           </MenuRow>
         ))}
         <MenuHeading>Fills</MenuHeading>
-        <div className="text-body flex items-center justify-between px-3 py-1.5 text-primary">
+        <div className="text-md flex items-center justify-between px-3 py-1.5 text-primary">
           Glass Effect
           <Switch
             aria-label="Glass Effect"
@@ -169,7 +169,7 @@ function ThemeButton({
       aria-pressed={selected}
       onClick={onPress}
       className={cn(
-        "text-body flex shrink-0 cursor-pointer items-center justify-center gap-1.5 overflow-clip rounded-full border bg-card py-[3px] pr-[11px] pl-[3px] text-foreground transition-colors",
+        "text-md flex shrink-0 cursor-pointer items-center justify-center gap-1.5 overflow-clip rounded-full border bg-card py-[3px] pr-[11px] pl-[3px] text-foreground transition-colors",
         selected ? "border-primary" : "border-card hover:border-foreground/20"
       )}
     >

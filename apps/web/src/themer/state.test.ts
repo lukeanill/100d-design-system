@@ -46,11 +46,8 @@ describe("a theme built from scratch", () => {
     expect(badColors({ ...emptyDraft(), foreground: "zzz" })).toEqual(["foreground"])
   })
 
-  it("needs the texture tone like every other Look choice", () => {
-    expect(unsetLabels(emptyDraft())).toContain("texture tone")
-    expect(draftToTheme({ ...emptyDraft(), tone: "light" }).tone).toBe("light")
-    // a copied preset brings the tone the Figma gives it (Settings/color), so only the name is left
-    expect(draftFromPreset(getPreset("laroc")!).tone).toBe("light")
+  it("takes no tone: a copied preset leaves only the name to give", () => {
+    expect(unsetLabels(emptyDraft())).not.toContain("texture tone")
     expect(lookMissing(draftFromPreset(getPreset("laroc")!))).toEqual(["theme name"])
   })
 
@@ -59,7 +56,7 @@ describe("a theme built from scratch", () => {
     expect(lookMissing(done)).toEqual(["theme name"])
     expect(lookDone({ ...done, label: "  " })).toBe(false)
     expect(lookDone({ ...done, label: "Mine" })).toBe(true)
-    expect(lookMissing(emptyDraft())).toEqual(expect.arrayContaining(["theme name", "background", "texture tone"]))
+    expect(lookMissing(emptyDraft())).toEqual(expect.arrayContaining(["theme name", "background", "texture"]))
     expect(valuesMissing(emptyDraft())).toEqual(["question 1", "question 2", "question 3", "question 4"])
     expect(valuesMissing({ ...emptyDraft(), values: ["a", "b", undefined, "a"] })).toEqual(["question 3"])
   })
@@ -98,8 +95,8 @@ describe("a theme built from scratch", () => {
   })
 
   it("takes light or dark from the colour chosen, not from a preset", () => {
-    expect(draftToTheme({ ...emptyDraft(), background: "#fafafa" }).scheme).toBe("light")
-    expect(draftToTheme({ ...emptyDraft(), background: "#111111" }).scheme).toBe("dark")
+    expect(draftToTheme({ ...emptyDraft(), background: "#fafafa" }).colorMode).toBe("light")
+    expect(draftToTheme({ ...emptyDraft(), background: "#111111" }).colorMode).toBe("dark")
   })
 
   it("never turns text that is not a colour into a token", () => {

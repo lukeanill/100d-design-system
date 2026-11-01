@@ -25,7 +25,7 @@ export const OrbsStory = ({ size, speed, dots, dotSize, paused }: Args) => (
         <div className="flex h-16 items-center justify-center">
           <ThinkingOrb state={state} size={size} speed={speed} dots={dots} dotSize={dotSize} paused={paused} />
         </div>
-        <p className="text-body-md capitalize">{state}</p>
+        <p className="text-md capitalize">{state}</p>
       </div>
     ))}
   </div>

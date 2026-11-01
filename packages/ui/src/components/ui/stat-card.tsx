@@ -92,7 +92,7 @@ export const StatCardItem = ({
           {(stat.label || stat.icon) && (
             <div className="flex items-center justify-between">
               {stat.label && (
-                <span className="text-body-lg text-foreground">
+                <span className="text-lg text-foreground">
                   {stat.label}
                 </span>
               )}

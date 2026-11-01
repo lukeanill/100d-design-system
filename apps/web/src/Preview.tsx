@@ -113,7 +113,7 @@ function ThemeButton({
         // the metal ring is the selected border; the fills are alpha overlays, light/sm when chosen, dark/xs otherwise
         selected
           ? // on a light theme the ring needs a darker line against it to read on the pale tile
-            preset.scheme === "light"
+            preset.colorMode === "light"
             ? "border-[color:var(--alpha-dark-xs,rgba(0,0,0,0.04))]"
             : "border-transparent"
           : "border-transparent bg-[image:linear-gradient(var(--alpha-dark-sm,rgba(30,30,30,0.08)),var(--alpha-dark-sm,rgba(30,30,30,0.08)))]"
@@ -127,7 +127,7 @@ function ThemeButton({
       )}
       {/* always mounted, only its strength changes, so choosing a tile never restarts the effect */}
       <span aria-hidden className="pointer-events-none absolute inset-0 rounded-[16px] transition-opacity duration-300" style={{ opacity: selected ? 1 : 0 }}>
-        <MetalSurface active={selected} variant="button" engine="v1" ringWidth={2} theme={preset.scheme} className="size-full rounded-[16px]! bg-transparent!">
+        <MetalSurface active={selected} variant="button" engine="v1" ringWidth={2} theme={preset.colorMode} className="size-full rounded-[16px]! bg-transparent!">
           <span className="block size-full" />
         </MetalSurface>
       </span>

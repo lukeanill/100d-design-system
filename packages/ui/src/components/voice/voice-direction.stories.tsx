@@ -44,7 +44,7 @@ export const VoiceDirectionStory = ({ pan, active, showProbabilities }: Args) =>
       />
       <button
         type="button"
-        className="text-body-md cursor-pointer rounded-(--radius-inner) px-3 py-1 outline-1 -outline-offset-[0.5px] outline-(--control-edge) hover:bg-(--control-hover)"
+        className="text-md cursor-pointer rounded-(--radius-button) px-3 py-1 outline-1 -outline-offset-[0.5px] outline-(--control-edge) hover:bg-(--control-hover)"
         onClick={() => setRunning((value) => !value)}
       >
         {running ? "Stop" : "Start"}

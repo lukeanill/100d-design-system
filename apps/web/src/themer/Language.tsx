@@ -7,14 +7,13 @@ import {
   HEADING_FONTS,
   VALUE_QUESTIONS,
   nearestWeight,
-  type Elevation,
+  type Shadow,
   type IconWeight,
   type Material,
   type Radius,
   type Scale,
   type Spacing,
   type ThemeDraft,
-  type Tone,
 } from "@workspace/ui/themes"
 
 import { ActionButton, BackButton, Header, Page, Panel } from "./Chrome"
@@ -33,13 +32,13 @@ const TEXTURES: { value: Material; label: string; style?: React.CSSProperties; c
   { value: "glass", label: "Glass" },
 ]
 /** The Figma calls the square-cornered edge "Solid"; the theme's own name for it is "sharp". */
-const EDGES: { value: Radius; label: string; radius: number }[] = [
+const RADII: { value: Radius; label: string; radius: number }[] = [
   { value: "sharp", label: "Solid", radius: 0 },
   { value: "subtle", label: "Subtle", radius: 8 },
   { value: "strong", label: "Strong", radius: 16 },
   { value: "rounded", label: "Rounded", radius: 9999 },
 ]
-const SHADOWS: { value: Elevation; label: string; shadow: string }[] = [
+const SHADOWS: { value: Shadow; label: string; shadow: string }[] = [
   { value: "none", label: "None", shadow: "none" },
   { value: "subtle", label: "Subtle", shadow: "0 4px 4px rgba(0,0,0,0.25)" },
   { value: "strong", label: "Strong", shadow: "0 8px 8px rgba(0,0,0,0.5)" },
@@ -56,11 +55,6 @@ const ICONS: { value: IconWeight; label: string }[] = [
   { value: "regular", label: "Regular" },
   { value: "fill", label: "Filled" },
 ]
-/** The texture's tone: cards sit darker or lighter than the page, and glass is dark or light. */
-const TONES: { value: Tone; label: string; fill: string }[] = [
-  { value: "dark", label: "Dark", fill: "linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.85))" },
-  { value: "light", label: "Light", fill: "linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.9))" },
-]
 const SCALES: { value: Scale; label: string }[] = [
   { value: "sm", label: "Small" },
   { value: "md", label: "Medium" },
@@ -69,7 +63,7 @@ const SCALES: { value: Scale; label: string }[] = [
 
 /* --- the Look tab: a column of control tiles beside a live product page ------- */
 
-type TileId = "name" | "color" | "type" | "texture" | "edges" | "shadow" | "spacing" | "icons"
+type TileId = "name" | "color" | "type" | "texture" | "radius" | "shadow" | "spacing" | "icons"
 
 function LookTab({
   draft,
@@ -123,18 +117,11 @@ function LookTab({
               </OptionRow>
             ))}
           </OptionGroup>
-          <OptionGroup label="Tone" className="mt-4 grid grid-cols-2 gap-2">
-            {TONES.map((t) => (
-              <OptionRow key={t.value} label={t.label} selected={draft.tone === t.value} onSelect={() => set({ tone: t.value })}>
-                <Swatch selected={draft.tone === t.value} style={{ background: t.fill }} />
-              </OptionRow>
-            ))}
-          </OptionGroup>
         </ControlTile>
 
-        <ControlTile title="Edges" {...tile("edges")}>
-          <OptionGroup label="Edges" className="grid grid-cols-2 gap-2">
-            {EDGES.map((e) => (
+        <ControlTile title="Radius" {...tile("radius")}>
+          <OptionGroup label="Radius" className="grid grid-cols-2 gap-2">
+            {RADII.map((e) => (
               <OptionRow key={e.value} label={e.label} selected={draft.radius === e.value} onSelect={() => set({ radius: e.value })}>
                 <Swatch selected={draft.radius === e.value} round={e.radius === 9999} radius={e.radius} />
               </OptionRow>
@@ -145,8 +132,8 @@ function LookTab({
         <ControlTile title="Shadow" lifted {...tile("shadow")}>
           <OptionGroup label="Shadow" className="flex flex-col gap-4">
             {SHADOWS.map((s) => (
-              <OptionRow key={s.value} label={s.label} selected={draft.elevation === s.value} onSelect={() => set({ elevation: s.value })}>
-                <Swatch selected={draft.elevation === s.value} style={{ boxShadow: s.shadow }} />
+              <OptionRow key={s.value} label={s.label} selected={draft.shadow === s.value} onSelect={() => set({ shadow: s.value })}>
+                <Swatch selected={draft.shadow === s.value} style={{ boxShadow: s.shadow }} />
               </OptionRow>
             ))}
           </OptionGroup>

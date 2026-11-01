@@ -3,7 +3,7 @@
   "label": "Berghain",
   "order": 0,
   "selector": ":root",
-  "scheme": "dark",
+  "colorMode": "dark",
   "seeds": {
     "background": "#000000",
     "foreground": "#fbfbfc",
@@ -15,7 +15,7 @@
     "emphasis": "Newsreader",
     "body": "Akkurat LL TT"
   },
-  "edges": "subtle",
+  "radius": "subtle",
   "overrides": {
     "primary-foreground": "#000000",
     "secondary-foreground": "#ffffff",
@@ -78,12 +78,13 @@
     "gradient-headline": "linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)",
     "radius": "0.5rem",
     "radius-container": "0.75rem",
-    "dimensions-max": "169px",
-    "radius-inner": "0.25rem",
+    "dimensions-max": "9999px",
+    "radius-button": "0.25rem",
     "radius-outer-max": "0.5rem",
-    "edges-sm": "0.25rem",
-    "edges-xs": "0.125rem",
-    "edges-md": "0.5rem",
+    "radius-sm": "0.25rem",
+    "radius-xs": "0.125rem",
+    "radius-md": "0.5rem",
+    "radius-xl": "1rem",
     "sidebar": "var(--background)",
     "sidebar-foreground": "var(--foreground)",
     "sidebar-primary": "var(--primary)",
@@ -92,14 +93,14 @@
     "sidebar-accent-foreground": "var(--accent-foreground)",
     "sidebar-border": "var(--border)",
     "sidebar-ring": "var(--ring)",
-    "shadow-2xs": "5px 5px 10px rgb(34 34 34 / 8%)",
-    "shadow-xs": "5px 5px 10px rgb(34 34 34 / 8%)",
-    "shadow-sm": "10px 10px 20px rgb(34 34 34 / 12%)",
-    "shadow": "10px 10px 20px rgb(34 34 34 / 12%)",
-    "shadow-md": "20px 20px 40px rgb(34 34 34 / 16%)",
-    "shadow-lg": "30px 30px 60px rgb(34 34 34 / 24%)",
-    "shadow-xl": "30px 30px 60px rgb(34 34 34 / 24%)",
-    "shadow-2xl": "30px 30px 60px rgb(34 34 34 / 24%)"
+    "shadow-2xs": "0px 4px 8px rgb(34 34 34 / 8%)",
+    "shadow-xs": "0px 4px 8px rgb(34 34 34 / 8%)",
+    "shadow-sm": "0px 12px 20px rgb(34 34 34 / 12%)",
+    "shadow": "0px 12px 20px rgb(34 34 34 / 12%)",
+    "shadow-md": "0px 20px 40px rgb(34 34 34 / 16%)",
+    "shadow-lg": "0px 40px 80px rgb(34 34 34 / 24%)",
+    "shadow-xl": "0px 40px 80px rgb(34 34 34 / 24%)",
+    "shadow-2xl": "0px 40px 80px rgb(34 34 34 / 24%)"
   },
   "glass": {
     "style": "glass",
@@ -112,7 +113,7 @@
     "spacing": "lg",
     "motion": "smooth",
     "material": "glass",
-    "elevation": "strong",
+    "shadow": "strong",
     "fonts": {
       "display": {
         "family": "PP Editorial New",

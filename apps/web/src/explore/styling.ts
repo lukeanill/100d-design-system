@@ -2,20 +2,20 @@ import type { CSSProperties } from "react"
 
 import { getPreset } from "@workspace/ui/themes"
 
-export type Edges = "square" | "subtle" | "strong" | "round"
+export type RadiusOption = "square" | "subtle" | "strong" | "round"
 export type TextSize = "small" | "medium" | "large"
 
 /** What the Styling menu can change, on top of whichever theme is chosen. */
 export type Styling = {
-  /** `null` leaves the theme's own edges alone. */
-  edges: Edges | null
+  /** `null` leaves the theme's own radius alone. */
+  radius: RadiusOption | null
   glass: boolean
   textSize: TextSize
 }
 
-export const DEFAULT_STYLING: Styling = { edges: null, glass: false, textSize: "medium" }
+export const DEFAULT_STYLING: Styling = { radius: null, glass: false, textSize: "medium" }
 
-export const EDGE_OPTIONS: { id: Edges; label: string }[] = [
+export const RADIUS_OPTIONS: { id: RadiusOption; label: string }[] = [
   { id: "square", label: "Square" },
   { id: "subtle", label: "Subtle" },
   { id: "strong", label: "Strong" },
@@ -28,8 +28,8 @@ export const TEXT_SIZE_OPTIONS: { id: TextSize; label: string }[] = [
   { id: "large", label: "Large" },
 ]
 
-/** The same pairs the themes themselves use, so an edge here is an edge there. */
-const EDGE_VALUES: Record<Edges, { radius: string; container: string }> = {
+/** The same pairs the themes themselves use, so a radius here is a radius there. */
+const RADIUS_VALUES: Record<RadiusOption, { radius: string; container: string }> = {
   square: { radius: "0", container: "0" },
   subtle: { radius: "0.5rem", container: "1rem" },
   strong: { radius: "0.75rem", container: "1.5rem" },
@@ -55,9 +55,9 @@ const glassLines = GLASS_GROUPS.flatMap((name) => [
 /** The custom properties a Styling choice sets, as name → value. */
 export function stylingDeclarations(styling: Styling): Record<string, string> {
   const lines: string[] = []
-  if (styling.edges) {
-    const { radius, container } = EDGE_VALUES[styling.edges]
-    lines.push(`--radius: ${radius};`, `--radius-container: ${container};`)
+  if (styling.radius) {
+    const { radius, container } = RADIUS_VALUES[styling.radius]
+    lines.push(`--radius: ${radius};`, `--radius-lg: ${container};`)
   }
   if (styling.glass) lines.push(...glassLines)
   const scale = TEXT_SCALE[styling.textSize]
