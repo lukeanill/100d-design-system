@@ -79,10 +79,6 @@ function Preview({ theme }: { theme: Theme }) {
           {theme.fonts.body.family}.<br />
           {sample}
         </p>
-        <p className="text-sm" style={{ fontFamily: "var(--font-emphasis)" }}>
-          {theme.fonts.serif.family}.<br />
-          {sample}
-        </p>
         <div className="grid grid-cols-2 gap-2" style={{ color: "var(--secondary)" }}>
           {[ArrowUpIcon, ChatCircleDotsIcon, NotePencilIcon, CalendarHeartIcon].map((I, i) => (
             <span key={i} className="grid size-6 place-items-center rounded-[4px]" style={{ background: "var(--secondary)", color: "var(--background)" }}>

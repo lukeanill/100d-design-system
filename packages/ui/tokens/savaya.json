@@ -122,10 +122,6 @@
       "sans": {
         "family": "Archivo",
         "weight": 500
-      },
-      "serif": {
-        "family": "Newsreader",
-        "weight": 600
       }
     }
   }

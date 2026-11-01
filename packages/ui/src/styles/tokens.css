@@ -215,7 +215,6 @@
 
 @theme inline {
   --font-primary: ui-sans-serif, system-ui, sans-serif;
-  --font-emphasis: ui-serif, Georgia, serif;
   --font-fira-code: 'Fira Code Variable', monospace;
   --font-bricolage-grotesque: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
   --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -223,7 +222,7 @@
   --font-body-token: ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-body-token);
   --font-body-small: var(--font-body-token);
-  --font-serif: var(--font-emphasis);
+  --font-serif: var(--font-secondary);
   --font-mono: var(--font-fira-code);
   --font-sans: var(--font-body-token);
   --font-family: var(--font-body-token);

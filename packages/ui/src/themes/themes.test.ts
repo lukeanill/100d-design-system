@@ -34,11 +34,11 @@ describe("font roles", () => {
     expect(HEADING_FONTS.map((f) => f.family).sort()).toEqual(
       [...new Set(presets.map((t) => t.fonts.display.family))].sort()
     )
-    const bodyFaces = new Set(presets.flatMap((t) => [t.fonts.body.family, t.fonts.serif.family]))
+    const bodyFaces = new Set(presets.flatMap((t) => [t.fonts.body.family]))
     expect(BODY_FONTS.map((f) => f.family).sort()).toEqual([...bodyFaces].sort())
-    // a sans or a serif: the themes' body faces and the serifs they use for emphasis
+    // a sans or a serif: the themes' body faces
     expect(BODY_FONTS.map((f) => f.family)).toEqual(
-      expect.arrayContaining(["Inter", "DM Sans", "Archivo", "Akkurat LL TT", "EB Garamond", "Lora", "Newsreader"])
+      expect.arrayContaining(["Inter", "DM Sans", "Archivo", "Akkurat LL TT"])
     )
     expect(HEADING_FONTS.map((f) => f.family)).not.toContain("Inter")
     expect(BODY_FONTS.map((f) => f.family)).not.toContain("Migra")

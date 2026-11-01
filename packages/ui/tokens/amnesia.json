@@ -144,10 +144,6 @@
       "sans": {
         "family": "Inter",
         "weight": 400
-      },
-      "serif": {
-        "family": "Lora",
-        "weight": 500
       }
     },
     "substitutions": {

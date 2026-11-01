@@ -150,10 +150,6 @@
       "sans": {
         "family": "Inter",
         "weight": 500
-      },
-      "serif": {
-        "family": "Lora",
-        "weight": 500
       }
     }
   }

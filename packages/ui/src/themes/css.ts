@@ -107,7 +107,6 @@ export function themeDeclarations(theme: Theme): string[] {
   const set = (name: string, value: string) => lines.push(`--${name}: ${value};`)
 
   set("font-primary", stack(fonts.display.family, SANS))
-  set("font-emphasis", stack(fonts.serif.family, SERIF))
   set("font-body-token", stack(fonts.body.family, SANS))
   set("font-body-weight", String(fonts.body.weight))
   // the Figma font/primary, font/secondary and font/body/action weights: the text classes and the buttons read these
@@ -239,7 +238,6 @@ export function themeToCss(theme: Theme, { asDefault = false }: { asDefault?: bo
 export const themeFamilies = (theme: Theme) => [
   { family: theme.fonts.display.family },
   { family: theme.fonts.body.family },
-  { family: theme.fonts.serif.family },
   { family: theme.fonts.secondary.family },
 ]
 

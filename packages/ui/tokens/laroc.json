@@ -144,10 +144,6 @@
       "sans": {
         "family": "Archivo",
         "weight": 400
-      },
-      "serif": {
-        "family": "Lora",
-        "weight": 500
       }
     }
   }

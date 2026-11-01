@@ -142,7 +142,6 @@ export function draftToTheme(d: ThemeDraft, base: Theme = BASELINE): Theme {
     fonts: {
       display: { family: heading, weight: headingWeight, emphasis: headingWeight },
       body: { family: body, weight: bodyWeight, actionWeight: bodyWeight },
-      serif: base.fonts.serif,
       secondary: { family: heading, weight: headingWeight, emphasis: headingWeight },
     },
     scale: d.scale ?? base.scale,
@@ -178,7 +177,6 @@ export const ALPES: Theme = {
   fonts: {
     display: { family: "Migra", weight: 200 },
     body: { family: "Karla", weight: 400 },
-    serif: BASELINE.fonts.serif,
     secondary: { family: "Migra", weight: 200 },
   },
   scale: "md",

@@ -64,7 +64,7 @@ function requestThemeFonts() {
   fontsRequested = true
   const families = THEMES.flatMap(({ id }) => {
     const fonts = getPreset(id)?.fonts
-    return fonts ? [fonts.display, fonts.body, fonts.serif] : []
+    return fonts ? [fonts.display, fonts.body, fonts.secondary] : []
   }).map((f) => ({ family: f.family, weights: [f.weight] }))
   const href = googleFontsHref(families)
   if (!href) return

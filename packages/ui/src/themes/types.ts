@@ -123,8 +123,8 @@ export interface Theme {
   label: string
   colorMode: ColorMode
   palette: ThemePalette
-  /** display is the Figma `font/primary`, secondary its `font/secondary`; serif is the code's own emphasis face. */
-  fonts: { display: ThemeFont; body: ThemeFont; serif: ThemeFont; secondary: ThemeFont }
+  /** display is the Figma `font/primary`, body its `font/body`, secondary its `font/secondary`. */
+  fonts: { display: ThemeFont; body: ThemeFont; secondary: ThemeFont }
   scale: Scale
   spacing: Spacing
   radius: Radius

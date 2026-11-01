@@ -82,7 +82,7 @@ const FONT_ALIASES: Record<string, string> = {
   "--font-heading": "var(--font-primary)",
   "--font-body": "var(--font-body-token)",
   "--font-body-small": "var(--font-body-token)",
-  "--font-serif": "var(--font-emphasis)",
+  "--font-serif": "var(--font-secondary)",
   "--font-sans": "var(--font-body-token)",
   "--font-family": "var(--font-body-token)",
 }

@@ -144,10 +144,6 @@
       "sans": {
         "family": "Inter",
         "weight": 300
-      },
-      "serif": {
-        "family": "EB Garamond",
-        "weight": 400
       }
     }
   }

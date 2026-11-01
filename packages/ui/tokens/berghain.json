@@ -122,10 +122,6 @@
       "sans": {
         "family": "Akkurat LL TT",
         "weight": 200
-      },
-      "serif": {
-        "family": "Newsreader",
-        "weight": 500
       }
     }
   }

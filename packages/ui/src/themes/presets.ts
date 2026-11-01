@@ -32,7 +32,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "Folio Std", weight: 700, emphasis: 700 },
       body: { family: "Inter", weight: 300, actionWeight: 400 },
-      serif: { family: "EB Garamond", weight: 400 },
       secondary: { family: "Folio Std", weight: 700, emphasis: 700 },
     },
     scale: "md", spacing: "lg", radius: "sharp", shadow: "subtle", material: "solid", motion: "emphatic",
@@ -48,7 +47,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "Intan", weight: 400, emphasis: 400 },
       body: { family: "DM Sans", weight: 500, letterSpacing: 1, actionWeight: 500 },
-      serif: { family: "Lora", weight: 500 },
       secondary: { family: "Intan", weight: 400, emphasis: 400 },
     },
     scale: "lg", spacing: "md", radius: "strong", shadow: "none", material: "solid", motion: "ease",
@@ -64,7 +62,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "GT Pressura Mono Trial", weight: 700, emphasis: 700 },
       body: { family: "Archivo", weight: 400, actionWeight: 400 },
-      serif: { family: "Lora", weight: 500 },
       secondary: { family: "GT Pressura Mono Trial", weight: 700, emphasis: 700 },
     },
     scale: "sm", spacing: "md", radius: "rounded", shadow: "none", material: "solid", motion: "none",
@@ -80,7 +77,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "ITC Garamond Std", weight: 800, emphasis: 800 },
       body: { family: "Inter", weight: 500, actionWeight: 500 },
-      serif: { family: "Lora", weight: 500 },
       secondary: { family: "ITC Garamond Std", weight: 800, emphasis: 800 },
     },
     scale: "lg", spacing: "md", radius: "strong", shadow: "strong", material: "glass", motion: "ease",
@@ -97,7 +93,6 @@ export const presets: Theme[] = [
       // Migra Extralight, as you asked, rather than the PP Editorial New the Figma variable names
       display: { family: "Migra", weight: 200, emphasis: 800 },
       body: { family: "Akkurat LL TT", weight: 200, lineHeight: 146, actionWeight: 400 },
-      serif: { family: "Newsreader", weight: 500 },
       secondary: { family: "Migra", weight: 200, emphasis: 800, italic: true },
     },
     scale: "md", spacing: "lg", radius: "subtle", shadow: "strong", material: "glass", motion: "ease",
@@ -113,7 +108,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "Gloock", weight: 400, emphasis: 400 },
       body: { family: "Archivo", weight: 500, actionWeight: 400 },
-      serif: { family: "Newsreader", weight: 600 },
       secondary: { family: "Gloock", weight: 400, emphasis: 400 },
     },
     scale: "md", spacing: "md", radius: "subtle", shadow: "strong", material: "glass", motion: "emphatic",
@@ -129,7 +123,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "Khaviax", weight: 400, emphasis: 400 },
       body: { family: "DM Sans", weight: 500, letterSpacing: 1, actionWeight: 500 },
-      serif: { family: "Lora", weight: 500 },
       secondary: { family: "Khaviax", weight: 400, emphasis: 400 },
     },
     scale: "lg", spacing: "lg", radius: "rounded", shadow: "none", material: "solid", motion: "springy",
@@ -145,7 +138,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "Swear Display Demo", weight: 500, emphasis: 500 },
       body: { family: "Inter", weight: 400, actionWeight: 400 },
-      serif: { family: "Lora", weight: 500 },
       secondary: { family: "Swear Display Demo", weight: 500, emphasis: 500 },
     },
     scale: "md", spacing: "md", radius: "rounded", shadow: "subtle", material: "gradient", motion: "ease",
@@ -161,7 +153,6 @@ export const presets: Theme[] = [
     fonts: {
       display: { family: "Migra", weight: 800, emphasis: 800 },
       body: { family: "Archivo", weight: 400, actionWeight: 400 },
-      serif: { family: "Newsreader", weight: 500 },
       secondary: { family: "Migra", weight: 800, emphasis: 800 },
     },
     scale: "md", spacing: "lg", radius: "strong", shadow: "strong", material: "gradient", motion: "ease",
@@ -182,5 +173,5 @@ const rolesOf = (...picks: ((t: Theme) => string)[]): FontChoice[] => {
   return FONT_CHOICES.filter((f) => used.has(f.family))
 }
 export const HEADING_FONTS = rolesOf((t) => t.fonts.display.family)
-// body text can be set in a sans or a serif: the themes' body faces and the serifs they use for emphasis
-export const BODY_FONTS = rolesOf((t) => t.fonts.body.family, (t) => t.fonts.serif.family)
+// body text can be set in a sans or a serif: the themes' body faces
+export const BODY_FONTS = rolesOf((t) => t.fonts.body.family)

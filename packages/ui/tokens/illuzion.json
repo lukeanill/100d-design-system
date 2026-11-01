@@ -116,10 +116,6 @@
       "sans": {
         "family": "DM Sans",
         "weight": 500
-      },
-      "serif": {
-        "family": "Lora",
-        "weight": 500
       }
     },
     "substitutions": {

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 
 import { Rule, Sheet, SHEET, sheetText } from "./tokens-sheet"
 
-/** The three specimens: the heading face, the emphasis face, and the body face. */
+/** The three specimens: the heading face, the secondary face, and the body face. */
 const FONT_FAMILIES = [
   { label: "Primary", token: "font-heading" },
-  { label: "Emphasis", token: "font-serif" },
+  { label: "Secondary", token: "font-serif" },
   { label: "Body", token: "font-body" },
 ] as const
 
