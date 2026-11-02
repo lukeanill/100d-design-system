@@ -48,15 +48,6 @@ function Grain({ className = "" }: { className?: string }) {
   )
 }
 
-/** Whether a theme's text is light, by its foreground colour: a light foreground means a dark page, so its inactive tiles carry light text. */
-function hasLightText(hex: string | undefined) {
-  const m = /^#?([0-9a-f]{6})$/i.exec(hex ?? "")
-  if (!m) return true
-  const n = parseInt(m[1]!, 16)
-  const lum = (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255
-  return lum > 0.5
-}
-
 /** The themes' own faces, fetched once so each button can set its name in its theme's font. */
 let fontsRequested = false
 function requestThemeFonts() {
@@ -78,14 +69,11 @@ function ThemeButton({
   id,
   label,
   selected,
-  lightText,
   onClick,
 }: {
   id: ThemeId
   label: string
   selected: boolean
-  /** The preview's own text is light (a dark page), so an inactive tile's label is too. */
-  lightText: boolean
   onClick: () => void
 }) {
   const preset = getPreset(id)
@@ -93,12 +81,9 @@ function ThemeButton({
   const style: CSSProperties = {
     fontFamily: `"${preset.fonts.display.family}", serif`,
     fontWeight: preset.fonts.display.weight,
-    // active: the theme's own label colour; inactive: a dark or light wash of text by the page's light or dark
-    color: selected
-      ? preset.palette.primaryForeground
-      : lightText
-        ? "var(--alpha-light-md, rgba(246,244,244,0.24))"
-        : "var(--alpha-dark-lg, rgba(30,30,30,0.32))",
+    // active: the theme's own label colour; inactive: a light wash of text, whichever theme is chosen, because the tiles
+    // sit on the page itself (dark) and only the cards below take the chosen theme
+    color: selected ? preset.palette.primaryForeground : "var(--alpha-light-md, rgba(246,244,244,0.24))",
     backgroundColor: selected ? preset.palette.background : undefined,
     ["--radius" as string]: "16px",
   }
@@ -318,8 +303,6 @@ export function Preview() {
   const [selected, setSelected] = useState<ThemeId | null>(null)
   useEffect(requestThemeFonts, [])
   const scope = themeScope(selected, DEFAULT_STYLING)
-  // the page's text is light unless the chosen theme's is dark
-  const lightText = hasLightText(selected ? getPreset(selected)?.palette.foreground : undefined)
 
   return (
     <>
@@ -334,7 +317,6 @@ export function Preview() {
                 id={id}
                 label={label}
                 selected={selected === id}
-                lightText={lightText}
                 onClick={() => setSelected((current) => (current === id ? null : id))}
               />
             ))}

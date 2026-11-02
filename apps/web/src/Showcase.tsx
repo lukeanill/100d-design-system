@@ -124,7 +124,7 @@ const It = ({ children }: { children: ReactNode }) => <em className={`${MIGRA} f
 const H48 = `${MIGRA} text-[clamp(32px,3.75vw,48px)] leading-[1.22] font-extralight`
 const H36 = `${MIGRA} text-[clamp(26px,2.8125vw,36px)] leading-[1.22] font-extralight`
 const H28 = `${MIGRA} text-[clamp(22px,2.1875vw,28px)] leading-[1.22] font-extralight`
-const BODY20 = `${BODY} text-[20px] leading-[1.42]`
+const BODY_LG = `${BODY} text-lg leading-[1.42]`
 
 export function Showcase() {
   const [installOpen, setInstallOpen] = useState(false)
@@ -142,7 +142,7 @@ export function Showcase() {
             <p className={`${MIGRA} text-[clamp(40px,4.6875vw,60px)] font-extrabold`}>design system</p>
             <p className={`${MIGRA} text-[clamp(32px,3.75vw,48px)] font-extralight italic`}>on a mission.</p>
           </div>
-          <p className={`${BODY} text-center text-[16px] leading-[1.42]`}>
+          <p className={`${BODY} text-center text-sm leading-[1.42]`}>
             for AI Product Builders,
             <br />
             by Luke &amp; Claude.
@@ -210,7 +210,7 @@ export function Showcase() {
               </p>
               <p className={H36}>prototype in minutes.</p>
             </div>
-            <div className={`${BODY20} flex w-full flex-col gap-6 opacity-90 min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
+            <div className={`${BODY_LG} flex w-full flex-col gap-6 opacity-90 min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
               <p>Moving AI from generic outputs to custom ones takes significant time and effort – chipping away at the time benefit offered.</p>
               <p>
                 This explores how effective an AI built design system can be – that’s easily customized, extended, and
@@ -236,7 +236,7 @@ export function Showcase() {
               </p>
               <p className={H28}>prototypes in minutes.</p>
             </div>
-            <p className={`${BODY20} w-full min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
+            <p className={`${BODY_LG} w-full min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
               How? to walk the walk. Building the system and many diverse prototypes with it – Iterating to the point of
               marginal utility.
             </p>
@@ -257,7 +257,7 @@ export function Showcase() {
                 </p>
               </div>
             </div>
-            <p className={`${BODY20} w-full min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
+            <p className={`${BODY_LG} w-full min-[1100px]:w-[435px] min-[1100px]:shrink-0`}>
               In a new AI world of product, by crafting specialist AI design tools that outperform<br className="max-[1099px]:hidden" /> general AI tools. Read more.
             </p>
           </div>
