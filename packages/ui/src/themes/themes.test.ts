@@ -46,8 +46,8 @@ describe("font roles", () => {
 })
 
 describe("themeToCss", () => {
-  it("scopes the default theme to :root and its own class, and every other theme to its class only", () => {
-    expect(themeToCss(getPreset("berghain")!, { asDefault: true })).toMatch(/^:root,\n\.berghain \{/)
+  it("scopes the default theme to :where(:root) and its own class, and every other theme to its class only", () => {
+    expect(themeToCss(getPreset("berghain")!, { asDefault: true })).toMatch(/^:where\(:root\),\n\.berghain \{/)
     expect(themeToCss(getPreset("fabrik")!)).toMatch(/^\.fabrik \{/)
   })
 
