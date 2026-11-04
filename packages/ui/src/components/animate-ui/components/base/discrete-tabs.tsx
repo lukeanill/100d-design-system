@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import type { FC, ReactNode } from "react"
 import { AnimatePresence, motion } from "motion/react"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 /* Icon-only tabs that expand into a labeled pill when active, others
  * collapse to icon-only circles. Ported from Watermelon UI's Discrete Tabs
@@ -41,7 +42,8 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
   }, [activeTab])
 
   return (
-    <div className="mx-auto flex h-11 w-fit items-center gap-1 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] border border-border bg-card p-1">
+    <div className="mx-auto flex h-11 w-fit items-center gap-1 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm p-1">
+      <SurfaceFill />
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab
         return (
@@ -53,14 +55,14 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
               {isActive && (
                 <motion.div
                   layoutId="discrete-tabs-active-bg"
-                  className="absolute inset-0 rounded-(--radius-button) bg-foreground shadow-xs"
+                  className="absolute inset-0 rounded-(--radius-button) bg-primary shadow-xs"
                 />
               )}
               <div className="relative z-10 flex h-full cursor-pointer items-center gap-1.5 px-3">
-                <div className={`flex shrink-0 items-center justify-center ${isActive ? "text-background" : "text-foreground/75"}`}>{tab.icon}</div>
+                <div className={`flex shrink-0 items-center justify-center ${isActive ? "text-primary-foreground" : "text-foreground"}`}>{tab.icon}</div>
                 <motion.span
                   animate={{ opacity: isActive ? 1 : 0, width: isActive ? "auto" : 0 }}
-                  className="relative overflow-hidden text-sm font-bold whitespace-nowrap text-background"
+                  className="relative overflow-hidden text-sm font-bold whitespace-nowrap text-primary-foreground"
                 >
                   {tab.label}
                   <AnimatePresence>

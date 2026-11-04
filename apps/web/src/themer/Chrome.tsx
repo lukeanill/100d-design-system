@@ -18,12 +18,15 @@ export function Page({
   rings = false,
   wide = false,
   fill = false,
+  flush = false,
 }: {
   children: ReactNode
   glow?: "glow" | "glow-code" | false
   rings?: boolean
   wide?: boolean
   fill?: boolean
+  /** no space under the content, for a screen whose last block should end at the bottom of the page */
+  flush?: boolean
 }) {
   return (
     <div className={cn("relative isolate overflow-x-clip bg-black text-foreground", fill ? "h-svh" : "min-h-screen")}>
@@ -45,7 +48,7 @@ export function Page({
         <div
           className={cn(
             "mx-auto w-full max-w-[1280px] px-10 pt-[137px] max-sm:px-4 max-sm:pt-[105px]",
-            fill ? "flex h-full flex-col pb-10 max-sm:pb-4" : "pb-40"
+            fill ? "flex h-full flex-col pb-10 max-sm:pb-4" : flush ? "pb-0" : "pb-40"
           )}
         >
           {children}
@@ -68,7 +71,7 @@ export function Page({
 /**
  * The bar across the top of every screen: Back or Home on the left, whatever
  * the screen has to say in the middle (the build screen's Look / Feel / Values),
- * actions on the right. It stays put, and once the page has scrolled it blurs what passes under it.
+ * actions on the right. It stays put, and once the page has scrolled it shortens and blurs what passes under it, under a dark wash.
  */
 export function Header({ nav, center, actions }: { nav: ReactNode; center?: ReactNode; actions?: ReactNode }) {
   // the blur and fill are for when the page has scrolled under the bar; at the top there is nothing to blur
@@ -83,10 +86,16 @@ export function Header({ nav, center, actions }: { nav: ReactNode; center?: Reac
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-[background-color,backdrop-filter] duration-200",
-        scrolled ? "bg-white/[0.01] backdrop-blur-[20px]" : "bg-transparent backdrop-blur-none"
+        scrolled ? "bg-(--alpha-dark-lg) backdrop-blur-[20px]" : "bg-transparent backdrop-blur-none"
       )}
     >
-      <div className="mx-auto flex min-h-[129px] max-w-[1280px] items-center justify-between gap-6 p-10 max-sm:min-h-[89px] max-sm:gap-3 max-sm:p-4">
+      {/* once scrolled the bar closes up to the phone's 89px, with the buttons held by 20px above and below */}
+      <div
+        className={cn(
+          "mx-auto flex max-w-[1280px] items-center justify-between gap-6 px-10 transition-[min-height,padding] duration-200 max-sm:min-h-[89px] max-sm:gap-3 max-sm:p-4",
+          scrolled ? "min-h-[89px] py-5" : "min-h-[129px] py-10"
+        )}
+      >
         <div className="flex shrink-0">{nav}</div>
         <div className="flex min-w-0 flex-1 items-center justify-center">{center}</div>
         <div className="flex shrink-0 items-center justify-end gap-3">{actions}</div>

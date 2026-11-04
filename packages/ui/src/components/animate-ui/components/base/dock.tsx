@@ -6,6 +6,7 @@ import { motion } from "motion/react"
 import { Bell, FileText, Search, Settings, SquarePlus } from "lucide-react"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 /* An animated dock inspired by the macOS dock — icons lift on hover and pop
  * on click. Ported from Watermelon UI's Dock Component
@@ -42,8 +43,9 @@ export const Dock: FC<DockProps> = ({ items = DEFAULT_DOCK_ITEMS }) => {
   return (
     <motion.div
       layout
-      className="relative flex w-fit items-center gap-1 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+6px))] border border-border bg-card px-2.5 py-1.5 shadow-xl"
+      className="relative flex w-fit items-center gap-1 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+6px))] isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-xl px-2.5 py-1.5"
     >
+      <SurfaceFill />
       {items.map((item) => (
         <motion.div
           key={item.id}

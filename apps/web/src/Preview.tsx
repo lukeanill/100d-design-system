@@ -68,13 +68,18 @@ function requestThemeFonts() {
   document.head.append(link)
 }
 
+/** The swatch is 48px, 8px smaller (40px) where the row is a single line on a smaller desktop (640 to 1099px). */
+const SWATCH = "size-12 sm:max-[1099px]:size-10"
+
 /** One quarter-pair of the swatch: the theme's secondary above its foreground, down the right half. */
 function Swatch({ palette, selected, mode }: { palette: ThemePalette; selected: boolean; mode: "light" | "dark" }) {
   // selected tiles carry a 4px black border, so the halves sit 2px further up and left than on the others
-  const half = selected ? "left-[21.67px] h-[24px] w-[25px]" : "left-[23.67px] h-[24px] w-[25px]"
-  const [top, bottom] = selected ? ["top-[-2px]", "top-[22px]"] : ["top-0", "top-[24px]"]
+  // the Figma's 48px swatch in percentages of the box, so it scales: 25 × 24 halves at 23.67 across (unselected), or in
+  // the 40px inside of the 4px border, at 21.67 across with the pair 2px up
+  const half = selected ? "left-[54.17%] h-[60%] w-[62.5%]" : "left-[49.31%] h-1/2 w-[52.08%]"
+  const [top, bottom] = selected ? ["top-[-5%]", "top-[55%]"] : ["top-0", "top-1/2"]
   return (
-    <span aria-hidden className="relative block size-12 shrink-0">
+    <span aria-hidden className={cn("relative block shrink-0", SWATCH)}>
       {/* the selected ring is the metal surface, 2px outside the swatch, always mounted so it only fades */}
       <span className="pointer-events-none absolute inset-[-2px] rounded-[14px] transition-opacity duration-300" style={{ opacity: selected ? 1 : 0 }}>
         <MetalSurface active={selected} variant="button" engine="v1" ringWidth={2} theme={mode} className="size-full rounded-[14px]! bg-transparent!">
@@ -83,7 +88,7 @@ function Swatch({ palette, selected, mode }: { palette: ThemePalette; selected: 
       </span>
     <span
       className={cn(
-        "relative block size-12 overflow-clip rounded-[12px]",
+        "relative block overflow-clip rounded-[12px]", SWATCH,
         selected && "border-4 border-solid border-black"
       )}
     >
@@ -131,10 +136,12 @@ function ThemeButton({
       aria-pressed={selected}
       onClick={onClick}
       style={style}
-      className="flex min-w-0 flex-col items-center justify-center gap-5 overflow-clip rounded-[16px] px-2 py-4 text-center text-[24px] leading-[1.14] outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-white/60 motion-reduce:transition-none min-[1100px]:flex-1"
+      className="flex min-w-0 flex-col items-center justify-center gap-5 overflow-clip rounded-[16px] px-1 py-4 text-center leading-[1.14] outline-none transition-colors duration-300 [container-type:inline-size] focus-visible:ring-2 focus-visible:ring-white/60 motion-reduce:transition-none sm:flex-1"
     >
       <Swatch palette={preset.palette} selected={selected} mode={preset.colorMode} />
-      <span className="max-w-full">{label}</span>
+      {/* 20cqw is the size at which the longest name, ILLUZION, just fits the tile: 24px when there is room, smaller as the row narrows */}
+      {/* ILLUZION is the heaviest face and reads larger than the rest, so it is 2px under the common size */}
+      <span className={cn("max-w-full", id === "illuzion" ? "text-[length:calc(min(24px,20cqw)-2px)]" : "text-[length:min(24px,20cqw)]")}>{label}</span>
     </button>
   )
 }
@@ -337,7 +344,7 @@ export function Preview() {
       <div className="flex w-full flex-col gap-12">
         <Pill>Preview</Pill>
         <div className="flex w-full flex-col gap-2">
-          <div role="group" aria-label="Theme" className="grid grid-cols-3 gap-2 min-[1100px]:flex min-[1100px]:gap-2">
+          <div role="group" aria-label="Theme" className="grid grid-cols-3 gap-2 sm:flex">
             <ThemeButton id="default" label="This Theme" selected={selected === null} onClick={() => setSelected(null)} />
             {THEMES.map(({ id, label }) => (
               <ThemeButton key={id} id={id} label={label} selected={selected === id} onClick={() => setSelected(id)} />

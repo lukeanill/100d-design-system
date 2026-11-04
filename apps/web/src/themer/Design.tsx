@@ -142,7 +142,7 @@ export function Design({
   )
 
   return (
-    <Page glow="glow-code" wide fill={stage === "design"}>
+    <Page glow="glow-code" wide fill={stage === "design"} flush={stage !== "design"}>
       <Header
         nav={<BackButton onClick={onBack} />}
         center={

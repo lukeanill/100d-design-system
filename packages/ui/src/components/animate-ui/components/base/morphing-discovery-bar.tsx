@@ -7,6 +7,7 @@ import { AnimatePresence, LayoutGroup, motion } from "motion/react"
 import { Search, X } from "lucide-react"
 
 import { glass } from "@workspace/ui/lib/glass"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 /* A search icon that expands into a search field, paired with a separate
  * tab group. Ported from Watermelon UI's Morphing Discovery Bar
@@ -51,11 +52,12 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
           <motion.div layout className={`flex max-w-full items-center gap-1.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+8px))] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
             <motion.div
               layout
-              className={`relative flex h-11 items-center overflow-hidden rounded-(--radius-button) border border-border bg-card shadow-xs transition-colors ${
+              className={`relative flex h-11 items-center overflow-hidden rounded-(--radius-button) isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm transition-colors ${
                 isSearching ? "xs:w-64 w-[calc(100vw-80px)] sm:w-80" : "w-11"
               }`}
             >
-              <div className="flex h-full w-full items-center justify-center px-3 sm:px-4">
+              <SurfaceFill />
+              <div className="relative flex h-full w-full items-center justify-center px-3 sm:px-4">
                 <motion.div layout="position">
                   <Search size={16} strokeWidth={2.25} className="shrink-0 text-foreground transition-colors" />
                 </motion.div>
@@ -89,8 +91,9 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   initial={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
                   animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
                   exit={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
-                  className="flex h-11 items-center gap-1 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] border border-border bg-card p-1"
+                  className="flex h-11 items-center gap-1 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm p-1"
                 >
+                  <SurfaceFill />
                   {categories.map((cat) => {
                     const isActive = activeTab === cat.id
 
@@ -102,12 +105,12 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                           setActiveTab(cat.id)
                           onChange?.(cat.id)
                         }}
-                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-(--radius-button) px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors ${isActive ? "text-background" : "text-foreground/75"}`}
+                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-(--radius-button) px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors hover:bg-(--control-hover) ${isActive ? "text-primary-foreground" : "text-foreground"}`}
                       >
                         {isActive && (
                           <motion.div
                             layoutId="discovery-pill-bg"
-                            className="absolute inset-0 z-[-1] rounded-[inherit] bg-foreground shadow-xs"
+                            className="absolute inset-0 z-[-1] rounded-[inherit] bg-primary shadow-xs"
                           />
                         )}
                         <span className="relative z-10 flex items-center">{cat.icon}</span>
@@ -128,9 +131,10 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                     setIsSearching(false)
                     setSearchValue("")
                   }}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-(--radius-button) border border-border bg-card text-foreground shadow-xs transition-colors"
+                  className="relative isolate flex h-11 w-11 shrink-0 outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm items-center justify-center rounded-(--radius-button) text-foreground transition-colors"
                 >
-                  <X size={16} strokeWidth={2.25} />
+                  <SurfaceFill />
+                  <X size={16} strokeWidth={2.25} className="relative" />
                 </motion.button>
               )}
             </AnimatePresence>
