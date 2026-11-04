@@ -14,6 +14,9 @@ import { VoiceGlow } from "@workspace/ui/components/voice/voice-glow"
 import { VoiceRing } from "@workspace/ui/components/voice/voice-ring"
 import { useDemoVoice } from "@workspace/ui/components/voice/demo-voice"
 import TextRotate from "@workspace/ui/components/fancy/text/text-rotate"
+import { GradientBackground } from "@workspace/ui/components/backgrounds/gradient-background"
+import { animatedBackgroundAurora } from "@workspace/ui/components/backgrounds/gradients/animated-background-aurora"
+import { animatedBackgroundHolo } from "@workspace/ui/components/backgrounds/gradients/animated-background-holo"
 import { Pill } from "./Pill"
 import { SlopesPhone } from "./SlopesPhone"
 import { DEFAULT_STYLING, themeScope } from "./explore/styling"
@@ -160,15 +163,22 @@ function CardGlass() {
 }
 
 /** A 500 × 380 card of glass, with the theme's backdrop over it. */
-function PreviewCard({ selected, className, children }: { selected: ThemeId | null; className?: string; children: ReactNode }) {
+function PreviewCard({ selected, className, background, children }: { selected: ThemeId | null; className?: string; background?: ReactNode; children: ReactNode }) {
   return (
     <div className={cn("relative isolate h-[380px] overflow-clip rounded-[24px] text-foreground", className)}>
       <CardGlass />
       <ThemeBackdrop selected={selected} />
+      {background}
       {children}
     </div>
   )
 }
+
+/** Aurora at twice its speed (0.205). */
+const AURORA_FAST = { ...animatedBackgroundAurora, speed: 0.41 }
+
+/** Holo at half its speed (1.265), so the voice card's background drifts rather than flows. */
+const HOLO_SLOW = { ...animatedBackgroundHolo, speed: 0.63 }
 
 /** The scale that fits the 402-wide phone to the card at 289, which also brings its 66px bottom corner to the Figma's 48. */
 const PHONE_SCALE = 289 / 402
@@ -212,7 +222,7 @@ function VoiceCard({ selected }: { selected: ThemeId | null }) {
   const glowColors = selected ? "theme" : "colorful"
   const ringColors = selected ? "theme" : "spectrum"
   return (
-    <PreviewCard selected={selected}>
+    <PreviewCard selected={selected} background={<GradientBackground config={HOLO_SLOW} useThemeColors scrim={0.75} className="opacity-50" />}>
       <Carousel opts={{ align: "start" }} setApi={setApi} className="h-full">
         <CarouselContent className="ml-0">
           <CarouselItem className="h-[380px] pl-0">
@@ -335,7 +345,7 @@ export function Preview() {
       {/* the system's components on the left, and on the right the voice components, one at a time */}
       <div className="flex w-full flex-col gap-6">
         <div className={cn(scope.className, "grid w-full grid-cols-1 gap-10 font-[family-name:var(--font-body)] [font-weight:var(--font-body-weight)] min-[1100px]:grid-cols-2")} style={scope.style}>
-          <PreviewCard selected={selected} className="min-w-0">
+          <PreviewCard selected={selected} className="min-w-0" background={<GradientBackground config={AURORA_FAST} useThemeColors scrim={0.75} className="opacity-50" />}>
             <div className="relative flex h-full flex-col items-center justify-evenly px-6">
               <FluidTabs />
               <div className="flex items-center gap-3">
