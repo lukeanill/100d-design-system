@@ -376,13 +376,17 @@ export function Preview() {
         <Pill>Projects</Pill>
         <div className="flex w-full flex-col gap-10 min-[1100px]:flex-row min-[1100px]:gap-8">
           <MediaLink href="https://slopes.lukeai.space" visual={(hovered) => <SlopesPhone playing={hovered} />} label="Slopes map">
-            Real-time slope analysis, <em className="text-h6-sec-bold">anywhere.</em>
+            Real-time slope analysis,
+            <br />
+            <em className="text-h6-sec-bold">anywhere on earth.</em>
           </MediaLink>
           <MediaLink href="https://goodnudge.lukeai.space" image="/home/goodnudge.webp" label="Good nudge guidance">
             A collection of behavioral nudge principles. <em className="text-h6-sec-bold">Don’t deceive.</em>
           </MediaLink>
           <MediaLink href="https://chart.lukeai.space" image="/home/chart-horoscopes.png" label="Birth chart horoscopes">
-            Written in the stars. <em className="text-h6-sec-bold">Shared by stars.</em>
+            Written in the stars.
+            <br />
+            <em className="text-h6-sec-bold">Shared by stars &amp; their friends.</em>
           </MediaLink>
         </div>
       </div>

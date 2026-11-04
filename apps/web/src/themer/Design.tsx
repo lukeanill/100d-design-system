@@ -160,11 +160,14 @@ export function Design({
       {stage === "design" ? (
         <div className="mx-auto flex min-h-0 w-full max-w-[800px] flex-1 flex-col">
           {/* the title always in the middle, Random at the right edge: the title keeps clear of the button and wraps if it must */}
-          <div className="relative mb-8 flex min-h-10 shrink-0 items-center justify-center">
-            <h3 className="px-[7.25rem] text-center text-[28px] leading-[1.2]">Set your theme choices</h3>
-            <Button variant="outline" onClick={randomOrClear} className="absolute top-1/2 right-0 h-10 shrink-0 -translate-y-1/2 rounded-[12px] border-white px-5 text-base leading-none">
-              {filled ? "Clear" : "Random"}
-            </Button>
+          {/* the padding is PageTitle's (32 above, 60 below), so the spacing matches the other screens */}
+          <div className="shrink-0 pt-8 pb-[60px]">
+            <div className="relative flex min-h-10 items-center justify-center">
+              <h3 className="px-[7.25rem] text-center text-[48px] leading-[1.22] max-sm:text-[32px]">Create a Theme</h3>
+              <Button variant="secondary" onClick={randomOrClear} className="absolute top-1/2 right-0 h-10 shrink-0 -translate-y-1/2 rounded-[12px] bg-secondary/50 px-5 text-base leading-none hover:bg-secondary/60">
+                {filled ? "Clear" : "Random"}
+              </Button>
+            </div>
           </div>
           <CodeEditor text={text} onChange={edit} errors={errors} />
           {errors.length > 0 && (

@@ -1,6 +1,5 @@
-import { useRef, useState, type CSSProperties, type ReactNode } from "react"
-import { Popover, PopoverPanel } from "@workspace/ui/components/animate-ui/components/base/popover"
-import { GlassLayer, LiquidGlass, glassProps } from "@workspace/ui/components/liquid-glass"
+import { useState, type CSSProperties, type ReactNode } from "react"
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "@workspace/ui/components/drawer"
 import { BODY, LinkTile, MIGRA } from "./LinkTile"
 import { Pill } from "./Pill"
 import { Preview } from "./Preview"
@@ -80,52 +79,41 @@ function Backdrop() {
   )
 }
 
-/** One command in the install panel: Soft dark glass, with the text in the chart green. */
+/** One command in the install panel: a solid dark fill (alpha/dark/lg), with the text in the chart green. */
 function CodeBox({ children }: { children: ReactNode }) {
   return (
-    <div className="relative isolate flex w-full items-center rounded-[16px] p-6">
-      <GlassLayer weight="soft" tone="dark" radius={16} />
-      <code className={`${MONO} relative min-w-0 flex-1 text-[18px] leading-[1.14] break-all text-[#00bc7d]`}>{children}</code>
+    <div className="relative isolate flex w-full items-center rounded-[16px] bg-(--alpha-dark-lg) p-6">
+      <code className={`${MONO} relative min-w-0 flex-1 text-[16px] leading-[1.14] break-all text-[#00bc7d]`}>{children}</code>
     </div>
   )
 }
 
 /**
- * The install panel the third tile opens (Figma 287:7271): Heavy dark glass that
- * overlaps the second and third tiles, 30px past the row's right edge and 16px
- * above it. It is the design system's Popover, so it comes in with its spring and
- * closes on Escape or a click outside; the row is its anchor. The Popover's own
- * surface is switched off so the glass is the only one, and the panel scales in
- * without fading (the content fades instead) so the refraction is there from the first frame.
+ * The install panel the third tile opens, in the design system's Drawer: it rises from the bottom
+ * with its own glass, handle and overlay, and closes on Escape, a click outside or a drag down.
  */
-function InstallPanel({ anchor }: { anchor: React.RefObject<HTMLElement | null> }) {
+function InstallDrawer({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   return (
-    <PopoverPanel
-      anchor={anchor}
-      side="bottom"
-      align="end"
-      sideOffset={({ anchor }) => -(anchor.height + 16)}
-      alignOffset={-30}
-      initialFocus={false}
-      fade={false}
-      className="w-[min(571px,calc(100vw-40px))] rounded-[16px] border-0 p-0 shadow-none"
-      style={{ "--glass-layer": "none", "--glass-surface": "transparent" } as CSSProperties}
-    >
-      <LiquidGlass radius={16} {...glassProps("heavy", "dark")} style={{ boxShadow: "0 24px 40px rgba(0, 0, 0, 0.25)" }}>
-        <div className="flex animate-in flex-col justify-end gap-6 p-6 duration-300 fade-in-0 sm:p-10">
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      <DrawerContent overlayClassName="bg-(--alpha-dark-md)" className="data-[vaul-drawer-direction=bottom]:border-t-0">
+        <div className="mx-auto flex w-full max-w-[571px] flex-col gap-6 px-6 pb-10 sm:px-10">
+          <DrawerHeader className="px-0">
+            <DrawerTitle>Use the system in your AI tool</DrawerTitle>
+            <DrawerDescription className="sr-only">Install the package from the command line or through package.json.</DrawerDescription>
+          </DrawerHeader>
           <div className="flex w-full flex-col gap-4">
             <p className={`${BODY} text-[18px] leading-[1.42]`}>Install from command line</p>
             <CodeBox>npm install @lukeanill/ui</CodeBox>
             <p className={`${BODY} text-[18px] leading-[1.42]`}>Install via package.json</p>
             <CodeBox>&quot;@lukeanill/ui&quot;</CodeBox>
           </div>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="flex w-full items-center justify-end gap-2 py-6">
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="flex w-full items-center justify-end gap-2 py-2">
             <span className={`${BODY} text-[16px] leading-[1.42] whitespace-nowrap`}>View on Github</span>
             <img alt="" src="/home/arrow-right.svg" className="size-4 shrink-0" />
           </a>
         </div>
-      </LiquidGlass>
-    </PopoverPanel>
+      </DrawerContent>
+    </Drawer>
   )
 }
 
@@ -157,7 +145,6 @@ const BODY_LG = `${BODY} text-lg leading-[1.42]`
 
 export function Showcase() {
   const [installOpen, setInstallOpen] = useState(false)
-  const tilesRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="relative isolate flex min-h-svh flex-col items-center overflow-x-clip bg-black text-[#fbfbfc]">
@@ -194,8 +181,7 @@ export function Showcase() {
 
         {/* Three link tiles */}
         <Section className="pt-10 pb-[clamp(40px,6.25vw,80px)]">
-          <Popover open={installOpen} onOpenChange={setInstallOpen}>
-          <div ref={tilesRef} className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
           <LinkTile
             image="/home/tile-blob.png"
             title={
@@ -211,14 +197,12 @@ export function Showcase() {
           <LinkTile image="/home/tile-box.png" title="Your look, feel and principles" label="Build your theme" to="/themes" />
           <LinkTile
             image="/home/tile-star.png"
-            title={installOpen ? "npm install @lukeanill/ui@4.3.0" : "Use the system in your AI tool"}
+            title="Use the system in your AI tool"
             label="Install package"
-            showArrow={!installOpen}
-            popoverTrigger
+            onClick={() => setInstallOpen(true)}
           />
           </div>
-          <InstallPanel anchor={tilesRef} />
-          </Popover>
+          <InstallDrawer open={installOpen} onOpenChange={setInstallOpen} />
         </Section>
 
         {/* Preview */}

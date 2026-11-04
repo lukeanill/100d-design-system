@@ -57,13 +57,16 @@ function DrawerContent({
   className,
   children,
   showHandle = true,
+  overlayClassName,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Content> & {
   showHandle?: boolean
+  /** Classes for the scrim behind the drawer, to give it a different fill */
+  overlayClassName?: string
 }) {
   return (
     <DrawerPortal>
-      <DrawerOverlay />
+      <DrawerOverlay className={overlayClassName} />
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(

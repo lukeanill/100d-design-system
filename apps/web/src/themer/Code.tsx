@@ -2,7 +2,7 @@ import { useMemo } from "react"
 
 import { cn } from "@workspace/ui/lib/utils"
 
-import { ActionButton, BackButton, Header, HomeButton, Page, PageTitle } from "./Chrome"
+import { ActionButton, BackButton, Header, Page, PageTitle } from "./Chrome"
 
 type Kind = "comment" | "prop" | "value" | "plain"
 interface Piece {
@@ -75,7 +75,7 @@ export function CodePanel({ code, numbered }: { code: string; numbered?: boolean
 export function CodeScreen({ code, onHome, onDownload }: { code: string; onHome: () => void; onDownload: () => void }) {
   return (
     <Page glow="glow-code" fill>
-      <Header nav={<HomeButton onClick={onHome} />} actions={<ActionButton onClick={onDownload}>Download</ActionButton>} />
+      <Header nav={<BackButton onClick={onHome} />} actions={<ActionButton onClick={onDownload}>Download</ActionButton>} />
       <PageTitle>Theme Code</PageTitle>
       <CodePanel code={code} numbered />
     </Page>

@@ -113,7 +113,7 @@ export const BackButton = ({ onClick, label = "Back" }: { onClick: () => void; l
 export const HomeButton = ({ onClick }: { onClick: () => void }) => (
   <Button variant="outline" onClick={onClick} className={cn(bar, "max-sm:w-auto")}>
     <ArrowUpLeftIcon size={24} />
-    Back
+    Home
   </Button>
 )
 

@@ -42,7 +42,7 @@ export const Dock: FC<DockProps> = ({ items = DEFAULT_DOCK_ITEMS }) => {
   return (
     <motion.div
       layout
-      className="relative flex w-fit items-center gap-1 rounded-full border border-border bg-card px-2.5 py-1.5 shadow-xl"
+      className="relative flex w-fit items-center gap-1 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+6px))] border border-border bg-card px-2.5 py-1.5 shadow-xl"
     >
       {items.map((item) => (
         <motion.div

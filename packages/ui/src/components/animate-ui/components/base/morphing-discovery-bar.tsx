@@ -48,10 +48,10 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
     <div className={`flex w-full flex-col items-center justify-center bg-transparent p-2 transition-colors duration-(--motion-duration) sm:p-4 ${className}`}>
       <div className="flex h-14 w-full max-w-full items-center justify-center">
         <LayoutGroup>
-          <motion.div layout className={`flex max-w-full items-center gap-1.5 rounded-[32px] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
+          <motion.div layout className={`flex max-w-full items-center gap-1.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+8px))] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
             <motion.div
               layout
-              className={`relative flex h-11 items-center overflow-hidden rounded-full border border-border bg-card shadow-xs transition-colors ${
+              className={`relative flex h-11 items-center overflow-hidden rounded-(--radius-button) border border-border bg-card shadow-xs transition-colors ${
                 isSearching ? "xs:w-64 w-[calc(100vw-80px)] sm:w-80" : "w-11"
               }`}
             >
@@ -89,7 +89,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   initial={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
                   animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
                   exit={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
-                  className="flex h-11 items-center gap-1 overflow-hidden rounded-full border border-border bg-card p-1"
+                  className="flex h-11 items-center gap-1 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] border border-border bg-card p-1"
                 >
                   {categories.map((cat) => {
                     const isActive = activeTab === cat.id
@@ -102,12 +102,12 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                           setActiveTab(cat.id)
                           onChange?.(cat.id)
                         }}
-                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-full px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors ${isActive ? "text-background" : "text-foreground/75"}`}
+                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-(--radius-button) px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors ${isActive ? "text-background" : "text-foreground/75"}`}
                       >
                         {isActive && (
                           <motion.div
                             layoutId="discovery-pill-bg"
-                            className="absolute inset-0 z-[-1] rounded-full bg-foreground shadow-xs"
+                            className="absolute inset-0 z-[-1] rounded-[inherit] bg-foreground shadow-xs"
                           />
                         )}
                         <span className="relative z-10 flex items-center">{cat.icon}</span>
@@ -128,7 +128,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                     setIsSearching(false)
                     setSearchValue("")
                   }}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-xs transition-colors"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-(--radius-button) border border-border bg-card text-foreground shadow-xs transition-colors"
                 >
                   <X size={16} strokeWidth={2.25} />
                 </motion.button>

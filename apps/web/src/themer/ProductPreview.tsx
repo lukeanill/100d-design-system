@@ -122,7 +122,7 @@ function Page({ draft }: { draft: ThemeDraft }) {
         <div className="flex min-w-0 flex-1 flex-col gap-16">
           <div className="flex flex-col gap-10">
             <div className="flex justify-end">
-              <Button variant="secondary" size="icon-lg" className="rounded-full" aria-label="Favourite">
+              <Button variant="secondary" size="icon-lg" aria-label="Favourite">
                 <Icon kind="heart" draft={draft} size={18} />
               </Button>
             </div>

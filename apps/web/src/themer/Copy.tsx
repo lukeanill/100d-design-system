@@ -127,8 +127,8 @@ export function Copy({
                   : { fontFamily: `'${t.fonts.display.family}', serif`, fontWeight: t.fonts.display.weight }
               }
             >
-              {/* 18.5cqw is the size at which the longest name, Bootshaus, just fits the tile; every name takes it, up to 48px (32px on a phone) */}
-              <span className="text-[length:min(48px,18.5cqw)] max-sm:text-[length:min(32px,18.5cqw)]">{TILE_LABELS[t.id] ?? t.label}</span>
+              {/* 18.5cqw is the size at which the longest name, Bootshaus, just fits the tile; every name takes it, up to 24px */}
+              <span className="text-[length:min(24px,18.5cqw)]">{TILE_LABELS[t.id] ?? t.label}</span>
             </button>
           )
         })}

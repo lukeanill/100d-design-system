@@ -41,7 +41,7 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
   }, [activeTab])
 
   return (
-    <div className="mx-auto flex h-11 w-fit items-center gap-1 rounded-full border border-border bg-card p-1">
+    <div className="mx-auto flex h-11 w-fit items-center gap-1 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] border border-border bg-card p-1">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab
         return (
@@ -53,7 +53,7 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
               {isActive && (
                 <motion.div
                   layoutId="discrete-tabs-active-bg"
-                  className="absolute inset-0 rounded-full bg-foreground shadow-xs"
+                  className="absolute inset-0 rounded-(--radius-button) bg-foreground shadow-xs"
                 />
               )}
               <div className="relative z-10 flex h-full cursor-pointer items-center gap-1.5 px-3">
