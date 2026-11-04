@@ -22,6 +22,6 @@ export const FluidTabs = (args: ComponentProps<typeof FluidTabsImpl>) => <FluidT
 FluidTabs.play = async ({ args, canvasElement }: StoryContext) => {
   const canvas = within(canvasElement)
 
-  await userEvent.click(canvas.getByRole("button", { name: "Deposits" }))
-  await expect(args.onChange).toHaveBeenCalledWith("deposits")
+  await userEvent.click(canvas.getByRole("button", { name: "Feel" }))
+  await expect(args.onChange).toHaveBeenCalledWith("feel")
 }

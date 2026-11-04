@@ -15,7 +15,6 @@ import { VoiceRing } from "@workspace/ui/components/voice/voice-ring"
 import { useDemoVoice } from "@workspace/ui/components/voice/demo-voice"
 import TextRotate from "@workspace/ui/components/fancy/text/text-rotate"
 import { Pill } from "./Pill"
-import { BODY, MIGRA } from "./LinkTile"
 import { SlopesPhone } from "./SlopesPhone"
 import { DEFAULT_STYLING, themeScope } from "./explore/styling"
 
@@ -297,12 +296,12 @@ function MediaLink({
             {visual(hovered)}
           </>
         ) : image ? (
-          <img alt="" src={image} className="absolute inset-0 size-full object-cover" />
+          <img alt="" src={image} className="absolute inset-0 size-full object-cover object-top" />
         ) : null}
       </div>
       <div className="flex flex-col gap-2">
-        <p className={`${BODY} text-[16px] leading-[1.42]`}>{label}</p>
-        <p className={`${MIGRA} text-[28px] leading-[1.14] font-extralight`}>{children}</p>
+        <p className="text-md">{label}</p>
+        <p className="text-h6-pri">{children}</p>
       </div>
     </a>
   )
@@ -358,15 +357,18 @@ export function Preview() {
         </div>
       </div>
 
-      {/* two products built with it */}
+      {/* three products built with it */}
       <div className="mt-10 flex w-full flex-col gap-12">
         <Pill>Projects</Pill>
-        <div className="flex w-full flex-col gap-10 min-[1100px]:flex-row">
+        <div className="flex w-full flex-col gap-10 min-[1100px]:flex-row min-[1100px]:gap-8">
           <MediaLink href="https://slopes.lukeai.space" visual={(hovered) => <SlopesPhone playing={hovered} />} label="Slopes map">
-            Real-time slope analysis, <em className="font-extrabold italic">anywhere.</em>
+            Real-time slope analysis, <em className="text-h6-sec-bold">anywhere.</em>
+          </MediaLink>
+          <MediaLink href="https://goodnudge.lukeai.space" image="/home/goodnudge.webp" label="Good nudge guidance">
+            A collection of behavioral nudge principles. <em className="text-h6-sec-bold">Don’t deceive.</em>
           </MediaLink>
           <MediaLink href="https://chart.lukeai.space" image="/home/chart-horoscopes.png" label="Birth chart horoscopes">
-            Written in the stars. <em className="font-extrabold italic">Shared by stars.</em>
+            Written in the stars. <em className="text-h6-sec-bold">Shared by stars.</em>
           </MediaLink>
         </div>
       </div>
