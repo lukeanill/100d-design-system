@@ -1,5 +1,5 @@
 import {
-  ElementType,
+  type ElementType,
   forwardRef,
   useCallback,
   useEffect,
@@ -9,10 +9,10 @@ import {
 } from "react"
 import {
   AnimatePresence,
-  AnimatePresenceProps,
+  type AnimatePresenceProps,
   motion,
-  MotionProps,
-  Transition,
+  type MotionProps,
+  type Transition,
 } from "motion/react"
 
 import { cn } from "@workspace/ui/lib/utils"
