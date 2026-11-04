@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 
-import { GlassLayer } from "@workspace/ui/components/liquid-glass"
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 import type { ThemeDraft } from "@workspace/ui/themes"
 
 import { ActionButton, BackButton, Header, Page } from "./Chrome"
 import { checkFont, loadPickerFonts } from "./fontLoading"
-import { OPTIONS, draftToText, textToDraft, type LineError } from "./options"
+import { OPTIONS, draftToText, randomDraft, textToDraft, type LineError } from "./options"
 import { ProductPreview } from "./ProductPreview"
-import { feelMissing, lookMissing, valuesMissing } from "./state"
+import { emptyDraft, feelMissing, lookMissing, valuesMissing } from "./state"
 
 export type Stage = "design" | "preview"
 
@@ -40,9 +40,9 @@ function CodeEditor({ text, onChange, errors }: { text: string; onChange: (t: st
   const bad = new Set(errors.map((e) => e.line))
   let open = false
   return (
-    <div className="relative isolate rounded-2xl border border-white/10">
-      <GlassLayer weight="soft" tint="rgba(27, 27, 27, 0.9)" radius={16} />
-      <div className="relative overflow-auto rounded-2xl p-6 max-sm:p-3" style={{ maxHeight: "min(560px, 62vh)" }}>
+    // a plain colour fill, not glass: the Figma's alpha/dark/lg (#1e1e1e at 32%)
+    <div className="relative isolate min-h-0 flex-1 rounded-2xl border border-white/10 bg-(--alpha-dark-lg)">
+      <div className="absolute inset-0 overflow-auto rounded-2xl p-6 max-sm:p-3">
         <div className="relative w-max min-w-full">
           <pre aria-hidden className="font-mono text-[13px] text-white" style={{ lineHeight: `${LINE}px` }}>
             {lines.map((l, i) => {
@@ -121,6 +121,14 @@ export function Design({
 
   const gap = useMemo(() => designGap(draft, errors), [draft, errors])
 
+  // Random fills every answer; the button then becomes Clear, which empties them again. Both go through
+  // the editor's own text, so what is on screen is always what was read.
+  const [filled, setFilled] = useState(false)
+  const randomOrClear = () => {
+    edit(draftToText(filled ? emptyDraft() : randomDraft()))
+    setFilled(!filled)
+  }
+
   const word = (id: Stage, label: string) => (
     <button
       type="button"
@@ -134,7 +142,7 @@ export function Design({
   )
 
   return (
-    <Page glow={false} wide>
+    <Page glow="glow-code" wide fill={stage === "design"}>
       <Header
         nav={<BackButton onClick={onBack} />}
         center={
@@ -150,11 +158,17 @@ export function Design({
         }
       />
       {stage === "design" ? (
-        <div className="mx-auto w-full max-w-[800px] rounded-2xl border border-white/20 bg-white/[0.03] p-10 max-sm:p-4">
-          <h3 className="mb-8 text-[28px] leading-[1.2]">Set your theme choices</h3>
+        <div className="mx-auto flex min-h-0 w-full max-w-[800px] flex-1 flex-col">
+          {/* the title always in the middle, Random at the right edge: the title keeps clear of the button and wraps if it must */}
+          <div className="relative mb-8 flex min-h-10 shrink-0 items-center justify-center">
+            <h3 className="px-[7.25rem] text-center text-[28px] leading-[1.2]">Set your theme choices</h3>
+            <Button variant="outline" onClick={randomOrClear} className="absolute top-1/2 right-0 h-10 shrink-0 -translate-y-1/2 rounded-[12px] border-white px-5 text-base leading-none">
+              {filled ? "Clear" : "Random"}
+            </Button>
+          </div>
           <CodeEditor text={text} onChange={edit} errors={errors} />
           {errors.length > 0 && (
-            <ul role="alert" className="mt-4 flex flex-col gap-1 text-sm text-red-400">
+            <ul role="alert" className="mt-4 flex shrink-0 flex-col gap-1 text-sm text-red-400">
               {errors.map((e) => (
                 <li key={e.line}>
                   Line {e.line}: {e.message}

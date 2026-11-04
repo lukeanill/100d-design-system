@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest"
 
 import { getPreset } from "@workspace/ui/themes"
 
-import { GROUPS, OPTIONS, draftToText, textToDraft } from "./options"
+import { GROUPS, OPTIONS, draftToText, randomDraft, textToDraft } from "./options"
+import { designGap } from "./Design"
 import { draftFromPreset, draftToTheme, emptyDraft, feelDone, lookDone, valuesDone } from "./state"
 
 describe("the theming options", () => {
@@ -107,5 +108,36 @@ describe("the 6.0 theme model", () => {
     expect(draftToTheme(draft).fonts.secondary.family).toBe("Newsreader")
     const same = textToDraft(draftToText(emptyDraft()).replace("heading primary font:", "heading primary font: Intan"), emptyDraft()).draft
     expect(draftToTheme(same).fonts.secondary.family).toBe("Intan")
+  })
+})
+
+describe("a random theme", () => {
+  it("answers every option with something it accepts, so nothing is left to do", () => {
+    for (let i = 0; i < 60; i++) {
+      const text = draftToText(randomDraft())
+      const { draft, errors } = textToDraft(text, emptyDraft())
+      expect(errors, text).toEqual([])
+      expect(designGap(draft, errors)).toEqual([])
+    }
+  })
+
+  it("gives each font a weight it has, and never an unreadable pair of colours", () => {
+    for (let i = 0; i < 60; i++) {
+      const d = randomDraft()
+      const theme = draftToTheme(d)
+      expect(theme.fonts.display.weight).toBe(d.headingWeight)
+      expect(theme.fonts.body.weight).toBe(d.bodyWeight)
+      expect(["#ffffff", "#0f0e0e"]).toContain(d.foreground)
+    }
+  })
+
+  it("is cleared by an empty draft: every answer goes back to empty", () => {
+    const filled = textToDraft(draftToText(randomDraft()), emptyDraft()).draft
+    const { draft, errors } = textToDraft(draftToText(emptyDraft()), filled)
+    expect(errors).toEqual([])
+    expect(designGap(draft, errors).length).toBeGreaterThan(10)
+    expect(draft.label).toBe("")
+    expect(draft.background).toBeUndefined()
+    expect(draft.values.every((v) => v === undefined)).toBe(true)
   })
 })

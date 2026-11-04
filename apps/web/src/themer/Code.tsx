@@ -1,6 +1,5 @@
 import { useMemo } from "react"
 
-import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { ActionButton, BackButton, Header, HomeButton, Page, PageTitle } from "./Chrome"
@@ -49,12 +48,9 @@ function tokenize(code: string): Piece[][] {
 export function CodePanel({ code, numbered }: { code: string; numbered?: boolean }) {
   const lines = useMemo(() => tokenize(code), [code])
   return (
-    <div className="relative isolate rounded-2xl border border-white/15">
-      <GlassLayer weight="medium" tint="rgba(27, 27, 27, 0.9)" radius={16} />
-      <div
-        className="relative overflow-auto rounded-2xl px-10 py-12 max-sm:px-4 max-sm:py-6"
-        style={{ maxHeight: "min(780px, 75vh)" }}
-      >
+    // the same panel as the Design page's editor: a plain alpha/dark/lg fill, running down to the bottom
+    <div className="relative isolate min-h-0 flex-1 rounded-2xl border border-white/10 bg-(--alpha-dark-lg)">
+      <div className="absolute inset-0 overflow-auto rounded-2xl p-6 max-sm:p-3">
         <pre className="font-mono text-[13px] leading-[23px] text-white" tabIndex={0} aria-label="Theme code">
           {lines.map((pieces, i) => (
             <div key={i} className="flex">
@@ -78,7 +74,7 @@ export function CodePanel({ code, numbered }: { code: string; numbered?: boolean
 /** Get the Code: the template, numbered, with Download. */
 export function CodeScreen({ code, onHome, onDownload }: { code: string; onHome: () => void; onDownload: () => void }) {
   return (
-    <Page glow="glow-code">
+    <Page glow="glow-code" fill>
       <Header nav={<HomeButton onClick={onHome} />} actions={<ActionButton onClick={onDownload}>Download</ActionButton>} />
       <PageTitle>Theme Code</PageTitle>
       <CodePanel code={code} numbered />
@@ -99,7 +95,7 @@ export function MyThemeScreen({
   onExit: () => void
 }) {
   return (
-    <Page glow={false}>
+    <Page glow={false} fill>
       <Header
         nav={<BackButton onClick={onBack} />}
         actions={
@@ -109,7 +105,10 @@ export function MyThemeScreen({
           </>
         }
       />
-      <h3 className="mb-[60px] pt-8 text-center text-[28px] leading-[1.14]">Get your theme code</h3>
+      {/* the same title row as the Design page: a 40px row under the header, then 32px to the panel */}
+      <div className="mb-8 flex min-h-10 shrink-0 items-center justify-center">
+        <h3 className="text-center text-[28px] leading-[1.2]">Get your theme code</h3>
+      </div>
       <CodePanel code={code} />
     </Page>
   )

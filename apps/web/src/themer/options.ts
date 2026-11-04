@@ -21,8 +21,10 @@ import {
   TRANSITIONS,
   TRANSITION_COLORS,
   VALUE_QUESTIONS,
+  fontChoice,
   isHex,
   normalizeHex,
+  onColor,
   type ThemeDraft,
 } from "@workspace/ui/themes"
 
@@ -327,3 +329,69 @@ export function textToDraft(text: string, previous: ThemeDraft): { draft: ThemeD
   })
   return { draft, errors }
 }
+
+/* --- a random theme --------------------------------------------------------------- */
+
+const pick = <T,>(items: readonly T[]): T => items[Math.floor(Math.random() * items.length)]
+const between = (min: number, max: number) => min + Math.random() * (max - min)
+
+const NAME_WORDS = [
+  ["Aurora", "Cobalt", "Ember", "Harbor", "Lumen", "Moss", "Nova", "Onyx", "Saffron", "Tide", "Velvet", "Zephyr"],
+  ["Dusk", "Field", "Glow", "Grove", "Mist", "Pulse", "Shore", "Signal", "Slate", "Studio", "Tone", "Wave"],
+]
+
+/** A colour from hue (0–360), saturation and lightness (0–1), as six-digit hex. */
+function hslToHex(h: number, s: number, l: number): string {
+  const k = (n: number) => (n + h / 30) % 12
+  const a = s * Math.min(l, 1 - l)
+  const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
+  return "#" + [f(0), f(8), f(4)].map((v) => Math.round(v * 255).toString(16).padStart(2, "0")).join("")
+}
+
+/**
+ * A theme with every option answered, at random. Each answer is one the option accepts: a font from
+ * its own list with a weight that font has, and the foreground is the readable ink for the
+ * background, so the result is never unreadable. Written as text and read back, it is a complete
+ * draft with nothing left to do.
+ */
+export function randomDraft(): ThemeDraft {
+  let d: ThemeDraft = { label: "", values: [undefined, undefined, undefined, undefined] }
+  const dark = Math.random() < 0.5
+  const background = hslToHex(between(0, 360), between(0.1, 0.5), dark ? between(0.06, 0.18) : between(0.9, 0.96))
+  const colors: Record<string, string> = {
+    background,
+    foreground: onColor(background),
+    primary: hslToHex(between(0, 360), between(0.55, 0.85), between(0.45, 0.6)),
+    secondary: hslToHex(between(0, 360), between(0.3, 0.6), dark ? between(0.3, 0.45) : between(0.7, 0.85)),
+  }
+  for (const o of OPTIONS) {
+    const k = o.kind
+    let value: unknown
+    switch (k.type) {
+      case "text":
+        value = `${pick(NAME_WORDS[0])} ${pick(NAME_WORDS[1])}`
+        break
+      case "hex":
+        value = colors[o.field]
+        break
+      case "font":
+        value = pick(k.families)
+        break
+      case "weight": {
+        // the options list each font before its weight
+        const family = (d as unknown as Record<string, unknown>)[o.field.replace("Weight", "Font")] as string
+        value = pick(fontChoice(family)?.weights ?? [400])
+        break
+      }
+      case "toggle":
+        value = Math.random() < 0.5
+        break
+      case "choice":
+        value = pick(k.choices)
+        break
+    }
+    d = write(d, o, value)
+  }
+  return d
+}
+

@@ -1,4 +1,4 @@
-import { ArrowDownLeftIcon, ArrowUpLeftIcon } from "@phosphor-icons/react"
+import { ArrowUpLeftIcon } from "@phosphor-icons/react"
 import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react"
 
@@ -9,21 +9,24 @@ import { cn } from "@workspace/ui/lib/utils"
  * The page every Themer screen sits on: black, with the glow behind the top (and, on some
  * screens, the rings at the bottom). `wide` is the build screen's own layout, the Figma's 1280
  * frame, and it is also plain: that frame draws no background effects. Every other screen keeps
- * the homepage's 1040 column and its glow. Both start below the header bar.
+ * the homepage's 1040 column and its glow. Both start below the header bar. `fill` makes the page
+ * exactly the window's height, so what is inside can run down to the bottom.
  */
 export function Page({
   children,
   glow = "glow",
   rings = false,
   wide = false,
+  fill = false,
 }: {
   children: ReactNode
   glow?: "glow" | "glow-code" | false
   rings?: boolean
   wide?: boolean
+  fill?: boolean
 }) {
   return (
-    <div className="relative isolate min-h-screen overflow-x-clip bg-black text-foreground">
+    <div className={cn("relative isolate overflow-x-clip bg-black text-foreground", fill ? "h-svh" : "min-h-screen")}>
       {glow && (
         <div
           aria-hidden
@@ -39,11 +42,23 @@ export function Page({
         />
       )}
       {wide ? (
-        <div className="mx-auto w-full max-w-[1280px] px-10 pt-[137px] pb-40 max-sm:px-4 max-sm:pt-[105px]">{children}</div>
+        <div
+          className={cn(
+            "mx-auto w-full max-w-[1280px] px-10 pt-[137px] max-sm:px-4 max-sm:pt-[105px]",
+            fill ? "flex h-full flex-col pb-10 max-sm:pb-4" : "pb-40"
+          )}
+        >
+          {children}
+        </div>
       ) : (
         // the homepage's column: 1040 wide, held by side padding that grows with the window up to 120
-        <div className="w-full px-[clamp(20px,9.375vw,120px)] pt-[137px] pb-40 max-sm:pt-[105px]">
-          <div className="mx-auto w-full max-w-[1040px]">{children}</div>
+        <div
+          className={cn(
+            "w-full px-[clamp(20px,9.375vw,120px)] pt-[137px] max-sm:pt-[105px]",
+            fill ? "flex h-full flex-col pb-10 max-sm:pb-4" : "pb-40"
+          )}
+        >
+          <div className={cn("mx-auto w-full max-w-[1040px]", fill && "flex min-h-0 flex-1 flex-col")}>{children}</div>
         </div>
       )}
     </div>
@@ -97,8 +112,8 @@ export const BackButton = ({ onClick, label = "Back" }: { onClick: () => void; l
 
 export const HomeButton = ({ onClick }: { onClick: () => void }) => (
   <Button variant="outline" onClick={onClick} className={cn(bar, "max-sm:w-auto")}>
-    <ArrowDownLeftIcon size={24} />
-    Home
+    <ArrowUpLeftIcon size={24} />
+    Back
   </Button>
 )
 

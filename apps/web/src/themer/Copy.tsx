@@ -1,5 +1,3 @@
-import { ChatCircleDotsIcon, CalendarHeartIcon, NotePencilIcon, ArrowUpIcon } from "@phosphor-icons/react"
-
 import { presets, themeStyle, type Theme } from "@workspace/ui/themes"
 import { cn } from "@workspace/ui/lib/utils"
 
@@ -20,27 +18,15 @@ const TILE_LABELS: Record<string, string> = {
   amnesia: "Amensia",
   ushuaia: "Ashuaia",
 }
-/**
- * The font name each theme's specimen shows, as written on the Figma Themes frame
- * (node 9:178), typos included: "Glook" is shown as drawn, for the designer to decide.
- */
-const SPECIMEN_NAMES: Record<string, string> = {
-  fabrik: "Folio",
-  illuzion: "Intan",
-  laroc: "GT PRESSURA",
-  bootshaus: "ITC Garamond",
-  berghain: "PP Editorial",
-  savaya: "Glook",
-  pacha: "Khaviax",
-  amnesia: "Swear",
-  ushuaia: "Migra",
-}
-
 /** Spacing is stored as sm, md, lg; the panel says it in words. */
 const SPACING_WORDS = { sm: "small", md: "medium", lg: "large" } as const
 
-/** What the Preview panel says about a theme's six settings, in Figma's order. */
-const settingsOf = (t: Theme) => [
+/**
+ * What the Preview panel says about a theme's six settings, in Figma's order. Every value is read from
+ * the theme being shown, so the panel can only say what the theme is; copy.test.ts holds it to the
+ * tokens the theme writes.
+ */
+export const settingsOf = (t: Theme) => [
   ["shadow", t.shadow],
   ["spacing", SPACING_WORDS[t.spacing]],
   ["radius", t.radius],
@@ -48,6 +34,9 @@ const settingsOf = (t: Theme) => [
   ["color", t.colorMode],
   ["motion", t.motion],
 ]
+
+/** The two typefaces the specimen shows: the theme's own heading and body families, by their real names. */
+export const specimenOf = (t: Theme) => ({ heading: t.fonts.display.family, body: t.fonts.body.family })
 
 const sample = "The quick brown fox jumps over the lazy dog."
 
@@ -71,21 +60,14 @@ function Preview({ theme }: { theme: Theme }) {
           </div>
         ))}
       </dl>
-      <div className="grid items-start gap-6 border-b py-8 sm:grid-cols-[1.1fr_1.5fr_1.5fr_auto]" style={rule}>
+      <div className="grid items-start gap-6 border-b py-8 sm:grid-cols-[1.1fr_1.5fr]" style={rule}>
         <p className="text-[56px] leading-none" style={{ fontFamily: "var(--font-primary)", fontWeight: "var(--h1-weight)", color: p.primaryForeground === p.background ? "var(--primary)" : "var(--primary-foreground)" }}>
-          {SPECIMEN_NAMES[theme.id] ?? theme.fonts.display.family}
+          {specimenOf(theme).heading}
         </p>
         <p className="text-sm" style={{ fontFamily: "var(--font-body-token)", fontWeight: "var(--font-body-weight)" }}>
-          {theme.fonts.body.family}.<br />
+          {specimenOf(theme).body}.<br />
           {sample}
         </p>
-        <div className="grid grid-cols-2 gap-2" style={{ color: "var(--secondary)" }}>
-          {[ArrowUpIcon, ChatCircleDotsIcon, NotePencilIcon, CalendarHeartIcon].map((I, i) => (
-            <span key={i} className="grid size-6 place-items-center rounded-[4px]" style={{ background: "var(--secondary)", color: "var(--background)" }}>
-              <I size={14} weight={theme.icons.weight} />
-            </span>
-          ))}
-        </div>
       </div>
       <div className="grid grid-cols-2 gap-5 pt-8 sm:grid-cols-4">
         {[p.primaryForeground, p.primary, p.secondary, p.secondaryForeground].map((c, i) => (
@@ -130,7 +112,7 @@ export function Copy({
               aria-checked={on}
               onClick={() => onSelect(t.id)}
               className={cn(
-                "flex h-[155px] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 text-center leading-none outline-none transition-colors [container-type:inline-size] focus-visible:ring-[3px] focus-visible:ring-ring/50 max-sm:h-[96px]",
+                "flex h-[88px] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border px-4 text-center leading-none outline-none transition-colors [container-type:inline-size] focus-visible:ring-[3px] focus-visible:ring-ring/50",
                 on ? "border-transparent" : "border-white/10 bg-gradient-to-b from-white/[0.02] to-white/[0.05] text-white/20 hover:text-white/40"
               )}
               style={
@@ -152,12 +134,12 @@ export function Copy({
         })}
       </div>
       {current && (
-        <div className="mt-[67px]">
+        <div className="mt-8">
           <Preview theme={current} />
         </div>
       )}
       {!current && (
-        <div className="mt-[67px] rounded-2xl border border-white/10 bg-white/[0.04] p-8 text-sm text-white/50">Select a theme to preview</div>
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] p-8 text-sm text-white/50">Select a theme to preview</div>
       )}
     </Page>
   )
