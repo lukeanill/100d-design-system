@@ -16,6 +16,7 @@ import { useDemoVoice } from "@workspace/ui/components/voice/demo-voice"
 import TextRotate from "@workspace/ui/components/fancy/text/text-rotate"
 import { Pill } from "./Pill"
 import { BODY, MIGRA } from "./LinkTile"
+import { SlopesPhone } from "./SlopesPhone"
 import { DEFAULT_STYLING, themeScope } from "./explore/styling"
 
 /* The homepage's Preview section (Figma "Preview", node 290:9537): five themes in a row, a
@@ -260,33 +261,41 @@ function VoiceCard({ selected }: { selected: ThemeId | null }) {
   )
 }
 
-/** The video for the Slopes card, played while it is hovered. Until the file is in /public/home, the card shows a plain glass tile. */
-const SLOPES_VIDEO: string | undefined = undefined
-
 /**
  * A 500 × 372 card with a caption under it, the whole of it a link out. The card holds an image, or a
- * video that plays only while the pointer is on it (and starts again from the top each time).
+ * `visual` that is told when the pointer is on the card (Slopes' phone plays its recordings only then).
  */
-function MediaLink({ href, image, video, label, children }: { href: string; image?: string; video?: string; label: string; children: ReactNode }) {
+function MediaLink({
+  href,
+  image,
+  visual,
+  label,
+  children,
+}: {
+  href: string
+  image?: string
+  visual?: (hovered: boolean) => ReactNode
+  label: string
+  children: ReactNode
+}) {
+  const [hovered, setHovered] = useState(false)
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="group flex min-w-0 flex-1 flex-col gap-6 outline-none"
-      onMouseEnter={(e) => void e.currentTarget.querySelector("video")?.play().catch(() => {})}
-      onMouseLeave={(e) => {
-        const v = e.currentTarget.querySelector("video")
-        if (v) {
-          v.pause()
-          v.currentTime = 0
-        }
-      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div className="relative isolate h-[372px] w-full overflow-clip rounded-[24px] group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-white/60">
-        {!video && !image && <CardGlass />}
-        {video ? (
-          <video src={video} poster={image} muted loop playsInline preload="metadata" className="absolute inset-0 size-full object-cover" />
+        {!visual && !image && <CardGlass />}
+        {visual ? (
+          <>
+            <CardGlass />
+            <img alt="" src="/home/slopes-bg.png" className="pointer-events-none absolute inset-0 size-full rounded-[24px] object-cover opacity-40" />
+            {visual(hovered)}
+          </>
         ) : image ? (
           <img alt="" src={image} className="absolute inset-0 size-full object-cover" />
         ) : null}
@@ -307,7 +316,7 @@ export function Preview() {
   return (
     <>
       {/* themes */}
-      <div className="flex w-full flex-col gap-6">
+      <div className="flex w-full flex-col gap-12">
         <Pill>Preview</Pill>
         <div className="flex w-full flex-col gap-2">
           <div role="group" aria-label="Theme" className="grid grid-cols-2 gap-2 min-[1100px]:flex min-[1100px]:gap-2">
@@ -350,9 +359,10 @@ export function Preview() {
       </div>
 
       {/* two products built with it */}
-      <div className="flex w-full flex-col gap-6">
+      <div className="mt-10 flex w-full flex-col gap-12">
+        <Pill>Projects</Pill>
         <div className="flex w-full flex-col gap-10 min-[1100px]:flex-row">
-          <MediaLink href="https://slopes.lukeai.space" video={SLOPES_VIDEO} label="Slopes map">
+          <MediaLink href="https://slopes.lukeai.space" visual={(hovered) => <SlopesPhone playing={hovered} />} label="Slopes map">
             Real-time slope analysis, <em className="font-extrabold italic">anywhere.</em>
           </MediaLink>
           <MediaLink href="https://chart.lukeai.space" image="/home/chart-horoscopes.png" label="Birth chart horoscopes">

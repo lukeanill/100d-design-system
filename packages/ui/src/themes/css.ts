@@ -230,9 +230,13 @@ export function themeDeclarations(theme: Theme): string[] {
   return lines
 }
 
-/** A block scoped to `.id`, or to `:root, .id` for the theme that is the default. */
+/**
+ * A block scoped to `.id`, or to `:where(:root), .id` for the theme that is the default. `:where` gives the
+ * `:root` half no specificity: written as a plain `:root` it ties with a theme's class, and the default's
+ * block (written after the themes before it) would win on <html> and paint those themes as the default.
+ */
 export function themeToCss(theme: Theme, { asDefault = false }: { asDefault?: boolean } = {}) {
-  const selector = asDefault ? `:root,\n.${theme.id}` : `.${theme.id}`
+  const selector = asDefault ? `:where(:root),\n.${theme.id}` : `.${theme.id}`
   return `${selector} {\n${themeDeclarations(theme).map((l) => `  ${l}`).join("\n")}\n}\n`
 }
 
