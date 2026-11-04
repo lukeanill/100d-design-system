@@ -5,6 +5,8 @@ import type { ReactNode } from "react"
 import { ArrowUp, Check, ChevronRight, MessageCircleQuestion, RotateCw, Scissors, SpellCheck, Sparkles, Smile, X } from "lucide-react"
 
 import { Button } from "@workspace/ui/components/button"
+import { EASING, TIMING, cubicBezier } from "@workspace/ui/themes/motion"
+import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* A contextual AI bar attached beneath selected text — highlight a passage
@@ -137,6 +139,8 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
   const copy = { ...DEFAULT_LABELS, ...labels }
   const [shown, setShown] = useState(false)
   const [mode, setMode] = useState<Mode>("idle")
+  const themeTransition = useThemeTransition() as { duration?: number }
+  const widthDuration = themeTransition.duration === 0 ? 0 : TIMING.fast
   const [action, setAction] = useState("Improve")
   const [prompt, setPrompt] = useState("")
   const [typingWidth, setTypingWidth] = useState<number | null>(null)
@@ -211,7 +215,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
 
     if (previousModeRef.current !== mode && Math.abs(nextWidth - previousWidth) > 1) {
       widthAnimationRef.current?.cancel()
-      const animation = bar.animate([{ width: `${previousWidth}px` }, { width: `${nextWidth}px` }], { duration: 320, easing: "cubic-bezier(0.23,1,0.32,1)" })
+      const animation = bar.animate([{ width: `${previousWidth}px` }, { width: `${nextWidth}px` }], { duration: widthDuration * 1000, easing: cubicBezier(EASING["ease-out"].normal) })
       widthAnimationRef.current = animation
       animation.onfinish = () => {
         lastWidthRef.current = nextWidth
@@ -279,7 +283,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
             opacity: visible ? 1 : 0,
             pointerEvents: visible ? "auto" : "none",
             transform: `translate3d(${anchor.x}px, ${anchor.y}px, 0) translateX(-50%)`,
-            transition: "transform 320ms cubic-bezier(0.77,0,0.175,1), opacity 180ms ease-out",
+            transition: "transform 320ms cubic-bezier(0.77,0,0.175,1), opacity 180ms ease-(--motion-transition-ease)",
             willChange: "transform",
           }}
         >
@@ -304,7 +308,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                   <button
                     type="button"
                     onClick={reset}
-                    className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full bg-foreground px-2.5 text-[12.5px] font-normal text-background shadow-xs transition-[opacity,transform] duration-150 hover:opacity-90 active:scale-[0.96]"
+                    className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full bg-foreground px-2.5 text-[12.5px] font-normal text-background shadow-xs transition-[opacity,transform] duration-(--motion-fast) hover:opacity-90 active:scale-[0.96]"
                   >
                     {icons.keep}
                     {copy.keep}
@@ -318,7 +322,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                     type="button"
                     aria-label="Try again"
                     onClick={() => run(action)}
-                    className="flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75 transition-[background-color,color,transform] duration-150 hover:bg-muted hover:text-foreground active:scale-[0.96]"
+                    className="flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75 transition-[background-color,color,transform] duration-(--motion-fast) hover:bg-muted hover:text-foreground active:scale-[0.96]"
                   >
                     {icons.retry}
                   </button>
@@ -328,7 +332,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
               {mode === "idle" && (
                 <>
                   <div
-                    className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-400"
+                    className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-(--motion-duration)"
                     style={{
                       maxWidth: expanded ? 0 : hasPrompt && typingWidth ? typingWidth - 40 : 145,
                       opacity: expanded ? 0 : 1,
@@ -337,7 +341,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                     }}
                   >
                     <form
-                      className="flex h-7 shrink-0 items-center transition-[width] duration-400"
+                      className="flex h-7 shrink-0 items-center transition-[width] duration-(--motion-duration)"
                       style={{ transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)", width: hasPrompt && typingWidth ? typingWidth - 40 : 145 }}
                       onSubmit={(event) => {
                         event.preventDefault()
@@ -363,7 +367,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                   </div>
 
                   <div
-                    className="flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,transform] duration-400"
+                    className="flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,transform] duration-(--motion-duration)"
                     style={{
                       maxWidth: hasPrompt ? 0 : expanded ? 462 : 224,
                       opacity: hasPrompt ? 0 : 1,
@@ -380,7 +384,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                     ))}
 
                     <div
-                      className="flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,margin] duration-400"
+                      className="flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,margin] duration-(--motion-duration)"
                       style={{ marginLeft: expanded ? 2 : 0, maxWidth: expanded ? 262 : 0, opacity: expanded ? 1 : 0, transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
                     >
                       {actionSet.more.map((item) => (
@@ -397,23 +401,23 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                       aria-label={expanded ? "Show fewer actions" : "Show more actions"}
                       aria-expanded={expanded}
                       onClick={() => setExpanded((value) => !value)}
-                      className="flex size-7 shrink-0 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-200 hover:bg-muted active:scale-[0.96]"
+                      className="flex size-7 shrink-0 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-(--motion-fast) hover:bg-muted active:scale-[0.96]"
                     >
-                      <span className="flex transition-transform duration-400" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)", transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}>
+                      <span className="flex transition-transform duration-(--motion-duration)" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)", transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}>
                         {icons.chevron}
                       </span>
                     </button>
                   </div>
 
                   <div
-                    className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-400"
+                    className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-(--motion-duration)"
                     style={{ maxWidth: hasPrompt ? 30 : 0, opacity: hasPrompt ? 1 : 0, transform: hasPrompt ? "scale(1)" : "scale(0.88)", transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
                   >
                     <button
                       type="button"
                       aria-label="Send edit instruction"
                       onClick={() => run(prompt.trim())}
-                      className="flex size-7 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-[opacity,transform] duration-200 active:scale-[0.94]"
+                      className="flex size-7 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-[opacity,transform] duration-(--motion-fast) active:scale-[0.94]"
                     >
                       {icons.send}
                     </button>

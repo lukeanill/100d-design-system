@@ -128,7 +128,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
                 aria-pressed={metric === item}
                 onClick={() => setMetric(item)}
                 className={cn(
-                  "rounded-full px-2 py-0.5 text-[10.5px] font-medium transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.96]",
+                  "rounded-full px-2 py-0.5 text-[10.5px] font-medium transition-[background-color,color,box-shadow,transform] duration-(--motion-fast) active:scale-[0.96]",
                   metric === item ? "bg-muted text-foreground shadow-xs" : "text-foreground/75 hover:text-foreground"
                 )}
               >
@@ -183,7 +183,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
             aria-pressed={selected === s.name}
             aria-label={`${s.label}: ${s.pct}%`}
             onClick={() => setSelected(s.name)}
-            className={cn("relative h-full overflow-hidden rounded-full transition-[opacity,transform] duration-300 active:scale-[0.98]", s.cls)}
+            className={cn("relative h-full overflow-hidden rounded-full transition-[opacity,transform] duration-(--motion-duration) active:scale-[0.98]", s.cls)}
             style={{ opacity: selected === s.name ? 1 : 0.58, transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)", width: `${s.pct}%` }}
           />
         ))}
@@ -196,7 +196,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
             aria-pressed={selected === s.name}
             onClick={() => setSelected(s.name)}
             className={cn(
-              "flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] transition-[background-color,color,transform] duration-150 active:scale-[0.96]",
+              "flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] transition-[background-color,color,transform] duration-(--motion-fast) active:scale-[0.96]",
               selected === s.name ? "bg-muted text-foreground" : "text-foreground/75 hover:bg-muted hover:text-foreground"
             )}
           >
@@ -282,14 +282,14 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
           <button
             aria-label="Previous insight"
             onClick={() => move(-1)}
-            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-100 hover:bg-muted hover:text-foreground active:scale-[0.96]"
+            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-(--motion-fast) hover:bg-muted hover:text-foreground active:scale-[0.96]"
           >
             <ChevronLeft className="size-3.5" strokeWidth={2.2} />
           </button>
           <button
             aria-label="Next insight"
             onClick={() => move(1)}
-            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-100 hover:bg-muted hover:text-foreground active:scale-[0.96]"
+            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-(--motion-fast) hover:bg-muted hover:text-foreground active:scale-[0.96]"
           >
             <ChevronRight className="size-3.5" strokeWidth={2.2} />
           </button>
@@ -301,7 +301,7 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
         <div className="mt-2">
           <Card />
         </div>
-        <button className="mt-2 rounded-full bg-card px-3 py-1.5 text-left text-[12px] text-foreground shadow-xs ring-1 ring-foreground/10 transition-colors duration-100 hover:bg-muted">{pill}</button>
+        <button className="mt-2 rounded-full bg-card px-3 py-1.5 text-left text-[12px] text-foreground shadow-xs ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted">{pill}</button>
       </div>
     </div>
   )

@@ -32,7 +32,7 @@ function MorphingText({
   animate = { opacity: 1, scale: 1, filter: 'blur(0px)' },
   exit = { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
   variants,
-  transition = { type: 'spring', stiffness: 125, damping: 25, mass: 0.4 },
+  transition,
   delay = 0,
   inView = false,
   inViewMargin = '0px',

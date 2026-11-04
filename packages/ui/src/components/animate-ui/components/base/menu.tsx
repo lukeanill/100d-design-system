@@ -68,7 +68,7 @@ function MenuPanel({
   id,
   children,
   sideOffset = 4,
-  transition = { duration: 0.2 },
+  transition,
   ...props
 }: MenuPanelProps) {
   return (
@@ -279,7 +279,7 @@ function MenuSubmenuTrigger({
         data-inset={inset}
         className={cn(
           'focus:text-accent-foreground data-[state=open]:text-accent-foreground flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8',
-          'aria-[expanded=true]:[&_[data-slot=chevron]]:rotate-90 [&_[data-slot=chevron]]:transition-transform [&_[data-slot=chevron]]:duration-300 [&_[data-slot=chevron]]:ease-in-out',
+          'aria-[expanded=true]:[&_[data-slot=chevron]]:rotate-90 [&_[data-slot=chevron]]:transition-transform [&_[data-slot=chevron]]:duration-(--motion-duration) [&_[data-slot=chevron]]:ease-(--motion-transition-ease)',
           className,
         )}
         {...props}
@@ -300,7 +300,7 @@ function MenuSubmenuPanel({
   id,
   children,
   sideOffset = 4,
-  transition = { duration: 0.2 },
+  transition,
   ...props
 }: MenuSubmenuPanelProps) {
   return (

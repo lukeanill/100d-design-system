@@ -15,7 +15,6 @@ import {
 } from "@workspace/ui/themes"
 
 export type Step = "landing" | "copy" | "language" | "mytheme" | "code"
-export type Tab = "look" | "feel" | "values"
 
 export const BASELINE = getPreset("berghain")!
 
@@ -31,6 +30,8 @@ export function draftFromPreset(theme: Theme): ThemeDraft {
     secondary: theme.palette.secondary,
     headingFont: theme.fonts.display.family,
     headingWeight: theme.fonts.display.weight,
+    headingSecondaryFont: theme.fonts.secondary.family,
+    headingSecondaryWeight: theme.fonts.secondary.weight,
     bodyFont: theme.fonts.body.family,
     bodyWeight: theme.fonts.body.weight,
     scale: theme.scale,
@@ -122,6 +123,9 @@ export function draftToTheme(d: ThemeDraft, base: Theme = BASELINE): Theme {
   const body = d.bodyFont ?? base.fonts.body.family
   const headingWeight = nearestWeight(heading, d.headingWeight ?? base.fonts.display.weight)
   const bodyWeight = nearestWeight(body, d.bodyWeight ?? base.fonts.body.weight)
+  // the secondary face is the heading face until it is named
+  const secondaryFamily = d.headingSecondaryFont ?? (d.headingFont ? heading : base.fonts.secondary.family)
+  const secondaryWeight = nearestWeight(secondaryFamily, d.headingSecondaryWeight ?? (d.headingFont ? headingWeight : base.fonts.secondary.weight))
   const fg = onColor(bg)
   const dark = fg === "#ffffff"
   const colorMode = d.background ? (dark ? "dark" : "light") : base.colorMode
@@ -142,7 +146,7 @@ export function draftToTheme(d: ThemeDraft, base: Theme = BASELINE): Theme {
     fonts: {
       display: { family: heading, weight: headingWeight, emphasis: headingWeight },
       body: { family: body, weight: bodyWeight, actionWeight: bodyWeight },
-      secondary: { family: heading, weight: headingWeight, emphasis: headingWeight },
+      secondary: { family: secondaryFamily, weight: secondaryWeight, emphasis: secondaryWeight },
     },
     scale: d.scale ?? base.scale,
     spacing: d.spacing ?? base.spacing,

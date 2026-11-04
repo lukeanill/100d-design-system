@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useThemeSpring } from '@workspace/ui/hooks/use-theme-motion';
 import {
   motion,
   useMotionValue,
@@ -34,16 +35,14 @@ function Tilt({
   maxTilt = 10,
   perspective = 800,
   style,
-  transition = {
-    stiffness: 300,
-    damping: 25,
-    mass: 0.5,
-  },
+  transition: transitionProp,
   onMouseMove,
   onMouseLeave,
   asChild = false,
   ...props
 }: TiltProps) {
+  const themeSpring = useThemeSpring();
+  const transition = transitionProp ?? themeSpring;
   const rX = useMotionValue(0);
   const rY = useMotionValue(0);
 

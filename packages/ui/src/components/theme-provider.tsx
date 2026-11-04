@@ -1,4 +1,7 @@
 import * as React from "react"
+import { MotionConfig } from "motion/react"
+
+import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
 
 import { DEFAULT_THEME_ID, getPreset, presets } from "@workspace/ui/themes/presets"
 import { googleFontsHref } from "@workspace/ui/themes/fonts"
@@ -102,5 +105,12 @@ export function ThemeProvider({
     [active, forcedTheme, setTheme]
   )
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  // every motion component without a transition of its own follows the theme's Component Animations choice
+  const transition = useThemeTransition()
+
+  return (
+    <ThemeContext.Provider value={value}>
+      <MotionConfig transition={transition}>{children}</MotionConfig>
+    </ThemeContext.Provider>
+  )
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useThemeSpring } from '@workspace/ui/hooks/use-theme-motion';
 import {
   motion,
   useMotionValue,
@@ -27,7 +28,7 @@ function Magnetic({
   ref,
   strength = 0.5,
   range = 120,
-  springOptions = { stiffness: 100, damping: 10, mass: 0.5 },
+  springOptions: springOptionsProp,
   onlyOnHover = false,
   disableOnTouch = true,
   style,
@@ -49,6 +50,8 @@ function Magnetic({
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
+  const themeSpring = useThemeSpring();
+  const springOptions = springOptionsProp ?? themeSpring;
   const x = useSpring(rawX, springOptions);
   const y = useSpring(rawY, springOptions);
 

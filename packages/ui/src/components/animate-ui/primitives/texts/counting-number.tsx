@@ -28,7 +28,7 @@ function CountingNumber({
   inViewMargin = '0px',
   inViewOnce = true,
   decimalSeparator = '.',
-  transition = { stiffness: 90, damping: 50 },
+  transition,
   decimalPlaces = 0,
   delay = 0,
   initiallyStable = false,

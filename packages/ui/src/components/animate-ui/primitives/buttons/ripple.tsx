@@ -105,7 +105,7 @@ type RippleButtonRipplesProps = WithAsChild<
 function RippleButtonRipples({
   color = 'var(--ripple-button-ripple-color)',
   scale = 10,
-  transition = { duration: 0.6, ease: 'easeOut' },
+  transition,
   asChild = false,
   style,
   ...props

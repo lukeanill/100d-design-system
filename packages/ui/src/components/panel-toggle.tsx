@@ -1,6 +1,8 @@
 import type { ReactNode } from "react"
 import { AnimatePresence, motion } from "motion/react"
 
+import { TIMING } from "@workspace/ui/themes/motion"
+import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
 import { cn } from "@workspace/ui/lib/utils"
 import { ControlButton } from "@workspace/ui/components/control-button"
 
@@ -21,6 +23,7 @@ type PanelToggleProps = {
 }
 
 function PanelToggle({ open, onClick, icon, label, closeLabel = "Close", metal = false, className }: PanelToggleProps) {
+  const themeTransition = useThemeTransition() as { duration?: number }
   return (
     <ControlButton
       shape={open ? "pill" : "circle"}
@@ -39,7 +42,7 @@ function PanelToggle({ open, onClick, icon, label, closeLabel = "Close", metal =
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
-          transition={{ duration: 0.15 }}
+          transition={{ duration: themeTransition.duration === 0 ? 0 : TIMING.fast }}
         >
           {open ? closeLabel : icon}
         </motion.span>

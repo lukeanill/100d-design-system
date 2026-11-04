@@ -94,7 +94,7 @@ type SwitchThumbProps = Omit<
 
 function SwitchThumb({
   pressedAnimation,
-  transition = { type: 'spring', stiffness: 300, damping: 25 },
+  transition,
   ...props
 }: SwitchThumbProps) {
   const { isPressed } = useSwitch();
@@ -123,7 +123,7 @@ type SwitchIconProps = HTMLMotionProps<'div'> & {
 
 function SwitchIcon({
   position,
-  transition = { type: 'spring', bounce: 0 },
+  transition,
   ...props
 }: SwitchIconProps) {
   const { isChecked } = useSwitch();

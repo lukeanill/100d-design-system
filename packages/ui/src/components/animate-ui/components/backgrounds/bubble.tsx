@@ -39,7 +39,7 @@ function BubbleBackground({
   className,
   children,
   interactive = false,
-  transition = { stiffness: 100, damping: 20 },
+  transition,
   colors = {
     first: '18,113,255',
     second: '221,74,255',

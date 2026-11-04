@@ -3,6 +3,7 @@
 import React, { ElementType, useMemo, useRef } from "react"
 import { motion, useScroll, useTransform, useSpring } from "motion/react"
 import { cn } from "@workspace/ui/lib/utils"
+import { useThemeSpring } from "@workspace/ui/hooks/use-theme-motion"
 
 // handy function to extract text from children
 const extractTextFromChildren = (children: React.ReactNode): string | undefined => {
@@ -64,7 +65,7 @@ interface ScrollAndSwapTextProps {
 
   /**
    * Spring animation configuration for smoothing the scroll-based animation
-   * @default { stiffness: 200, damping: 30 }
+   * @default the active theme's spring
    */
   springConfig?: {
     stiffness?: number
@@ -83,10 +84,11 @@ const ScrollAndSwapText = ({
   offset = ["0 0", "0 1"],
   className,
   containerRef,
-  springConfig = { stiffness: 200, damping: 30 },
+  springConfig,
   ...props
 }: ScrollAndSwapTextProps) => {
   const ref = useRef<HTMLElement>(null)
+  const themeSpring = useThemeSpring()
 
   // Convert children to string for processing with error handling
   const text = useMemo(() => {
@@ -106,7 +108,7 @@ const ScrollAndSwapText = ({
   })
 
   // Apply spring physics to smooth the scroll-based animation
-  const springScrollYProgress = useSpring(scrollYProgress, springConfig)
+  const springScrollYProgress = useSpring(scrollYProgress, springConfig ?? themeSpring)
 
   // Transform scroll progress into vertical translation values
   // Original text moves from 0% to -100% (slides up and out)

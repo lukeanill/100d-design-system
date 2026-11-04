@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useFastTransition } from "@workspace/ui/hooks/use-fast-transition"
 import type { FC, ReactNode } from "react"
 import { motion } from "motion/react"
 import { FilmScriptIcon, ScribbleIcon, SwatchesIcon } from "@phosphor-icons/react"
@@ -32,6 +33,7 @@ const DEFAULT_TABS: FluidTabItem[] = [
 ]
 
 export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActive = tabs[0]?.id, onChange }) => {
+  const fast = useFastTransition()
   const [active, setActive] = useState<string>(defaultActive)
 
   const handleChange = (id: string) => {
@@ -57,15 +59,14 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
             {isActive && (
               <motion.div
                 layoutId="fluid-tabs-active-pill"
-                transition={{ damping: 25, mass: 0.8, stiffness: 280, type: "spring" }}
                 className="absolute inset-0 rounded-[inherit] bg-foreground"
               />
             )}
 
             <motion.div
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={fast}
               animate={{ filter: isActive ? ["blur(0px)", "blur(4px)", "blur(0px)"] : "blur(0px)" }}
-              className={`relative z-10 flex h-full items-center gap-1 transition-colors duration-200 ${isActive ? "text-background" : "text-foreground"}`}
+              className={`relative z-10 flex h-full items-center gap-1 transition-colors duration-(--motion-fast) ${isActive ? "text-background" : "text-foreground"}`}
             >
               <span className="flex size-5 shrink-0 items-center justify-center overflow-clip">{tab.icon}</span>
 

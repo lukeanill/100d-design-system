@@ -36,7 +36,7 @@ type ScrollProgressProviderProps = {
 
 function ScrollProgressProvider({
   global = false,
-  transition = { stiffness: 250, damping: 40, bounce: 0 },
+  transition,
   direction = 'vertical',
   ...props
 }: ScrollProgressProviderProps) {

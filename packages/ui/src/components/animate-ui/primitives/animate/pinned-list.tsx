@@ -69,7 +69,7 @@ type PinnedListLabelProps = WithAsChild<
 function PinnedListLabel({
   hide = false,
   asChild = false,
-  transition = { duration: 0.22, ease: 'easeInOut' },
+  transition,
   ...props
 }: PinnedListLabelProps) {
   const Component = asChild ? Slot : motion.p;
@@ -111,7 +111,7 @@ function PinnedListItem({
   id,
   asChild = false,
   customTrigger = false,
-  transition = { stiffness: 320, damping: 25, mass: 0.8, type: 'spring' },
+  transition,
   onClick,
   ...props
 }: PinnedListItemProps) {

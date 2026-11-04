@@ -6,6 +6,7 @@ import {
 } from "motion/react"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
 
 // handy function to split text into characters with support for unicode and emojis
 const splitIntoCharacters = (text: string): string[] => {
@@ -100,7 +101,7 @@ interface Letter3DSwapProps {
 
   /**
    * Animation transition configuration.
-   * @default { type: "spring", damping: 25, stiffness: 300 }
+   * @default the active theme's transition
    */
   transition?: ValueAnimationTransition | AnimationOptions
 
@@ -119,13 +120,15 @@ const Letter3DSwap = ({
   secondFaceClassName,
   staggerDuration = 0.05,
   staggerFrom = "first",
-  transition = { type: "spring", damping: 30, stiffness: 300 },
+  transition: transitionProp,
   rotateDirection = "right",
   ...props
 }: Letter3DSwapProps) => {
   const [isAnimating, setIsAnimating] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [scope, animate] = useAnimate()
+  const themeTransition = useThemeTransition()
+  const transition = transitionProp ?? themeTransition
 
   // Determine rotation transform based on direction
   const rotationTransform = (() => {

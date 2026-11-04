@@ -80,6 +80,7 @@
     "./themes/*": "./src/themes/*.ts",
     "./components/backgrounds/gradients/*": "./src/components/backgrounds/gradients/*.ts",
     "./components/*": "./src/components/*.tsx",
+    "./hooks/use-theme-motion": "./src/hooks/use-theme-motion.tsx",
     "./hooks/use-motion-value-state": "./src/hooks/use-motion-value-state.tsx",
     "./hooks/use-controlled-state": "./src/hooks/use-controlled-state.tsx",
     "./hooks/use-auto-height": "./src/hooks/use-auto-height.tsx",

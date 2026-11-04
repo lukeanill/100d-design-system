@@ -91,7 +91,7 @@ type AccordionPanelProps = Omit<
   };
 
 function AccordionPanel({
-  transition = { duration: 0.35, ease: 'easeInOut' },
+  transition,
   hiddenUntilFound,
   keepRendered = false,
   ...props

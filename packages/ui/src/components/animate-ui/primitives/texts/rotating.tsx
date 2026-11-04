@@ -88,7 +88,7 @@ function RotatingTextContainer({
 type RotatingTextProps = Omit<HTMLMotionProps<'div'>, 'children'>;
 
 function RotatingText({
-  transition = { duration: 0.3, ease: 'easeOut' },
+  transition,
   ...props
 }: RotatingTextProps) {
   const { currentText, y, isInView } = useRotatingText();

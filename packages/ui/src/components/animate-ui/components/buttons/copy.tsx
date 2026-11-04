@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'motion/react';
 import { CheckIcon, CopyIcon } from 'lucide-react';
@@ -63,6 +64,7 @@ function CopyButton({
   delay = 3000,
   ...props
 }: CopyButtonProps) {
+  const fast = useFastTransition();
   const [isCopied, setIsCopied] = useControlledState({
     value: copied,
     onChange: onCopiedChange,
@@ -108,7 +110,7 @@ function CopyButton({
           initial={{ scale: 0, opacity: 0.4, filter: 'blur(4px)' }}
           animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
           exit={{ scale: 0, opacity: 0.4, filter: 'blur(4px)' }}
-          transition={{ duration: 0.25 }}
+          transition={fast}
         >
           <Icon />
         </motion.span>

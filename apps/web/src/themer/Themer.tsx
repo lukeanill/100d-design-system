@@ -18,9 +18,9 @@ import { CodeScreen, MyThemeScreen } from "./Code"
 import { Copy } from "./Copy"
 import { downloadFile } from "./download"
 import { Landing, type LandingChoice } from "./Landing"
-import { Language } from "./Language"
+import { Design, type Stage } from "./Design"
 import { notifySuccess } from "./notify"
-import { BASELINE, draftFromPreset, draftToTheme, emptyDraft, feelDone, lookDone, unsetLabels, valuesDone, type Step, type Tab } from "./state"
+import { BASELINE, draftFromPreset, draftToTheme, emptyDraft, unsetLabels, type Step } from "./state"
 
 /** The generic template: Berghain, named my-theme, for someone to edit. */
 const TEMPLATE = themeToFile({ ...BASELINE, id: "my-theme", label: "My theme" })
@@ -30,8 +30,7 @@ export function Themer() {
   const [origin, setOrigin] = useState<"copy" | "build">("build")
   const [preset, setPreset] = useState<string | null>(null)
   const [draft, setDraft] = useState<ThemeDraft>(emptyDraft)
-  const [tab, setTab] = useState<Tab>("look")
-  const [visited, setVisited] = useState<Set<Tab>>(new Set(["look"]))
+  const [stage, setStage] = useState<Stage>("design")
   const [dirty, setDirty] = useState(false)
   const [leaving, setLeaving] = useState<null | (() => void)>(null)
   const announced = useRef(false)
@@ -43,20 +42,12 @@ export function Themer() {
     setDraft((d) => ({ ...d, ...p }))
     setDirty(true)
   }
-  const showTab = (t: Tab) => {
-    // a page cannot be opened until the one before it is complete
-    if (t === "feel" && !lookDone(draft)) return
-    if (t === "values" && !(lookDone(draft) && feelDone(draft))) return
-    setTab(t)
-    setVisited((v) => new Set(v).add(t))
-  }
   /** Leaving with unsaved work asks first. Nothing here is stored anywhere. */
   const leave = (go: () => void) => (dirty ? setLeaving(() => go) : go())
   const reset = () => {
     setDraft(emptyDraft())
     setPreset(null)
-    setTab("look")
-    setVisited(new Set(["look"]))
+    setStage("design")
     setDirty(false)
     announced.current = false
     setStep("landing")
@@ -75,8 +66,7 @@ export function Themer() {
       setOrigin("build")
       setDraft(emptyDraft())
       setDirty(false)
-      setTab("look")
-      setVisited(new Set(["look"]))
+      setStage("design")
       setStep("language")
     }
     if (choice === "code") setStep("code")
@@ -97,26 +87,20 @@ export function Themer() {
             setOrigin("copy")
             setDraft(draftFromPreset(p))
             setDirty(false)
-            setTab("look")
-            setVisited(new Set(["look"]))
+            setStage("design")
             setStep("language")
           }}
         />
       )}
 
       {step === "language" && (
-        <Language
+        <Design
           draft={draft}
           onChange={patch}
-          tab={tab}
-          onTab={showTab}
-          visited={visited}
-          onBack={() =>
-            tab === "values" ? showTab("feel") : tab === "feel" ? showTab("look") : leave(() => setStep(origin === "copy" ? "copy" : "landing"))
-          }
-          onContinue={() =>
-            tab === "look" ? showTab("feel") : tab === "feel" ? showTab("values") : lookDone(draft) && feelDone(draft) && valuesDone(draft) && setStep("mytheme")
-          }
+          stage={stage}
+          onStage={setStage}
+          onBack={() => leave(() => setStep(origin === "copy" ? "copy" : "landing"))}
+          onContinue={() => setStep("mytheme")}
         />
       )}
 

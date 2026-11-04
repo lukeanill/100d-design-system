@@ -24,9 +24,7 @@
 import * as React from "react"
 import {
   AnimatePresence,
-  MotionConfig,
   motion,
-  type Transition,
 } from "motion/react"
 import { CheckIcon, PencilSimpleIcon } from "@phosphor-icons/react"
 
@@ -59,18 +57,6 @@ export interface SplitToEditProps {
   }
 }
 
-const expandedTransition: Transition = {
-  type: "spring",
-  stiffness: 450,
-  damping: 25,
-  mass: 2,
-}
-const collapsedTransition: Transition = {
-  type: "spring",
-  stiffness: 450,
-  damping: 25,
-  mass: 1,
-}
 
 function clamp(value: string, max: number): number {
   return Math.min(max, Math.max(0, parseInt(value, 10) || 0))
@@ -178,9 +164,7 @@ export function SplitToEdit({
   const iconClass = cn("size-5 text-muted-foreground", classNames?.icon)
 
   return (
-    <MotionConfig
-      transition={isExpanded ? expandedTransition : collapsedTransition}
-    >
+    <>
       <motion.div
         ref={rootRef}
         layout
@@ -289,7 +273,7 @@ export function SplitToEdit({
                 initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-                transition={{ type: "spring", visualDuration: 0.25, bounce: 0 }}
+               
                 className="flex"
               >
                 {isExpanded ? (
@@ -302,6 +286,6 @@ export function SplitToEdit({
           </button>
         </motion.div>
       </motion.div>
-    </MotionConfig>
+    </>
   )
 }

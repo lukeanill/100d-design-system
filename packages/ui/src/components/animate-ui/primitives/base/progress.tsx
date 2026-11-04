@@ -34,7 +34,7 @@ type ProgressIndicatorProps = React.ComponentProps<
 const MotionProgressIndicator = motion.create(ProgressPrimitives.Indicator);
 
 function ProgressIndicator({
-  transition = { type: 'spring', stiffness: 100, damping: 30 },
+  transition,
   ...props
 }: ProgressIndicatorProps) {
   const { value } = useProgress();
@@ -68,7 +68,7 @@ type ProgressValueProps = Omit<
   Omit<CountingNumberProps, 'number'>;
 
 function ProgressValue({
-  transition = { stiffness: 80, damping: 20 },
+  transition,
   ...props
 }: ProgressValueProps) {
   const { value } = useProgress();

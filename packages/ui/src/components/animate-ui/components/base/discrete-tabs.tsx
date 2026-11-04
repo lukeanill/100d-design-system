@@ -48,14 +48,12 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
           <button key={tab.id} type="button" onClick={() => handleTabClick(tab.id)} className="relative h-full focus:outline-none">
             <motion.div
               layout="position"
-              transition={{ damping: 18, mass: 1, stiffness: 210, type: "spring" }}
               className={`relative flex h-full ${isActive ? "w-28" : "w-9"} items-center justify-center`}
             >
               {isActive && (
                 <motion.div
                   layoutId="discrete-tabs-active-bg"
                   className="absolute inset-0 rounded-full bg-foreground shadow-xs"
-                  transition={{ damping: 26, stiffness: 220, type: "spring" }}
                 />
               )}
               <div className="relative z-10 flex h-full cursor-pointer items-center gap-1.5 px-3">

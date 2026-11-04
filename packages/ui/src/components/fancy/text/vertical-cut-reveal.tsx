@@ -45,11 +45,7 @@ const VerticalCutReveal = forwardRef<VerticalCutRevealRef, TextProps>(
     {
       children,
       reverse = false,
-      transition = {
-        type: "spring",
-        stiffness: 190,
-        damping: 22,
-      },
+      transition,
       splitBy = "words",
       staggerDuration = 0.2,
       staggerFrom = "first",

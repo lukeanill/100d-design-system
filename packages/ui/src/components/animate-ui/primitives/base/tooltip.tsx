@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useThemeSpring } from '@workspace/ui/hooks/use-theme-motion';
 import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
 import {
   AnimatePresence,
@@ -42,9 +43,11 @@ type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> & {
 
 function Tooltip({
   followCursor = false,
-  followCursorSpringOptions = { stiffness: 200, damping: 17 },
+  followCursorSpringOptions: followCursorSpringOptionsProp,
   ...props
 }: TooltipProps) {
+  const themeSpring = useThemeSpring();
+  const followCursorSpringOptions = followCursorSpringOptionsProp ?? themeSpring;
   const [isOpen, setIsOpen] = useControlledState({
     value: props?.open,
     defaultValue: props?.defaultOpen,
@@ -147,7 +150,7 @@ type TooltipPopupProps = Omit<
   HTMLMotionProps<'div'>;
 
 function TooltipPopup({
-  transition = { type: 'spring', stiffness: 300, damping: 25 },
+  transition,
   style,
   ...props
 }: TooltipPopupProps) {

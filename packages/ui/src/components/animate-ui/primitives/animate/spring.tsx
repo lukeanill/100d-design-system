@@ -111,7 +111,7 @@ type SpringProviderProps = {
 
 function SpringProvider({
   dragElastic = 0.2,
-  transition = { stiffness: 200, damping: 16 },
+  transition,
   pathConfig = {},
   ...props
 }: SpringProviderProps) {

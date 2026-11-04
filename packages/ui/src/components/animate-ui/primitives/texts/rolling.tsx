@@ -28,7 +28,7 @@ function RollingText({
   inView = false,
   inViewMargin = '0px',
   inViewOnce = true,
-  transition = { duration: 0.5, delay: 0.1, ease: 'easeOut' },
+  transition,
   delay = 0,
   ...props
 }: RollingTextProps) {

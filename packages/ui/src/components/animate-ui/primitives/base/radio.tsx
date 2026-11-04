@@ -51,7 +51,7 @@ type RadioIndicatorProps = Omit<
   HTMLMotionProps<'div'>;
 
 function RadioIndicator({
-  transition = { type: 'spring', stiffness: 200, damping: 16 },
+  transition,
   ...props
 }: RadioIndicatorProps) {
   const { isChecked } = useRadio();

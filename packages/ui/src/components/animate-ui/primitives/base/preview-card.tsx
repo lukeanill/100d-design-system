@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useThemeSpring } from '@workspace/ui/hooks/use-theme-motion';
 import { PreviewCard as PreviewCardPrimitive } from '@base-ui/react/preview-card';
 import {
   AnimatePresence,
@@ -36,9 +37,11 @@ type PreviewCardProps = React.ComponentProps<
 
 function PreviewCard({
   followCursor = false,
-  followCursorSpringOptions = { stiffness: 200, damping: 17 },
+  followCursorSpringOptions: followCursorSpringOptionsProp,
   ...props
 }: PreviewCardProps) {
+  const themeSpring = useThemeSpring();
+  const followCursorSpringOptions = followCursorSpringOptionsProp ?? themeSpring;
   const [isOpen, setIsOpen] = useControlledState({
     value: props?.open,
     defaultValue: props?.defaultOpen,
@@ -147,7 +150,7 @@ type PreviewCardPopupProps = Omit<
   HTMLMotionProps<'div'>;
 
 function PreviewCardPopup({
-  transition = { type: 'spring', stiffness: 300, damping: 25 },
+  transition,
   style,
   ...props
 }: PreviewCardPopupProps) {

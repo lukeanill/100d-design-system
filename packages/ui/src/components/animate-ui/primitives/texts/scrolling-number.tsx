@@ -158,7 +158,7 @@ type ScrollingNumberProps = HTMLMotionProps<'div'> & {
 };
 
 function ScrollingNumber({
-  transition = { stiffness: 90, damping: 30 },
+  transition,
   delay = 0,
   onCompleted,
   style,

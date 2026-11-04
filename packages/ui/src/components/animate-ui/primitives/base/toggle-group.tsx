@@ -83,7 +83,7 @@ function Toggle({
 type ToggleGroupHighlightProps = Omit<HighlightProps, 'controlledItems'>;
 
 function ToggleGroupHighlight({
-  transition = { type: 'spring', stiffness: 200, damping: 25 },
+  transition,
   ...props
 }: ToggleGroupHighlightProps) {
   const { value } = useToggleGroup();
