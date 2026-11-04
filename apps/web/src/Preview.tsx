@@ -2,7 +2,7 @@ import { useEffect, useState, type CSSProperties, type ReactNode } from "react"
 import { ArrowUpIcon, CaretDownIcon, StopIcon, XIcon } from "@phosphor-icons/react"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { getPreset, googleFontsHref } from "@workspace/ui/themes"
+import { DEFAULT_THEME_ID, getPreset, googleFontsHref, type ThemePalette } from "@workspace/ui/themes"
 import { FluidTabs } from "@workspace/ui/components/animate-ui/components/base/fluid-tabs"
 import { PromptBar } from "@workspace/ui/components/ai/prompt-bar"
 import { MetalSurface } from "@workspace/ui/components/metal-surface"
@@ -68,27 +68,62 @@ function requestThemeFonts() {
   document.head.append(link)
 }
 
+/** One quarter-pair of the swatch: the theme's secondary above its foreground, down the right half. */
+function Swatch({ palette, selected, mode }: { palette: ThemePalette; selected: boolean; mode: "light" | "dark" }) {
+  // selected tiles carry a 4px black border, so the halves sit 2px further up and left than on the others
+  const half = selected ? "left-[21.67px] h-[24px] w-[25px]" : "left-[23.67px] h-[24px] w-[25px]"
+  const [top, bottom] = selected ? ["top-[-2px]", "top-[22px]"] : ["top-0", "top-[24px]"]
+  return (
+    <span aria-hidden className="relative block size-12 shrink-0">
+      {/* the selected ring is the metal surface, 2px outside the swatch, always mounted so it only fades */}
+      <span className="pointer-events-none absolute inset-[-2px] rounded-[14px] transition-opacity duration-300" style={{ opacity: selected ? 1 : 0 }}>
+        <MetalSurface active={selected} variant="button" engine="v1" ringWidth={2} theme={mode} className="size-full rounded-[14px]! bg-transparent!">
+          <span className="block size-full" />
+        </MetalSurface>
+      </span>
+    <span
+      className={cn(
+        "relative block size-12 overflow-clip rounded-[12px]",
+        selected && "border-4 border-solid border-black"
+      )}
+    >
+      <span className="absolute inset-0 rounded-[12px]" style={{ backgroundColor: palette.background }} />
+      <span className={cn("absolute", half, top)} style={{ backgroundColor: palette.secondary }} />
+      <span className={cn("absolute", half, bottom)} style={{ backgroundColor: palette.foreground }} />
+      <span
+        className={cn("pointer-events-none absolute rounded-[inherit] shadow-[inset_2px_4px_8px_0px_rgba(34,34,34,0.24)]", selected ? "inset-[-2px]" : "inset-0")}
+      />
+    </span>
+    </span>
+  )
+}
+
+/** A theme choice (Figma 435:6368): its swatch over its name in its own face. Only the chosen one is lit; the rest sit at a light wash. */
 function ThemeButton({
   id,
   label,
   selected,
   onClick,
 }: {
-  id: ThemeId
+  id: ThemeId | "default"
   label: string
   selected: boolean
   onClick: () => void
 }) {
-  const preset = getPreset(id)
+  // "This Theme" is the page's own look, the Berghain preset, and is the choice when no other is made
+  const preset = getPreset(id === "default" ? DEFAULT_THEME_ID : id)
   if (!preset) return null
   const style: CSSProperties = {
     fontFamily: `"${preset.fonts.display.family}", serif`,
     fontWeight: preset.fonts.display.weight,
-    // active: the theme's own label colour; inactive: a light wash of text, whichever theme is chosen, because the tiles
-    // sit on the page itself (dark) and only the cards below take the chosen theme
-    color: selected ? preset.palette.primaryForeground : "var(--alpha-light-md, rgba(246,244,244,0.24))",
-    backgroundColor: selected ? preset.palette.background : undefined,
-    ["--radius" as string]: "16px",
+    color: selected
+      ? id === "default"
+        ? preset.palette.primary
+        : id === "ushuaia"
+          ? // its own label colour is near-black, which vanishes on the page's dark; the selector shows it white instead
+            "#ffffff"
+          : preset.palette.primaryForeground
+      : "var(--alpha-light-md, rgba(246,244,244,0.24))",
   }
   return (
     <button
@@ -96,36 +131,10 @@ function ThemeButton({
       aria-pressed={selected}
       onClick={onClick}
       style={style}
-      className={cn(
-        "relative flex h-20 max-h-20 w-full min-w-0 shrink-0 items-center justify-center overflow-clip rounded-[16px] border px-4 text-center text-[24px] leading-[1.14] min-[1100px]:flex-1 min-[1100px]:px-10 transition-[background-color,border-color,backdrop-filter] duration-300 outline-none focus-visible:ring-2 focus-visible:ring-white/60 motion-reduce:transition-none",
-        // the metal ring is the selected border; the fills are alpha overlays, light/sm when chosen, dark/xs otherwise
-        selected
-          ? // on a light theme the ring needs a darker line against it to read on the pale tile
-            preset.colorMode === "light"
-            ? "border-[color:var(--alpha-dark-xs,rgba(0,0,0,0.04))]"
-            : "border-transparent"
-          : "border-transparent bg-[image:linear-gradient(var(--alpha-dark-sm,rgba(30,30,30,0.08)),var(--alpha-dark-sm,rgba(30,30,30,0.08)))]"
-      )}
+      className="flex min-w-0 flex-col items-center justify-center gap-5 overflow-clip rounded-[16px] px-2 py-4 text-center text-[24px] leading-[1.14] outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-white/60 motion-reduce:transition-none min-[1100px]:flex-1"
     >
-      {selected && id === "savaya" && (
-        <>
-          <span aria-hidden className="absolute inset-0" style={{ backgroundImage: SAVAYA_GRADIENT }} />
-          <Grain />
-        </>
-      )}
-      {/* always mounted, only its strength changes, so choosing a tile never restarts the effect */}
-      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-[16px] transition-opacity duration-300" style={{ opacity: selected ? 1 : 0 }}>
-        <MetalSurface active={selected} variant="button" engine="v1" ringWidth={2} theme={preset.colorMode} className="size-full rounded-[16px]! bg-transparent!">
-          <span className="block size-full" />
-        </MetalSurface>
-      </span>
-      {selected && (
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[image:linear-gradient(var(--alpha-light-md,rgba(246,244,244,0.24)),var(--alpha-light-md,rgba(246,244,244,0.24)))]"
-        />
-      )}
-      <span className="relative">{label}</span>
+      <Swatch palette={preset.palette} selected={selected} mode={preset.colorMode} />
+      <span className="max-w-full">{label}</span>
     </button>
   )
 }
@@ -158,8 +167,8 @@ function ThemeBackdrop({ selected }: { selected: ThemeId | null }) {
 }
 
 /** The glass the cards are made of: the Glass sheet's Soft weight in a 24px corner, at the softer rim the homepage tiles use. */
-function CardGlass() {
-  return <GlassLayer weight="soft" radius={24} edge={0.35} />
+function CardGlass({ radius = 24 }: { radius?: number }) {
+  return <GlassLayer weight="soft" radius={radius} edge={0.35} />
 }
 
 /** A 500 × 380 card of glass, with the theme's backdrop over it. */
@@ -297,12 +306,12 @@ function MediaLink({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="relative isolate h-[372px] w-full overflow-clip rounded-[24px] group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-white/60">
-        {!visual && !image && <CardGlass />}
+      <div className="relative isolate h-[372px] w-full overflow-clip rounded-[16px] group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-white/60">
+        {!visual && !image && <CardGlass radius={16} />}
         {visual ? (
           <>
-            <CardGlass />
-            <img alt="" src="/home/slopes-bg.png" className="pointer-events-none absolute inset-0 size-full rounded-[24px] object-cover opacity-40" />
+            <CardGlass radius={16} />
+            <img alt="" src="/home/slopes-bg.png" className="pointer-events-none absolute inset-0 size-full rounded-[16px] object-cover opacity-40" />
             {visual(hovered)}
           </>
         ) : image ? (
@@ -328,15 +337,10 @@ export function Preview() {
       <div className="flex w-full flex-col gap-12">
         <Pill>Preview</Pill>
         <div className="flex w-full flex-col gap-2">
-          <div role="group" aria-label="Theme" className="grid grid-cols-2 gap-2 min-[1100px]:flex min-[1100px]:gap-2">
+          <div role="group" aria-label="Theme" className="grid grid-cols-3 gap-2 min-[1100px]:flex min-[1100px]:gap-2">
+            <ThemeButton id="default" label="This Theme" selected={selected === null} onClick={() => setSelected(null)} />
             {THEMES.map(({ id, label }) => (
-              <ThemeButton
-                key={id}
-                id={id}
-                label={label}
-                selected={selected === id}
-                onClick={() => setSelected((current) => (current === id ? null : id))}
-              />
+              <ThemeButton key={id} id={id} label={label} selected={selected === id} onClick={() => setSelected(id)} />
             ))}
           </div>
         </div>
@@ -344,7 +348,7 @@ export function Preview() {
 
       {/* the system's components on the left, and on the right the voice components, one at a time */}
       <div className="flex w-full flex-col gap-6">
-        <div className={cn(scope.className, "grid w-full grid-cols-1 gap-10 font-[family-name:var(--font-body)] [font-weight:var(--font-body-weight)] min-[1100px]:grid-cols-2")} style={scope.style}>
+        <div className={cn(scope.className, "grid w-full grid-cols-1 gap-x-10 gap-y-5 font-[family-name:var(--font-body)] [font-weight:var(--font-body-weight)] min-[1100px]:grid-cols-2")} style={scope.style}>
           <PreviewCard selected={selected} className="min-w-0" background={<GradientBackground config={AURORA_FAST} useThemeColors scrim={0.75} className="opacity-50" />}>
             <div className="relative flex h-full flex-col items-center justify-evenly px-6">
               <FluidTabs />

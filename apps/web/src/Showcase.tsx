@@ -166,20 +166,34 @@ export function Showcase() {
       <div className="relative z-10 flex w-full flex-col gap-[clamp(40px,6.25vw,80px)]">
         {/* Hero */}
         <Section className="flex flex-col items-center gap-10 pt-[clamp(96px,12.5vw,160px)]">
-          <div className="flex flex-col items-center text-center leading-[1.22]">
-            <p className={`${MIGRA} text-[clamp(32px,3.75vw,48px)] font-extralight`}>A themeable</p>
-            <p className={`${MIGRA} text-[clamp(40px,4.6875vw,60px)] font-extrabold`}>design system</p>
-            <p className={`${MIGRA} text-[clamp(32px,3.75vw,48px)] font-extralight italic`}>on a mission.</p>
+          {/* Figma 436:8485: 36 / 60 / 48 on a 1.4 line, each line pulled 6px into the next; "design system" carries a double space */}
+          <div className="flex flex-col items-center text-center leading-[1.4]">
+            <p className="text-h4-pri mb-[-6px]">A themeable AI</p>
+            <p className="text-h2-pri-bold mb-[-6px] whitespace-pre">{"design  system"}</p>
+            <p className="text-h3-sec">on a mission.</p>
           </div>
-          <p className={`${BODY} text-center text-sm leading-[1.42]`}>
-            for AI Product Builders,
-            <br />
-            by Luke &amp; Claude.
-          </p>
+          {/* Figma 436:8489: the line, then who made it, with Luke's photo and the Claude mark */}
+          <div className={`${BODY} flex flex-col items-center leading-[1.6]`}>
+            <p className="text-md opacity-75">for AI Product Builders,</p>
+            <p className="text-lg flex items-center gap-1 whitespace-nowrap">
+              <span className="opacity-75">by</span>
+              <span className="flex items-center gap-1">
+                <span className="relative size-5 shrink-0 rounded-full border-[0.909px] border-primary">
+                  <img alt="" src="/home/luke.png" className="absolute inset-0 size-full rounded-full object-cover" />
+                </span>
+                <span className="text-md text-primary">Luke</span>
+              </span>
+              <span className="opacity-75">and</span>
+              <span className="flex items-center gap-0.5">
+                <img alt="" src="/home/claude.svg" className="size-[22px]" />
+                <span className="text-secondary-foreground">Claude</span>
+              </span>
+            </p>
+          </div>
         </Section>
 
         {/* Three link tiles */}
-        <Section className="pb-[clamp(40px,6.25vw,80px)]">
+        <Section className="pt-10 pb-[clamp(40px,6.25vw,80px)]">
           <Popover open={installOpen} onOpenChange={setInstallOpen}>
           <div ref={tilesRef} className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
           <LinkTile

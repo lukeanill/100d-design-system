@@ -21,8 +21,8 @@ function Arrow() {
  * On hover the object softens (a 30px blur, which the Figma draws as a background
  * blur over it; blurring the image itself gives the same look and renders
  * reliably under the blend mode) under a faint dark wash, the
- * outline drops away, and the link grows from 16px to 20px with its arrow from
- * 16px to 22px (the Figma's hover frame).
+ * outline drops away, and the arrow grows from 16px to 22px (the Figma's hover
+ * frame). The link text keeps its size, so it never rewraps under the pointer.
  */
 export function LinkTile({
   image,
@@ -74,7 +74,7 @@ export function LinkTile({
         {(label || showArrow) && (
           <div className={`flex w-full items-center gap-2 ${label ? "" : "justify-end"}`}>
             {label && (
-              <p className={`${BODY} text-[16px] leading-[1.42] min-w-0 transition-[font-size] sm:text-[clamp(12px,1.25vw,16px)] duration-300 ease-out group-hover:text-[20px] motion-reduce:transition-none`}>
+              <p className={`${BODY} text-[16px] leading-[1.42] min-w-0 sm:text-[clamp(12px,1.25vw,16px)]`}>
                 {label}
               </p>
             )}
