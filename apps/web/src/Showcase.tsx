@@ -24,6 +24,35 @@ function Section({ children, className = "" }: { children: ReactNode; className?
   )
 }
 
+/** The page's footer (Figma "section", node 425:4324): who made it, with the name linking to Luke's site. */
+function Footer() {
+  return (
+    <footer className={`w-full ${PAD}`}>
+      <div className="mx-auto flex w-full max-w-[1040px] items-center justify-center pt-[clamp(48px,6.25vw,80px)] pb-[clamp(96px,12.5vw,160px)]">
+        <p className="text-lg flex items-center gap-1 whitespace-nowrap text-primary">
+          <span>made by</span>
+          <a
+            href="https://luke.lukeai.space"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg-bold flex items-center gap-1 rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            <span className="relative size-[22px] shrink-0 rounded-full border border-primary">
+              <img alt="" src="/home/luke.png" className="absolute inset-0 size-full rounded-full object-cover" />
+            </span>
+            Luke
+          </a>
+          <span>and</span>
+          <span className="text-lg-bold flex items-center gap-0.5">
+            <img alt="" src="/home/claude.svg" className="size-6" />
+            Claude
+          </span>
+        </p>
+      </div>
+    </footer>
+  )
+}
+
 /** The fixed backdrop: a textured plate under a rotated, blurred glow. Neither is clipped to the 848 frame, so the glow carries on behind the tiles, as in the Figma. */
 function Backdrop() {
   return (
@@ -262,6 +291,8 @@ export function Showcase() {
             </p>
           </div>
         </Section>
+
+        <Footer />
       </div>
     </div>
   )
