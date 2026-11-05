@@ -32,3 +32,5 @@ export const ImageZoomEffects = (args: any) => (
     />
   </ImageZoomImpl>
 )
+
+ImageZoomEffects.storyName = "Image Zoom"

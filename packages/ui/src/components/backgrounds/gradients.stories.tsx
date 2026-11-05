@@ -7,7 +7,7 @@ import { animatedBackgroundHolo } from "./gradients/animated-background-holo"
 import { animatedBackgroundSmoke } from "./gradients/animated-background-smoke"
 
 export default {
-  title: "Animation/Backgrounds/Gradients",
+  title: "Animation/Backgrounds/FX",
   component: GradientBackground,
   parameters: { layout: "fullscreen" },
   argTypes: {
@@ -74,5 +74,5 @@ Ascii.storyName = "ASCII"
 // near-white stops, so the type is dark
 export const Holo = (args: Args) => <Scene {...args} config={animatedBackgroundHolo} title="Holo" dark />
 
-export const Eighty = (args: Args) => <Scene {...args} config={animatedBackground80} title="80" />
-Eighty.storyName = "80"
+export const Eighty = (args: Args) => <Scene {...args} config={animatedBackground80} title="Retro" />
+Eighty.storyName = "Retro"

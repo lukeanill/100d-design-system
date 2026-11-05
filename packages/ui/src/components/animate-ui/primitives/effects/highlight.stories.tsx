@@ -45,3 +45,5 @@ export const HighlightEffects = (args: any) => (
     <div style={itemStyle}>Contact</div>
   </HighlightImpl>
 )
+
+HighlightEffects.storyName = "Highlight"

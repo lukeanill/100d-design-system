@@ -35,7 +35,7 @@ addons.setConfig({
     buttonBg: palette.secondary,
     buttonBorder: "rgba(15, 14, 14, 0.12)",
     booleanBg: "rgba(15, 14, 14, 0.12)",
-    booleanSelectedBg: palette.primary,
+    booleanSelectedBg: palette.secondary,
 
     inputBg: palette.secondary,
     inputBorder: "rgba(15, 14, 14, 0.12)",

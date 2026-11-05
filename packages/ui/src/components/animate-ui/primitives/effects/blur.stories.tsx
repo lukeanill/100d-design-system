@@ -37,3 +37,5 @@ export const BlurEffects = (args: any) => (
     Blur in content
   </BlurImpl>
 )
+
+BlurEffects.storyName = "Blur"

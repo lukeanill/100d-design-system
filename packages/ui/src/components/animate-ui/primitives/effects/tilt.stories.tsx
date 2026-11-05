@@ -30,3 +30,5 @@ export const TiltEffects = (args: any) => (
     </TiltContent>
   </TiltImpl>
 )
+
+TiltEffects.storyName = "Tilt"

@@ -1,7 +1,7 @@
 import { Effect as EffectImpl } from "./effect"
 
 export default {
-  title: "Animation/Transitions/Effect",
+  title: "Animation/Transitions/Combined",
   component: EffectImpl,
   argTypes: {
     delay: { control: { type: "range", min: 0, max: 2000, step: 50 } },
@@ -43,3 +43,5 @@ export const EffectEffects = (args: any) => (
     Animated content
   </EffectImpl>
 )
+
+EffectEffects.storyName = "Combined"

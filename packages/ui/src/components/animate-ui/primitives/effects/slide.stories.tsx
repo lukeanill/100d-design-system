@@ -39,3 +39,5 @@ export const SlideEffects = (args: any) => (
     Slide in content
   </SlideImpl>
 )
+
+SlideEffects.storyName = "Slide"

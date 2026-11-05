@@ -39,3 +39,5 @@ export const FadeEffects = (args: any) => (
     Fade in content
   </FadeImpl>
 )
+
+FadeEffects.storyName = "Fade"

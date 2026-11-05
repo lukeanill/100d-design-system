@@ -35,3 +35,5 @@ export const MagneticEffects = (args: any) => (
     Move your cursor near me
   </MagneticImpl>
 )
+
+MagneticEffects.storyName = "Magnetic"

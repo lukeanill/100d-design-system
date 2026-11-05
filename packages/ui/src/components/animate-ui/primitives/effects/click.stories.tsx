@@ -38,3 +38,5 @@ export const ClickEffects = (args: any) => (
     </div>
   </ClickImpl>
 )
+
+ClickEffects.storyName = "Click"

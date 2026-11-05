@@ -80,3 +80,5 @@ export const AutoHeightEffects = (args: any) => {
     </div>
   )
 }
+
+AutoHeightEffects.storyName = "Auto Height"
