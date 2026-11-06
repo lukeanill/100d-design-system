@@ -404,7 +404,7 @@ export function GradientBackground({
     >
       <div
         className={cn(
-          "absolute inset-0 transition-opacity",
+          "absolute inset-0 transition-opacity duration-(--motion-duration) ease-(--motion-transition-ease)",
           showCanvas ? "opacity-0" : "opacity-100"
         )}
         style={{
@@ -417,7 +417,7 @@ export function GradientBackground({
       <div
         ref={canvasHostRef}
         className={cn(
-          "absolute inset-0 block size-full transition-opacity forced-colors:hidden",
+          "absolute inset-0 block size-full transition-opacity duration-(--motion-duration) ease-(--motion-transition-ease) forced-colors:hidden",
           showCanvas ? "opacity-100" : "opacity-0"
         )}
       />

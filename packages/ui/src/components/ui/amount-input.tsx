@@ -111,7 +111,7 @@ export const AmountInputDisplay = ({
           </span>
           <div className="flex items-center justify-center gap-2">
             <button
-              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
               aria-label={`Decrease ${label}`}
               disabled={amount <= min}
               onClick={() => setAmount(amount - step)}
@@ -137,7 +137,7 @@ export const AmountInputDisplay = ({
                 </div>
               ) : (
                 <button
-                  className="cursor-pointer font-bold text-xl transition-colors hover:text-primary sm:text-2xl"
+                  className="cursor-pointer font-bold text-xl transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:text-primary sm:text-2xl"
                   onClick={() => setEditing(true)}
                   type="button"
                 >
@@ -147,7 +147,7 @@ export const AmountInputDisplay = ({
               )}
             </div>
             <button
-              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
               aria-label={`Increase ${label}`}
               disabled={amount >= max}
               onClick={() => setAmount(amount + step)}
@@ -181,7 +181,7 @@ export const AmountInputPresets = ({
         presets.map((preset) => (
           <button
             className={cn(
-              "cursor-pointer rounded-full border px-3 py-1 text-xs transition-colors sm:text-sm",
+              "cursor-pointer rounded-full border px-3 py-1 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) sm:text-sm",
               amount === preset
                 ? "border-foreground ring-1 ring-foreground"
                 : "border-border hover:bg-muted"

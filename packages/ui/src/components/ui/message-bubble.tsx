@@ -406,7 +406,7 @@ export const MessageWithReactions = ({
                   onClick={() => handleReact(reaction.emoji)}
                   aria-label={`${userReactions.has(reaction.emoji) ? "Remove" : "Add"} ${reaction.emoji} reaction, ${reaction.count} ${reaction.count === 1 ? "reaction" : "reactions"}`}
                   className={cn(
-                    "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs transition-colors cursor-pointer",
+                    "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) cursor-pointer",
                     userReactions.has(reaction.emoji)
                       ? "bg-primary/15 border border-primary/50"
                       : "bg-card border hover:bg-muted"
@@ -431,7 +431,7 @@ export const MessageWithReactions = ({
               render={
                 <button
                   aria-label="Add reaction"
-                  className="inline-flex items-center justify-center size-6 bg-card border rounded-full hover:bg-muted transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center size-6 bg-card border rounded-full hover:bg-muted transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) cursor-pointer"
                 />
               }
             >
@@ -444,7 +444,7 @@ export const MessageWithReactions = ({
                     key={emoji}
                     onClick={() => handleReact(emoji)}
                     aria-label={`React with ${emoji}`}
-                    className="size-8 flex items-center justify-center text-lg hover:bg-muted rounded transition-colors cursor-pointer"
+                    className="size-8 flex items-center justify-center text-lg hover:bg-muted rounded transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) cursor-pointer"
                   >
                     {emoji}
                   </button>
@@ -576,7 +576,7 @@ export const VoiceMessageBubble = ({
               isPlaying ? "Pause voice message" : "Play voice message"
             }
             className={cn(
-              "size-8 rounded-full flex items-center justify-center shrink-0 transition-colors cursor-pointer",
+              "size-8 rounded-full flex items-center justify-center shrink-0 transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) cursor-pointer",
               isOwn
                 ? "bg-primary-foreground/20 hover:bg-primary-foreground/30"
                 : "bg-foreground/10 hover:bg-foreground/20"

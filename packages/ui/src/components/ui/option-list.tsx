@@ -91,7 +91,7 @@ export const OptionListItem = ({
   return (
     <button
       className={cn(
-        "inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors sm:gap-2 sm:px-3 sm:py-1.5 sm:text-sm",
+        "inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) sm:gap-2 sm:px-3 sm:py-1.5 sm:text-sm",
         selected
           ? "border-foreground bg-foreground text-background"
           : "border-foreground bg-transparent hover:bg-muted",

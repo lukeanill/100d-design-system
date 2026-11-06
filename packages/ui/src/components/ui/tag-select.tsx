@@ -79,7 +79,7 @@ export const TagSelectItem = ({
   return (
     <button
       className={cn(
-        "inline-flex cursor-pointer items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs transition-colors sm:gap-1.5 sm:px-3 sm:py-1 sm:text-sm",
+        "inline-flex cursor-pointer items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) sm:gap-1.5 sm:px-3 sm:py-1 sm:text-sm",
         selected
           ? "border-foreground bg-foreground text-background"
           : "border-border bg-background text-foreground hover:bg-muted",
@@ -140,7 +140,7 @@ export const TagSelectActions = ({
         <>
           {showClear && selected.length > 0 ? (
             <button
-              className="inline-flex cursor-pointer items-center gap-1 text-foreground/75 text-xs transition-colors hover:text-foreground"
+              className="inline-flex cursor-pointer items-center gap-1 text-foreground/75 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:text-foreground"
               onClick={clear}
               type="button"
             >

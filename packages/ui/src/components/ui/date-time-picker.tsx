@@ -371,7 +371,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             <button
               onClick={handlePrevMonth}
               aria-label="Previous month"
-              className="p-1 hover:bg-muted rounded transition-colors"
+              className="p-1 hover:bg-muted rounded transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
             >
               <ChevronLeft className="size-5 text-foreground/75" />
             </button>
@@ -381,7 +381,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             <button
               onClick={handleNextMonth}
               aria-label="Next month"
-              className="p-1 hover:bg-muted rounded transition-colors"
+              className="p-1 hover:bg-muted rounded transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
             >
               <ChevronRight className="size-5 text-foreground/75" />
             </button>
@@ -453,7 +453,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                   render={
                     <button
                       aria-label="Select timezone"
-                      className="flex items-center gap-2 text-sm text-foreground/75 hover:text-foreground transition-colors"
+                      className="flex items-center gap-2 text-sm text-foreground/75 hover:text-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
                     />
                   }
                 >
@@ -464,7 +464,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                   </span>
                   <ChevronRight
                     className={cn(
-                      "size-3 transition-transform",
+                      "size-3 transition-transform duration-(--motion-fast) ease-(--motion-transition-ease)",
                       timezoneDropdownOpen ? "rotate-90" : "rotate-0"
                     )}
                   />
@@ -489,7 +489,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                         key={tz.id}
                         onClick={() => handleTimezoneSelect(tz)}
                         className={cn(
-                          "w-full px-3 py-2.5 text-left text-sm hover:bg-muted transition-colors flex items-center justify-between",
+                          "w-full px-3 py-2.5 text-left text-sm hover:bg-muted transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) flex items-center justify-between",
                           selectedTimezone.id === tz.id && "bg-muted"
                         )}
                       >

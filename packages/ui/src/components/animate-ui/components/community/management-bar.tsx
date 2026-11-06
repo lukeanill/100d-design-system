@@ -53,7 +53,7 @@ function ManagementBar() {
             <button
               aria-label="Previous page"
               disabled={currentPage === 1}
-              className="p-1 text-foreground/75 transition-colors hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
+              className="p-1 text-foreground/75 transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
               onClick={handlePrevPage}
             >
               <ChevronLeft size={20} />
@@ -69,7 +69,7 @@ function ManagementBar() {
             <button
               aria-label="Next page"
               disabled={currentPage === TOTAL_PAGES}
-              className="p-1 text-foreground/75 transition-colors hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
+              className="p-1 text-foreground/75 transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:text-foreground disabled:text-foreground/30 disabled:hover:text-foreground/30"
               onClick={handleNextPage}
             >
               <ChevronRight size={20} />

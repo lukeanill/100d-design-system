@@ -407,7 +407,7 @@ export const TableGrid = ({ className, ...props }: ComponentProps<"div">) => {
               <tr
                 aria-selected={selectedIndexes.has(index)}
                 className={cn(
-                  "border-b transition-colors last:border-0",
+                  "border-b transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) last:border-0",
                   selectable !== "none" && "cursor-pointer hover:bg-muted/30",
                   selectedIndexes.has(index) && "bg-muted/30"
                 )}

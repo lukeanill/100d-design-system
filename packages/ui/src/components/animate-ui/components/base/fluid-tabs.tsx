@@ -44,7 +44,7 @@ export const FluidTabs: FC<FluidTabsProps> = ({ tabs = DEFAULT_TABS, defaultActi
   // Figma nav-bar: 44px high, 4px of padding to a tab, with the 1px outline centred on the edge, 2px between tabs;
   // a tab is 36px high with 12px at the sides, a 20px icon and 4px before the label
   return (
-    <div className="relative isolate flex h-11 w-fit items-center gap-0.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] outline-1 -outline-offset-[0.5px] outline-(--control-edge) p-1 shadow-sm transition-colors">
+    <div className="relative isolate flex h-11 w-fit items-center gap-0.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] outline-1 -outline-offset-[0.5px] outline-(--control-edge) p-1 shadow-sm transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)">
       <SurfaceFill />
       {tabs.map((tab) => {
         const isActive = active === tab.id

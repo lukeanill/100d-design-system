@@ -60,7 +60,7 @@ function VoiceDirection({ pan, probabilities, active = true, className }: VoiceD
             className="transition-[stroke-width,opacity] duration-(--motion-fast) ease-(--motion-transition-ease)"
           />
         ))}
-        <g style={{ transform: `rotate(${angle}deg)`, transformOrigin: "100px 100px" }} className="transition-transform duration-300 ease-out">
+        <g style={{ transform: `rotate(${angle}deg)`, transformOrigin: "100px 100px" }} className="transition-transform duration-(--motion-duration) ease-(--motion-transition-ease)">
           <line x1="100" y1="100" x2="100" y2="34" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
         </g>
         <circle cx="100" cy="100" r="6" fill="currentColor" />
@@ -71,7 +71,7 @@ function VoiceDirection({ pan, probabilities, active = true, className }: VoiceD
           {SIDES.map((id) => (
             <div key={id} className="flex flex-1 flex-col items-center gap-1">
               <div className="h-1 w-full overflow-clip rounded-full bg-current/15">
-                <div className="h-full rounded-full bg-current transition-[width] duration-300" style={{ width: `${Math.round(probabilities[id] * 100)}%` }} />
+                <div className="h-full rounded-full bg-current transition-[width] duration-(--motion-duration) ease-(--motion-transition-ease)" style={{ width: `${Math.round(probabilities[id] * 100)}%` }} />
               </div>
               <span className="text-sm opacity-60">{LABEL[id]}</span>
             </div>

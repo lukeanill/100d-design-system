@@ -100,7 +100,7 @@ function ControlGroupItem({ className, type = "button", ...props }: ComponentPro
       type={type}
       data-slot="control-group-item"
       className={cn(
-        "flex size-10 cursor-pointer items-center justify-center bg-transparent text-inherit outline-none transition-colors hover:bg-black/5 focus-visible:bg-black/10 disabled:cursor-default disabled:opacity-45 dark:hover:bg-white/6 dark:focus-visible:bg-white/10 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0",
+        "flex size-10 cursor-pointer items-center justify-center bg-transparent text-inherit outline-none transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-black/5 focus-visible:bg-black/10 disabled:cursor-default disabled:opacity-45 dark:hover:bg-white/6 dark:focus-visible:bg-white/10 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0",
         className
       )}
       {...props}

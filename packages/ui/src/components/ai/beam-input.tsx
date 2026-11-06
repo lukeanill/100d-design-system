@@ -101,7 +101,7 @@ export function BeamInput({ texture, colorMode, motion = "rotate", type = "large
         aria-label="Send"
         disabled={!canSend}
         className={cn(
-          "flex size-9 shrink-0 items-center justify-center rounded-(--radius-button) transition-[background-color,color,transform] duration-200 enabled:active:scale-[0.94]",
+          "flex size-9 shrink-0 items-center justify-center rounded-(--radius-button) transition-[background-color,color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) enabled:active:scale-[0.94]",
           canSend ? "bg-foreground text-background" : "bg-border text-foreground/75"
         )}
       >

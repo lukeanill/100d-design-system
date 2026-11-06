@@ -57,7 +57,7 @@ const THEMED_SURFACE = cn(
   "text-foreground! data-[quiet]:after:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_10%,transparent)]!",
   "[&[data-quiet]_.metal-fx-inner]:shadow-none!",
   // `!` because metal-fx sets its own transition inline, for its reveal
-  "transition-[background-color]! duration-(--motion-fast)! ease-(--motion-transition-ease)!"
+  "transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease)! duration-(--motion-fast)! ease-(--motion-transition-ease)!"
 )
 
 const SURFACE = cn(
@@ -66,7 +66,7 @@ const SURFACE = cn(
   "hover:bg-[color-mix(in_srgb,var(--foreground)_12%,transparent)]!",
   "text-foreground! data-[quiet]:after:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--foreground)_10%,transparent)]!",
   "[&[data-quiet]_.metal-fx-inner]:shadow-none!",
-  "transition-colors"
+  "transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
 )
 
 /** The metal's strength when it fills the control: low enough that the icon or label on it stays readable. */

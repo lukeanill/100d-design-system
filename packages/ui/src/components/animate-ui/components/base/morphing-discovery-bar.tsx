@@ -52,14 +52,14 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
           <motion.div layout className={`flex max-w-full items-center gap-1.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+8px))] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
             <motion.div
               layout
-              className={`relative flex h-11 items-center overflow-hidden rounded-(--radius-button) isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm transition-colors ${
+              className={`relative flex h-11 items-center overflow-hidden rounded-(--radius-button) isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) ${
                 isSearching ? "xs:w-64 w-[calc(100vw-80px)] sm:w-80" : "w-11"
               }`}
             >
               <SurfaceFill />
               <div className="relative flex h-full w-full items-center justify-center px-3 sm:px-4">
                 <motion.div layout="position">
-                  <Search size={16} strokeWidth={2.25} className="shrink-0 text-foreground transition-colors" />
+                  <Search size={16} strokeWidth={2.25} className="shrink-0 text-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)" />
                 </motion.div>
 
                 <AnimatePresence mode="wait">
@@ -105,7 +105,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                           setActiveTab(cat.id)
                           onChange?.(cat.id)
                         }}
-                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-(--radius-button) px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors hover:bg-(--control-hover) ${isActive ? "text-primary-foreground" : "text-foreground"}`}
+                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-(--radius-button) px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover) ${isActive ? "text-primary-foreground" : "text-foreground"}`}
                       >
                         {isActive && (
                           <motion.div
@@ -131,7 +131,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                     setIsSearching(false)
                     setSearchValue("")
                   }}
-                  className="relative isolate flex h-11 w-11 shrink-0 outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm items-center justify-center rounded-(--radius-button) text-foreground transition-colors"
+                  className="relative isolate flex h-11 w-11 shrink-0 outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm items-center justify-center rounded-(--radius-button) text-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
                 >
                   <SurfaceFill />
                   <X size={16} strokeWidth={2.25} className="relative" />

@@ -209,7 +209,7 @@ const HotelCard = ({
   <button
     onClick={onClick}
     className={cn(
-      "relative flex gap-3 p-2 rounded-xl border bg-card min-w-[300px] max-w-[300px] text-left transition-all shrink-0 cursor-pointer select-none shadow-lg",
+      "relative flex gap-3 p-2 rounded-xl border bg-card min-w-[300px] max-w-[300px] text-left transition-all duration-(--motion-fast) ease-(--motion-transition-ease) shrink-0 cursor-pointer select-none shadow-lg",
       isSelected
         ? "ring-1 ring-foreground border-foreground"
         : "hover:border-foreground/30"
@@ -284,7 +284,7 @@ const LocationListCard = ({
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
     className={cn(
-      "flex gap-3 p-3 border-b transition-colors cursor-pointer",
+      "flex gap-3 p-3 border-b transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) cursor-pointer",
       isSelected && "bg-accent"
     )}
   >
@@ -357,7 +357,7 @@ const FilterSection = ({
     <div className="border-b border-border/50">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-between py-4 text-sm font-medium hover:text-foreground/80 transition-colors"
+        className="flex w-full items-center justify-between py-4 text-sm font-medium hover:text-foreground/80 transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
       >
         <span>{title}</span>
         <ChevronDown
@@ -385,7 +385,7 @@ const FilterSection = ({
                   onCheckedChange={() => toggleOption(option)}
                   className="size-4"
                 />
-                <span className="text-sm text-foreground/75 group-hover:text-foreground transition-colors">
+                <span className="text-sm text-foreground/75 group-hover:text-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)">
                   {option}
                 </span>
               </label>
@@ -393,7 +393,7 @@ const FilterSection = ({
             {hasMore && (
               <button
                 onClick={() => setShowAll(!showAll)}
-                className="mt-1 text-xs text-primary hover:text-primary/80 transition-colors"
+                className="mt-1 text-xs text-primary hover:text-primary/80 transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
               >
                 {showAll
                   ? "Show less"
