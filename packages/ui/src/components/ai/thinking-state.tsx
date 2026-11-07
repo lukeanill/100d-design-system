@@ -72,13 +72,13 @@ const VARIANTS: Record<string, { active: string; done: string; rows: Row[]; quer
 
 function Dot({ tone }: { tone: string }) {
   return (
-    <span className={cn("flex size-3.5 shrink-0 items-center justify-center rounded-full text-white", tone)}>
+    <span className={cn("flex size-3.5 shrink-0 items-center justify-center rounded-full text-primary-foreground", tone)}>
       <Search className="size-2" strokeWidth={3} />
     </span>
   )
 }
 
-const TONES = ["bg-primary", "bg-amber-500", "bg-affirmative"]
+const TONES = ["bg-primary", "bg-destructive", "bg-affirmative"]
 
 export interface ThinkingStateProps {
   appearance?: {

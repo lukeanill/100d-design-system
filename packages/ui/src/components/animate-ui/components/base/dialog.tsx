@@ -47,7 +47,7 @@ type DialogBackdropProps = DialogBackdropPrimitiveProps;
 function DialogBackdrop({ className, ...props }: DialogBackdropProps) {
   return (
     <DialogBackdropPrimitive
-      className={cn('fixed inset-0 z-50 bg-black/50', className)}
+      className={cn('fixed inset-0 z-50 bg-(--alpha-dark-xl)', className)}
       {...props}
     />
   );

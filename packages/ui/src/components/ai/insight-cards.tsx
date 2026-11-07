@@ -18,7 +18,7 @@ const formatMoney = (v: number) => `$${Math.round(v).toLocaleString("en-US")}`
 function Entity({ name }: { name: string }) {
   return (
     <span className="inline-flex items-center gap-1 align-baseline font-medium text-foreground">
-      <span className="inline-block size-2.5 rounded-full bg-amber-500" />@{name}
+      <span className="inline-block size-2.5 rounded-full bg-destructive" />@{name}
     </span>
   )
 }
@@ -55,7 +55,7 @@ export type CompareSeries = {
 }
 
 const COMPARE_SERIES: CompareSeries[] = [
-  { color: "var(--color-amber-500, #f59e0b)", dot: "bg-amber-500", name: "Mint Chip", sub: "-$2,377.66", tone: "red", values: [-2.9, -3.4, -3.05, -3.86, -3.52, -4.1, -3.82, -4.41] },
+  { color: "var(--color-destructive)", dot: "bg-destructive", name: "Mint Chip", sub: "-$2,377.66", tone: "red", values: [-2.9, -3.4, -3.05, -3.86, -3.52, -4.1, -3.82, -4.41] },
   { color: "var(--color-primary)", dot: "bg-primary", name: "Pistachio", sub: "+$617.22", tone: "green", values: [0.22, 0.58, 0.42, 0.91, 0.76, 1.08, 0.96, 1.15] },
 ]
 
@@ -159,7 +159,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
 export type AllocationSegment = { name: string; label: string; pct: number; amount: string; cls: string; tone: string }
 
 const ALLOCATION_SEGMENTS: AllocationSegment[] = [
-  { amount: "$51,785", cls: "bg-amber-500", label: "Vanilla", name: "VAN", pct: 72.5, tone: "text-amber-600 dark:text-amber-400" },
+  { amount: "$51,785", cls: "bg-destructive", label: "Vanilla", name: "VAN", pct: 72.5, tone: "text-destructive" },
   { amount: "$16,278", cls: "bg-border", label: "Chocolate", name: "CHOC", pct: 22.8, tone: "text-foreground/75" },
   { amount: "$3,357", cls: "bg-muted", label: "Mint", name: "MINT", pct: 4.7, tone: "text-foreground/75" },
 ]
@@ -171,7 +171,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
   return (
     <CardChrome>
       <span className="flex items-center gap-1.5 text-[12px] font-medium text-foreground">
-        <span className="flex size-3.5 items-center justify-center rounded-full bg-amber-500 text-[8px] font-bold text-white">V</span>
+        <span className="flex size-3.5 items-center justify-center rounded-full bg-destructive text-[8px] font-bold text-primary-foreground">V</span>
         Vanilla allocation
       </span>
       <span className="mt-1 block text-[20px] font-semibold tracking-[-0.01em] text-foreground tabular-nums">{active.amount}</span>

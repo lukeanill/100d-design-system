@@ -91,7 +91,7 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
                 transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
               }}
             >
-              <span className={cn("flex size-3.5 items-center justify-center rounded-[4px] text-[7px] font-bold text-white", chunk.tone === "destructive" ? "bg-destructive" : "bg-affirmative")}>
+              <span className={cn("flex size-3.5 items-center justify-center rounded-[4px] text-[7px] font-bold text-primary-foreground", chunk.tone === "destructive" ? "bg-destructive" : "bg-affirmative")}>
                 {chunk.badge}
               </span>
               {chunk.source}
