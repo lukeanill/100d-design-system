@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "@workspace/ui/components/drawer"
+import { CopyButton } from "@workspace/ui/components/animate-ui/components/buttons/copy"
 import { BODY, LinkTile, MIGRA } from "./LinkTile"
 import { Pill } from "./Pill"
 import { Preview } from "./Preview"
@@ -10,7 +11,6 @@ import { Preview } from "./Preview"
 // Storybook is built into the site at /storybook/; in dev it is its own server
 const STORYBOOK_URL = import.meta.env.DEV ? "http://localhost:6006" : "/storybook/"
 const GITHUB_URL = "https://github.com/lukeanill/100d-design-system"
-const MONO = "font-[family-name:Geist_Mono,ui-monospace,monospace] font-light"
 
 const PAD = "px-[clamp(20px,9.375vw,120px)]"
 
@@ -79,11 +79,16 @@ function Backdrop() {
   )
 }
 
-/** One command in the install panel: a solid dark fill (alpha/dark/lg), with the text in the chart green. */
-function CodeBox({ children }: { children: ReactNode }) {
+/** What someone pastes into Claude (or another AI tool) to get started: Claude installs the package and the skill, and the skill takes over. */
+const START_PROMPT =
+  "Set up the design system from https://ds.lukeai.space in this project: install @lukeanill/ui, run npx @lukeanill/ui install-skill, then use the design-system skill to get me started. If anything needs a login, walk me through it step by step."
+
+/** The prompt in the install panel: a solid dark fill (alpha/dark/lg), the text in the theme's body face, and the design system's CopyButton. */
+function PromptBox({ children }: { children: string }) {
   return (
-    <div className="relative isolate flex w-full items-center rounded-[16px] bg-(--alpha-dark-lg) p-6">
-      <code className={`${MONO} relative min-w-0 flex-1 text-[16px] leading-[1.14] break-all text-[#00bc7d]`}>{children}</code>
+    <div className="relative isolate flex w-full flex-col gap-4 rounded-[16px] bg-(--alpha-dark-lg) p-6">
+      <p className={`${BODY} text-[16px] leading-[1.5]`}>{children}</p>
+      <CopyButton content={children} variant="secondary" className="self-end" aria-label="Copy the prompt" />
     </div>
   )
 }
@@ -99,13 +104,11 @@ function InstallDrawer({ open, onOpenChange }: { open: boolean; onOpenChange: (o
         <div className="mx-auto flex w-full max-w-[571px] flex-col gap-6 px-6 pb-10 sm:px-10">
           <DrawerHeader className="px-0">
             <DrawerTitle>Use the system in your AI tool</DrawerTitle>
-            <DrawerDescription className="sr-only">Install the package from the command line or through package.json.</DrawerDescription>
+            <DrawerDescription className="sr-only">Copy the prompt and paste it into Claude. It installs the design system and gets you started.</DrawerDescription>
           </DrawerHeader>
           <div className="flex w-full flex-col gap-4">
-            <p className={`${BODY} text-[18px] leading-[1.42]`}>Install from command line</p>
-            <CodeBox>npm install @lukeanill/ui</CodeBox>
-            <p className={`${BODY} text-[18px] leading-[1.42]`}>Install via package.json</p>
-            <CodeBox>&quot;@lukeanill/ui&quot;</CodeBox>
+            <p className={`${BODY} text-[18px] leading-[1.42]`}>Paste this into Claude</p>
+            <PromptBox>{START_PROMPT}</PromptBox>
           </div>
           <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="flex w-full items-center justify-end gap-2 py-2">
             <span className={`${BODY} text-[16px] leading-[1.42] whitespace-nowrap`}>View on Github</span>
