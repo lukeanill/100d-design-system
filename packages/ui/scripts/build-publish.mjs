@@ -16,7 +16,7 @@
 //   5. generate dist/package.json (publish name/version, exports map
 //      rewritten to dist-relative paths, dependencies only)
 
-import { readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync, statSync } from "node:fs"
+import { readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync, statSync, chmodSync } from "node:fs"
 import { join, dirname, basename } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -69,7 +69,11 @@ writeFileSync(
   join(skillDist, "INSTALL.md"),
   `# Using this skill in your project
 
-This folder is the \`design-system\` skill for Claude Code, shipped with ${PUBLISH_NAME}. Copy it into your project so Claude reads it:
+This folder is the \`design-system\` skill for Claude Code, shipped with ${PUBLISH_NAME}. Claude only reads skills from a project's .claude/skills folder, so install it with one command, run from your project folder:
+
+    npx ${PUBLISH_NAME} install-skill
+
+Add \`--global\` to install it for every project on your machine, or \`--dir <folder>\` for another project. Run it again after updating the package. Or copy it by hand:
 
     mkdir -p .claude/skills && cp -r node_modules/${PUBLISH_NAME}/skills/design-system .claude/skills/
 
@@ -78,7 +82,11 @@ Re-copy after you update the package to get the latest themes, tokens and compon
 Ignore any \`node .claude/skills/design-system/scripts/generate.mjs\` refresh command in SKILL.md: that script only runs inside the library's repo.
 `
 )
-console.log("copied the design-system skill to dist/skills/design-system")
+// the one-line installer: npx @lukeanill/ui install-skill
+mkdirSync(join(distDir, "bin"), { recursive: true })
+cpSync(join(root, "bin/install-skill.mjs"), join(distDir, "bin/install-skill.mjs"))
+chmodSync(join(distDir, "bin/install-skill.mjs"), 0o755)
+console.log("copied the design-system skill to dist/skills/design-system, with bin/install-skill.mjs")
 
 // 5. generate dist/package.json
 function toDistExport(sourcePath) {
@@ -112,6 +120,7 @@ const distPkg = {
     react: srcPkg.dependencies.react,
     "react-dom": srcPkg.dependencies["react-dom"],
   },
+  bin: { "lukeanill-ui": "./bin/install-skill.mjs" },
   exports: exportsOut,
 }
 
