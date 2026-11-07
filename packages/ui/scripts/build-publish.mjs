@@ -12,11 +12,12 @@
 //   3. copy globals.publish.css -> dist/styles/globals.css
 //   4. rewrite self-referential "@workspace/ui/..." imports -> "@lukeanill/ui/..."
 //      in every emitted .js and .d.ts file
+//   4b. copy the design-system Claude Code skill into dist/skills/
 //   5. generate dist/package.json (publish name/version, exports map
 //      rewritten to dist-relative paths, dependencies only)
 
 import { readFileSync, writeFileSync, mkdirSync, cpSync, readdirSync, statSync } from "node:fs"
-import { join, dirname } from "node:path"
+import { join, dirname, basename } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -57,6 +58,28 @@ for (const file of rewriteTargets) {
 }
 console.log(`rewrote self-references in ${rewriteCount} files`)
 
+// 4b. ship the design-system skill (the Claude Code skill that documents themes, tokens, components,
+//     guidance and the kickoff questions) so everyone who installs the package gets it.
+//     Source of truth: <repo>/.claude/skills/design-system. The generator script only works inside
+//     this repo, so it is left out; a short note tells the consumer how to use the copy.
+const skillSrc = join(root, "../../.claude/skills/design-system")
+const skillDist = join(distDir, "skills/design-system")
+cpSync(skillSrc, skillDist, { recursive: true, filter: (src) => basename(src) !== "scripts" })
+writeFileSync(
+  join(skillDist, "INSTALL.md"),
+  `# Using this skill in your project
+
+This folder is the \`design-system\` skill for Claude Code, shipped with ${PUBLISH_NAME}. Copy it into your project so Claude reads it:
+
+    mkdir -p .claude/skills && cp -r node_modules/${PUBLISH_NAME}/skills/design-system .claude/skills/
+
+Paths such as \`packages/ui/src/...\` inside the references point at the library's own source, not your project.
+Re-copy after you update the package to get the latest themes, tokens and components.
+Ignore any \`node .claude/skills/design-system/scripts/generate.mjs\` refresh command in SKILL.md: that script only runs inside the library's repo.
+`
+)
+console.log("copied the design-system skill to dist/skills/design-system")
+
 // 5. generate dist/package.json
 function toDistExport(sourcePath) {
   // "./src/components/*.tsx" -> { types: "./components/*.d.ts", default: "./components/*.js" }
@@ -74,6 +97,7 @@ for (const [key, value] of Object.entries(srcPkg.exports)) {
   exportsOut[key] = toDistExport(value)
 }
 exportsOut["./package.json"] = "./package.json"
+exportsOut["./skills/*"] = "./skills/*"
 
 const distPkg = {
   name: PUBLISH_NAME,
