@@ -58,6 +58,20 @@ export function TokensPanel() {
         {noFigma ? `, ${noFigma} with no Figma variable` : ""}
       </div>
 
+      <div style={{ display: "grid", gridTemplateColumns: COLUMNS, gap: 12, color: muted, fontWeight: 600 }}>
+        <div>Code token</div>
+        <div>Figma variable · mode</div>
+        <div>Value</div>
+        <div>Used for · on</div>
+      </div>
+      {groups.map((group) => (
+        <section key={group} style={{ marginTop: -8 }}>
+          <div style={{ fontWeight: 600, marginBottom: 2 }}>{group}</div>
+          {data.uses.filter((u) => u.group === group).map((u) => (
+            <Row key={u.token} use={u} muted={muted} border={border} />
+          ))}
+        </section>
+      ))}
       <section>
         <div style={{ fontWeight: 600, marginBottom: 6 }}>Agreed exceptions</div>
         {data.exceptions.length === 0 ? (
@@ -78,20 +92,6 @@ export function TokensPanel() {
         )}
       </section>
 
-      <div style={{ display: "grid", gridTemplateColumns: COLUMNS, gap: 12, color: muted, fontWeight: 600 }}>
-        <div>Code token</div>
-        <div>Figma variable · mode</div>
-        <div>Value</div>
-        <div>Used for · on</div>
-      </div>
-      {groups.map((group) => (
-        <section key={group} style={{ marginTop: -8 }}>
-          <div style={{ fontWeight: 600, marginBottom: 2 }}>{group}</div>
-          {data.uses.filter((u) => u.group === group).map((u) => (
-            <Row key={u.token} use={u} muted={muted} border={border} />
-          ))}
-        </section>
-      ))}
       <div style={{ color: muted }}>
         Read from the styles that apply to what is showing: a hover or focus style appears here while that state is active.
       </div>
