@@ -9,6 +9,7 @@ import { isHex, normalizeHex, oklch, onColor } from "./color"
 import { NO_FEEL } from "./types"
 import { TYPESCALE } from "./typescale"
 import { figmaVariableFor } from "./figma-map"
+import { glassProps } from "../components/liquid-glass"
 
 describe("presets", () => {
   it("are the nine from Figma, in the Figma order, with Berghain the default wherever it sits", () => {
@@ -367,5 +368,43 @@ describe("figma map", () => {
     expect(figmaVariableFor("font-mono", fabrik)).toBeNull()
     expect(figmaVariableFor("glass-card-blur", fabrik)).toBeNull()
     expect(figmaVariableFor("font-primary-line-height", fabrik)).toBeNull()
+  })
+})
+
+describe("glass popups", () => {
+  const decl = (id: string) => themeDeclarations(getPreset(id)!)
+
+  it("are plain Heavy glass on a glass theme: refraction on, no tint, the glass's own edge and shadow", () => {
+    const heavy = glassProps("heavy")
+    for (const id of ["fabrik", "bootshaus", "berghain", "savaya"]) {
+      const d = decl(id)
+      for (const group of ["select", "overlay"]) {
+        expect(d, `${id} ${group}`).toContain(`--glass-${group}-refraction: 1;`)
+        expect(d).toContain(`--glass-${group}-surface: transparent;`)
+        // the numbers are LiquidGlass's heavy weight
+        expect(d).toContain(`--glass-${group}-refraction-blur: ${heavy.blur};`)
+        expect(d).toContain(`--glass-${group}-refraction-bezel: ${heavy.bezel};`)
+        expect(d).toContain(`--glass-${group}-refraction-thickness: ${heavy.thickness};`)
+        expect(d).toContain(`--glass-${group}-refraction-scale: ${heavy.scaleRatio};`)
+        expect(d).toContain(`--glass-${group}-blur: ${heavy.fallbackBlur}px;`)
+      }
+      expect(d).toContain("--glass-popup-border: transparent;")
+      expect(d).toContain("--glass-popup-color: var(--foreground);")
+      expect(d.some((l) => l.startsWith("--glass-popup-shadow: 0 4px 24px"))).toBe(true)
+      // cards are untouched: no refraction for them
+      expect(d.some((l) => l.startsWith("--glass-card-refraction"))).toBe(false)
+    }
+  })
+
+  it("leave a solid theme's popups as they were", () => {
+    for (const id of ["illuzion", "laroc", "pacha", "amnesia", "ushuaia"]) {
+      const d = decl(id)
+      expect(d).toContain("--glass-select-refraction: 0;")
+      expect(d).toContain("--glass-overlay-refraction: 0;")
+      expect(d).toContain("--glass-select-surface: initial;")
+      expect(d).toContain("--glass-popup-border: initial;")
+      expect(d).toContain("--glass-popup-color: initial;")
+      expect(d).toContain("--glass-popup-shadow: initial;")
+    }
   })
 })

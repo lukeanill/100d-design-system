@@ -1001,6 +1001,18 @@
 }
 
 /*
+  Plain Heavy glass on popups: a glass theme sets --glass-popup-border, --glass-popup-shadow and --glass-popup-color,
+  and the popup's own border, shadow and text colour give way to them. This sits outside the layers on purpose, so it wins over the utility classes on
+  the components; a theme that sets neither falls back to whatever the component had (revert-layer).
+*/
+.glass-select,
+.glass-overlay {
+  border-color: var(--glass-popup-border, revert-layer);
+  box-shadow: var(--glass-popup-shadow, revert-layer);
+  color: var(--glass-popup-color, revert-layer);
+}
+
+/*
   Tailwind's `@theme inline` collapses aliases like `--font-heading: var(--font-primary)`
   down to `var(--font-primary)` when it compiles the `.font-heading`/`.font-sans`/`.font-body`/
   `.font-serif` utility classes — so overriding `--font-heading` etc. here has no effect on those

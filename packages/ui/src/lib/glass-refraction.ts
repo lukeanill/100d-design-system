@@ -3,7 +3,7 @@ import { buildMaps, filterMarkup, supportsSvgBackdrop } from "@workspace/ui/lib/
 /**
  * Document-wide refraction for the large glass surfaces.
  *
- * A theme opts in with `--glass-refraction: 1` (see theme-settings.mjs). This
+ * A theme opts in with `--glass-refraction: 1` for every group, or `--glass-<group>-refraction: 1` for one. This
  * finds the surfaces of the card, select, overlay and dialog groups, builds an
  * SVG filter for each one's size, and points that surface's backdrop-filter at
  * it through `--glass-backdrop`. Actions and inputs are never touched: they
@@ -76,7 +76,10 @@ export function startGlassRefraction() {
 
   const apply = (el: HTMLElement) => {
     const style = getComputedStyle(el)
-    const on = style.getPropertyValue("--glass-refraction").trim() === "1"
+    const group = groupOf(el)
+    // a group can switch itself on (--glass-select-refraction: 1); otherwise the document-wide switch decides
+    const own = group ? style.getPropertyValue(`--glass-${group}-refraction`).trim() : ""
+    const on = own ? own === "1" : style.getPropertyValue("--glass-refraction").trim() === "1"
     // `none` is the switch the recipe uses for "no ::before at all"
     const glass = style.getPropertyValue("--glass-layer").trim() !== "none"
     const w = Math.round(el.offsetWidth)
@@ -89,7 +92,6 @@ export function startGlassRefraction() {
       tracked.forEach((other) => sizes.delete(other))
     }
 
-    const group = groupOf(el)
     if (!group) return clear(el)
     const prefix = `--glass-${group}-refraction-`
     const params: Params = {

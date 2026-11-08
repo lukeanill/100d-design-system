@@ -48,12 +48,40 @@ function shadowTokens(level: Shadow): Record<string, string> {
   }
 }
 
-/** Glass material: heavy blur, a dark or light tint, on cards. Refraction stays off. */
+/**
+ * The Heavy glass weight (the Figma `glass/heavy`), as the refraction runtime reads it. These are the numbers in
+ * LiquidGlass's heavy weight; themes.test.ts holds the two together. `edge` scales the highlight, as it does there.
+ */
+const HEAVY = { blur: 14, bezel: 28, thickness: 40, scale: 1, specular: 0.5, fallbackBlur: 40 }
+const GLASS_EDGE = 0.6
+
+/** The popup groups: menus, selects, popovers, sheets and drawers. */
+const POPUPS = ["select", "overlay"] as const
+
+/**
+ * Glass material: heavy blur, a dark or light tint, on cards. Menus, selects, popovers and sheets are plain Heavy
+ * glass: refraction on, no tint fill, the theme foreground for text, and the glass's own soft shadow and inner glow
+ * in place of a border and a drop shadow. Cards stay on the blur.
+ */
 const glass = (colorMode: ColorMode = "dark") => [
   `--glass-card-layer: "";`,
   `--glass-card-blur: 64px;`,
   `--glass-card-saturate: 180%;`,
   `--glass-card-surface: color-mix(in oklab, color-mix(in oklab, var(--card) 90%, ${colorMode === "light" ? "oklch(1 0 0)" : "oklch(0 0 0)"}) 55%, transparent);`,
+  ...POPUPS.flatMap((group) => [
+    `--glass-${group}-surface: transparent;`,
+    `--glass-${group}-blur: ${HEAVY.fallbackBlur}px;`,
+    `--glass-${group}-saturate: 100%;`,
+    `--glass-${group}-refraction: 1;`,
+    `--glass-${group}-refraction-blur: ${HEAVY.blur};`,
+    `--glass-${group}-refraction-bezel: ${HEAVY.bezel};`,
+    `--glass-${group}-refraction-thickness: ${HEAVY.thickness};`,
+    `--glass-${group}-refraction-scale: ${HEAVY.scale};`,
+    `--glass-${group}-refraction-specular: ${HEAVY.specular * GLASS_EDGE};`,
+  ]),
+  `--glass-popup-border: transparent;`,
+  `--glass-popup-color: var(--foreground);`,
+  `--glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / ${Math.round(0.45 * GLASS_EDGE * 100)}%);`,
 ]
 
 /**
@@ -96,6 +124,17 @@ const GLASS_OFF = [
   "--glass-card-blur: 0px;",
   "--glass-card-saturate: 100%;",
   "--glass-card-surface: initial;",
+  // popups on a solid theme keep the tinted blur, border and shadow they have always had
+  ...POPUPS.flatMap((group) => [
+    `--glass-${group}-surface: initial;`,
+    `--glass-${group}-blur: 40px;`,
+    `--glass-${group}-saturate: 150%;`,
+    `--glass-${group}-refraction: 0;`,
+    ...["blur", "bezel", "thickness", "scale", "specular"].map((n) => `--glass-${group}-refraction-${n}: initial;`),
+  ]),
+  "--glass-popup-border: initial;",
+  "--glass-popup-color: initial;",
+  "--glass-popup-shadow: initial;",
 ]
 
 const stack = (family: string, fallback: string) => `'${family}', ${fallback}`
