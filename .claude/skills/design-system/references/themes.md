@@ -14,7 +14,7 @@ There are **9 themes** (presets), in this order (never reorder them): Fabrik, Il
 | `scale` | sm, md, lg | Which typescale set is used (sizes in the Tokens reference). |
 | `spacing` | sm, md, lg | Layout spacing between components only; component padding stays fixed. Carried as `--theme-spacing`; components do not read it yet. |
 | `radius` | sharp, subtle, strong, rounded | sharp = square, subtle, strong, rounded = pill controls. |
-| `shadow` | none, subtle, strong | Strength of every `shadow-*` token. |
+| `shadow` | none, subtle, strong | Strength of every shadow token. |
 | `material` (texture) | solid, glass, gradient | How cards and controls are made: solid wash, top-to-bottom gradient, or blurred glass. |
 | `uiColor` (ui-color) | classic, modern, alternative | Which `ui-color` collection the theme uses for destructive, affirmative, focus and the five chart colours. |
 | `motion` (Component Animations) | none, ease, emphatic, springy | Easing and duration for every component transition. |

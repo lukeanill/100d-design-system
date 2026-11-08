@@ -21,7 +21,7 @@ Repo: `packages/ui` (the system), `apps/web` (site + Storybook), `qa` (QA app). 
 | A component: props, where used, Storybook link | `references/components.md` (index) → `references/components/<group>.md` (detail) | Groups follow the Storybook sidebar. |
 | An animation, transition or text effect | `references/animations.md` (index) → `references/animations/<group>.md` | Motion tokens are in `tokens.md`; the theme's motion choice in `themes.md`. |
 | Direction, rules, what to do and not do | `references/guidance.md` | Working rules, component theming rules (numbered), theme direction, open questions, known gaps. |
-| Breakpoints | `references/breakpoints.md` | Tailwind defaults plus the fixed widths in code. |
+| Breakpoints | `references/breakpoints.md` | The standard widths plus the fixed widths in code. |
 | Tech stack, commands, hosting, publishing | `references/tech.md` | |
 | Which sites are built with it | `references/sites.md` | Split into verified vs claimed. |
 | Adding or importing a component | `references/import.md` | Follow it step by step; it starts by asking the user. |
@@ -35,8 +35,9 @@ Number every point you make to the user, so they can answer by number ("go with 
 
 ## How to answer
 
-1. **Find the entry first, then quote it.** For a component, open the group file and give the props table, the import path, the Storybook link, and where it is used. For a theme, give the setting values from `themes.md`. Do not answer from memory of other shadcn/Tailwind systems: the tokens, text classes and theme settings here are the system's own.
+1. **Find the entry first, then quote it.** For a component, open the group file and give the props table, the import path, the Storybook link, and where it is used. For a theme, give the setting values from `themes.md`. Do not answer from memory of other design systems: the tokens, text styles and theme settings here are the system's own.
 2. **Give links as full URLs.** Storybook story links in the references are `https://ds.lukeai.space/storybook/?path=/story/<id>`. When showing the user a story locally, open the full UI (`/?path=/story/...`), never a bare `iframe.html`.
+2a. **"Tell me about / show me / list the tokens" means list every token.** Give the full list from `references/tokens.md`, grouped by section, each token with its meaning and where it is applied (example components). Tokens that share a meaning may share a row, but every token name must appear. Do not give a summary of the groups, and do not ask which group first: the user asked for all of them. Offer a deeper dive (per-theme values) after the list, not instead of it.
 3. **Say when something is missing.** "No story yet" and "not used in apps/web" are real answers. If a fact is not in the references and not in the source, say it is unknown rather than guessing. Known gaps are in `guidance.md` §5.
 4. **If the references may be stale** (the user changed components, tokens or themes this session, or `git log` shows newer commits than the files), refresh them first:
    ```bash

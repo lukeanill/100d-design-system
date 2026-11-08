@@ -1,10 +1,10 @@
 # Breakpoints
 
-The design system does not define custom breakpoints in `tokens.css` (no `--breakpoint-*`). It uses Tailwind v4's defaults plus a handful of fixed widths in code. Verified against source; re-check with the greps at the end if the code has moved.
+The design system does not define custom breakpoints in `tokens.css` (no `--breakpoint-*`). It uses the standard set of widths (640, 768, 1024, 1280, 1536px) plus a handful of fixed widths in code. Verified against source; re-check with the greps at the end if the code has moved.
 
-## Tailwind defaults (min-width, mobile first)
+## Standard breakpoints (min-width, mobile first)
 
-| Prefix | Width | Used (approx. class count in `packages/ui/src` + `apps/web/src`) |
+| Name | Width | Used (approx. class count in `packages/ui/src` + `apps/web/src`) |
 |---|---|---|
 | `sm:` | 640px | ~137 (most common) |
 | `md:` | 768px | ~33 |

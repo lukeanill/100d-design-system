@@ -86,7 +86,7 @@ function themesDoc(t) {
     `| \`scale\` | ${T.SCALES.join(", ")} | Which typescale set is used (sizes in the Tokens reference). |`,
     `| \`spacing\` | ${T.SPACINGS.join(", ")} | Layout spacing between components only; component padding stays fixed. Carried as \`--theme-spacing\`; components do not read it yet. |`,
     `| \`radius\` | ${T.RADII.join(", ")} | sharp = square, subtle, strong, rounded = pill controls. |`,
-    `| \`shadow\` | ${T.SHADOW_LEVELS.join(", ")} | Strength of every \`shadow-*\` token. |`,
+    `| \`shadow\` | ${T.SHADOW_LEVELS.join(", ")} | Strength of every shadow token. |`,
     `| \`material\` (texture) | ${T.MATERIALS.join(", ")} | How cards and controls are made: solid wash, top-to-bottom gradient, or blurred glass. |`,
     `| \`uiColor\` (ui-color) | ${t["ui-color"].UI_COLOR_MODES.join(", ")} | Which \`ui-color\` collection the theme uses for destructive, affirmative, focus and the five chart colours. |`,
     `| \`motion\` (Component Animations) | ${T.MOTIONS.join(", ")} | Easing and duration for every component transition. |`,
@@ -155,54 +155,54 @@ function themesDoc(t) {
 
 // [pattern, meaning, example of use]. First match wins. Order matters.
 const TOKEN_RULES = [
-  [/^--(ease-|spring-bounce|duration-)/, "Motion token from the Figma `motion` collection. Same in every theme.", "`transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)`"],
+  [/^--(ease-|spring-bounce|duration-)/, "Motion token from the Figma `motion` collection. Same in every theme.", "CSS transitions and the motion library"],
   [/^--ease-(hold|constant)$/, "Special easings: hold (ease-out) and constant (linear).", "`var(--ease-hold)`"],
-  [/^--motion-ease$/, "Easing curve of the theme's Component Animations choice.", "`transition-timing-function: var(--motion-ease)`"],
+  [/^--motion-ease$/, "Easing curve of the theme's Component Animations choice.", "CSS transitions and the motion library"],
   [/^--motion-duration$/, "Duration of the theme's Component Animations choice (0s for none).", "components read it via `useThemeTransition()`"],
   [/^--motion-spring-bounce$/, "Bounce of the Springy choice (0 for the others).", "`useThemeSpring()`"],
-  [/^--motion-fast$/, "How long a hover takes: `--duration-fast`, or instant when motion is none.", "`transition-duration: var(--motion-fast)`"],
-  [/^--motion-transition-ease$/, "Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`.", "`transition-timing-function: var(--motion-transition-ease)`"],
-  [/^--font-primary-weight-/, "Weight of the display (primary) face: regular / emphasis.", "headings and `text-h*-pri`, `text-h*-pri-bold`"],
-  [/^--font-secondary-weight-/, "Weight of the secondary face: regular / emphasis.", "`text-h*-sec`, `text-h*-sec-bold`"],
+  [/^--motion-fast$/, "How long a hover takes: `--duration-fast`, or instant when motion is none.", "hover transitions"],
+  [/^--motion-transition-ease$/, "Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`.", "CSS transitions"],
+  [/^--font-primary-weight-/, "Weight of the display (primary) face: regular / emphasis.", "display headings (regular and bold)"],
+  [/^--font-secondary-weight-/, "Weight of the secondary face: regular / emphasis.", "secondary headings (regular and bold)"],
   [/^--font-primary-letter-spacing$/, "Letter spacing of the display face, in em.", "h1–h6"],
-  [/^--font-secondary-letter-spacing$/, "Letter spacing of the secondary face, in em.", "`text-h*-sec`"],
-  [/^--font-secondary-style$/, "normal or italic for the secondary face.", "`text-h*-sec`"],
-  [/^--font-body-weight-action$/, "Weight of text inside buttons (Figma font/body/action/weight).", "`text-action-*`"],
-  [/^--font-body-weight-emphasis$/, "Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme.", "`text-*-bold`"],
-  [/^--font-body-weight$/, "Weight of body text.", "`text-md`, `text-sm`, …"],
-  [/^--font-(body|primary|secondary)-line-height$/, "Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own.", "body and heading text styles, `text-*` sizes"],
+  [/^--font-secondary-letter-spacing$/, "Letter spacing of the secondary face, in em.", "secondary headings"],
+  [/^--font-secondary-style$/, "normal or italic for the secondary face.", "secondary headings"],
+  [/^--font-body-weight-action$/, "Weight of text inside buttons (Figma font/body/action/weight).", "button text"],
+  [/^--font-body-weight-emphasis$/, "Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme.", "bold body text"],
+  [/^--font-body-weight$/, "Weight of body text.", "body text"],
+  [/^--font-(body|primary|secondary)-line-height$/, "Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own.", "body and heading text styles"],
   [/^--font-body-letter-spacing$/, "Letter spacing of body text, in em.", "body text styles"],
-  [/^--font-(primary|secondary|body-token|heading|body|body-small|serif|mono|sans|family|family-alt|fira-code|bricolage-grotesque|inter)$/, "Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. `font-heading`, `font-sans`, `font-serif` alias these.", "`font-heading`, `font-sans`, `font-serif` Tailwind classes"],
+  [/^--font-(primary|secondary|body-token|heading|body|body-small|serif|mono|sans|family|family-alt|fira-code|bricolage-grotesque|inter)$/, "Font family. `primary` = display face, `secondary` = secondary face, `body` = body face.", "headings, body text and secondary text"],
   [/^--h[1-6]-(weight|size)$/, "Per-heading weight and size (size reads the typescale).", "`<h1>`–`<h6>` base styles"],
-  [/^--typescale-/, "Font size of one step of the theme's scale (sm/md/lg set).", "`text-md`, `text-h1-pri`"],
-  [/^--text-/, "Tailwind text size mapped to a typescale step, with its line height.", "`text-sm`, `text-2xl`"],
-  [/^--background$/, "Page surface. Everything else (card, popover) is derived from it.", "`bg-background`"],
-  [/^--foreground$/, "Ink on the page; border, input, ring and muted-foreground are this colour at set opacities.", "`text-foreground`"],
+  [/^--typescale-/, "Font size of one step of the theme's scale (sm/md/lg set).", "every text style"],
+  [/^--text-/, "Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height.", "text sizes"],
+  [/^--background$/, "Page surface. Everything else (card, popover) is derived from it.", "page background"],
+  [/^--foreground$/, "Ink on the page; border, input, ring and muted-foreground are this colour at set opacities.", "text on the page"],
   [/^--card$/, "Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See \"Texture and the card\" in themes.md.", "Card, popups"],
   [/^--card-image$/, "The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`.", "Card"],
   [/^--card-foreground$/, "Ink on a card. The theme foreground (Figma color/semantic/card-foreground).", "Card, popups"],
-  [/^--(popover|popover-foreground)$/, "Popup surface and text. Equals background.", "`bg-popover` in menus, dialogs"],
+  [/^--(popover|popover-foreground)$/, "Popup surface and text. Equals background.", "menus, dialogs"],
   [/^--(primary|primary-foreground)$/, "Primary brand/action colour and the ink on it.", "Button default variant, links"],
-  [/^--(secondary|secondary-foreground|muted|accent|accent-foreground)$/, "Secondary colour and the ink on it. `muted` and `accent` alias secondary.", "`bg-secondary`, `bg-muted`, hover rows"],
-  [/^--muted-foreground$/, "Foreground at 65% opacity for quiet text.", "`text-muted-foreground`"],
-  [/^--focus$/, "Focus colour, from the theme's ui-color mode.", "`ring-focus`"],
+  [/^--(secondary|secondary-foreground|muted|accent|accent-foreground)$/, "Secondary colour and the ink on it. `muted` and `accent` alias secondary.", "secondary surfaces, hover rows"],
+  [/^--muted-foreground$/, "Foreground at 65% opacity for quiet text.", "quiet text"],
+  [/^--focus$/, "Focus colour, from the theme's ui-color mode.", "focus rings"],
   [/^--primitive-(700|800)$/, "The Figma primitives color-700 and color-800 (new). Nothing reads them yet.", "—"],
-  [/^--destructive$/, "Error / delete colour, from the theme's ui-color mode.", "`bg-destructive`, destructive Button, Alert"],
-  [/^--affirmative$/, "Success colour, from the theme's ui-color mode (Figma ui-color/affirmative).", "`bg-affirmative`"],
-  [/^--affirmative-foreground$/, "Ink on the success colour: the theme's foreground.", "`text-affirmative-foreground`"],
-  [/^--(border|input|ring)$/, "Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings.", "`border-border`, `ring-ring`"],
-  [/^--chart-[1-5]$/, "Chart series colours (five per theme).", "recharts series via `var(--chart-1)`; no `bg-chart-*` classes"],
+  [/^--destructive$/, "Error / delete colour, from the theme's ui-color mode.", "destructive Button, Alert"],
+  [/^--affirmative$/, "Success colour, from the theme's ui-color mode (Figma ui-color/affirmative).", "success states"],
+  [/^--affirmative-foreground$/, "Ink on the success colour: the theme's foreground.", "text on success colour"],
+  [/^--(border|input|ring)$/, "Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings.", "borders, input outlines, focus rings"],
+  [/^--chart-[1-5]$/, "Chart series colours (five per theme).", "chart series (recharts)"],
   [/^--alpha-(dark|light)-/, "Translucent wash (dark or light) in steps xs–xl. One value set for every theme.", "hover, solid control fill, borders, overlays"],
   [/^--alpha-blur-/, "Backdrop blur strength for popups, for pages narrower than 1200px (320) and wider (1200).", "`--popup-blur`"],
   [/^--popup-blur$/, "The blur behind a popup; switches at min-width 1200px.", "menus, popovers, dialogs"],
   [/^--control-fill$/, "Fill behind a control, from material + colour mode (glass has none).", "Button, PromptBar, tabs"],
   [/^--control-edge$/, "A control's 1px outline (transparent for glass).", "controls"],
   [/^--control-hover$/, "What a hover adds over a control.", "hover states"],
-  [/^--gradient-/, "Named gradients built from the palette.", "`bg-gradient-downlight`, `bg-gradient-headline`"],
+  [/^--gradient-/, "Named gradients built from the palette.", "gradient backgrounds, headline text"],
   [/^--dimensions-max$/, "Fully rounded (9999px).", "`radius-button` on rounded themes"],
-  [/^--radius-(button|outer-max)$/, "Corner for controls (`button`) and the cap for a container's corner (`outer-max`).", "`rounded-(--radius-button)`"],
-  [/^--radius(-(xs|sm|md|lg|xl|full))?$/, "Corner radius steps; their size depends on the theme's radius setting.", "`rounded-sm` … `rounded-xl`"],
-  [/^--shadow/, "Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none.", "`shadow-sm`, `shadow-lg`"],
+  [/^--radius-(button|outer-max)$/, "Corner for controls (`button`) and the cap for a container's corner (`outer-max`).", "buttons and controls"],
+  [/^--radius(-(xs|sm|md|lg|xl|full))?$/, "Corner radius steps; their size depends on the theme's radius setting.", "cards, menus, inner elements"],
+  [/^--shadow/, "Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none.", "elevation of cards, menus, dialogs"],
   [/^--sidebar/, "Sidebar colours (alias the main palette).", "Sidebar component"],
   [/^--glass-refraction/, "Glass refraction switch/strength.", "LiquidGlass, GlassLayer"],
   [/^--glass-(card|action|input|select|overlay|dialog)-/, "Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour.", "`glass('card')` class string"],
@@ -269,9 +269,9 @@ function tokensDoc(t, presets) {
 
   const out = [GENERATED, "", "# Design tokens", ""]
   out.push(
-    "A token is a CSS custom property. A theme's block (`.<id>`) sets most of them; `styles/tokens.css` sets the motion tokens and maps them to Tailwind (`@theme inline`), so `bg-primary`, `rounded-lg`, `shadow-md`, `text-md` all resolve through tokens. Values below are the default theme's (Berghain); `themes-resolved.md` has every theme's values. \"Applied in\" is sampled from component source: the three components that use the token most (not exhaustive).",
+    "A token is a CSS custom property. A theme's block (`.<id>`) sets most of them; `styles/tokens.css` sets the motion tokens. Values below are the default theme's (Berghain); `themes-resolved.md` has every theme's values. \"Applied in\" is sampled from component source: the three components that use the token most (not exhaustive).",
     "",
-    `Counts: ${all.size} custom properties, ${classes.length} token-backed classes (\`text-*\`, \`glass-*\`).`,
+    `Counts: ${all.size} custom properties, ${classes.length} text styles and glass surfaces.`,
     ""
   )
   const groups = [
@@ -304,7 +304,7 @@ function tokensDoc(t, presets) {
     out.push("")
   }
 
-  out.push("## Token-backed classes", "", "| Class | Meaning | Applied in (sampled) |", "|---|---|---|")
+  out.push("## Text styles and glass surfaces", "", "| Code name | Meaning | Applied in (sampled) |", "|---|---|---|")
   const classMeaning = (c) => {
     if (/^text-h\d-pri-bold$/.test(c)) return "Display face, emphasis weight (Figma pri/emp/hN)"
     if (/^text-h\d-pri$/.test(c)) return "Display face, regular weight (Figma pri/reg/hN)"
@@ -317,14 +317,14 @@ function tokensDoc(t, presets) {
     if (c === "text-md") return "Body medium, regular (default control + paragraph size)"
     if (/^glass-surface$/.test(c)) return "Base class that creates the blur layer"
     if (/^glass-/.test(c)) return "Glass recipe for one surface group (card, action, input, select, overlay, dialog)"
-    return "Token-backed class"
+    return "Text size"
   }
   for (const c of [...new Set(classes)]) {
     const u = usage.get(c)
     const top = u ? [...u.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([f]) => f).join(", ") : ""
     out.push(`| \`${c}\` | ${classMeaning(c)} | ${top || "—"} |`)
   }
-  out.push("", "## Typescale by step", "", "Line-height comes from the theme: body steps read `--font-body-line-height` (default 1.6), heading steps `--font-primary-line-height` / `--font-secondary-line-height` (default 1.4). Sizes (px) per `scale` mode are in `themes.md`. Tailwind sizes map as: " + Object.entries(t.typescale.TAILWIND_TEXT).map(([k, v]) => `text-${k}→${v}`).join(", ") + ".", "")
+  out.push("", "## Typescale by step", "", "Line-height comes from the theme: body steps read `--font-body-line-height` (default 1.6), heading steps `--font-primary-line-height` / `--font-secondary-line-height` (default 1.4). Sizes (px) per `scale` mode are in `themes.md`. The size ladder maps as: " + Object.entries(t.typescale.TAILWIND_TEXT).map(([k, v]) => `${k}→${v}`).join(", ") + ".", "")
   const motion = t.motion
   out.push("## Motion tokens", "")
   out.push("Easing curves (`--ease-<group>-<strength>`):", "", "| Token | cubic-bezier |", "|---|---|")

@@ -2,9 +2,9 @@
 
 # Design tokens
 
-A token is a CSS custom property. A theme's block (`.<id>`) sets most of them; `styles/tokens.css` sets the motion tokens and maps them to Tailwind (`@theme inline`), so `bg-primary`, `rounded-lg`, `shadow-md`, `text-md` all resolve through tokens. Values below are the default theme's (Berghain); `themes-resolved.md` has every theme's values. "Applied in" is sampled from component source: the three components that use the token most (not exhaustive).
+A token is a CSS custom property. A theme's block (`.<id>`) sets most of them; `styles/tokens.css` sets the motion tokens. Values below are the default theme's (Berghain); `themes-resolved.md` has every theme's values. "Applied in" is sampled from component source: the three components that use the token most (not exhaustive).
 
-Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
+Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 ## Colour
 
@@ -27,15 +27,15 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 | `--accent-foreground` | `var(--secondary-foreground)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | ripple |
 | `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour, from the theme's ui-color mode. | button, badge, insight-cards (+30) |
 | `--affirmative` | `oklch(0.894 0.187 153.03)` | Success colour, from the theme's ui-color mode (Figma ui-color/affirmative). | task-rows, thinking-state, context-cards (+2) |
-| `--affirmative-foreground` | `var(--foreground)` | Ink on the success colour: the theme's foreground. | `text-affirmative-foreground` |
+| `--affirmative-foreground` | `var(--foreground)` | Ink on the success colour: the theme's foreground. | text on success colour |
 | `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+30) |
 | `--input` | `oklch(0.988 0.001 286.38 / 20%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | checkbox, bubble, button-group (+1) |
 | `--ring` | `oklch(0.988 0.001 286.38 / 70%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | button, questionnaire, files (+30) |
-| `--chart-1` | `oklch(0.647 0.217 36.85)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-2` | `oklch(0.605 0.107 184.17)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-3` | `oklch(0.397 0.070 227.19)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-4` | `oklch(0.829 0.171 81.04)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-5` | `oklch(0.530 0.112 69.26)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
+| `--chart-1` | `oklch(0.647 0.217 36.85)` | Chart series colours (five per theme). | chart series (recharts) |
+| `--chart-2` | `oklch(0.605 0.107 184.17)` | Chart series colours (five per theme). | chart series (recharts) |
+| `--chart-3` | `oklch(0.397 0.070 227.19)` | Chart series colours (five per theme). | chart series (recharts) |
+| `--chart-4` | `oklch(0.829 0.171 81.04)` | Chart series colours (five per theme). | chart series (recharts) |
+| `--chart-5` | `oklch(0.530 0.112 69.26)` | Chart series colours (five per theme). | chart series (recharts) |
 | `--sidebar` | `var(--background)` | Sidebar colours (alias the main palette). | sidebar |
 | `--sidebar-foreground` | `var(--foreground)` | Sidebar colours (alias the main palette). | Sidebar component |
 | `--sidebar-primary` | `var(--primary)` | Sidebar colours (alias the main palette). | Sidebar component |
@@ -65,31 +65,31 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 | `--control-fill` | `transparent` | Fill behind a control, from material + colour mode (glass has none). | themed-surface |
 | `--control-edge` | `transparent` | A control's 1px outline (transparent for glass). | prompt-bar, morphing-discovery-bar, beam-input (+4) |
 | `--control-hover` | `var(--alpha-light-sm)` | What a hover adds over a control. | prompt-bar, control-button, streaming-text (+5) |
-| `--gradient-downlight` | `linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(…` | Named gradients built from the palette. | `bg-gradient-downlight`, `bg-gradient-headline` |
-| `--gradient-rise` | `linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)` | Named gradients built from the palette. | `bg-gradient-downlight`, `bg-gradient-headline` |
-| `--gradient-set` | `linear-gradient(180deg, var(--background) 0%, var(--card) 100%)` | Named gradients built from the palette. | `bg-gradient-downlight`, `bg-gradient-headline` |
-| `--gradient-headline` | `linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)` | Named gradients built from the palette. | `bg-gradient-downlight`, `bg-gradient-headline` |
+| `--gradient-downlight` | `linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(…` | Named gradients built from the palette. | gradient backgrounds, headline text |
+| `--gradient-rise` | `linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)` | Named gradients built from the palette. | gradient backgrounds, headline text |
+| `--gradient-set` | `linear-gradient(180deg, var(--background) 0%, var(--card) 100%)` | Named gradients built from the palette. | gradient backgrounds, headline text |
+| `--gradient-headline` | `linear-gradient(180deg, var(--foreground) 0%, var(--primary) 100%)` | Named gradients built from the palette. | gradient backgrounds, headline text |
 
 ## Typography
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--font-primary` | `'Migra', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. `font-heading`, `font-sans`, `font-serif` alias these. | `font-heading`, `font-sans`, `font-serif` Tailwind classes |
-| `--font-body-token` | `'Akkurat LL TT', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. `font-heading`, `font-sans`, `font-serif` alias these. | `font-heading`, `font-sans`, `font-serif` Tailwind classes |
-| `--font-body-weight` | `200` | Weight of body text. | `text-md`, `text-sm`, … |
+| `--font-primary` | `'Migra', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. | headings, body text and secondary text |
+| `--font-body-token` | `'Akkurat LL TT', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. | headings, body text and secondary text |
+| `--font-body-weight` | `200` | Weight of body text. | body text |
 | `--font-body-weight-action` | `400` | Weight of text inside buttons (Figma font/body/action/weight). | button |
-| `--font-body-weight-emphasis` | `600` | Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme. | `text-*-bold` |
-| `--font-primary-weight-regular` | `200` | Weight of the display (primary) face: regular / emphasis. | headings and `text-h*-pri`, `text-h*-pri-bold` |
-| `--font-primary-weight-emphasis` | `800` | Weight of the display (primary) face: regular / emphasis. | headings and `text-h*-pri`, `text-h*-pri-bold` |
+| `--font-body-weight-emphasis` | `600` | Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme. | bold body text |
+| `--font-primary-weight-regular` | `200` | Weight of the display (primary) face: regular / emphasis. | display headings (regular and bold) |
+| `--font-primary-weight-emphasis` | `800` | Weight of the display (primary) face: regular / emphasis. | display headings (regular and bold) |
 | `--font-primary-letter-spacing` | `0em` | Letter spacing of the display face, in em. | h1–h6 |
-| `--font-secondary` | `'Migra', ui-serif, Georgia, serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. `font-heading`, `font-sans`, `font-serif` alias these. | `font-heading`, `font-sans`, `font-serif` Tailwind classes |
-| `--font-secondary-style` | `italic` | normal or italic for the secondary face. | `text-h*-sec` |
-| `--font-secondary-weight-regular` | `200` | Weight of the secondary face: regular / emphasis. | `text-h*-sec`, `text-h*-sec-bold` |
-| `--font-secondary-weight-emphasis` | `800` | Weight of the secondary face: regular / emphasis. | `text-h*-sec`, `text-h*-sec-bold` |
-| `--font-secondary-letter-spacing` | `0em` | Letter spacing of the secondary face, in em. | `text-h*-sec` |
-| `--font-body-line-height` | `1.6` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles, `text-*` sizes |
-| `--font-primary-line-height` | `1.4` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles, `text-*` sizes |
-| `--font-secondary-line-height` | `1.4` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles, `text-*` sizes |
+| `--font-secondary` | `'Migra', ui-serif, Georgia, serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. | headings, body text and secondary text |
+| `--font-secondary-style` | `italic` | normal or italic for the secondary face. | secondary headings |
+| `--font-secondary-weight-regular` | `200` | Weight of the secondary face: regular / emphasis. | secondary headings (regular and bold) |
+| `--font-secondary-weight-emphasis` | `800` | Weight of the secondary face: regular / emphasis. | secondary headings (regular and bold) |
+| `--font-secondary-letter-spacing` | `0em` | Letter spacing of the secondary face, in em. | secondary headings |
+| `--font-body-line-height` | `1.6` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles |
+| `--font-primary-line-height` | `1.4` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles |
+| `--font-secondary-line-height` | `1.4` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles |
 | `--font-body-letter-spacing` | `0em` | Letter spacing of body text, in em. | body text styles |
 | `--h1-weight` | `200` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h2-weight` | `200` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
@@ -97,38 +97,38 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 | `--h4-weight` | `200` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h5-weight` | `200` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h6-weight` | `200` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
-| `--typescale-xs` | `0.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-sm` | `0.875rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-md` | `1rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-lg` | `1.125rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-h6` | `1.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-h5` | `1.875rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-h4` | `2.25rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-h3` | `3rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-h2` | `3.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
-| `--text-xs` | `var(--typescale-xs)` | Tailwind text size mapped to a typescale step, with its line height. | map-carousel, message-bubble, sidebar (+27) |
-| `--text-xs--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-sm` | `var(--typescale-sm)` | Tailwind text size mapped to a typescale step, with its line height. | date-time-picker, map-carousel, menu (+53) |
-| `--text-sm--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-base` | `var(--typescale-md)` | Tailwind text size mapped to a typescale step, with its line height. | questionnaire, date-time-picker, morphing-discovery-bar (+6) |
-| `--text-base--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-lg` | `var(--typescale-lg)` | Tailwind text size mapped to a typescale step, with its line height. | hero, message-bubble, stat-card (+1) |
-| `--text-lg--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-xl` | `var(--typescale-lg)` | Tailwind text size mapped to a typescale step, with its line height. | amount-input, hero, date-time-picker (+2) |
-| `--text-xl--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-2xl` | `var(--typescale-h6)` | Tailwind text size mapped to a typescale step, with its line height. | amount-input, hero |
-| `--text-2xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-3xl` | `var(--typescale-h5)` | Tailwind text size mapped to a typescale step, with its line height. | hero |
-| `--text-3xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-4xl` | `var(--typescale-h4)` | Tailwind text size mapped to a typescale step, with its line height. | hero |
-| `--text-4xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-5xl` | `var(--typescale-h3)` | Tailwind text size mapped to a typescale step, with its line height. | hero |
-| `--text-5xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-6xl` | `var(--typescale-h2)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-6xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-7xl` | `var(--typescale-h1)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-7xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--typescale-xs` | `0.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-sm` | `0.875rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-md` | `1rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-lg` | `1.125rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-h6` | `1.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-h5` | `1.875rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-h4` | `2.25rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-h3` | `3rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-h2` | `3.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
+| `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | map-carousel, message-bubble, sidebar (+27) |
+| `--text-xs--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, menu (+53) |
+| `--text-sm--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-base` | `var(--typescale-md)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | questionnaire, date-time-picker, morphing-discovery-bar (+6) |
+| `--text-base--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-lg` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | hero, message-bubble, stat-card (+1) |
+| `--text-lg--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-xl` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | amount-input, hero, date-time-picker (+2) |
+| `--text-xl--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-2xl` | `var(--typescale-h6)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | amount-input, hero |
+| `--text-2xl--line-height` | `var(--font-primary-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-3xl` | `var(--typescale-h5)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | hero |
+| `--text-3xl--line-height` | `var(--font-primary-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-4xl` | `var(--typescale-h4)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | hero |
+| `--text-4xl--line-height` | `var(--font-primary-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-5xl` | `var(--typescale-h3)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | hero |
+| `--text-5xl--line-height` | `var(--font-primary-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-6xl` | `var(--typescale-h2)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-6xl--line-height` | `var(--font-primary-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-7xl` | `var(--typescale-h1)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
+| `--text-7xl--line-height` | `var(--font-primary-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
 | `--h1-size` | `var(--typescale-h1)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h2-size` | `var(--typescale-h2)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h3-size` | `var(--typescale-h3)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
@@ -149,10 +149,10 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 | `--radius-xs` | `0.125rem` | Corner radius steps; their size depends on the theme's radius setting. | thread-insight-card, dialog |
 | `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, insight-cards, button (+18) |
 | `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, sidebar (+14) |
-| `--shadow-2xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | `shadow-sm`, `shadow-lg` |
+| `--shadow-2xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
 | `--shadow-xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | button, copy, icon (+14) |
 | `--shadow-sm` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | prompt-bar, morphing-discovery-bar, sidebar (+5) |
-| `--shadow` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | `shadow-sm`, `shadow-lg` |
+| `--shadow` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
 | `--shadow-md` | `0px 20px 40px rgb(34 34 34 / 16%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | menu, map-carousel, popover (+9) |
 | `--shadow-lg` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | insight-cards, selection-actions, alert-dialog (+8) |
 | `--shadow-xl` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | dock, chart |
@@ -162,29 +162,29 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--ease-in-out-normal` | `cubic-bezier(0.8, 0, 0.2, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-in-out-slight` | `cubic-bezier(0.2, 0, 0, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-in-out-strong` | `cubic-bezier(0.7, 0, 0.04, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-in-out-back` | `cubic-bezier(0.4, -0.6, 0.6, 1.6)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-in-normal` | `cubic-bezier(0.6, 0, 1, 0.8)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-in-strong` | `cubic-bezier(0.95, 0, 1, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-in-back` | `cubic-bezier(0.4, -0.4, 1, 0.8)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-out-normal` | `cubic-bezier(0, 0, 0.35, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-out-strong` | `cubic-bezier(0, 0, 0.02, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-out-back` | `cubic-bezier(0, 0.4, 0.4, 1.4)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-out-in-transition-out-in` | `cubic-bezier(0, 0.7, 1, 0.3)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--spring-bounce-subtle` | `0.5` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--spring-bounce-normal` | `0.7005` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--spring-bounce-expressive` | `0.75` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--duration-instant` | `0s` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--duration-fast` | `0.2s` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--duration-faster` | `0.4s` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--duration-long` | `0.8s` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--duration-longer` | `1.2s` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--duration-longest` | `2.4s` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-hold` | `cubic-bezier(0, 0, 0.58, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--ease-constant` | `linear` | Motion token from the Figma `motion` collection. Same in every theme. | `transition-timing-function: var(--ease-out-normal)`; `duration` via `var(--duration-fast)` |
-| `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | `transition-timing-function: var(--motion-ease)` |
+| `--ease-in-out-normal` | `cubic-bezier(0.8, 0, 0.2, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-in-out-slight` | `cubic-bezier(0.2, 0, 0, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-in-out-strong` | `cubic-bezier(0.7, 0, 0.04, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-in-out-back` | `cubic-bezier(0.4, -0.6, 0.6, 1.6)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-in-normal` | `cubic-bezier(0.6, 0, 1, 0.8)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-in-strong` | `cubic-bezier(0.95, 0, 1, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-in-back` | `cubic-bezier(0.4, -0.4, 1, 0.8)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-out-normal` | `cubic-bezier(0, 0, 0.35, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-out-strong` | `cubic-bezier(0, 0, 0.02, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-out-back` | `cubic-bezier(0, 0.4, 0.4, 1.4)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-out-in-transition-out-in` | `cubic-bezier(0, 0.7, 1, 0.3)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--spring-bounce-subtle` | `0.5` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--spring-bounce-normal` | `0.7005` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--spring-bounce-expressive` | `0.75` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--duration-instant` | `0s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--duration-fast` | `0.2s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--duration-faster` | `0.4s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--duration-long` | `0.8s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--duration-longer` | `1.2s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--duration-longest` | `2.4s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-hold` | `cubic-bezier(0, 0, 0.58, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--ease-constant` | `linear` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | CSS transitions and the motion library |
 | `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | selection-actions, navigation-menu, thinking-state (+15) |
 | `--motion-spring-bounce` | `0` | Bounce of the Springy choice (0 for the others). | `useThemeSpring()` |
 | `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | prompt-bar, streaming-text, date-time-picker (+55) |
@@ -253,9 +253,9 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 | `--primitive-800` | `oklch(1.000 0.000 0.00)` | The Figma primitives color-700 and color-800 (new). Nothing reads them yet. |
 | `--focus` | `oklch(0.656 0.222 301.98)` | Focus colour, from the theme's ui-color mode. |
 
-## Token-backed classes
+## Text styles and glass surfaces
 
-| Class | Meaning | Applied in (sampled) |
+| Code name | Meaning | Applied in (sampled) |
 |---|---|---|
 | `text-md` | Body medium, regular (default control + paragraph size) | prompt-bar, stat-card, beam-input |
 | `text-xs-bold` | Body style, bold | — |
@@ -296,7 +296,7 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 | `text-h4-sec-bold` | Secondary face, emphasis weight (Figma sec/emp/hN) | — |
 | `text-h5-sec-bold` | Secondary face, emphasis weight (Figma sec/emp/hN) | — |
 | `text-h6-sec-bold` | Secondary face, emphasis weight (Figma sec/emp/hN) | — |
-| `text-xs` | Token-backed class | map-carousel, message-bubble, sidebar |
+| `text-xs` | Text size | map-carousel, message-bubble, sidebar |
 | `glass-surface` | Base class that creates the blur layer | button |
 | `glass-card` | Glass recipe for one surface group (card, action, input, select, overlay, dialog) | — |
 | `glass-action` | Glass recipe for one surface group (card, action, input, select, overlay, dialog) | — |
@@ -307,7 +307,7 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 
 ## Typescale by step
 
-Line-height comes from the theme: body steps read `--font-body-line-height` (default 1.6), heading steps `--font-primary-line-height` / `--font-secondary-line-height` (default 1.4). Sizes (px) per `scale` mode are in `themes.md`. Tailwind sizes map as: text-xs→xs, text-sm→sm, text-base→md, text-lg→lg, text-xl→lg, text-2xl→h6, text-3xl→h5, text-4xl→h4, text-5xl→h3, text-6xl→h2, text-7xl→h1.
+Line-height comes from the theme: body steps read `--font-body-line-height` (default 1.6), heading steps `--font-primary-line-height` / `--font-secondary-line-height` (default 1.4). Sizes (px) per `scale` mode are in `themes.md`. The size ladder maps as: xs→xs, sm→sm, base→md, lg→lg, xl→lg, 2xl→h6, 3xl→h5, 4xl→h4, 5xl→h3, 6xl→h2, 7xl→h1.
 
 ## Motion tokens
 
