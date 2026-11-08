@@ -51,7 +51,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 **States (7.x)** The default hover halves the opacity of the element's background. An element with no background fades as a whole. On an element with a background, a hover never changes text, icon, border or shadow colour. Prompt Bar, Streaming Text, Fluid Tabs, Morphing Discovery Bar, Control Button, Metal Surface, Native Select and Questionnaire keep the alpha wash instead: light mode adds `alpha-dark-sm` over the background and dark mode adds `alpha-light-sm` (`--control-hover`). Focus and press change only the background layer.
 
-**Motion (8.x)** Use only the `Timing` set (`instant fast faster long longer longest`); a hover or press is `fast`. The theme's `motion` supplies the easing; `motion=none` is `instant`. In code: CSS `duration-(--motion-fast) ease-(--motion-transition-ease)`, or `useThemeTransition()` / `useThemeSpring()` for the `motion` library. A component whose animation is its identity (metal) keeps its own timing. We follow Material Design's motion principles (purposeful, quick, responsive) but never override the design system with them: the timing set, the theme's easing and the motion tokens always win.
+**Motion (8.x)** Use only the `Timing` set (`instant fast faster long longer longest`); a hover or press is `fast`. The theme's `motion` supplies the easing; `motion=none` is `instant`. In code: CSS `duration-(--motion-fast) ease-(--motion-transition-ease)`, or `useThemeTransition()` / `useThemeSpring()` for the `motion` library. A component whose animation is its identity (metal) keeps its own timing. We follow Material Design's motion principles (purposeful, quick, responsive) but never override the design system with them: the timing set, the theme's easing and the motion tokens always win. The nav-bar pill that moves between destinations uses `Timing/faster`, following Material Design for a navigation indicator. Its easing comes from the theme, as for every other transition.
 
 **Shadow (9.x)** `shadow-*` tokens only, at the theme's strength. A popup sits one level above the component that opens it (xs → sm). We follow Material Design's elevation principles (higher means closer to the user) but never override the design system with them: the shadow tokens at the theme's strength always win. Shadow follows the element's role, one step higher for each layer above the page: tag and button `shadow-xs`, card `shadow-sm`, fixed header and footer `shadow-md`, drawer `shadow-lg`.
 
@@ -91,9 +91,9 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
      - In reports, name which answers you applied and where.
 - Fonts: bundled faces are in `packages/ui/src/styles/fonts`; the rest load from Google Fonts. Swear Display Demo (Amnesia) is a demo face: check its licence before shipping.
 
-## 4. Open questions in the source guidance
+## 4. Open questions
 
-These are `?` points in the theming guidelines with no answer yet. Do not guess them; ask Luke: 8.1.4 (timing for the nav-bar pill).
+None at the moment. If a rule needs a decision that is not written here, do not guess it: ask Luke.
 
 ## 5. Known gaps
 
