@@ -19,6 +19,13 @@
 - **What matters is what is in Figma and what is in code.** Describe every token as the Figma variable (collection, name, mode) and the code token (`--name`), and nothing in between.
 - **Understand the whole pipeline and check it end to end:** Figma variable → theme data (`packages/ui/src/themes`) → CSS custom property (`--name`) → the framework's alias for it. When asked, verify every step and report gaps as Figma-versus-code gaps.
 
+## Staging and going live
+
+- **`staging` is the test branch.** Vercel builds a preview of it. **`master` is live** (https://ds.lukeai.space).
+- Work goes to `staging` first. **Never push to `master` until the user says "go live".**
+- **"Go live" means:** check the latest `staging` preview built, merge `staging` into `master` (fast-forward where possible), push `master`, then confirm the production deploy finished.
+- Do not publish the npm package (`@lukeanill/ui`) unless the user asks for a release.
+
 ## Before saying done
 
 - Test in the browser and report what you did and did not check.
