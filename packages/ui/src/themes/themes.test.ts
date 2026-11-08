@@ -7,6 +7,8 @@ import { googleFontsHref } from "./fonts"
 import { VALUE_QUESTIONS } from "./values"
 import { isHex, normalizeHex, oklch, onColor } from "./color"
 import { NO_FEEL } from "./types"
+import { TYPESCALE } from "./typescale"
+import { figmaVariableFor } from "./figma-map"
 
 describe("presets", () => {
   it("are the nine from Figma, in the Figma order, with Berghain the default wherever it sits", () => {
@@ -53,7 +55,7 @@ describe("themeToCss", () => {
 
   it("turns glass on for glass themes and explicitly off for the rest", () => {
     const on = themeDeclarations(getPreset("berghain")!).join("\n")
-    const off = themeDeclarations(getPreset("fabrik")!).join("\n")
+    const off = themeDeclarations(getPreset("illuzion")!).join("\n")
     expect(on).toContain("--glass-card-blur: 64px;")
     expect(off).toContain("--glass-card-blur: 0px;")
   })
@@ -74,12 +76,12 @@ describe("themeToCss", () => {
     expect(decl("bootshaus")).toContain("--font-primary-letter-spacing: -0.02em;")
     expect(decl("bootshaus")).toContain("--font-secondary-letter-spacing: -0.02em;")
     expect(decl("berghain")).toContain("--font-primary-letter-spacing: 0em;")
-    expect(decl("fabrik")).toContain("--font-body-letter-spacing: 0.02em;")
+    expect(decl("fabrik")).toContain("--font-body-letter-spacing: 0em;")
     expect(decl("savaya")).toContain("--font-body-letter-spacing: 0.01em;")
   })
 
   it("uses the Figma body faces for Fabrik and Savaya", () => {
-    expect(getPreset("fabrik")!.fonts.body).toMatchObject({ family: "EB Garamond", weight: 400 })
+    expect(getPreset("fabrik")!.fonts.body).toMatchObject({ family: "PP Neue Montreal", weight: 200 })
     expect(getPreset("savaya")!.fonts.body).toMatchObject({ family: "Newsreader", weight: 400 })
   })
 
@@ -95,19 +97,19 @@ describe("themeToCss", () => {
 
   it("writes the Figma typescale sizes for the theme's mode, with no multiplier", () => {
     const sizesOf = (id: string, scale: "sm" | "md" | "lg") => themeDeclarations({ ...getPreset(id)!, scale })
-    expect(sizesOf("berghain", "sm")).toContain("--typescale-h1: 3.75rem;")
+    expect(sizesOf("berghain", "sm")).toContain("--typescale-h1: 3.5625rem;")
     expect(sizesOf("berghain", "md")).toContain("--typescale-h1: 4.5rem;")
     expect(sizesOf("berghain", "lg")).toContain("--typescale-h1: 5.5rem;")
     expect(sizesOf("berghain", "md")).toContain("--typescale-sm: 0.875rem;")
     expect(sizesOf("berghain", "md")).toContain("--text-sm: var(--typescale-sm);")
     expect(sizesOf("berghain", "md")).toContain("--text-base: var(--typescale-md);")
     expect(sizesOf("berghain", "md")).toContain("--h1-size: var(--typescale-h1);")
-    // Tailwind's text sizes take the Figma line-heights: 160% for body steps, 140% for heading steps
-    expect(sizesOf("berghain", "md")).toContain("--text-sm--line-height: 1.6;")
+    // Tailwind's text sizes take the theme's line-height tokens (default 160% for body steps, 140% for heading steps)
+    expect(sizesOf("berghain", "md")).toContain("--text-sm--line-height: var(--font-body-line-height);")
     expect(sizesOf("berghain", "md")).toContain("--text-xl: var(--typescale-lg);")
-    expect(sizesOf("berghain", "md")).toContain("--text-xl--line-height: 1.6;")
-    expect(sizesOf("berghain", "md")).toContain("--text-2xl--line-height: 1.4;")
-    expect(sizesOf("berghain", "md")).toContain("--text-7xl--line-height: 1.4;")
+    expect(sizesOf("berghain", "md")).toContain("--text-xl--line-height: var(--font-body-line-height);")
+    expect(sizesOf("berghain", "md")).toContain("--text-2xl--line-height: var(--font-primary-line-height);")
+    expect(sizesOf("berghain", "md")).toContain("--text-7xl--line-height: var(--font-primary-line-height);")
     expect(sizesOf("berghain", "md").join("\n")).not.toContain("type-scale")
   })
 
@@ -119,21 +121,21 @@ describe("themeToCss", () => {
     expect(berghain).toContain("--font-secondary-weight-emphasis: 800;")
     expect(berghain).toContain("--font-secondary-style: italic;")
     expect(berghain).toContain("--font-body-weight-action: 400;")
-    expect(decl("illuzion")).toContain("--font-body-weight-action: 500;")
+    expect(decl("illuzion")).toContain("--font-body-weight-action: 450;")
     expect(decl("illuzion")).toContain("--font-secondary-style: normal;")
     expect(decl("bootshaus")).toContain("--font-primary-weight-emphasis: 800;")
   })
 
   it("gives each preset the typescale mode the Figma's settings/typescale gives it", () => {
     const figma: Record<string, string> = {
-      fabrik: "md", illuzion: "lg", laroc: "sm", bootshaus: "lg", berghain: "md", savaya: "md", pacha: "lg", amnesia: "md", ushuaia: "md",
+      fabrik: "sm", illuzion: "lg", laroc: "sm", bootshaus: "lg", berghain: "md", savaya: "md", pacha: "lg", amnesia: "md", ushuaia: "md",
     }
     for (const t of presets) expect(t.scale, t.id).toBe(figma[t.id])
   })
 
   it("gives each preset the color-mode and motion the Figma gives it, and nothing else of the feel", () => {
     const figma: Record<string, [string, string]> = {
-      fabrik: ["emphatic", "light"], illuzion: ["ease", "light"], laroc: ["none", "dark"], bootshaus: ["ease", "dark"],
+      fabrik: ["springy", "light"], illuzion: ["ease", "light"], laroc: ["none", "dark"], bootshaus: ["ease", "dark"],
       berghain: ["ease", "dark"], savaya: ["emphatic", "dark"], pacha: ["springy", "light"], amnesia: ["ease", "dark"], ushuaia: ["ease", "light"],
     }
     for (const t of presets) {
@@ -143,7 +145,7 @@ describe("themeToCss", () => {
   })
 
   it("makes a card from the color-mode: solid 20%, gradient 10% to 20%, glass the background", () => {
-    const base = getPreset("fabrik")! // solid
+    const base = getPreset("illuzion")! // solid
     const solid = (colorMode: "dark" | "light") => themeDeclarations({ ...base, material: "solid", colorMode })
     expect(solid("light")).toContain("--card: color-mix(in oklab, var(--background), white 20%);")
     expect(solid("dark")).toContain("--card: color-mix(in oklab, var(--background), black 20%);")
@@ -160,8 +162,8 @@ describe("themeToCss", () => {
     const lines = (t: Parameters<typeof themeDeclarations>[0]) => themeDeclarations(t)
     expect(lines(getPreset("illuzion")!)).toContain("--motion-ease: cubic-bezier(0, 0, 0.35, 1);")
     expect(lines(getPreset("illuzion")!)).toContain("--motion-duration: 0.8s;")
-    expect(lines(getPreset("fabrik")!)).toContain("--motion-ease: cubic-bezier(0.8, 0, 0.2, 1);")
-    expect(lines(getPreset("fabrik")!)).toContain("--motion-duration: 0.4s;")
+    expect(lines(getPreset("savaya")!)).toContain("--motion-ease: cubic-bezier(0.8, 0, 0.2, 1);")
+    expect(lines(getPreset("savaya")!)).toContain("--motion-duration: 0.4s;")
     expect(lines(getPreset("pacha")!)).toContain("--motion-spring-bounce: 0.7005;")
     expect(lines(getPreset("laroc")!)).toContain("--motion-duration: 0s;")
     const feel = { ...NO_FEEL, transition: "curtain-iris" as const, transitionSpeed: "slow" as const, animatedBackground: "aurora" as const, animatedBackgroundInverse: true, animatedBackgroundOverlay: 40 as const }
@@ -193,7 +195,7 @@ describe("themeToCss", () => {
     expect(steps("berghain")).toEqual(["0.125rem", "0.25rem", "0.5rem", "0.75rem", "1rem"])
     expect(steps("illuzion")).toEqual(["0.25rem", "0.5rem", "1rem", "1.5rem", "2rem"])
     expect(steps("laroc")).toEqual(["0.5rem", "1rem", "1.5rem", "2rem", "2.5rem"])
-    expect(steps("fabrik")).toEqual(["0", "0", "0", "0", "0"])
+    expect(steps("fabrik")).toEqual(["0.25rem", "0.5rem", "1rem", "1.5rem", "2rem"])
   })
 })
 
@@ -262,5 +264,108 @@ describe("helpers", () => {
   it("picks readable ink for a fill", () => {
     expect(onColor("#000000")).toBe("#ffffff")
     expect(onColor("#ffffff")).toBe("#0f0e0e")
+  })
+})
+
+describe("font weights", () => {
+  it("match the Figma font weight and letter-spacing variables for every theme", () => {
+    // from the Figma `theme` collection: primary and secondary regular/emphasis, body regular/action
+    const figma: Record<string, { primary: [number, number]; secondary: [number, number]; body: [number, number]; ls: { primary: number; secondary: number; body: number } }> = {
+      fabrik: { primary: [420, 320], secondary: [460, 640], body: [200, 400], ls: { primary: 0, secondary: 0, body: 0 } },
+      illuzion: { primary: [400, 400], secondary: [400, 400], body: [450, 450], ls: { primary: 0, secondary: 0, body: 1 } },
+      laroc: { primary: [700, 700], secondary: [700, 700], body: [400, 400], ls: { primary: 0, secondary: 0, body: 0 } },
+      bootshaus: { primary: [800, 800], secondary: [800, 800], body: [500, 500], ls: { primary: -2, secondary: -2, body: 0 } },
+      berghain: { primary: [200, 800], secondary: [200, 800], body: [200, 400], ls: { primary: 0, secondary: 0, body: 0 } },
+      savaya: { primary: [400, 400], secondary: [400, 400], body: [400, 400], ls: { primary: 0, secondary: 0, body: 1 } },
+      pacha: { primary: [400, 400], secondary: [400, 400], body: [500, 500], ls: { primary: 0, secondary: 0, body: 1 } },
+      amnesia: { primary: [500, 500], secondary: [500, 500], body: [400, 400], ls: { primary: 0, secondary: 0, body: 0 } },
+      ushuaia: { primary: [800, 800], secondary: [800, 800], body: [400, 400], ls: { primary: 0, secondary: 0, body: 0 } },
+    }
+    for (const t of presets) {
+      const f = figma[t.id]
+      const { display, secondary, body } = t.fonts
+      expect([display.weight, display.emphasis ?? display.weight], `${t.id} primary`).toEqual(f.primary)
+      expect([secondary.weight, secondary.emphasis ?? secondary.weight], `${t.id} secondary`).toEqual(f.secondary)
+      expect([body.weight, body.actionWeight ?? body.weight], `${t.id} body`).toEqual(f.body)
+      expect(display.letterSpacing ?? 0, `${t.id} primary letter-spacing`).toBe(f.ls.primary)
+      expect(secondary.letterSpacing ?? 0, `${t.id} secondary letter-spacing`).toBe(f.ls.secondary)
+      expect(body.letterSpacing ?? 0, `${t.id} body letter-spacing`).toBe(f.ls.body)
+    }
+  })
+})
+
+describe("typescale", () => {
+  it("has every size of the Figma typescale collection, in each of its three modes", () => {
+    // xs, sm, md, lg, h6, h5, h4, h3, h2, h1: read from the Figma `typescale` collection
+    const figma = {
+      sm: [12, 13, 15, 18, 19, 23, 29, 37, 46, 57],
+      md: [12, 14, 16, 18, 24, 30, 36, 48, 60, 72],
+      lg: [14, 16, 18, 20, 26, 36, 44, 56, 72, 88],
+    } as const
+    for (const mode of ["sm", "md", "lg"] as const) {
+      expect(Object.values(TYPESCALE[mode]), mode).toEqual([...figma[mode]])
+    }
+  })
+})
+
+describe("ui-color", () => {
+  it("gives each preset the ui-color mode the Figma's settings/ui-color gives it", () => {
+    const want: Record<string, string> = {
+      fabrik: "modern", illuzion: "alternative", laroc: "classic", bootshaus: "modern", berghain: "modern",
+      savaya: "modern", pacha: "alternative", amnesia: "modern", ushuaia: "classic",
+    }
+    for (const t of presets) expect(t.uiColor, t.id).toBe(want[t.id])
+  })
+
+  it("writes destructive, affirmative, focus and the five charts from the theme's mode", () => {
+    const decl = (id: string) => themeDeclarations(getPreset(id)!)
+    expect(decl("laroc")).toContain(`--destructive: ${oklch("#e7000b")};`)
+    expect(decl("laroc")).toContain(`--affirmative: ${oklch("#00a81c")};`)
+    expect(decl("fabrik")).toContain(`--focus: ${oklch("#ac64ff")};`)
+    expect(decl("fabrik")).toContain(`--chart-5: ${oklch("#955e09")};`)
+    expect(decl("pacha")).toContain(`--chart-1: ${oklch("#db50eb")};`)
+    expect(decl("pacha")).toContain("--theme-ui-color: alternative;")
+  })
+
+  it("writes the new primitives color-700 and color-800, and Fabrik's own accent and popover", () => {
+    const decl = themeDeclarations(getPreset("fabrik")!)
+    expect(decl).toContain(`--primitive-700: ${oklch("#5b90ac")};`)
+    expect(decl).toContain(`--primitive-800: ${oklch("#a77b84")};`)
+    expect(decl).toContain(`--accent: ${oklch("#78565d")};`)
+    expect(decl).toContain(`--popover: ${oklch("#2b2726")};`)
+    expect(decl).toContain(`--muted-foreground: ${oklch("#a77b84")};`)
+    expect(decl).toContain(`--accent-foreground: ${oklch("#a77b84")};`)
+    expect(themeDeclarations(getPreset("berghain")!)).toContain("--accent: var(--secondary);")
+    expect(themeDeclarations(getPreset("berghain")!)).toContain(`--muted-foreground: ${oklch("#fbfbfc", 65)};`)
+  })
+})
+
+describe("figma map", () => {
+  const fabrik = getPreset("fabrik")!
+  const pacha = getPreset("pacha")!
+
+  it("maps a code token to its Figma variable and the mode the theme uses", () => {
+    expect(figmaVariableFor("primary", fabrik)).toEqual({ variable: "color/semantic/primary", mode: "fabrik" })
+    expect(figmaVariableFor("--chart-1", pacha)).toEqual({ variable: "ui-color/chart-1", mode: "alternative" })
+    expect(figmaVariableFor("affirmative", fabrik)).toEqual({ variable: "ui-color/affirmative", mode: "modern" })
+    expect(figmaVariableFor("card", pacha)).toEqual({ variable: "settings/texture", mode: "solid" })
+    expect(figmaVariableFor("primitive-800", fabrik)).toEqual({ variable: "color/primitive/color-800", mode: "fabrik" })
+  })
+
+  it("maps type, radius, shadow and motion tokens, with their own modes", () => {
+    expect(figmaVariableFor("typescale-h1", fabrik)).toEqual({ variable: "typescale/h1", mode: "sm" })
+    expect(figmaVariableFor("h2-size", fabrik)).toEqual({ variable: "typescale/h2", mode: "sm" })
+    expect(figmaVariableFor("h1-weight", fabrik)).toEqual({ variable: "font/primary/weight/regular", mode: "fabrik" })
+    expect(figmaVariableFor("font-body-weight-action", fabrik)).toEqual({ variable: "font/body/action/weight", mode: "fabrik" })
+    expect(figmaVariableFor("radius-button", pacha)).toEqual({ variable: "radius/button", mode: "rounded" })
+    expect(figmaVariableFor("shadow-2xl", fabrik)).toEqual({ variable: "shadow/lg", mode: "strong" })
+    expect(figmaVariableFor("duration-fast", fabrik)).toEqual({ variable: "timing/fast", mode: "single" })
+    expect(figmaVariableFor("ease-in-out-normal", fabrik)).toEqual({ variable: "easing/emphatic/normal", mode: "single" })
+  })
+
+  it("has no Figma variable for tokens Figma does not define", () => {
+    expect(figmaVariableFor("font-mono", fabrik)).toBeNull()
+    expect(figmaVariableFor("glass-card-blur", fabrik)).toBeNull()
+    expect(figmaVariableFor("font-primary-line-height", fabrik)).toBeNull()
   })
 })

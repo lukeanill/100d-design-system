@@ -1,3 +1,5 @@
+import type { UiColor } from "./ui-color"
+
 // The theme model. It follows the Figma `theme` variable collection: a palette,
 // three font roles, the six settings, icons, the UX direction and the feel
 // (component motion, page transitions, an animated background and the hero).
@@ -53,13 +55,13 @@ export interface ThemeFont {
   actionWeight?: number
   /** The face is the italic of its family (Figma writes it into the name, "Migra Italic"). */
   italic?: boolean
-  /** The body font's line height as a percent: the Figma `Font/Sans/line-height`. Defaults to 142. */
+  /** The font's line height as a percent of its size, written as `--font-<role>-line-height`. Defaults to 160 for body and 140 for the primary and secondary (heading) faces, the Figma text styles. */
   lineHeight?: number
   /** The font's letter spacing as a percent of the size: the Figma `font/<role>/letter-spacing`. Defaults to 0. */
   letterSpacing?: number
 }
 
-/** Hex colours. The six primitives of the Figma file plus the status colours. */
+/** Hex colours. The primitives of the Figma file (color-100 to color-800). The status and chart colours come from `uiColor`. */
 export interface ThemePalette {
   background: string
   foreground: string
@@ -67,8 +69,16 @@ export interface ThemePalette {
   primaryForeground: string
   secondary: string
   secondaryForeground: string
-  destructive: string
-  charts: [string, string, string, string, string]
+  /** The Figma primitives color-700 and color-800 (new). Nothing reads them yet; the semantic colours come from the other six. */
+  color700: string
+  color800: string
+  /** Where a theme maps these semantic colours to a primitive other than the default (accent = secondary, popover = background), the hex it takes. */
+  accent?: string
+  accentForeground?: string
+  /** Where muted-foreground is a primitive at full strength, not the foreground at 65%, the hex it takes. */
+  mutedForeground?: string
+  popover?: string
+  popoverForeground?: string
 }
 
 export interface ThemeIcons {
@@ -132,6 +142,8 @@ export interface Theme {
   material: Material
   /** The Figma `Settings/motion` value: Component Animations. Carried in the output. */
   motion: Motion
+  /** The Figma `settings/ui-color`: which `ui-color` collection (classic, modern, alternative) the status and chart colours come from. */
+  uiColor: UiColor
   feel: ThemeFeel
   icons: ThemeIcons
   values: ThemeValues

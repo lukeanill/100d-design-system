@@ -10,7 +10,7 @@ export type TypeStep = (typeof TYPE_STEPS)[number]
 
 /** Font sizes in px, by step, for each Figma typescale mode. */
 export const TYPESCALE: Record<Scale, Record<TypeStep, number>> = {
-  sm: { xs: 12, sm: 13, md: 14, lg: 16, h6: 20, h5: 24, h4: 28, h3: 36, h2: 44, h1: 60 },
+  sm: { xs: 12, sm: 13, md: 15, lg: 18, h6: 19, h5: 23, h4: 29, h3: 37, h2: 46, h1: 57 },
   md: { xs: 12, sm: 14, md: 16, lg: 18, h6: 24, h5: 30, h4: 36, h3: 48, h2: 60, h1: 72 },
   lg: { xs: 14, sm: 16, md: 18, lg: 20, h6: 26, h5: 36, h4: 44, h3: 56, h2: 72, h1: 88 },
 }
@@ -20,11 +20,15 @@ export const TAILWIND_TEXT: Record<string, TypeStep> = {
   xs: "xs", sm: "sm", base: "md", lg: "lg", xl: "lg", "2xl": "h6", "3xl": "h5", "4xl": "h4", "5xl": "h3", "6xl": "h2", "7xl": "h1",
 }
 
-/** The Figma text styles' line-heights: body steps (body/*) 160%, heading steps (pri/reg/h*) 140%. */
-export const BODY_LINE_HEIGHT = 1.6
-export const HEADING_LINE_HEIGHT = 1.4
+/**
+ * The Figma text styles' line-heights, in percent: body steps (body/*) 160%, heading steps (pri/reg/h*) 140%. These are
+ * only the defaults: a theme sets its own through `fonts.<role>.lineHeight`, and every text style reads the theme's token.
+ */
+export const BODY_LINE_HEIGHT_PERCENT = 160
+export const HEADING_LINE_HEIGHT_PERCENT = 140
 
-/** The line-height Tailwind's text-<name> takes: body for xs to xl, heading for 2xl and up. */
-export const tailwindLineHeight = (name: string) => (name in TAILWIND_TEXT && TAILWIND_TEXT[name].startsWith("h") ? HEADING_LINE_HEIGHT : BODY_LINE_HEIGHT)
+/** The line-height token Tailwind's text-<name> reads: the body token for xs to xl, the primary (heading) token for 2xl and up. */
+export const tailwindLineHeight = (name: string) =>
+  name in TAILWIND_TEXT && TAILWIND_TEXT[name].startsWith("h") ? "var(--font-primary-line-height)" : "var(--font-body-line-height)"
 
 export const rem = (px: number) => `${px / 16}rem`

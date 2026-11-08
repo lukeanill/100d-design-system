@@ -17,6 +17,86 @@
 }
 
 @font-face {
+  font-family: "DentonVariable Test";
+  src: url("./fonts/denton-variable-test.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Denton Italic Variable Test";
+  src: url("./fonts/denton-italic-variable-test.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./fonts/pp-neue-montreal-thin.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./fonts/pp-neue-montreal-book.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./fonts/pp-neue-montreal-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./fonts/pp-neue-montreal-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./fonts/pp-neue-montreal-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("./fonts/pp-neue-montreal-semibolditalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans Variable";
+  src: url("./fonts/general-sans-variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans Variable";
+  src: url("./fonts/general-sans-variable-italic.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "ITC Garamond Std";
   src: url("./fonts/itc-garamond-std-ultra.woff2") format("woff2");
   font-weight: 800;
@@ -248,6 +328,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-focus: var(--focus);
   --color-affirmative: var(--affirmative);
   --color-affirmative-foreground: var(--affirmative-foreground);
   --color-border: var(--border);
@@ -308,7 +389,7 @@
   h1 {
     font-family: var(--h1-family, var(--font-heading));
     font-size: var(--h1-size, 4.5rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h1-weight, 400);
     /*
@@ -332,7 +413,7 @@
   h2 {
     font-family: var(--h2-family, var(--font-heading));
     font-size: var(--h2-size, 3.75rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h2-weight, 400);
   }
@@ -340,7 +421,7 @@
   h3 {
     font-family: var(--h3-family, var(--font-heading));
     font-size: var(--h3-size, 3rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h3-weight, 400);
   }
@@ -348,7 +429,7 @@
   h4 {
     font-family: var(--h4-family, var(--font-heading));
     font-size: var(--h4-size, 2.25rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h4-weight, 400);
   }
@@ -356,7 +437,7 @@
   h5 {
     font-family: var(--h5-family, var(--font-heading));
     font-size: var(--h5-size, 1.875rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h5-weight, 400);
   }
@@ -364,13 +445,13 @@
   h6 {
     font-family: var(--h6-family, var(--font-heading));
     font-size: var(--h6-size, 1.5rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
     font-weight: var(--h6-weight, 400);
   }
 
   body {
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
   }
 
   code,
@@ -395,7 +476,7 @@
     font-weight: var(--font-body-weight);
     font-style: normal;
     font-size: var(--typescale-md, 1rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -405,7 +486,7 @@
     font-weight: 700;
     font-style: normal;
     font-size: var(--typescale-xs, 0.75rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -415,7 +496,7 @@
     font-weight: var(--font-body-weight);
     font-style: italic;
     font-size: var(--typescale-xs, 0.75rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -425,7 +506,7 @@
     font-weight: 700;
     font-style: normal;
     font-size: var(--typescale-sm, 0.875rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -435,7 +516,7 @@
     font-weight: var(--font-body-weight);
     font-style: italic;
     font-size: var(--typescale-sm, 0.875rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -445,7 +526,7 @@
     font-weight: 700;
     font-style: normal;
     font-size: var(--typescale-md, 1rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -455,7 +536,7 @@
     font-weight: var(--font-body-weight);
     font-style: italic;
     font-size: var(--typescale-md, 1rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -465,7 +546,7 @@
     font-weight: 700;
     font-style: normal;
     font-size: var(--typescale-lg, 1.125rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -475,7 +556,7 @@
     font-weight: var(--font-body-weight);
     font-style: italic;
     font-size: var(--typescale-lg, 1.125rem);
-    line-height: 1.6;
+    line-height: var(--font-body-line-height, 1.6);
     letter-spacing: var(--font-body-letter-spacing, 0em);
   }
 
@@ -545,7 +626,7 @@
     font-weight: var(--font-primary-weight-regular);
     font-style: normal;
     font-size: var(--typescale-h1, 4.5rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -555,7 +636,7 @@
     font-weight: var(--font-primary-weight-regular);
     font-style: normal;
     font-size: var(--typescale-h2, 3.75rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -565,7 +646,7 @@
     font-weight: var(--font-primary-weight-regular);
     font-style: normal;
     font-size: var(--typescale-h3, 3rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -575,7 +656,7 @@
     font-weight: var(--font-primary-weight-regular);
     font-style: normal;
     font-size: var(--typescale-h4, 2.25rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -585,7 +666,7 @@
     font-weight: var(--font-primary-weight-regular);
     font-style: normal;
     font-size: var(--typescale-h5, 1.875rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -595,7 +676,7 @@
     font-weight: var(--font-primary-weight-regular);
     font-style: normal;
     font-size: var(--typescale-h6, 1.5rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -605,7 +686,7 @@
     font-weight: var(--font-primary-weight-emphasis);
     font-style: normal;
     font-size: var(--typescale-h1, 4.5rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -614,7 +695,7 @@
     font-weight: var(--font-primary-weight-emphasis);
     font-style: normal;
     font-size: var(--typescale-h2, 3.75rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -623,7 +704,7 @@
     font-weight: var(--font-primary-weight-emphasis);
     font-style: normal;
     font-size: var(--typescale-h3, 3rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -632,7 +713,7 @@
     font-weight: var(--font-primary-weight-emphasis);
     font-style: normal;
     font-size: var(--typescale-h4, 2.25rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -641,7 +722,7 @@
     font-weight: var(--font-primary-weight-emphasis);
     font-style: normal;
     font-size: var(--typescale-h5, 1.875rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -650,7 +731,7 @@
     font-weight: var(--font-primary-weight-emphasis);
     font-style: normal;
     font-size: var(--typescale-h6, 1.5rem);
-    line-height: 1.4;
+    line-height: var(--font-primary-line-height, 1.4);
     letter-spacing: var(--font-primary-letter-spacing, 0em);
   }
 
@@ -660,7 +741,7 @@
     font-weight: var(--font-secondary-weight-regular);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h1, 4.5rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -669,7 +750,7 @@
     font-weight: var(--font-secondary-weight-regular);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h2, 3.75rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -678,7 +759,7 @@
     font-weight: var(--font-secondary-weight-regular);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h3, 3rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -687,7 +768,7 @@
     font-weight: var(--font-secondary-weight-regular);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h4, 2.25rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -696,7 +777,7 @@
     font-weight: var(--font-secondary-weight-regular);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h5, 1.875rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -705,7 +786,7 @@
     font-weight: var(--font-secondary-weight-regular);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h6, 1.5rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -715,7 +796,7 @@
     font-weight: var(--font-secondary-weight-emphasis);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h1, 4.5rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -724,7 +805,7 @@
     font-weight: var(--font-secondary-weight-emphasis);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h2, 3.75rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -733,7 +814,7 @@
     font-weight: var(--font-secondary-weight-emphasis);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h3, 3rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -742,7 +823,7 @@
     font-weight: var(--font-secondary-weight-emphasis);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h4, 2.25rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -751,7 +832,7 @@
     font-weight: var(--font-secondary-weight-emphasis);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h5, 1.875rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 
@@ -760,7 +841,7 @@
     font-weight: var(--font-secondary-weight-emphasis);
     font-style: var(--font-secondary-style, normal);
     font-size: var(--typescale-h6, 1.5rem);
-    line-height: 1.4;
+    line-height: var(--font-secondary-line-height, 1.4);
     letter-spacing: var(--font-secondary-letter-spacing, 0em);
   }
 

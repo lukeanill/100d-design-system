@@ -4,7 +4,8 @@
 
 import { oklch } from "./color"
 import { MOTION_STYLES, TRANSITION_SPEEDS, cubicBezier, springEasing } from "./motion"
-import { TAILWIND_TEXT, TYPESCALE, TYPE_STEPS, rem, tailwindLineHeight } from "./typescale"
+import { BODY_LINE_HEIGHT_PERCENT, HEADING_LINE_HEIGHT_PERCENT, TAILWIND_TEXT, TYPESCALE, TYPE_STEPS, rem, tailwindLineHeight } from "./typescale"
+import { UI_COLORS } from "./ui-color"
 import type { ColorMode, Shadow, Radius, Theme } from "./types"
 
 const SANS = "ui-sans-serif, system-ui, sans-serif"
@@ -56,7 +57,8 @@ const glass = (colorMode: ColorMode = "dark") => [
 ]
 
 /**
- * What a card is made of, from the theme's color-mode (the Figma's settings/color-mode): solid is the background
+ * What a card is made of. A card has no Figma variable: it comes from the theme's texture setting (the Figma's
+ * settings/texture, `material` here) and its color-mode (settings/color-mode). Solid is the background
  * 20% toward white or black, and gradient runs 10% to 20% (the card colour is the middle, and
  * `--card-image` is the gradient, which `.bg-card` paints). Glass keeps the card the background and
  * takes its tint from the color-mode.
@@ -101,7 +103,6 @@ const stack = (family: string, fallback: string) => `'${family}', ${fallback}`
 /** The custom properties of a theme, in the order they are written. */
 export function themeDeclarations(theme: Theme): string[] {
   const { palette: p, fonts, colorMode } = theme
-  const dark = colorMode === "dark"
   const step = RADIUS[theme.radius]
   const lines: string[] = [`color-scheme: ${colorMode};`]
   const set = (name: string, value: string) => lines.push(`--${name}: ${value};`)
@@ -120,14 +121,17 @@ export function themeDeclarations(theme: Theme): string[] {
   set("font-secondary-weight-emphasis", String(fonts.secondary.emphasis ?? fonts.secondary.weight))
   set("font-secondary-letter-spacing", `${(fonts.secondary.letterSpacing ?? 0) / 100}em`)
   // Figma Font/Sans/line-height and letter-spacing: percents, written as a unitless line height and an em spacing
-  set("font-body-line-height", String((fonts.body.lineHeight ?? 142) / 100))
+  // line-height per font role, as a unitless ratio: the text styles, headings, body and Tailwind text sizes all read these
+  set("font-body-line-height", String((fonts.body.lineHeight ?? BODY_LINE_HEIGHT_PERCENT) / 100))
+  set("font-primary-line-height", String((fonts.display.lineHeight ?? HEADING_LINE_HEIGHT_PERCENT) / 100))
+  set("font-secondary-line-height", String((fonts.secondary.lineHeight ?? HEADING_LINE_HEIGHT_PERCENT) / 100))
   set("font-body-letter-spacing", `${(fonts.body.letterSpacing ?? 0) / 100}em`)
   for (const level of ["h1", "h2", "h3", "h4", "h5", "h6"]) set(`${level}-weight`, String(fonts.display.weight))
   // the Figma typescale mode this theme uses (settings/typescale): every size written out, no multiplier
   for (const step of TYPE_STEPS) set(`typescale-${step}`, rem(TYPESCALE[theme.scale][step]))
   for (const [name, step] of Object.entries(TAILWIND_TEXT)) {
     set(`text-${name}`, `var(--typescale-${step})`)
-    set(`text-${name}--line-height`, String(tailwindLineHeight(name)))
+    set(`text-${name}--line-height`, tailwindLineHeight(name))
   }
   for (const n of [1, 2, 3, 4, 5, 6]) set(`h${n}-size`, `var(--typescale-h${n})`)
 
@@ -135,19 +139,25 @@ export function themeDeclarations(theme: Theme): string[] {
   set("foreground", oklch(p.foreground))
   lines.push(...cardTokens(theme))
   set("card-foreground", "var(--foreground)")
-  set("popover", "var(--background)")
-  set("popover-foreground", "var(--foreground)")
+  set("popover", p.popover ? oklch(p.popover) : "var(--background)")
+  set("popover-foreground", p.popoverForeground ? oklch(p.popoverForeground) : "var(--foreground)")
   set("primary", oklch(p.primary))
   set("primary-foreground", oklch(p.primaryForeground))
   set("secondary", oklch(p.secondary))
   set("secondary-foreground", oklch(p.secondaryForeground))
   set("muted", "var(--secondary)")
-  set("muted-foreground", oklch(p.foreground, 65))
-  set("accent", "var(--secondary)")
-  set("accent-foreground", "var(--secondary-foreground)")
-  set("destructive", oklch(p.destructive))
-  set("affirmative", dark ? "oklch(0.847 0.117 143.45)" : "oklch(0.548 0.150 145.00)")
-  set("affirmative-foreground", dark ? "oklch(0.145 0 0)" : "oklch(1 0 0)")
+  set("muted-foreground", p.mutedForeground ? oklch(p.mutedForeground) : oklch(p.foreground, 65))
+  set("accent", p.accent ? oklch(p.accent) : "var(--secondary)")
+  set("accent-foreground", p.accentForeground ? oklch(p.accentForeground) : "var(--secondary-foreground)")
+  // the Figma primitives color-700 and color-800 (nothing reads them yet)
+  set("primitive-700", oklch(p.color700))
+  set("primitive-800", oklch(p.color800))
+  // the Figma ui-color collection, in the mode this theme's `ui-color` setting names
+  const ui = UI_COLORS[theme.uiColor]
+  set("destructive", oklch(ui.destructive))
+  set("affirmative", oklch(ui.affirmative))
+  set("focus", oklch(ui.focus))
+  set("affirmative-foreground", "var(--foreground)")
   set("border", oklch(p.foreground, 15))
   set("input", oklch(p.foreground, 20))
   set("ring", oklch(p.foreground, 70))
@@ -164,7 +174,7 @@ export function themeDeclarations(theme: Theme): string[] {
   // wash on a dark one, so a hover is always a visible step away from the surface
   set("control-edge", theme.material === "glass" ? "transparent" : `var(--alpha-${colorMode === "light" ? "dark" : "light"}-xs)`)
   set("control-hover", `var(--alpha-${colorMode === "light" ? "dark" : "light"}-sm)`)
-  p.charts.forEach((hex, i) => set(`chart-${i + 1}`, oklch(hex)))
+  ui.charts.forEach((hex, i) => set(`chart-${i + 1}`, oklch(hex)))
 
   set("gradient-downlight", "linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(--border) 100%)")
   set("gradient-rise", "linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)")
@@ -192,6 +202,7 @@ export function themeDeclarations(theme: Theme): string[] {
   // them. Components do not read these yet.
   set("theme-spacing", theme.spacing)
   set("theme-motion", theme.motion)
+  set("theme-ui-color", theme.uiColor)
   set("theme-icon-style", theme.icons.style)
   set("theme-icon-weight", theme.icons.weight)
   set("theme-material", theme.material)

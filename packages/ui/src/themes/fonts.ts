@@ -15,6 +15,10 @@ const b = (family: string, kind: FontChoice["kind"], weights: number[]): FontCho
 export const FONT_CHOICES: FontChoice[] = [
   b("Akkurat LL TT", "sans", [200, 300, 400, 500, 600, 700]),
   b("Folio Std", "sans", [700]),
+  b("DentonVariable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900]),
+  b("Denton Italic Variable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900]),
+  b("PP Neue Montreal", "sans", [200, 400, 500, 600, 700]),
+  b("General Sans Variable", "sans", [200, 300, 400, 450, 500, 600, 700]),
   b("ITC Garamond Std", "serif", [800]),
   b("PP Editorial New", "serif", [400]),
   b("GT Pressura Mono Trial", "mono", [400, 700]),

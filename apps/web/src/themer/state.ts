@@ -140,8 +140,8 @@ export function draftToTheme(d: ThemeDraft, base: Theme = BASELINE): Theme {
       primaryForeground: d.primary ? onColor(primary) : base.palette.primaryForeground,
       secondary,
       secondaryForeground: d.secondary ? onColor(secondary) : base.palette.secondaryForeground,
-      destructive: colorMode === "dark" ? "#ff6467" : "#e7000b",
-      charts: base.palette.charts,
+      color700: base.palette.color700,
+      color800: base.palette.color800,
     },
     fonts: {
       display: { family: heading, weight: headingWeight, emphasis: headingWeight },
@@ -154,6 +154,7 @@ export function draftToTheme(d: ThemeDraft, base: Theme = BASELINE): Theme {
     shadow: d.shadow ?? base.shadow,
     material: d.material ?? base.material,
     motion: d.motion ?? base.motion,
+    uiColor: base.uiColor,
     feel: { ...base.feel, ...Object.fromEntries(FEEL_KEYS.flatMap((k) => (d[k] === undefined ? [] : [[k, d[k]]]))) } as ThemeFeel,
     icons: { style: d.iconStyle ?? base.icons.style, weight: d.iconWeight ?? base.icons.weight },
     values: d.values.map((v, i) => v ?? DEFAULT_VALUES[i]) as ThemeValues,
@@ -175,9 +176,11 @@ export const ALPES: Theme = {
     primaryForeground: "#ffffff",
     secondary: "#dbdbdb",
     secondaryForeground: "#9c2f2f",
-    destructive: "#e7000b",
-    charts: BASELINE.palette.charts,
+    color700: BASELINE.palette.color700,
+    color800: BASELINE.palette.color800,
   },
+  // the classic ui-color mode: the red destructive and the five chart colours this look always had
+  uiColor: "classic",
   fonts: {
     display: { family: "Migra", weight: 200 },
     body: { family: "Karla", weight: 400 },
