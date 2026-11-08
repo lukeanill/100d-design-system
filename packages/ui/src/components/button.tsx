@@ -8,22 +8,22 @@ import { cn } from "@workspace/ui/lib/utils"
 import { glass } from "@workspace/ui/lib/glass"
 
 const buttonVariants = cva(
-  "group/button relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-(--radius-button) border border-transparent bg-clip-padding whitespace-nowrap shadow-md transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-(--radius-button) border border-transparent bg-clip-padding whitespace-nowrap shadow-md transition-[color,background-color,border-color,opacity] duration-(--motion-fast) ease-(--motion-transition-ease) outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         // hover is the surface at 80%, which is exactly what bg-primary/80 was
         // while the surface is var(--primary), and follows the glass once a
         // theme turns it on
-        default: `${glass("action")} text-primary-foreground hover:bg-[color-mix(in_oklab,var(--glass-surface),transparent_20%)]`,
+        default: `${glass("action")} text-primary-foreground hover:bg-[color-mix(in_oklab,var(--glass-surface),transparent_50%)]`,
         outline:
-          "border-foreground bg-transparent hover:bg-muted aria-expanded:bg-muted",
+          "border-foreground bg-transparent hover:opacity-50 aria-expanded:bg-muted",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/50 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
-          "shadow-none hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "shadow-none hover:opacity-50 aria-expanded:bg-muted aria-expanded:text-foreground",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+          "bg-destructive/10 text-destructive hover:bg-destructive/5 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/10 dark:focus-visible:ring-destructive/40",
         link: "shadow-none text-primary underline underline-offset-4",
       },
       size: {

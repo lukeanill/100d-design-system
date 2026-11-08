@@ -111,7 +111,7 @@ export const AmountInputDisplay = ({
           </span>
           <div className="flex items-center justify-center gap-2">
             <button
-              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-[color,background-color,opacity] duration-(--motion-fast) ease-(--motion-transition-ease) hover:opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label={`Decrease ${label}`}
               disabled={amount <= min}
               onClick={() => setAmount(amount - step)}
@@ -147,7 +147,7 @@ export const AmountInputDisplay = ({
               )}
             </div>
             <button
-              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-[color,background-color,opacity] duration-(--motion-fast) ease-(--motion-transition-ease) hover:opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label={`Increase ${label}`}
               disabled={amount >= max}
               onClick={() => setAmount(amount + step)}
@@ -184,7 +184,7 @@ export const AmountInputPresets = ({
               "cursor-pointer rounded-full border px-3 py-1 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) sm:text-sm",
               amount === preset
                 ? "border-foreground ring-1 ring-foreground"
-                : "border-border hover:bg-muted"
+                : "border-border hover:opacity-50"
             )}
             key={preset}
             onClick={() => setAmount(preset)}

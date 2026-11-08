@@ -56,7 +56,7 @@ function ShareButton({
   return (
     <motion.button
       className={cn(
-        'bg-primary text-primary-foreground hover:bg-primary/90',
+        'bg-primary text-primary-foreground hover:bg-primary/50',
         buttonVariants({ size, className, icon }),
       )}
       onMouseEnter={() => setHovered(true)}

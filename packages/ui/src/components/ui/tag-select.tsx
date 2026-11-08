@@ -82,7 +82,7 @@ export const TagSelectItem = ({
         "inline-flex cursor-pointer items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) sm:gap-1.5 sm:px-3 sm:py-1 sm:text-sm",
         selected
           ? "border-foreground bg-foreground text-background"
-          : "border-border bg-background text-foreground hover:bg-muted",
+          : "border-border bg-background text-foreground hover:bg-background/50",
         className
       )}
       onClick={() => toggle(tagId)}
