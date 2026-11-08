@@ -23,8 +23,8 @@
 
 - **`staging` is the test branch.** Vercel builds a preview of it. **`master` is live** (https://ds.lukeai.space).
 - Work goes to `staging` first. **When a piece of work is finished and checked, commit and push it to `staging` automatically**, then give the preview link and what to check. **Never push to `master` until the user says "go live".**
-- **"Go live" means:** check the latest `staging` preview built, merge `staging` into `master` (fast-forward where possible), push `master`, then confirm the production deploy finished.
-- Do not publish the npm package (`@lukeanill/ui`) unless the user asks for a release.
+- **"Go live" means:** check the latest `staging` preview built, merge `staging` into `master` (fast-forward where possible), push `master`, confirm the production deploy finished, **and publish the npm package (`@lukeanill/ui`)**.
+- **Always ask the user for the version number first**, before publishing: say what changed since the last release, whether it breaks anything, and recommend a version (semver). Publish only after they answer.
 
 ## Before saying done
 

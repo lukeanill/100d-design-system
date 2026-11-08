@@ -34,7 +34,7 @@ Versions are the ranges in `package.json` at the time of writing; read the file 
 ## Packaging and hosting
 
 - Internal name `@workspace/ui` (imports like `@workspace/ui/components/button`, `@workspace/ui/themes`, `@workspace/ui/globals.css`).
-- Published as **`@lukeanill/ui`** (currently 6.3.x): `pnpm --filter @workspace/ui build` runs `scripts/build-publish.mjs`, which compiles to `dist/`, copies the styles and fonts, rewrites `@workspace/ui/` imports to `@lukeanill/ui/`, and writes the publish `package.json`. Releases are a deliberate step; do not publish unless asked.
+- Published as **`@lukeanill/ui`** (currently 6.3.x): `pnpm --filter @workspace/ui build` runs `scripts/build-publish.mjs`, which compiles to `dist/`, copies the styles and fonts, rewrites `@workspace/ui/` imports to `@lukeanill/ui/`, and writes the publish `package.json`. Every "go live" also publishes the package, but always ask the user which version number first (say what changed, whether it breaks anything, and recommend one).
 - Consumers import the stylesheet and a theme, wrap the app in `ThemeProvider`, and pass the theme id.
 - Hosting: Vercel project `100ds`, live at **https://ds.lukeai.space** (also `www.lukeai.space`, `100d-design-system.vercel.app`). The build runs the web app and builds Storybook into `/storybook/` (`STORYBOOK_BASE_PATH=/storybook/`). Repo: `github.com/lukeanill/100d-design-system`.
 
