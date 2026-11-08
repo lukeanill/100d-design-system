@@ -47,9 +47,9 @@ export type ColorMode = "light" | "dark"
 
 export interface ThemeFont {
   family: string
-  /** The regular weight: Figma `font/<role>/weight/regular` (body: `font/body/regular/weight`). */
+  /** The regular weight: Figma `font/primary|secondary/regular` (body: `font/body/regular/weight`). */
   weight: number
-  /** The emphasis weight, Figma `font/primary|secondary/weight/emphasis`. Defaults to `weight`. */
+  /** The emphasis weight, Figma `font/primary|secondary/emphasis`. Defaults to `weight`. */
   emphasis?: number
   /** The weight a button's text takes, Figma `font/body/action/weight` (body only). Defaults to `weight`. */
   actionWeight?: number

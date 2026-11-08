@@ -356,7 +356,7 @@ describe("figma map", () => {
   it("maps type, radius, shadow and motion tokens, with their own modes", () => {
     expect(figmaVariableFor("typescale-h1", fabrik)).toEqual({ variable: "typescale/h1", mode: "sm" })
     expect(figmaVariableFor("h2-size", fabrik)).toEqual({ variable: "typescale/h2", mode: "sm" })
-    expect(figmaVariableFor("h1-weight", fabrik)).toEqual({ variable: "font/primary/weight/regular", mode: "fabrik" })
+    expect(figmaVariableFor("h1-weight", fabrik)).toEqual({ variable: "font/primary/regular", mode: "fabrik" })
     expect(figmaVariableFor("font-body-weight-action", fabrik)).toEqual({ variable: "font/body/action/weight", mode: "fabrik" })
     expect(figmaVariableFor("radius-button", pacha)).toEqual({ variable: "radius/button", mode: "rounded" })
     expect(figmaVariableFor("shadow-2xl", fabrik)).toEqual({ variable: "shadow/lg", mode: "strong" })

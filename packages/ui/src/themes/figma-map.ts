@@ -23,13 +23,13 @@ const UI_COLOURS = new Set(["destructive", "affirmative", "focus", "chart-1", "c
 const FONT_VARIABLES: Record<string, string> = {
   "font-primary": "font/primary/family",
   "font-heading": "font/primary/family",
-  "font-primary-weight-regular": "font/primary/weight/regular",
-  "font-primary-weight-emphasis": "font/primary/weight/emphasis",
+  "font-primary-weight-regular": "font/primary/regular",
+  "font-primary-weight-emphasis": "font/primary/emphasis",
   "font-primary-letter-spacing": "font/primary/letter-spacing",
   "font-secondary": "font/secondary/family",
   "font-serif": "font/secondary/family",
-  "font-secondary-weight-regular": "font/secondary/weight/regular",
-  "font-secondary-weight-emphasis": "font/secondary/weight/emphasis",
+  "font-secondary-weight-regular": "font/secondary/regular",
+  "font-secondary-weight-emphasis": "font/secondary/emphasis",
   "font-secondary-letter-spacing": "font/secondary/letter-spacing",
   "font-body-token": "font/body/family",
   "font-body": "font/body/family",
@@ -77,7 +77,7 @@ export function figmaVariableFor(token: string, theme: Theme): FigmaVariable | n
 
   if (FONT_VARIABLES[t]) return at(FONT_VARIABLES[t], theme.id)
   // the weight each heading level takes is the primary font's regular weight
-  if (/^h[1-6]-weight$/.test(t)) return at("font/primary/weight/regular", theme.id)
+  if (/^h[1-6]-weight$/.test(t)) return at("font/primary/regular", theme.id)
   if (SETTING_VARIABLES[t]) return at(SETTING_VARIABLES[t][0], SETTING_VARIABLES[t][1](theme))
 
   // sizes: the typescale steps, by their own names, by the text styles that read them, and by the heading sizes
