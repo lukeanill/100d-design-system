@@ -110,7 +110,7 @@ _No props of its own._
 | Prop | Type | Required | Note |
 |---|---|---|---|
 | `weight` | `"soft" \| "medium" \| "heavy"` | yes |  |
-| `tone` | `"light" \| "dark" \| "clear" \| "tinted"` | no |  |
+| `tone` | `"light" \| "dark" \| "clear"` | no |  |
 | `tint` | `string` | no |  |
 | `radius` | `number` | no |  |
 | `edge` | `number` | no |  |
@@ -216,7 +216,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 - File: `packages/ui/src/components/theme-provider.tsx`
 - Import: `@workspace/ui/components/theme-provider`
 - Storybook: no story yet
-- Used in the web app: App shell (every page)
+- Used in the web app: Tokens page (/tokens); App shell (every page)
 - Used by other components: beam-input
 
 | Prop | Type | Required | Note |

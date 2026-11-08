@@ -1,4 +1,5 @@
 import { addons } from "storybook/manager-api"
+import "./tokens-addon/register"
 import { create } from "storybook/theming"
 import { getPreset } from "@workspace/ui/themes"
 

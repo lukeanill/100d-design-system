@@ -61,7 +61,7 @@ async function loadThemes() {
   }
   // `motion/react` is only imported for a type, so it is erased; nothing else is external.
   const t = {}
-  for (const n of ["types", "presets", "css", "motion", "typescale", "values", "fonts"]) {
+  for (const n of ["types", "presets", "css", "motion", "typescale", "values", "fonts", "ui-color"]) {
     t[n] = await import(pathToFileURL(path.join(dir, `${n}.mjs`)).href)
   }
   return t
@@ -81,13 +81,14 @@ function themesDoc(t) {
     "| Setting | Options | What it controls |",
     "|---|---|---|",
     `| \`colorMode\` | ${T.ColorMode ?? "light, dark"} | Which alpha wash and glass tone to use (light themes wash with dark, dark themes with light). One setting, no second light/dark switch. |`,
-    `| \`palette\` | 7 colours + 5 chart colours | background, foreground, primary, primaryForeground, secondary, secondaryForeground, destructive, charts[5]. All the other colour tokens are derived from these. |`,
+    `| \`palette\` | 6 colours + 2 new primitives | background, foreground, primary, primaryForeground, secondary, secondaryForeground, color700, color800 (the Figma primitives; Fabrik also sets its own accent and popover). All the other colour tokens are derived from these. |`,
     `| \`fonts\` | display, body, secondary | Three roles. Each has family, weight, optional emphasis weight, letterSpacing (% of size), italic. Body also has actionWeight (button text) and lineHeight (%). |`,
     `| \`scale\` | ${T.SCALES.join(", ")} | Which typescale set is used (sizes in the Tokens reference). |`,
     `| \`spacing\` | ${T.SPACINGS.join(", ")} | Layout spacing between components only; component padding stays fixed. Carried as \`--theme-spacing\`; components do not read it yet. |`,
     `| \`radius\` | ${T.RADII.join(", ")} | sharp = square, subtle, strong, rounded = pill controls. |`,
     `| \`shadow\` | ${T.SHADOW_LEVELS.join(", ")} | Strength of every \`shadow-*\` token. |`,
     `| \`material\` (texture) | ${T.MATERIALS.join(", ")} | How cards and controls are made: solid wash, top-to-bottom gradient, or blurred glass. |`,
+    `| \`uiColor\` (ui-color) | ${t["ui-color"].UI_COLOR_MODES.join(", ")} | Which \`ui-color\` collection the theme uses for destructive, affirmative, focus and the five chart colours. |`,
     `| \`motion\` (Component Animations) | ${T.MOTIONS.join(", ")} | Easing and duration for every component transition. |`,
     `| \`icons\` | style: ${T.ICON_STYLES.join(", ")}; weight: ${T.ICON_WEIGHTS.join(", ")} | Icon family and weight. |`,
     `| \`feel.transition\` | ${T.TRANSITIONS.join(", ")} | Page transition; plus colour (${T.TRANSITION_COLORS.join(", ")}) and speed (${T.SPEEDS.join(", ")}). |`,
@@ -106,10 +107,23 @@ function themesDoc(t) {
       `| ${p.label}${p.id === DEFAULT_THEME_ID ? " (default)" : ""} | \`${p.id}\` | ${p.colorMode} | ${p.material} | ${p.radius} | ${p.shadow} | ${p.spacing} | ${p.scale} | ${p.motion} | ${font(p.fonts.display)} | ${font(p.fonts.body)} | ${font(p.fonts.secondary)} |`
     )
   }
-  lines.push("", "## Palettes", "", "| Theme | background | foreground | primary | primary-fg | secondary | secondary-fg | destructive | charts 1–5 |", "|---|---|---|---|---|---|---|---|---|")
+  lines.push(
+    "", "## Texture and the card", "",
+    "A card has no Figma variable of its own. Its surface comes from the theme's **texture** setting (Figma `settings/texture`, code `material`) together with its colour mode. The code tokens are `--card` (colour) and `--card-image` (gradient fill); the text on it is `--card-foreground`, which is the theme foreground.", "",
+    "| Texture | `--card` | `--card-image` | Controls (tabs, prompt bar, buttons) | Used by |", "|---|---|---|---|---|",
+    `| solid | background 20% toward white (light theme) or black (dark theme) | none | the card colour under a translucent wash | ${presets.filter((p) => p.material === "solid").map((p) => p.label).join(", ")} |`,
+    `| gradient | background 15% toward white or black | top-to-bottom gradient, 10% to 20% toward white or black | a translucent wash gradient (medium to large) | ${presets.filter((p) => p.material === "gradient").map((p) => p.label).join(", ")} |`,
+    `| glass | the background itself | none | no fill: the blurred glass layer is the surface | ${presets.filter((p) => p.material === "glass").map((p) => p.label).join(", ")} |`,
+    "", "Glass cards take their blur (64px), saturation and tint from the `--glass-card-*` tokens; the tint follows the colour mode. Source: `cardTokens` in `packages/ui/src/themes/css.ts`.",
+  )
+  lines.push("", "## Palettes", "", "| Theme | background | foreground | primary | primary-fg | secondary | secondary-fg | color-700 | color-800 |", "|---|---|---|---|---|---|---|---|---|")
   for (const p of presets) {
     const c = p.palette
-    lines.push(`| ${p.label} | ${c.background} | ${c.foreground} | ${c.primary} | ${c.primaryForeground} | ${c.secondary} | ${c.secondaryForeground} | ${c.destructive} | ${c.charts.join(" ")} |`)
+    lines.push(`| ${p.label} | ${c.background} | ${c.foreground} | ${c.primary} | ${c.primaryForeground} | ${c.secondary} | ${c.secondaryForeground} | ${c.color700} | ${c.color800} |`)
+  }
+  lines.push("", "## ui-color", "", "Each theme names one mode (its `ui-color` setting). The mode sets the status and chart colours.", "", "| Mode | destructive | affirmative | focus | charts 1–5 | Used by |", "|---|---|---|---|---|---|")
+  for (const [mode, c] of Object.entries(t["ui-color"].UI_COLORS)) {
+    lines.push(`| ${mode} | ${c.destructive} | ${c.affirmative} | ${c.focus} | ${c.charts.join(" ")} | ${presets.filter((p) => p.uiColor === mode).map((p) => p.label).join(", ")} |`)
   }
   lines.push("", "## Font details", "", "| Theme | Display | Body (line-height %, letter-spacing %, action weight) | Secondary |", "|---|---|---|---|")
   for (const p of presets) {
@@ -155,7 +169,7 @@ const TOKEN_RULES = [
   [/^--font-secondary-style$/, "normal or italic for the secondary face.", "`text-h*-sec`"],
   [/^--font-body-weight-action$/, "Weight of text inside buttons (Figma font/body/action/weight).", "`text-action-*`"],
   [/^--font-body-weight$/, "Weight of body text.", "`text-md`, `text-sm`, …"],
-  [/^--font-body-line-height$/, "Line height of body text (unitless).", "body text styles"],
+  [/^--font-(body|primary|secondary)-line-height$/, "Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own.", "body and heading text styles, `text-*` sizes"],
   [/^--font-body-letter-spacing$/, "Letter spacing of body text, in em.", "body text styles"],
   [/^--font-(primary|secondary|body-token|heading|body|body-small|serif|mono|sans|family|family-alt|fira-code|bricolage-grotesque|inter)$/, "Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. `font-heading`, `font-sans`, `font-serif` alias these.", "`font-heading`, `font-sans`, `font-serif` Tailwind classes"],
   [/^--h[1-6]-(weight|size)$/, "Per-heading weight and size (size reads the typescale).", "`<h1>`–`<h6>` base styles"],
@@ -163,13 +177,18 @@ const TOKEN_RULES = [
   [/^--text-/, "Tailwind text size mapped to a typescale step, with its line height.", "`text-sm`, `text-2xl`"],
   [/^--background$/, "Page surface. Everything else (card, popover) is derived from it.", "`bg-background`"],
   [/^--foreground$/, "Ink on the page; border, input, ring and muted-foreground are this colour at set opacities.", "`text-foreground`"],
-  [/^--(card|card-image|card-foreground)$/, "Card surface (solid or gradient, from material + colour mode) and its text.", "`bg-card`, Card, popups"],
+  [/^--card$/, "Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See \"Texture and the card\" in themes.md.", "Card, popups"],
+  [/^--card-image$/, "The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`.", "Card"],
+  [/^--card-foreground$/, "Ink on a card. The theme foreground (Figma color/semantic/card-foreground).", "Card, popups"],
   [/^--(popover|popover-foreground)$/, "Popup surface and text. Equals background.", "`bg-popover` in menus, dialogs"],
   [/^--(primary|primary-foreground)$/, "Primary brand/action colour and the ink on it.", "Button default variant, links"],
   [/^--(secondary|secondary-foreground|muted|accent|accent-foreground)$/, "Secondary colour and the ink on it. `muted` and `accent` alias secondary.", "`bg-secondary`, `bg-muted`, hover rows"],
   [/^--muted-foreground$/, "Foreground at 65% opacity for quiet text.", "`text-muted-foreground`"],
-  [/^--destructive$/, "Error / delete colour.", "`bg-destructive`, destructive Button, Alert"],
-  [/^--affirmative(-foreground)?$/, "Success colour and its ink (set by colour mode, not by the palette).", "`bg-affirmative`"],
+  [/^--focus$/, "Focus colour, from the theme's ui-color mode.", "`ring-focus`"],
+  [/^--primitive-(700|800)$/, "The Figma primitives color-700 and color-800 (new). Nothing reads them yet.", "—"],
+  [/^--destructive$/, "Error / delete colour, from the theme's ui-color mode.", "`bg-destructive`, destructive Button, Alert"],
+  [/^--affirmative$/, "Success colour, from the theme's ui-color mode (Figma ui-color/affirmative).", "`bg-affirmative`"],
+  [/^--affirmative-foreground$/, "Ink on the success colour: the theme's foreground.", "`text-affirmative-foreground`"],
   [/^--(border|input|ring)$/, "Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings.", "`border-border`, `ring-ring`"],
   [/^--chart-[1-5]$/, "Chart series colours (five per theme).", "recharts series via `var(--chart-1)`; no `bg-chart-*` classes"],
   [/^--alpha-(dark|light)-/, "Translucent wash (dark or light) in steps xs–xl. One value set for every theme.", "hover, solid control fill, borders, overlays"],
@@ -304,7 +323,7 @@ function tokensDoc(t, presets) {
     const top = u ? [...u.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([f]) => f).join(", ") : ""
     out.push(`| \`${c}\` | ${classMeaning(c)} | ${top || "—"} |`)
   }
-  out.push("", "## Typescale by step", "", "Body steps use line-height 1.6, heading steps 1.4. Sizes (px) per `scale` mode are in `themes.md`. Tailwind sizes map as: " + Object.entries(t.typescale.TAILWIND_TEXT).map(([k, v]) => `text-${k}→${v}`).join(", ") + ".", "")
+  out.push("", "## Typescale by step", "", "Line-height comes from the theme: body steps read `--font-body-line-height` (default 1.6), heading steps `--font-primary-line-height` / `--font-secondary-line-height` (default 1.4). Sizes (px) per `scale` mode are in `themes.md`. Tailwind sizes map as: " + Object.entries(t.typescale.TAILWIND_TEXT).map(([k, v]) => `text-${k}→${v}`).join(", ") + ".", "")
   const motion = t.motion
   out.push("## Motion tokens", "")
   out.push("Easing curves (`--ease-<group>-<strength>`):", "", "| Token | cubic-bezier |", "|---|---|")

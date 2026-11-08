@@ -1,6 +1,6 @@
 # Building from Figma
 
-Use whenever a design in Figma is the source for something you build or check. Figma is read-only: you never edit it. If the design needs to change, tell the user what and why, and they change it; you change the code to match.
+Use whenever a design in Figma is the source for something you build or check. Figma is read-only by default. You write to it only when the user explicitly says to, and then only exactly what they say: before every write, state exactly what will change (file, page, collection, variable, value) and wait for a clear yes; add new things rather than overwriting or deleting unless they say so; afterwards report what you did and check it. Otherwise, if the design needs to change, tell the user what and why, and you change the code to match.
 
 ## 1. Read the design properly (dev mode)
 

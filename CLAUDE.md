@@ -10,7 +10,14 @@
 ## Figma
 
 - Read Figma in dev mode: use its CSS and read the annotations (`data-annotations`). Measure the build against the numbers (size, radius, padding, font weight) before calling it done.
+- **Figma is read-only unless the user explicitly says to write to it.** Then change only what they explicitly say. Before every write, state exactly what will change (file, page, collection, variable, value) and wait for a clear yes. Add rather than overwrite or delete unless they say so. Afterwards, report what you did and check it. Permission does not carry over: each new change is confirmed again.
 - Do not reorder themes. Do not narrow the scope that was asked for.
+
+## Tokens: talk Figma and code, never Tailwind
+
+- **Do not expose the user, or anyone using the system, to Tailwind details.** No Tailwind class names, utility names, `@theme`, `@apply`, config or `--color-*` aliases in reports, questions, page labels or docs. Keep it out of what people see; handle it yourself.
+- **What matters is what is in Figma and what is in code.** Describe every token as the Figma variable (collection, name, mode) and the code token (`--name`), and nothing in between.
+- **Understand the whole pipeline and check it end to end:** Figma variable → theme data (`packages/ui/src/themes`) → CSS custom property (`--name`) → the framework's alias for it. When asked, verify every step and report gaps as Figma-versus-code gaps.
 
 ## Before saying done
 

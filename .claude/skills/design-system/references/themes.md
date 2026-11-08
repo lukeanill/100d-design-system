@@ -9,13 +9,14 @@ There are **9 themes** (presets), in this order (never reorder them): Fabrik, Il
 | Setting | Options | What it controls |
 |---|---|---|
 | `colorMode` | light, dark | Which alpha wash and glass tone to use (light themes wash with dark, dark themes with light). One setting, no second light/dark switch. |
-| `palette` | 7 colours + 5 chart colours | background, foreground, primary, primaryForeground, secondary, secondaryForeground, destructive, charts[5]. All the other colour tokens are derived from these. |
+| `palette` | 6 colours + 2 new primitives | background, foreground, primary, primaryForeground, secondary, secondaryForeground, color700, color800 (the Figma primitives; Fabrik also sets its own accent and popover). All the other colour tokens are derived from these. |
 | `fonts` | display, body, secondary | Three roles. Each has family, weight, optional emphasis weight, letterSpacing (% of size), italic. Body also has actionWeight (button text) and lineHeight (%). |
 | `scale` | sm, md, lg | Which typescale set is used (sizes in the Tokens reference). |
 | `spacing` | sm, md, lg | Layout spacing between components only; component padding stays fixed. Carried as `--theme-spacing`; components do not read it yet. |
 | `radius` | sharp, subtle, strong, rounded | sharp = square, subtle, strong, rounded = pill controls. |
 | `shadow` | none, subtle, strong | Strength of every `shadow-*` token. |
 | `material` (texture) | solid, glass, gradient | How cards and controls are made: solid wash, top-to-bottom gradient, or blurred glass. |
+| `uiColor` (ui-color) | classic, modern, alternative | Which `ui-color` collection the theme uses for destructive, affirmative, focus and the five chart colours. |
 | `motion` (Component Animations) | none, ease, emphatic, springy | Easing and duration for every component transition. |
 | `icons` | style: phosphor, lucide; weight: thin, light, regular, bold, fill, duotone | Icon family and weight. |
 | `feel.transition` | none, blinds, iris, curtain, fade, curtain-iris | Page transition; plus colour (foreground, primary) and speed (slow, medium, fast). |
@@ -29,8 +30,8 @@ There are **9 themes** (presets), in this order (never reorder them): Fabrik, Il
 
 | Theme | id | Mode | Material | Radius | Shadow | Spacing | Scale | Motion | Display font | Body font | Secondary font |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Fabrik | `fabrik` | light | solid | sharp | subtle | lg | md | emphatic | Folio Std 700 | EB Garamond 400 | Folio Std 700 |
-| Illuzion | `illuzion` | light | solid | strong | none | md | lg | ease | Intan 400 | DM Sans 500 | Intan 400 |
+| Fabrik | `fabrik` | light | glass | strong | strong | lg | sm | springy | DentonVariable Test 420/320 | PP Neue Montreal 200 | Denton Italic Variable Test 460/640 |
+| Illuzion | `illuzion` | light | solid | strong | none | md | lg | ease | Intan 400 | General Sans Variable 450 | Intan 400 |
 | Laroc | `laroc` | dark | solid | rounded | none | md | sm | none | GT Pressura Mono Trial 700 | Archivo 400 | GT Pressura Mono Trial 700 |
 | Bootshaus | `bootshaus` | dark | glass | strong | strong | md | lg | ease | ITC Garamond Std 800 | Inter 500 | ITC Garamond Std 800 |
 | Berghain (default) | `berghain` | dark | glass | subtle | strong | lg | md | ease | Migra 200/800 | Akkurat LL TT 200 | Migra 200/800 italic |
@@ -39,35 +40,57 @@ There are **9 themes** (presets), in this order (never reorder them): Fabrik, Il
 | Amnesia | `amnesia` | dark | gradient | rounded | subtle | md | md | ease | Swear Display Demo 500 | Inter 400 | Swear Display Demo 500 |
 | Ushuaia | `ushuaia` | light | gradient | strong | strong | lg | md | ease | Migra 800 | Archivo 400 | Migra 800 |
 
+## Texture and the card
+
+A card has no Figma variable of its own. Its surface comes from the theme's **texture** setting (Figma `settings/texture`, code `material`) together with its colour mode. The code tokens are `--card` (colour) and `--card-image` (gradient fill); the text on it is `--card-foreground`, which is the theme foreground.
+
+| Texture | `--card` | `--card-image` | Controls (tabs, prompt bar, buttons) | Used by |
+|---|---|---|---|---|
+| solid | background 20% toward white (light theme) or black (dark theme) | none | the card colour under a translucent wash | Illuzion, Laroc, Pacha |
+| gradient | background 15% toward white or black | top-to-bottom gradient, 10% to 20% toward white or black | a translucent wash gradient (medium to large) | Amnesia, Ushuaia |
+| glass | the background itself | none | no fill: the blurred glass layer is the surface | Fabrik, Bootshaus, Berghain, Savaya |
+
+Glass cards take their blur (64px), saturation and tint from the `--glass-card-*` tokens; the tint follows the colour mode. Source: `cardTokens` in `packages/ui/src/themes/css.ts`.
+
 ## Palettes
 
-| Theme | background | foreground | primary | primary-fg | secondary | secondary-fg | destructive | charts 1–5 |
+| Theme | background | foreground | primary | primary-fg | secondary | secondary-fg | color-700 | color-800 |
 |---|---|---|---|---|---|---|---|---|
-| Fabrik | #3a3c83 | #fbfbfc | #2e3067 | #ff8081 | #4d4fad | #80a8ff | #ff6467 | #1447e6 #00bc7d #fe9a00 #ad46ff #ff2056 |
-| Illuzion | #f7cae7 | #1b1717 | #f2aeda | #ff4901 | #812961 | #ee98d0 | #ff6467 | #1447e6 #00bc7d #fe9a00 #ad46ff #ff2056 |
-| Laroc | #3a6be2 | #fbfbfc | #17347b | #fbfbfc | #1b4bbe | #a0b2df | #e7000b | #f54900 #009689 #104e64 #ffb900 #fe9a00 |
-| Bootshaus | #214c56 | #ffffff | #1e363c | #ffc937 | #ffc937 | #1e363c | #ff6467 | #1447e6 #00bc7d #fe9a00 #ad46ff #ff2056 |
-| Berghain | #000000 | #fbfbfc | #ffffff | #000000 | #363636 | #ffffff | #ff6467 | #1447e6 #00bc7d #fe9a00 #ad46ff #ff2056 |
-| Savaya | #84699b | #ffffff | #6f59bb | #ffffff | #a56a62 | #734a45 | #ff6467 | #1447e6 #00bc7d #fe9a00 #ad46ff #ff2056 |
-| Pacha | #ffe9e9 | #1b1717 | #ffffff | #e22700 | #831a04 | #b38b83 | #e7000b | #f54900 #009689 #104e64 #ffb900 #fe9a00 |
-| Amnesia | #224f4a | #f8f8f8 | #122a27 | #f8f8f8 | #23786e | #0c1d1b | #ff6467 | #1447e6 #00bc7d #fe9a00 #ad46ff #ff2056 |
-| Ushuaia | #edebe3 | #0f0e0e | #222222 | #0f0e0e | #ffffff | #222222 | #e7000b | #f54900 #009689 #104e64 #ffb900 #fe9a00 |
+| Fabrik | #f4f1f1 | #2b2726 | #40433e | #ffffff | #e4cdd2 | #78565d | #5b90ac | #a77b84 |
+| Illuzion | #f7cae7 | #1b1717 | #f2aeda | #ff4901 | #812961 | #ee98d0 | #ee98d0 | #ee98d0 |
+| Laroc | #3a6be2 | #fbfbfc | #17347b | #fbfbfc | #1b4bbe | #a0b2df | #a0b2df | #a0b2df |
+| Bootshaus | #214c56 | #ffffff | #1e363c | #ffc937 | #ffc937 | #1e363c | #1e363c | #1e363c |
+| Berghain | #000000 | #fbfbfc | #ffffff | #000000 | #363636 | #ffffff | #ffffff | #ffffff |
+| Savaya | #84699b | #ffffff | #6f59bb | #ffffff | #a56a62 | #734a45 | #734a45 | #734a45 |
+| Pacha | #ffe9e9 | #1b1717 | #831a04 | #ffffff | #ffffff | #831a04 | #b38b83 | #b38b83 |
+| Amnesia | #224f4a | #f8f8f8 | #122a27 | #f8f8f8 | #23786e | #0c1d1b | #0c1d1b | #0c1d1b |
+| Ushuaia | #edebe3 | #0f0e0e | #222222 | #0f0e0e | #ffffff | #222222 | #222222 | #222222 |
+
+## ui-color
+
+Each theme names one mode (its `ui-color` setting). The mode sets the status and chart colours.
+
+| Mode | destructive | affirmative | focus | charts 1–5 | Used by |
+|---|---|---|---|---|---|
+| classic | #e7000b | #00a81c | #0032a8 | #1447e6 #00bc7d #fe9a00 #ad46ff #ff2056 | Laroc, Ushuaia |
+| modern | #ff6467 | #64ff9f | #ac64ff | #f54900 #009689 #104e64 #ffb900 #955e09 | Fabrik, Bootshaus, Berghain, Savaya, Amnesia |
+| alternative | #eb7a50 | #a5eb50 | #50ebd1 | #db50eb #ebc950 #50cceb #5086eb #a850eb | Illuzion, Pacha |
 
 ## Font details
 
 | Theme | Display | Body (line-height %, letter-spacing %, action weight) | Secondary |
 |---|---|---|---|
-| Fabrik | Folio Std 700 | EB Garamond 400, lh 142, ls 2, action 400 | Folio Std 700 |
-| Illuzion | Intan 400 | DM Sans 500, lh 142, ls 1, action 500 | Intan 400 |
+| Fabrik | DentonVariable Test 420/320 | PP Neue Montreal 200, lh 142, ls 0, action 400 | Denton Italic Variable Test 460/640 |
+| Illuzion | Intan 400 | General Sans Variable 450, lh 142, ls 1, action 450 | Intan 400 |
 | Laroc | GT Pressura Mono Trial 700 | Archivo 400, lh 142, ls 0, action 400 | GT Pressura Mono Trial 700 |
 | Bootshaus | ITC Garamond Std 800, ls -2% | Inter 500, lh 142, ls 0, action 500 | ITC Garamond Std 800 |
-| Berghain | Migra 200/800 | Akkurat LL TT 200, lh 146, ls 0, action 400 | Migra 200/800 italic |
+| Berghain | Migra 200/800 | Akkurat LL TT 200, lh 142, ls 0, action 400 | Migra 200/800 italic |
 | Savaya | Gloock 400 | Newsreader 400, lh 142, ls 1, action 400 | Gloock 400 |
 | Pacha | Khaviax 400 | DM Sans 500, lh 142, ls 1, action 500 | Khaviax 400 |
 | Amnesia | Swear Display Demo 500 | Inter 400, lh 142, ls 0, action 400 | Swear Display Demo 500 |
 | Ushuaia | Migra 800 | Archivo 400, lh 142, ls 0, action 400 | Migra 800 |
 
-Bundled faces (shipped as @font-face): Akkurat LL TT, Folio Std, ITC Garamond Std, PP Editorial New, GT Pressura Mono Trial, Intan, Khaviax, Swear Display Demo, Imbue, Migra. Google Fonts faces: Archivo, Bricolage Grotesque, DM Sans, Inter, Karla, Manrope, Plus Jakarta Sans, Work Sans, Space Grotesk, DM Serif Display, EB Garamond, Gloock, Instrument Serif, Lora, Newsreader, Playfair Display, Fraunces, Space Mono, JetBrains Mono.
+Bundled faces (shipped as @font-face): Akkurat LL TT, Folio Std, DentonVariable Test, Denton Italic Variable Test, PP Neue Montreal, General Sans Variable, ITC Garamond Std, PP Editorial New, GT Pressura Mono Trial, Intan, Khaviax, Swear Display Demo, Imbue, Migra. Google Fonts faces: Archivo, Bricolage Grotesque, DM Sans, Inter, Karla, Manrope, Plus Jakarta Sans, Work Sans, Space Grotesk, DM Serif Display, EB Garamond, Gloock, Instrument Serif, Lora, Newsreader, Playfair Display, Fraunces, Space Mono, JetBrains Mono.
 
 ## Typescale (px) by `scale`
 
@@ -75,14 +98,14 @@ Bundled faces (shipped as @font-face): Akkurat LL TT, Folio Std, ITC Garamond St
 |---|---|---|---|
 | xs | 12 | 12 | 14 |
 | sm | 13 | 14 | 16 |
-| md | 14 | 16 | 18 |
-| lg | 16 | 18 | 20 |
-| h6 | 20 | 24 | 26 |
-| h5 | 24 | 30 | 36 |
-| h4 | 28 | 36 | 44 |
-| h3 | 36 | 48 | 56 |
-| h2 | 44 | 60 | 72 |
-| h1 | 60 | 72 | 88 |
+| md | 15 | 16 | 18 |
+| lg | 18 | 18 | 20 |
+| h6 | 19 | 24 | 26 |
+| h5 | 23 | 30 | 36 |
+| h4 | 29 | 36 | 44 |
+| h3 | 37 | 48 | 56 |
+| h2 | 46 | 60 | 72 |
+| h1 | 57 | 72 | 88 |
 
 ## UX direction (`values`)
 

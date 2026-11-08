@@ -4,7 +4,7 @@
 
 A token is a CSS custom property. A theme's block (`.<id>`) sets most of them; `styles/tokens.css` sets the motion tokens and maps them to Tailwind (`@theme inline`), so `bg-primary`, `rounded-lg`, `shadow-md`, `text-md` all resolve through tokens. Values below are the default theme's (Berghain); `themes-resolved.md` has every theme's values. "Applied in" is sampled from component source: the three components that use the token most (not exhaustive).
 
-Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
+Counts: 185 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 
 ## Colour
 
@@ -12,9 +12,9 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 |---|---|---|---|
 | `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, gradient-background, kbd (+28) |
 | `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, prompt-bar, streaming-text (+82) |
-| `--card` | `var(--background)` | Card surface (solid or gradient, from material + colour mode) and its text. | insight-cards, task-rows, alert (+23) |
-| `--card-image` | `none` | Card surface (solid or gradient, from material + colour mode) and its text. | `bg-card`, Card, popups |
-| `--card-foreground` | `var(--foreground)` | Card surface (solid or gradient, from material + colour mode) and its text. | `bg-card`, Card, popups |
+| `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | insight-cards, task-rows, alert (+23) |
+| `--card-image` | `none` | The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`. | Card |
+| `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
 | `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, calendar, navigation-menu (+1) |
 | `--popover-foreground` | `var(--foreground)` | Popup surface and text. Equals background. | map-carousel |
 | `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+33) |
@@ -25,17 +25,17 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--muted-foreground` | `oklch(0.988 0.001 286.38 / 65%)` | Foreground at 65% opacity for quiet text. | day-timeline |
 | `--accent` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | dropdown-menu, context-menu, menubar (+10) |
 | `--accent-foreground` | `var(--secondary-foreground)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | ripple |
-| `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour. | button, badge, insight-cards (+30) |
-| `--affirmative` | `oklch(0.847 0.117 143.45)` | Success colour and its ink (set by colour mode, not by the palette). | task-rows, thinking-state, context-cards (+2) |
-| `--affirmative-foreground` | `oklch(0.145 0 0)` | Success colour and its ink (set by colour mode, not by the palette). | `bg-affirmative` |
+| `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour, from the theme's ui-color mode. | button, badge, insight-cards (+30) |
+| `--affirmative` | `oklch(0.894 0.187 153.03)` | Success colour, from the theme's ui-color mode (Figma ui-color/affirmative). | task-rows, thinking-state, context-cards (+2) |
+| `--affirmative-foreground` | `var(--foreground)` | Ink on the success colour: the theme's foreground. | `text-affirmative-foreground` |
 | `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+30) |
 | `--input` | `oklch(0.988 0.001 286.38 / 20%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | checkbox, bubble, button-group (+1) |
 | `--ring` | `oklch(0.988 0.001 286.38 / 70%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | button, questionnaire, files (+30) |
-| `--chart-1` | `oklch(0.488 0.243 264.40)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-2` | `oklch(0.702 0.158 160.44)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-3` | `oklch(0.772 0.173 65.37)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-4` | `oklch(0.622 0.259 305.31)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
-| `--chart-5` | `oklch(0.643 0.245 16.50)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
+| `--chart-1` | `oklch(0.647 0.217 36.85)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
+| `--chart-2` | `oklch(0.605 0.107 184.17)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
+| `--chart-3` | `oklch(0.397 0.070 227.19)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
+| `--chart-4` | `oklch(0.829 0.171 81.04)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
+| `--chart-5` | `oklch(0.530 0.112 69.26)` | Chart series colours (five per theme). | recharts series via `var(--chart-1)`; no `bg-chart-*` classes |
 | `--sidebar` | `var(--background)` | Sidebar colours (alias the main palette). | sidebar |
 | `--sidebar-foreground` | `var(--foreground)` | Sidebar colours (alias the main palette). | Sidebar component |
 | `--sidebar-primary` | `var(--primary)` | Sidebar colours (alias the main palette). | Sidebar component |
@@ -86,7 +86,9 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--font-secondary-weight-regular` | `200` | Weight of the secondary face: regular / emphasis. | `text-h*-sec`, `text-h*-sec-bold` |
 | `--font-secondary-weight-emphasis` | `800` | Weight of the secondary face: regular / emphasis. | `text-h*-sec`, `text-h*-sec-bold` |
 | `--font-secondary-letter-spacing` | `0em` | Letter spacing of the secondary face, in em. | `text-h*-sec` |
-| `--font-body-line-height` | `1.46` | Line height of body text (unitless). | body text styles |
+| `--font-body-line-height` | `1.6` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles, `text-*` sizes |
+| `--font-primary-line-height` | `1.4` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles, `text-*` sizes |
+| `--font-secondary-line-height` | `1.4` | Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own. | body and heading text styles, `text-*` sizes |
 | `--font-body-letter-spacing` | `0em` | Letter spacing of body text, in em. | body text styles |
 | `--h1-weight` | `200` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h2-weight` | `200` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
@@ -105,27 +107,27 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--typescale-h2` | `3.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
 | `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
 | `--text-xs` | `var(--typescale-xs)` | Tailwind text size mapped to a typescale step, with its line height. | map-carousel, message-bubble, sidebar (+27) |
-| `--text-xs--line-height` | `1.6` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-xs--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-sm` | `var(--typescale-sm)` | Tailwind text size mapped to a typescale step, with its line height. | date-time-picker, map-carousel, menu (+54) |
-| `--text-sm--line-height` | `1.6` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-sm--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-base` | `var(--typescale-md)` | Tailwind text size mapped to a typescale step, with its line height. | questionnaire, date-time-picker, morphing-discovery-bar (+6) |
-| `--text-base--line-height` | `1.6` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-base--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-lg` | `var(--typescale-lg)` | Tailwind text size mapped to a typescale step, with its line height. | hero, message-bubble, stat-card (+1) |
-| `--text-lg--line-height` | `1.6` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-lg--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-xl` | `var(--typescale-lg)` | Tailwind text size mapped to a typescale step, with its line height. | amount-input, hero, date-time-picker (+2) |
-| `--text-xl--line-height` | `1.6` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-xl--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-2xl` | `var(--typescale-h6)` | Tailwind text size mapped to a typescale step, with its line height. | amount-input, hero |
-| `--text-2xl--line-height` | `1.4` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-2xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-3xl` | `var(--typescale-h5)` | Tailwind text size mapped to a typescale step, with its line height. | hero |
-| `--text-3xl--line-height` | `1.4` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-3xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-4xl` | `var(--typescale-h4)` | Tailwind text size mapped to a typescale step, with its line height. | hero |
-| `--text-4xl--line-height` | `1.4` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-4xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-5xl` | `var(--typescale-h3)` | Tailwind text size mapped to a typescale step, with its line height. | hero |
-| `--text-5xl--line-height` | `1.4` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-5xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-6xl` | `var(--typescale-h2)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-6xl--line-height` | `1.4` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-6xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-7xl` | `var(--typescale-h1)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-7xl--line-height` | `1.4` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
+| `--text-7xl--line-height` | `var(--font-primary-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--h1-size` | `var(--typescale-h1)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h2-size` | `var(--typescale-h2)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h3-size` | `var(--typescale-h3)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
@@ -137,15 +139,15 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, input-group, split-to-edit (+12) |
-| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+39) |
+| `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, input-group, split-to-edit (+10) |
+| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+35) |
 | `--dimensions-max` | `9999px` | Fully rounded (9999px). | `radius-button` on rounded themes |
-| `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | prompt-bar, morphing-discovery-bar, management-bar (+8) |
-| `--radius-outer-max` | `0.5rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | prompt-bar, morphing-discovery-bar, beam-input (+3) |
+| `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | prompt-bar, menubar, morphing-discovery-bar (+14) |
+| `--radius-outer-max` | `0.5rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+4) |
 | `--radius-sm` | `0.25rem` | Corner radius steps; their size depends on the theme's radius setting. | menu, checkbox, kbd (+1) |
 | `--radius-xs` | `0.125rem` | Corner radius steps; their size depends on the theme's radius setting. | thread-insight-card, dialog |
-| `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, insight-cards, button (+20) |
-| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | menubar, context-menu, dropdown-menu (+15) |
+| `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, insight-cards, button (+18) |
+| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, sidebar (+14) |
 | `--shadow-2xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | `shadow-sm`, `shadow-lg` |
 | `--shadow-xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | button, copy, icon (+14) |
 | `--shadow-sm` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | prompt-bar, morphing-discovery-bar, sidebar (+5) |
@@ -202,6 +204,7 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 |---|---|---|---|
 | `--theme-spacing` | `lg` | The theme's setting written out for AI/tools. Components mostly do not read these yet. | metadata |
 | `--theme-motion` | `ease` | The theme's setting written out for AI/tools. Components mostly do not read these yet. | metadata |
+| `--theme-ui-color` | `modern` | — | — |
 | `--theme-icon-style` | `phosphor` | The theme's setting written out for AI/tools. Components mostly do not read these yet. | metadata |
 | `--theme-icon-weight` | `regular` | The theme's setting written out for AI/tools. Components mostly do not read these yet. | themed-icon |
 | `--theme-material` | `glass` | The theme's setting written out for AI/tools. Components mostly do not read these yet. | themed-surface |
@@ -219,6 +222,14 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--theme-hero-text` | `none` | The theme's Feel choices written out. | ThemePageTransition, ThemeBackground, hero components |
 | `--theme-button-click` | `none` | The theme's Feel choices written out. | ThemePageTransition, ThemeBackground, hero components |
 | `--theme-link-hover` | `none` | The theme's Feel choices written out. | ThemePageTransition, ThemeBackground, hero components |
+
+## Other
+
+| Token | Default value | Meaning |
+|---|---|---|
+| `--primitive-700` | `oklch(1.000 0.000 0.00)` | The Figma primitives color-700 and color-800 (new). Nothing reads them yet. |
+| `--primitive-800` | `oklch(1.000 0.000 0.00)` | The Figma primitives color-700 and color-800 (new). Nothing reads them yet. |
+| `--focus` | `oklch(0.656 0.222 301.98)` | Focus colour, from the theme's ui-color mode. |
 
 ## Token-backed classes
 
@@ -274,7 +285,7 @@ Counts: 179 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 
 ## Typescale by step
 
-Body steps use line-height 1.6, heading steps 1.4. Sizes (px) per `scale` mode are in `themes.md`. Tailwind sizes map as: text-xs→xs, text-sm→sm, text-base→md, text-lg→lg, text-xl→lg, text-2xl→h6, text-3xl→h5, text-4xl→h4, text-5xl→h3, text-6xl→h2, text-7xl→h1.
+Line-height comes from the theme: body steps read `--font-body-line-height` (default 1.6), heading steps `--font-primary-line-height` / `--font-secondary-line-height` (default 1.4). Sizes (px) per `scale` mode are in `themes.md`. Tailwind sizes map as: text-xs→xs, text-sm→sm, text-base→md, text-lg→lg, text-xl→lg, text-2xl→h6, text-3xl→h5, text-4xl→h4, text-5xl→h3, text-6xl→h2, text-7xl→h1.
 
 ## Motion tokens
 

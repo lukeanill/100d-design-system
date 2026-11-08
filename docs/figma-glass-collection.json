@@ -1,0 +1,792 @@
+{
+  "variableCollections": [
+    {
+      "action": "CREATE",
+      "id": "glass",
+      "name": "glass",
+      "initialModeId": "light"
+    }
+  ],
+  "variableModes": [
+    {
+      "action": "CREATE",
+      "id": "light",
+      "name": "light",
+      "variableCollectionId": "glass"
+    },
+    {
+      "action": "CREATE",
+      "id": "dark",
+      "name": "dark",
+      "variableCollectionId": "glass"
+    }
+  ],
+  "variables": [
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_light_angle",
+      "name": "glass/soft/light-angle",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Light (angle), degrees.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_light_intensity",
+      "name": "glass/soft/light-intensity",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Light (intensity), 0-100 as shown in Figma's panel. Full-strength sheet: 80 / 80 / 50 for soft / medium / heavy.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_refraction",
+      "name": "glass/soft/refraction",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Refraction, 0-100 as shown in Figma's panel.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_depth",
+      "name": "glass/soft/depth",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Depth, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_dispersion",
+      "name": "glass/soft/dispersion",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Dispersion, 0-100 as shown in Figma's panel.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_frost",
+      "name": "glass/soft/frost",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Frost, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_splay",
+      "name": "glass/soft/splay",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Splay.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_soft_fill",
+      "name": "glass/soft/fill",
+      "variableCollectionId": "glass",
+      "resolvedType": "COLOR",
+      "description": "Fill. Light mode: FFFFFF at 16%. Dark mode: 000000 at 40%. The Clear tone has no fill: remove the Fill row.",
+      "scopes": [
+        "ALL_FILLS"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_light_angle",
+      "name": "glass/medium/light-angle",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Light (angle), degrees.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_light_intensity",
+      "name": "glass/medium/light-intensity",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Light (intensity), 0-100 as shown in Figma's panel. Full-strength sheet: 80 / 80 / 50 for soft / medium / heavy.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_refraction",
+      "name": "glass/medium/refraction",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Refraction, 0-100 as shown in Figma's panel.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_depth",
+      "name": "glass/medium/depth",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Depth, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_dispersion",
+      "name": "glass/medium/dispersion",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Dispersion, 0-100 as shown in Figma's panel.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_frost",
+      "name": "glass/medium/frost",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Frost, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_splay",
+      "name": "glass/medium/splay",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Splay.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_medium_fill",
+      "name": "glass/medium/fill",
+      "variableCollectionId": "glass",
+      "resolvedType": "COLOR",
+      "description": "Fill. Light mode: FFFFFF at 24%. Dark mode: 000000 at 48%. The Clear tone has no fill: remove the Fill row.",
+      "scopes": [
+        "ALL_FILLS"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_light_angle",
+      "name": "glass/heavy/light-angle",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Light (angle), degrees.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_light_intensity",
+      "name": "glass/heavy/light-intensity",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Light (intensity), 0-100 as shown in Figma's panel. Full-strength sheet: 80 / 80 / 50 for soft / medium / heavy.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_refraction",
+      "name": "glass/heavy/refraction",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Refraction, 0-100 as shown in Figma's panel.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_depth",
+      "name": "glass/heavy/depth",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Depth, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_dispersion",
+      "name": "glass/heavy/dispersion",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Dispersion, 0-100 as shown in Figma's panel.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_frost",
+      "name": "glass/heavy/frost",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Frost, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_splay",
+      "name": "glass/heavy/splay",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Glass effect > Splay.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_heavy_fill",
+      "name": "glass/heavy/fill",
+      "variableCollectionId": "glass",
+      "resolvedType": "COLOR",
+      "description": "Fill. Light mode: FFFFFF at 32%. Dark mode: 000000 at 48%. The Clear tone has no fill: remove the Fill row.",
+      "scopes": [
+        "ALL_FILLS"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_drop_shadow_x",
+      "name": "glass/drop-shadow/x",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Drop shadow > X, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_drop_shadow_y",
+      "name": "glass/drop-shadow/y",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Drop shadow > Y, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_drop_shadow_blur",
+      "name": "glass/drop-shadow/blur",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Drop shadow > Blur, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_drop_shadow_spread",
+      "name": "glass/drop-shadow/spread",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Drop shadow > Spread, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_drop_shadow_color",
+      "name": "glass/drop-shadow/color",
+      "variableCollectionId": "glass",
+      "resolvedType": "COLOR",
+      "description": "Effects > Drop shadow > colour: 000000 at 18%.",
+      "scopes": [
+        "EFFECT_COLOR"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_inner_shadow_x",
+      "name": "glass/inner-shadow/x",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Inner shadow > X, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_inner_shadow_y",
+      "name": "glass/inner-shadow/y",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Inner shadow > Y, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_inner_shadow_blur",
+      "name": "glass/inner-shadow/blur",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Inner shadow > Blur, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_inner_shadow_spread",
+      "name": "glass/inner-shadow/spread",
+      "variableCollectionId": "glass",
+      "resolvedType": "FLOAT",
+      "description": "Effects > Inner shadow > Spread, px.",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ]
+    },
+    {
+      "action": "CREATE",
+      "id": "v_glass_inner_shadow_color",
+      "name": "glass/inner-shadow/color",
+      "variableCollectionId": "glass",
+      "resolvedType": "COLOR",
+      "description": "Effects > Inner shadow > colour: FFFFFF at 27% (the story's default edge of 0.6). 45% at full strength.",
+      "scopes": [
+        "EFFECT_COLOR"
+      ]
+    }
+  ],
+  "variableModeValues": [
+    {
+      "variableId": "v_glass_soft_light_angle",
+      "modeId": "light",
+      "value": -45
+    },
+    {
+      "variableId": "v_glass_soft_light_angle",
+      "modeId": "dark",
+      "value": -45
+    },
+    {
+      "variableId": "v_glass_soft_light_intensity",
+      "modeId": "light",
+      "value": 48
+    },
+    {
+      "variableId": "v_glass_soft_light_intensity",
+      "modeId": "dark",
+      "value": 48
+    },
+    {
+      "variableId": "v_glass_soft_refraction",
+      "modeId": "light",
+      "value": 50
+    },
+    {
+      "variableId": "v_glass_soft_refraction",
+      "modeId": "dark",
+      "value": 50
+    },
+    {
+      "variableId": "v_glass_soft_depth",
+      "modeId": "light",
+      "value": 20
+    },
+    {
+      "variableId": "v_glass_soft_depth",
+      "modeId": "dark",
+      "value": 20
+    },
+    {
+      "variableId": "v_glass_soft_dispersion",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_soft_dispersion",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_soft_frost",
+      "modeId": "light",
+      "value": 1
+    },
+    {
+      "variableId": "v_glass_soft_frost",
+      "modeId": "dark",
+      "value": 1
+    },
+    {
+      "variableId": "v_glass_soft_splay",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_soft_splay",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_soft_fill",
+      "modeId": "light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.16
+      }
+    },
+    {
+      "variableId": "v_glass_soft_fill",
+      "modeId": "dark",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.4
+      }
+    },
+    {
+      "variableId": "v_glass_medium_light_angle",
+      "modeId": "light",
+      "value": -45
+    },
+    {
+      "variableId": "v_glass_medium_light_angle",
+      "modeId": "dark",
+      "value": -45
+    },
+    {
+      "variableId": "v_glass_medium_light_intensity",
+      "modeId": "light",
+      "value": 48
+    },
+    {
+      "variableId": "v_glass_medium_light_intensity",
+      "modeId": "dark",
+      "value": 48
+    },
+    {
+      "variableId": "v_glass_medium_refraction",
+      "modeId": "light",
+      "value": 60
+    },
+    {
+      "variableId": "v_glass_medium_refraction",
+      "modeId": "dark",
+      "value": 60
+    },
+    {
+      "variableId": "v_glass_medium_depth",
+      "modeId": "light",
+      "value": 60
+    },
+    {
+      "variableId": "v_glass_medium_depth",
+      "modeId": "dark",
+      "value": 60
+    },
+    {
+      "variableId": "v_glass_medium_dispersion",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_medium_dispersion",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_medium_frost",
+      "modeId": "light",
+      "value": 5
+    },
+    {
+      "variableId": "v_glass_medium_frost",
+      "modeId": "dark",
+      "value": 5
+    },
+    {
+      "variableId": "v_glass_medium_splay",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_medium_splay",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_medium_fill",
+      "modeId": "light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.24
+      }
+    },
+    {
+      "variableId": "v_glass_medium_fill",
+      "modeId": "dark",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.48
+      }
+    },
+    {
+      "variableId": "v_glass_heavy_light_angle",
+      "modeId": "light",
+      "value": -45
+    },
+    {
+      "variableId": "v_glass_heavy_light_angle",
+      "modeId": "dark",
+      "value": -45
+    },
+    {
+      "variableId": "v_glass_heavy_light_intensity",
+      "modeId": "light",
+      "value": 30
+    },
+    {
+      "variableId": "v_glass_heavy_light_intensity",
+      "modeId": "dark",
+      "value": 30
+    },
+    {
+      "variableId": "v_glass_heavy_refraction",
+      "modeId": "light",
+      "value": 100
+    },
+    {
+      "variableId": "v_glass_heavy_refraction",
+      "modeId": "dark",
+      "value": 100
+    },
+    {
+      "variableId": "v_glass_heavy_depth",
+      "modeId": "light",
+      "value": 40
+    },
+    {
+      "variableId": "v_glass_heavy_depth",
+      "modeId": "dark",
+      "value": 40
+    },
+    {
+      "variableId": "v_glass_heavy_dispersion",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_heavy_dispersion",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_heavy_frost",
+      "modeId": "light",
+      "value": 14
+    },
+    {
+      "variableId": "v_glass_heavy_frost",
+      "modeId": "dark",
+      "value": 14
+    },
+    {
+      "variableId": "v_glass_heavy_splay",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_heavy_splay",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_heavy_fill",
+      "modeId": "light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.32
+      }
+    },
+    {
+      "variableId": "v_glass_heavy_fill",
+      "modeId": "dark",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.48
+      }
+    },
+    {
+      "variableId": "v_glass_drop_shadow_x",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_drop_shadow_x",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_drop_shadow_y",
+      "modeId": "light",
+      "value": 4
+    },
+    {
+      "variableId": "v_glass_drop_shadow_y",
+      "modeId": "dark",
+      "value": 4
+    },
+    {
+      "variableId": "v_glass_drop_shadow_blur",
+      "modeId": "light",
+      "value": 24
+    },
+    {
+      "variableId": "v_glass_drop_shadow_blur",
+      "modeId": "dark",
+      "value": 24
+    },
+    {
+      "variableId": "v_glass_drop_shadow_spread",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_drop_shadow_spread",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_drop_shadow_color",
+      "modeId": "light",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.18
+      }
+    },
+    {
+      "variableId": "v_glass_drop_shadow_color",
+      "modeId": "dark",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.18
+      }
+    },
+    {
+      "variableId": "v_glass_inner_shadow_x",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_inner_shadow_x",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_inner_shadow_y",
+      "modeId": "light",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_inner_shadow_y",
+      "modeId": "dark",
+      "value": 0
+    },
+    {
+      "variableId": "v_glass_inner_shadow_blur",
+      "modeId": "light",
+      "value": 20
+    },
+    {
+      "variableId": "v_glass_inner_shadow_blur",
+      "modeId": "dark",
+      "value": 20
+    },
+    {
+      "variableId": "v_glass_inner_shadow_spread",
+      "modeId": "light",
+      "value": -5
+    },
+    {
+      "variableId": "v_glass_inner_shadow_spread",
+      "modeId": "dark",
+      "value": -5
+    },
+    {
+      "variableId": "v_glass_inner_shadow_color",
+      "modeId": "light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.27
+      }
+    },
+    {
+      "variableId": "v_glass_inner_shadow_color",
+      "modeId": "dark",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.27
+      }
+    }
+  ]
+}

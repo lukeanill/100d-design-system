@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/react-vite"
 import { ThemeProvider } from "@workspace/ui/components/theme-provider"
 import { presets } from "@workspace/ui/themes"
 import "@workspace/ui/globals.css"
+import { TokenReporter } from "./tokens-addon/reporter"
 
 const COLOR_ICONS: Record<string, string> = {
   fabrik: "moon",
@@ -80,6 +81,7 @@ const preview: Preview = {
           {/* Fullscreen stories get no padding, so a story can reach the page
               edges -- a scoped overlay padded away from them isn't fullscreen. */}
           <div
+            data-ds-tokens-root=""
             className={
               context.parameters.layout === "fullscreen"
                 ? "min-h-screen bg-background text-foreground"
@@ -87,6 +89,7 @@ const preview: Preview = {
             }
           >
             <Story />
+            <TokenReporter themeId={context.globals.theme} title={context.title} storyId={context.id} />
           </div>
       </ThemeProvider>
     ),

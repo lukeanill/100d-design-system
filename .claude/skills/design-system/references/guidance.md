@@ -8,11 +8,14 @@ Direction for the design system and for themes. Sources: `CLAUDE.md`, `docs/comp
 2. **Copy what already exists.** Find the closest built thing (the Themer in `apps/web/src/themer`, the homepage tiles in `apps/web/src/LinkTile.tsx`, `Showcase.tsx`, the Storybook stories) and match its structure, glass, header, spacing, motion and states. Do not invent a second version.
 3. **Never fake what the system provides.** No hand-drawn gradients, blurs, shadows, radii or colours standing in for a token, a glass weight (`GlassLayer`, `LiquidGlass`) or a component. Literal px only where the Figma specifies one and no token matches.
 4. **Say which you used.** Every report lists what was reused from the design system or existing work, and what was built new and why.
-5. **Figma is read-only** (full steps in `figma.md`). Read it in dev mode (its CSS and the `data-annotations`) and measure the build against the numbers (size, radius, padding, font weight). The user edits Figma; you change code to match.
+5. **Figma is read-only unless the user explicitly says to write** (full steps in `figma.md`). Read it in dev mode (its CSS and the `data-annotations`) and measure the build against the numbers (size, radius, padding, font weight). You change code to match Figma. You write to Figma only what the user explicitly says, after stating exactly what will change and getting a clear yes; add rather than overwrite or delete unless told to; report and check afterwards.
 6. **Do not reorder themes. Do not narrow the scope that was asked for.** Apply a change to everything asked, never silently to less.
 7. **Work from this repo only.** Sibling `100d` folders and `ds-bundle/` are stale.
 8. **Before saying done:** test in the browser, report what you did and did not check, and end by asking the user to QA with URLs and what to check. Do not ask "push to live?".
 9. **If a request is ambiguous, ask first and change nothing.**
+10. **Talk Figma and code, never Tailwind.** Describe every token as the Figma variable (collection, name, mode) and the code token (`--name`). Do not expose Tailwind class names, utilities or config to the user.
+11. **Check what a component uses in Storybook.** Every story has a **Tokens** panel (next to Controls). It lists each design token the component uses, with the Figma variable and mode, the code token, the live value, and what it styles. Tokens with no Figma variable say so. The map from code token to Figma variable is `figmaVariableFor` in `packages/ui/src/themes/figma-map.ts`, shared with the `/tokens` page.
+12. **Agreed exceptions live in one file.** Where a component deliberately does not use the token Figma maps to, the exception is recorded component by component in `packages/ui/src/themes/token-exceptions.ts` (keyed by the story title), with what differs, why, and the date it was agreed. The Tokens panel shows them under the component. Add one only after the design owner agrees to it; never add one to make a check pass.
 
 ## 2. Build rules for components
 

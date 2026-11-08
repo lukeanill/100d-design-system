@@ -14,7 +14,7 @@ Detail: `references/components/actions.md`
 |---|---|---|---|
 | Button | `components/button` | [story](https://ds.lukeai.space/storybook/?path=/story/components-actions-button--button) | History page (/history); Tokens page (/tokens) |
 | Command | `components/command` | [story](https://ds.lukeai.space/storybook/?path=/story/components-actions-command--command) | — |
-| Copy | `components/animate-ui/components/buttons/copy` | [story](https://ds.lukeai.space/storybook/?path=/story/components-actions-copy--copy) | — |
+| Copy | `components/animate-ui/components/buttons/copy` | [story](https://ds.lukeai.space/storybook/?path=/story/components-actions-copy--copy) | Homepage (/) |
 | Icon | `components/animate-ui/components/buttons/icon` | [story](https://ds.lukeai.space/storybook/?path=/story/components-actions-icon--icon) | — |
 | Option List | `components/ui/option-list` | [story](https://ds.lukeai.space/storybook/?path=/story/components-actions-option-list--option-list) | — |
 | Quick Reply | `components/ui/quick-reply` | [story](https://ds.lukeai.space/storybook/?path=/story/components-actions-quick-reply--quick-reply) | — |
@@ -173,7 +173,7 @@ Detail: `references/components/not-in-storybook.md`
 | management-bar | `components/animate-ui/components/community/management-bar` | — | — |
 | select | `components/select` | — | History page (/history) |
 | stat-card | `components/ai/stat-card` | — | — |
-| theme-provider | `components/theme-provider` | — | App shell (every page) |
+| theme-provider | `components/theme-provider` | — | Tokens page (/tokens); App shell (every page) |
 | themed-card | `components/themed-card` | — | — |
 | themed-icon | `components/themed-icon` | — | Homepage preview |
 | themed-surface | `components/themed-surface` | — | — |
@@ -204,7 +204,7 @@ Detail: `references/components/selects.md`
 | Checkbox | `components/animate-ui/components/base/checkbox` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-checkbox--checkbox) | — |
 | Combobox | `components/combobox` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-combobox--combobox) | — |
 | Date Time Picker | `components/ui/date-time-picker` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-date-time-picker--date-time-picker) | — |
-| Native Select | `components/native-select` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-native-select--native-select) | — |
+| Native Select | `components/native-select` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-native-select--native-select) | Tokens page (/tokens) |
 | Questionnaire | `components/questionnaire` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-questionnaire--questionnaire) | Themer preview: the Coeurdes Alpes product page |
 | Radio | `components/animate-ui/components/base/radio` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-radio--radio) | — |
 | Radio Group | `components/radio-group` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-radio-group--radio-group) | — |
