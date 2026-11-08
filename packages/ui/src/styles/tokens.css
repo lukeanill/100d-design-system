@@ -35,7 +35,7 @@
 @font-face {
   font-family: "PP Neue Montreal";
   src: url("./fonts/pp-neue-montreal-thin.woff2") format("woff2");
-  font-weight: 200;
+  font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
@@ -483,7 +483,7 @@
   /* body/xs/bold */
   .text-xs-bold {
     font-family: var(--font-body);
-    font-weight: 700;
+    font-weight: var(--font-body-weight-emphasis, 700);
     font-style: normal;
     font-size: var(--typescale-xs, 0.75rem);
     line-height: var(--font-body-line-height, 1.6);
@@ -503,7 +503,7 @@
   /* body/sm/bold */
   .text-sm-bold {
     font-family: var(--font-body);
-    font-weight: 700;
+    font-weight: var(--font-body-weight-emphasis, 700);
     font-style: normal;
     font-size: var(--typescale-sm, 0.875rem);
     line-height: var(--font-body-line-height, 1.6);
@@ -523,7 +523,7 @@
   /* body/md/bold */
   .text-md-bold {
     font-family: var(--font-body);
-    font-weight: 700;
+    font-weight: var(--font-body-weight-emphasis, 700);
     font-style: normal;
     font-size: var(--typescale-md, 1rem);
     line-height: var(--font-body-line-height, 1.6);
@@ -543,7 +543,7 @@
   /* body/lg/bold */
   .text-lg-bold {
     font-family: var(--font-body);
-    font-weight: 700;
+    font-weight: var(--font-body-weight-emphasis, 700);
     font-style: normal;
     font-size: var(--typescale-lg, 1.125rem);
     line-height: var(--font-body-line-height, 1.6);

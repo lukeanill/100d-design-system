@@ -138,6 +138,9 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 |---|---|---|---|
 | `index` | `number` | yes |  |
 | `option` | `Option` | yes |  |
+| `tapScale` | `number` | no |  |
+
+Also accepts the props of `@base-ui/react` and standard HTML attributes.
 
 **`OptionListOptions`**
 

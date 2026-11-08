@@ -82,7 +82,7 @@ describe("themeToCss", () => {
   })
 
   it("uses the Figma body faces for Fabrik and Savaya", () => {
-    expect(getPreset("fabrik")!.fonts.body).toMatchObject({ family: "PP Neue Montreal", weight: 200 })
+    expect(getPreset("fabrik")!.fonts.body).toMatchObject({ family: "PP Neue Montreal", weight: 100 })
     expect(getPreset("savaya")!.fonts.body).toMatchObject({ family: "Newsreader", weight: 400 })
   })
 
@@ -272,7 +272,7 @@ describe("font weights", () => {
   it("match the Figma font weight and letter-spacing variables for every theme", () => {
     // from the Figma `theme` collection: primary and secondary regular/emphasis, body regular/action
     const figma: Record<string, { primary: [number, number]; secondary: [number, number]; body: [number, number]; ls: { primary: number; secondary: number; body: number } }> = {
-      fabrik: { primary: [420, 320], secondary: [460, 640], body: [200, 400], ls: { primary: 0, secondary: 0, body: 0 } },
+      fabrik: { primary: [420, 320], secondary: [460, 640], body: [100, 400], ls: { primary: 0, secondary: 0, body: 0 } },
       illuzion: { primary: [400, 400], secondary: [400, 400], body: [450, 450], ls: { primary: 0, secondary: 0, body: 1 } },
       laroc: { primary: [700, 700], secondary: [700, 700], body: [400, 400], ls: { primary: 0, secondary: 0, body: 0 } },
       bootshaus: { primary: [800, 800], secondary: [800, 800], body: [500, 500], ls: { primary: -2, secondary: -2, body: 0 } },
@@ -408,3 +408,16 @@ describe("glass popups", () => {
     }
   })
 })
+
+describe("body emphasis weight", () => {
+  it("is Book (400) on Fabrik, whose regular is Thin (100), and the 700 it always was everywhere else", () => {
+    const decl = (id: string) => themeDeclarations(getPreset(id)!)
+    expect(decl("fabrik")).toContain("--font-body-weight: 100;")
+    expect(decl("fabrik")).toContain("--font-body-weight-emphasis: 400;")
+    for (const id of ["illuzion", "laroc", "bootshaus", "berghain", "savaya", "pacha", "amnesia", "ushuaia"]) {
+      expect(decl(id), id).toContain("--font-body-weight-emphasis: 700;")
+    }
+    expect(figmaVariableFor("font-body-weight-emphasis", getPreset("fabrik")!)).toEqual({ variable: "font/body/emphasis/weight", mode: "fabrik" })
+  })
+})
+

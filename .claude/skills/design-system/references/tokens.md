@@ -4,14 +4,14 @@
 
 A token is a CSS custom property. A theme's block (`.<id>`) sets most of them; `styles/tokens.css` sets the motion tokens and maps them to Tailwind (`@theme inline`), so `bg-primary`, `rounded-lg`, `shadow-md`, `text-md` all resolve through tokens. Values below are the default theme's (Berghain); `themes-resolved.md` has every theme's values. "Applied in" is sampled from component source: the three components that use the token most (not exhaustive).
 
-Counts: 185 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
+Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 
 ## Colour
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, gradient-background, kbd (+28) |
-| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, prompt-bar, streaming-text (+82) |
+| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, gradient-background, kbd (+27) |
+| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, prompt-bar, streaming-text (+81) |
 | `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | insight-cards, task-rows, alert (+23) |
 | `--card-image` | `none` | The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`. | Card |
 | `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
@@ -21,7 +21,7 @@ Counts: 185 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, map-carousel, theme-colors |
 | `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, copy, icon (+5) |
 | `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+3) |
-| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | insight-cards, navigation-menu, table (+45) |
+| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | insight-cards, navigation-menu, table (+44) |
 | `--muted-foreground` | `oklch(0.988 0.001 286.38 / 65%)` | Foreground at 65% opacity for quiet text. | day-timeline |
 | `--accent` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | dropdown-menu, context-menu, menubar (+10) |
 | `--accent-foreground` | `var(--secondary-foreground)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | ripple |
@@ -78,6 +78,7 @@ Counts: 185 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--font-body-token` | `'Akkurat LL TT', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. `font-heading`, `font-sans`, `font-serif` alias these. | `font-heading`, `font-sans`, `font-serif` Tailwind classes |
 | `--font-body-weight` | `200` | Weight of body text. | `text-md`, `text-sm`, … |
 | `--font-body-weight-action` | `400` | Weight of text inside buttons (Figma font/body/action/weight). | button |
+| `--font-body-weight-emphasis` | `700` | Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 700 on every other theme. | `text-*-bold` |
 | `--font-primary-weight-regular` | `200` | Weight of the display (primary) face: regular / emphasis. | headings and `text-h*-pri`, `text-h*-pri-bold` |
 | `--font-primary-weight-emphasis` | `800` | Weight of the display (primary) face: regular / emphasis. | headings and `text-h*-pri`, `text-h*-pri-bold` |
 | `--font-primary-letter-spacing` | `0em` | Letter spacing of the display face, in em. | h1–h6 |
@@ -108,7 +109,7 @@ Counts: 185 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | `text-md`, `text-h1-pri` |
 | `--text-xs` | `var(--typescale-xs)` | Tailwind text size mapped to a typescale step, with its line height. | map-carousel, message-bubble, sidebar (+27) |
 | `--text-xs--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
-| `--text-sm` | `var(--typescale-sm)` | Tailwind text size mapped to a typescale step, with its line height. | date-time-picker, map-carousel, menu (+54) |
+| `--text-sm` | `var(--typescale-sm)` | Tailwind text size mapped to a typescale step, with its line height. | date-time-picker, map-carousel, menu (+53) |
 | `--text-sm--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
 | `--text-base` | `var(--typescale-md)` | Tailwind text size mapped to a typescale step, with its line height. | questionnaire, date-time-picker, morphing-discovery-bar (+6) |
 | `--text-base--line-height` | `var(--font-body-line-height)` | Tailwind text size mapped to a typescale step, with its line height. | `text-sm`, `text-2xl` |
@@ -186,8 +187,8 @@ Counts: 185 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | `transition-timing-function: var(--motion-ease)` |
 | `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | selection-actions, navigation-menu, thinking-state (+15) |
 | `--motion-spring-bounce` | `0` | Bounce of the Springy choice (0 for the others). | `useThemeSpring()` |
-| `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | prompt-bar, streaming-text, date-time-picker (+56) |
-| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | sidebar, prompt-bar, map-carousel (+50) |
+| `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | prompt-bar, streaming-text, date-time-picker (+55) |
+| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | sidebar, prompt-bar, map-carousel (+49) |
 
 ## Glass
 
@@ -197,6 +198,27 @@ Counts: 185 custom properties, 47 token-backed classes (`text-*`, `glass-*`).
 | `--glass-card-blur` | `64px` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-card-saturate` | `180%` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-card-surface` | `color-mix(in oklab, color-mix(in oklab, var(--card) 90%, oklch(0 0 …` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-surface` | `transparent` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-blur` | `40px` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-saturate` | `100%` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-refraction` | `1` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-refraction-blur` | `14` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-refraction-bezel` | `28` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-refraction-thickness` | `40` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-refraction-scale` | `1` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-refraction-specular` | `0.3` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-surface` | `transparent` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-blur` | `40px` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-saturate` | `100%` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-refraction` | `1` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-refraction-blur` | `14` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-refraction-bezel` | `28` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-refraction-thickness` | `40` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-refraction-scale` | `1` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-refraction-specular` | `0.3` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-popup-border` | `transparent` | Resolved glass values on a surface (set per element by the group class). | .glass-surface |
+| `--glass-popup-color` | `var(--foreground)` | Resolved glass values on a surface (set per element by the group class). | .glass-surface |
+| `--glass-popup-shadow` | `0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / …` | Resolved glass values on a surface (set per element by the group class). | .glass-surface |
 
 ## Theme settings (metadata)
 

@@ -19,7 +19,7 @@ export const FONT_CHOICES: FontChoice[] = [
   b("Folio Std", "sans", [700]),
   b("DentonVariable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900], [100, 900]),
   b("Denton Italic Variable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900], [100, 900]),
-  b("PP Neue Montreal", "sans", [200, 400, 500, 600, 700]),
+  b("PP Neue Montreal", "sans", [100, 400, 500, 600, 700]),
   b("General Sans Variable", "sans", [200, 300, 400, 500, 600, 700], [200, 700]),
   b("ITC Garamond Std", "serif", [800]),
   b("PP Editorial New", "serif", [400]),

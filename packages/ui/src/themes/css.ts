@@ -151,6 +151,8 @@ export function themeDeclarations(theme: Theme): string[] {
   set("font-body-weight", String(fonts.body.weight))
   // the Figma font/primary, font/secondary and font/body/action weights: the text classes and the buttons read these
   set("font-body-weight-action", String(fonts.body.actionWeight ?? fonts.body.weight))
+  // the Figma font/body/emphasis/weight: bold body text. Every theme but Fabrik keeps the 700 it always had
+  set("font-body-weight-emphasis", String(fonts.body.emphasis ?? 700))
   set("font-primary-weight-regular", String(fonts.display.weight))
   set("font-primary-weight-emphasis", String(fonts.display.emphasis ?? fonts.display.weight))
   set("font-primary-letter-spacing", `${(fonts.display.letterSpacing ?? 0) / 100}em`)

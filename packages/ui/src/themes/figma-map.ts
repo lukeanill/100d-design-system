@@ -37,6 +37,7 @@ const FONT_VARIABLES: Record<string, string> = {
   "font-body-weight": "font/body/regular/weight",
   "font-body-letter-spacing": "font/body/regular/letter-spacing",
   "font-body-weight-action": "font/body/action/weight",
+  "font-body-weight-emphasis": "font/body/emphasis/weight",
 }
 
 /** The theme settings: the CSS custom property, the Figma setting. */

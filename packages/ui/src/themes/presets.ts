@@ -31,7 +31,7 @@ export const presets: Theme[] = [
     },
     fonts: {
       display: { family: "DentonVariable Test", weight: 420, emphasis: 320 },
-      body: { family: "PP Neue Montreal", weight: 200, actionWeight: 400 },
+      body: { family: "PP Neue Montreal", weight: 100, emphasis: 400, actionWeight: 400 },
       secondary: { family: "Denton Italic Variable Test", weight: 460, emphasis: 640 },
     },
     scale: "sm", spacing: "lg", radius: "strong", shadow: "strong", material: "glass", motion: "springy", uiColor: "modern",
