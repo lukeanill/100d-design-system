@@ -3,7 +3,7 @@ import { GLASS_EDGE, LiquidGlass, glassProps, glassTones, glassWeights, type Gla
 
 /**
  * The glass sheet from the Figma file (100DS, "Glass"): three weights (Soft,
- * Medium, Heavy) across four tones (Clear, Light, Dark, Tinted).
+ * Medium, Heavy) across three tones (Clear, Light, Dark).
  *
  * Each tile is a refraction glass (see liquid-glass.tsx): an SVG displacement
  * filter bends the background along the rim and a specular highlight catches
@@ -41,7 +41,7 @@ export const Glass = ({ edge }: { edge: number }) => (
       position: "relative",
       isolation: "isolate",
       display: "grid",
-      gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+      gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
       gap: "24px clamp(12px, 4.8vw, 80px)",
       alignContent: "center",
       minHeight: "100vh",

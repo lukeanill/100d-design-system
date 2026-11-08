@@ -157,7 +157,7 @@ function ShareIconGroup({
           y: -8,
           transition: fast,
         }}
-        className="group-hover:opacity-100 cursor-pointer py-3 rounded-lg box-border"
+        className="group-hover:opacity-100 cursor-pointer py-3 rounded-(--radius-button) box-border"
         onClick={(event) => handleIconClick('github', event)}
       >
         <GithubLogo size={iconSize} />
@@ -170,7 +170,7 @@ function ShareIconGroup({
           y: -8,
           transition: fast,
         }}
-        className="group-hover:opacity-100 cursor-pointer py-3 rounded-lg box-border"
+        className="group-hover:opacity-100 cursor-pointer py-3 rounded-(--radius-button) box-border"
         onClick={(event) => handleIconClick('x', event)}
       >
         <XLogo size={iconSize} />
@@ -183,7 +183,7 @@ function ShareIconGroup({
           y: -8,
           transition: fast,
         }}
-        className="group-hover:opacity-100 cursor-pointer py-3 rounded-lg box-border"
+        className="group-hover:opacity-100 cursor-pointer py-3 rounded-(--radius-button) box-border"
         onClick={(event) => handleIconClick('facebook', event)}
       >
         <FacebookLogo size={iconSize} />

@@ -33,7 +33,7 @@ function ToggleGroup({
       data-variant={variant}
       data-size={size}
       className={cn(
-        'group/toggle-group flex gap-0.5 w-fit items-center rounded-lg data-[variant=outline]:shadow-xs data-[variant=outline]:border data-[variant=outline]:p-0.5',
+        'group/toggle-group flex gap-0.5 w-fit items-center rounded-(--radius-button) data-[variant=outline]:shadow-xs data-[variant=outline]:border data-[variant=outline]:p-0.5',
         className,
       )}
       multiple={multiple}
@@ -41,7 +41,7 @@ function ToggleGroup({
     >
       <ToggleGroupProvider value={{ variant, size }}>
         {!multiple ? (
-          <ToggleGroupHighlightPrimitive className="bg-foreground rounded-md">
+          <ToggleGroupHighlightPrimitive className="bg-foreground rounded-(--radius-button)">
             {children}
           </ToggleGroupHighlightPrimitive>
         ) : (
@@ -61,7 +61,7 @@ function Toggle({ className, children, variant, size, ...props }: ToggleProps) {
   return (
     <ToggleHighlightPrimitive
       value={props.value?.toString()}
-      className={cn(multiple && 'bg-foreground rounded-md')}
+      className={cn(multiple && 'bg-foreground rounded-(--radius-button)')}
     >
       <TogglePrimitive
         data-variant={contextVariant || variant}
@@ -71,7 +71,7 @@ function Toggle({ className, children, variant, size, ...props }: ToggleProps) {
             variant: contextVariant || variant,
             size: contextSize || size,
           }),
-          'min-w-0 border-0 flex-1 shrink-0 shadow-none rounded-md focus:z-10 focus-visible:z-10',
+          'min-w-0 border-0 flex-1 shrink-0 shadow-none rounded-(--radius-button) focus:z-10 focus-visible:z-10',
           className,
         )}
         {...props}

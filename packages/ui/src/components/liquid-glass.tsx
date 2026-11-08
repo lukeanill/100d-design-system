@@ -143,13 +143,13 @@ export function LiquidGlass({
 
 /**
  * The Glass sheet's weights and tones (Figma "Glass": Soft, Medium, Heavy across
- * Clear, Light, Dark, Tinted). Everything that wants the design system's glass
+ * Clear, Light, Dark). Everything that wants the design system's glass
  * asks for one of these rather than choosing its own blur.
  */
 const WEIGHTS = {
-  soft: { blur: 1, bezel: 12, thickness: 20, scaleRatio: 0.5, specularOpacity: 0.8, fallbackBlur: 2, fill: 0.32, light: 0.16, dark: 0.4 },
-  medium: { blur: 5, bezel: 30, thickness: 60, scaleRatio: 0.6, specularOpacity: 0.8, fallbackBlur: 10, fill: 0.4, light: 0.24, dark: 0.48 },
-  heavy: { blur: 14, bezel: 28, thickness: 40, scaleRatio: 1, specularOpacity: 0.5, fallbackBlur: 40, fill: 0.48, light: 0.32, dark: 0.48 },
+  soft: { blur: 1, bezel: 12, thickness: 20, scaleRatio: 0.5, specularOpacity: 0.8, fallbackBlur: 2, light: 0.16, dark: 0.4 },
+  medium: { blur: 5, bezel: 30, thickness: 60, scaleRatio: 0.6, specularOpacity: 0.8, fallbackBlur: 10, light: 0.24, dark: 0.48 },
+  heavy: { blur: 14, bezel: 28, thickness: 40, scaleRatio: 1, specularOpacity: 0.5, fallbackBlur: 40, light: 0.32, dark: 0.48 },
 }
 
 export type GlassWeight = keyof typeof WEIGHTS
@@ -159,8 +159,6 @@ const TONES = {
   clear: () => undefined,
   light: (w: WeightValues) => `rgba(255, 255, 255, ${w.light})`,
   dark: (w: WeightValues) => `rgba(0, 0, 0, ${w.dark})`,
-  tinted: (w: WeightValues) =>
-    `linear-gradient(162deg, rgba(50, 205, 216, ${w.fill}) 42.7%, rgba(21, 61, 155, ${w.fill}) 93.1%)`,
 }
 
 export type GlassTone = keyof typeof TONES

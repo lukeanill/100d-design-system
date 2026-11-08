@@ -33,7 +33,7 @@ function NativeSelect({
         className={
           themed
             ? "text-md h-9 w-full min-w-0 cursor-pointer appearance-none rounded-[inherit] border-0 bg-transparent py-1 pr-7 pl-2 text-inherit outline-none select-none disabled:pointer-events-none disabled:cursor-not-allowed"
-            : "h-9 w-full min-w-0 appearance-none rounded-(--radius) border border-foreground bg-transparent py-2 pr-8 pl-3 text-sm transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-foreground hover:bg-muted focus-visible:border-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 data-[size=sm]:h-8 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40"
+            : "h-9 w-full min-w-0 appearance-none rounded-(--radius-button) border border-foreground bg-transparent py-2 pr-8 pl-3 text-sm transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-foreground hover:bg-muted focus-visible:border-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 data-[size=sm]:h-8 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40"
         }
         {...props}
       />

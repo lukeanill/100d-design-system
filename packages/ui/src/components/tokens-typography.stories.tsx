@@ -59,7 +59,7 @@ function Specimen({ label, token, name }: { label: string; token: string; name: 
       {isBody ? (
         <div style={{ ...family, display: "flex", flexDirection: "column", gap: 16, maxWidth: 505 }}>
           {BODY_STYLES.map((b) => (
-            <div key={b.label} className={b.className} style={{ lineHeight: 1.6 }}>
+            <div key={b.label} className={b.className} style={{ lineHeight: "var(--font-body-line-height)" }}>
               <p style={{ margin: 0 }}>{b.label}</p>
               <p style={{ margin: 0 }}>The quick brown fox jumped over the lazy dog.</p>
             </div>
