@@ -49,9 +49,9 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 **States (7.x)** One hover formula for every texture: light mode adds `alpha-dark-sm` over the background, dark mode adds `alpha-light-sm` (`--control-hover`). A hover, focus or press changes only the background layer, never text, icon, border or shadow colour.
 
-**Motion (8.x)** Use only the `Timing` set (`instant fast faster long longer longest`); a hover or press is `fast`. The theme's `motion` supplies the easing; `motion=none` is `instant`. In code: CSS `duration-(--motion-fast) ease-(--motion-transition-ease)`, or `useThemeTransition()` / `useThemeSpring()` for the `motion` library. A component whose animation is its identity (metal) keeps its own timing.
+**Motion (8.x)** Use only the `Timing` set (`instant fast faster long longer longest`); a hover or press is `fast`. The theme's `motion` supplies the easing; `motion=none` is `instant`. In code: CSS `duration-(--motion-fast) ease-(--motion-transition-ease)`, or `useThemeTransition()` / `useThemeSpring()` for the `motion` library. A component whose animation is its identity (metal) keeps its own timing. We follow Material Design's motion principles (purposeful, quick, responsive) but never override the design system with them: the timing set, the theme's easing and the motion tokens always win.
 
-**Shadow (9.x)** `shadow-*` tokens only, at the theme's strength. A popup sits one level above the component that opens it (xs → sm).
+**Shadow (9.x)** `shadow-*` tokens only, at the theme's strength. A popup sits one level above the component that opens it (xs → sm). We follow Material Design's elevation principles (higher means closer to the user) but never override the design system with them: the shadow tokens at the theme's strength always win.
 
 **Sizing (10.x)** Core interactive components (button, input, select, nav) have a minimum height and width from the `size-controls/interactive-component` tokens; height is a minimum and grows with content. Inside another component the `component-within-component` minimums apply. Figma size tokens are mirrored in `docs/figma-size-tokens.json`.
 
