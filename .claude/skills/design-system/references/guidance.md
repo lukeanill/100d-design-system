@@ -55,7 +55,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 **Shadow (9.x)** `shadow-*` tokens only, at the theme's strength. A popup sits one level above the component that opens it (xs → sm). We follow Material Design's elevation principles (higher means closer to the user) but never override the design system with them: the shadow tokens at the theme's strength always win. Shadow follows the element's role, one step higher for each layer above the page: tag and button `shadow-xs`, card `shadow-sm`, fixed header and footer `shadow-md`, drawer `shadow-lg`.
 
-**Sizing (10.x)** Core interactive components (button, input, select, nav) have a minimum height and width from the `size-controls/interactive-component` tokens; height is a minimum and grows with content. Inside another component the `component-within-component` minimums apply. Figma size tokens are mirrored in `docs/figma-size-tokens.json`.
+**Sizing (10.x)** Core interactive components are Button, Icon, Copy, Share Button, Toggle, Toggle Group and Quick Reply (actions); Input, Amount Input, Textarea and Input Otp (inputs); Native Select, Combobox, Checkbox, Radio, Switch, Slider and Tag Select (selects); Discrete Tabs, Fluid Tabs, Pagination and Menubar (navigation). They have a minimum height and width from the `size-controls/interactive-component` tokens; height is a minimum and grows with content. Inside another component the `component-within-component` minimums apply. Figma size tokens are mirrored in `docs/figma-size-tokens.json`.
 
 **Popups (11.x)** Padding at least `spacing/padding/sm`, even. Corner is the card corner (`radius-md`), never the pill. Fill is the component's fill plus `alpha-dark-sm`; on glass there is no wash and the glass goes up one weight (Soft → Medium → Heavy). Backdrop blur is `--popup-blur` (40px under 1200px wide, 120px above). Opens at `Timing/faster`, closes at `Timing/fast`. A native select's dropdown is the browser's and keeps only the themed chip.
 
@@ -93,7 +93,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 ## 4. Open questions in the source guidance
 
-These are `?` points in the theming guidelines with no answer yet. Do not guess them; ask Luke: 7.1.3 (is the hover wash a shared token for every component), 8.1.4 (timing for the nav-bar pill), 10.1.4 (what else counts as a core interactive component), 11.1.4 (token for minimum popup width), 11.2.4 (Medium vs Heavy glass in popups).
+These are `?` points in the theming guidelines with no answer yet. Do not guess them; ask Luke: 7.1.3 (is the hover wash a shared token for every component), 8.1.4 (timing for the nav-bar pill), 11.1.4 (token for minimum popup width), 11.2.4 (Medium vs Heavy glass in popups).
 
 ## 5. Known gaps
 
