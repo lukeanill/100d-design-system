@@ -68,7 +68,25 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 - A theme is: palette (7 colours + 5 charts), three font roles, six settings (scale, spacing, radius, shadow, material, motion), icons, feel, and the four UX-direction answers. Foreground can be left empty and is worked out from the background.
 - Card surface follows `color-mode`: solid = background 20% toward white/black; gradient = 10%→20%; glass = card equals background with a tinted blur.
 - Component Animations: Ease = ease-out, 0.8s; Emphatic = ease-in-out, 0.4s; Springy = spring, bounce 0.7; None = instant. Page-transition speeds: Fast 0.4s, Medium 0.8s, Slow 1.2s.
-- UX direction (the four `values`) guides copy and flow, not looks: Guided vs Exploratory, Automated vs In control, Simple vs Powerful, Casual vs Professional. Every preset answers "a" to all four today.
+- **UX direction (the four `values`).** Each theme answers four a/b questions. They steer your decisions when you design or build: what to show, what to automate, how much to expose, how to write. They do not change how it looks (that is the palette, fonts and settings). Read the theme's answers first (`values` in `presets.ts`, or the header of a Themer download, which spells them out), then apply them to every screen, flow and piece of copy. Every preset answers "a" to all four today.
+  1. **Navigation: Guided (a) or Exploratory (b).**
+     - Guided: one clear next step on each screen, steps in a fixed order with progress shown, a single primary action, defaults chosen for the person, onboarding and hints, few ways to wander off. Prefer wizards, stepped forms and "continue" over open menus.
+     - Exploratory: open layouts, browsing, search and filters, shortcuts and several ways in, no forced order, people can jump anywhere and come back. Prefer hubs, galleries and rich navigation over a fixed path.
+  2. **Decisions: Automated (a) or In control (b).**
+     - Automated: pick sensible defaults, pre-fill, suggest the next action, do the work and show the result with an easy undo. Ask only when the answer cannot be guessed. Fewer confirmations.
+     - In control: show the options and let the person choose, confirm before anything that changes data, expose settings and manual overrides, make every automatic action visible and reversible, never act silently.
+  3. **Density: Simple (a) or Powerful (b).**
+     - Simple: show only what is needed now, hide the rest behind progressive disclosure, few controls per screen, short forms, one task at a time, plenty of whitespace.
+     - Powerful: expose the full set of options and information within reach, denser layouts, advanced settings, bulk actions, keyboard shortcuts, tables and detail views.
+  4. **Voice: Casual (a) or Professional (b).**
+     - Casual: friendly, plain words, contractions, short sentences, warm empty states and error messages, the odd bit of personality.
+     - Professional: direct and to the point, neutral, precise terms, no jokes or filler, errors state what happened and what to do next.
+  5. **How to apply them.**
+     - They decide structure, defaults, flow and copy, so apply them when you choose a layout, the number of steps, what is pre-filled, what needs confirming, and every label, message and empty state.
+     - They never override the design system: no new colours, fonts, spacing or components because of a value. Use existing components and tokens to express them (for example, Exploratory still uses the same Navigation components, arranged differently).
+     - Where two values pull against each other (Automated with Powerful, for example), follow each in its own area: automate the routine, expose the options behind it.
+     - When a request conflicts with a value, or the answers are missing, say which value applies and what you chose, and ask if it matters. Do not quietly pick the opposite.
+     - In reports, name which answers you applied and where.
 - Fonts: bundled faces are in `packages/ui/src/styles/fonts`; the rest load from Google Fonts. Swear Display Demo (Amnesia) is a demo face: check its licence before shipping.
 
 ## 4. Open questions in the source guidance
