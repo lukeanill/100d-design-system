@@ -10,7 +10,7 @@ Every CSS custom property `themeToCss()` writes, per theme. Use this to answer "
 color-scheme: light;
 --font-primary: 'DentonVariable Test', ui-sans-serif, system-ui, sans-serif;
 --font-body-token: 'PP Neue Montreal', ui-sans-serif, system-ui, sans-serif;
---font-body-weight: 100;
+--font-body-weight: 300;
 --font-body-weight-action: 400;
 --font-body-weight-emphasis: 400;
 --font-primary-weight-regular: 420;

@@ -29,7 +29,7 @@ Versions are the ranges in `package.json` at the time of writing; read the file 
 | Validation | zod 4 |
 | Colour | oklch throughout; hex palettes are converted by `themes/color.ts` |
 | Fonts | `@fontsource` (Inter, Bricolage Grotesque, Fira Code) and bundled `@font-face` files in `packages/ui/src/styles/fonts`; theme faces not bundled load from Google Fonts |
-| Routing (web app) | react-router 8 (`/`, `/themes`, `/tokens`, `/history`) |
+| Routing (web app) | react-router 8 (`/`, `/themes`, `/history`) |
 
 ## Packaging and hosting
 

@@ -30,7 +30,7 @@ There are **9 themes** (presets), in this order (never reorder them): Fabrik, Il
 
 | Theme | id | Mode | Material | Radius | Shadow | Spacing | Scale | Motion | Display font | Body font | Secondary font |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Fabrik | `fabrik` | light | glass | strong | strong | lg | sm | springy | DentonVariable Test 420/320 | PP Neue Montreal 100/400 | Denton Italic Variable Test 460/640 |
+| Fabrik | `fabrik` | light | glass | strong | strong | lg | sm | springy | DentonVariable Test 420/320 | PP Neue Montreal 300/400 | Denton Italic Variable Test 460/640 |
 | Illuzion | `illuzion` | light | solid | strong | none | md | lg | ease | Intan 400 | General Sans Variable 450 | Intan 400 |
 | Laroc | `laroc` | dark | solid | rounded | none | md | sm | none | GT Pressura Mono Trial 700 | Archivo 400 | GT Pressura Mono Trial 700 |
 | Bootshaus | `bootshaus` | dark | glass | strong | strong | md | lg | ease | ITC Garamond Std 800 | Inter 500 | ITC Garamond Std 800 |
@@ -80,7 +80,7 @@ Each theme names one mode (its `ui-color` setting). The mode sets the status and
 
 | Theme | Display | Body (line-height %, letter-spacing %, action weight) | Secondary |
 |---|---|---|---|
-| Fabrik | DentonVariable Test 420/320 | PP Neue Montreal 100, lh 142, ls 0, action 400 | Denton Italic Variable Test 460/640 |
+| Fabrik | DentonVariable Test 420/320 | PP Neue Montreal 300, lh 142, ls 0, action 400 | Denton Italic Variable Test 460/640 |
 | Illuzion | Intan 400 | General Sans Variable 450, lh 142, ls 1, action 450 | Intan 400 |
 | Laroc | GT Pressura Mono Trial 700 | Archivo 400, lh 142, ls 0, action 400 | GT Pressura Mono Trial 700 |
 | Bootshaus | ITC Garamond Std 800, ls -2% | Inter 500, lh 142, ls 0, action 500 | ITC Garamond Std 800 |

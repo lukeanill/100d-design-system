@@ -115,7 +115,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 - File: `packages/ui/src/components/separator.tsx`
 - Import: `@workspace/ui/components/separator`
 - Storybook: [Components/Layout/Separator](https://ds.lukeai.space/storybook/?path=/story/components-layout-separator--separator)
-- Used in the web app: Tokens page (/tokens)
+- Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: button-group, field, item, sidebar
 
 _No props of its own._

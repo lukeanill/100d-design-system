@@ -183,7 +183,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 - File: `packages/ui/src/components/native-select.tsx`
 - Import: `@workspace/ui/components/native-select`
 - Storybook: [Components/Selects/Native Select](https://ds.lukeai.space/storybook/?path=/story/components-selects-native-select--native-select)
-- Used in the web app: Tokens page (/tokens)
+- Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: stat-card
 
 **`NativeSelect`**

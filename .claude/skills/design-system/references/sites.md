@@ -6,7 +6,7 @@ What is verified from this repo, and what is not.
 
 | Site / surface | Where | Notes |
 |---|---|---|
-| **Design system site** | https://ds.lukeai.space (`apps/web`) | Homepage `/` (always Berghain), Themer `/themes`, Tokens `/tokens`, History `/history`. Source in `apps/web/src`. |
+| **Design system site** | https://ds.lukeai.space (`apps/web`) | Homepage `/` (always Berghain), Themer `/themes`, History `/history`. Source in `apps/web/src`. |
 | **Storybook** | https://ds.lukeai.space/storybook/ (dev: http://localhost:6006) | Every component and animation story; theme switcher in the toolbar. |
 | **Themer product preview: "Coeurdes Alpes"** | `apps/web/src/themer/ProductPreview.tsx` | A product page drawn with the real components at half size, reading the draft theme. The best "in context" example of the whole system. |
 | **Homepage tiles and install drawer** | `apps/web/src/Showcase.tsx`, `LinkTile.tsx` | LinkTile + Popover + GlassLayer; Drawer for the install panel. |

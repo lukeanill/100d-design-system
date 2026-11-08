@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router"
 
 import "@workspace/ui/globals.css"
 import { History } from "./History.tsx"
-import { Tokens } from "./Tokens.tsx"
 import { Showcase } from "./Showcase.tsx"
 import { Themer } from "./themer/Themer"
 import { ThemeProvider } from "@workspace/ui/components/theme-provider"
@@ -25,7 +24,6 @@ function AppRoutes() {
       <Routes location={location}>
         <Route path="/" element={<Showcase />} />
         <Route path="/history" element={<History />} />
-        <Route path="/tokens" element={<Tokens />} />
         <Route path="/themes" element={<Themer />} />
       </Routes>
     </ThemePageTransition>
