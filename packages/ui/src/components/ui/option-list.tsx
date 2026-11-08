@@ -56,8 +56,8 @@ export interface OptionListProps extends ComponentProps<"div"> {
 }
 
 interface OptionListItemProps extends Omit<
-  ComponentProps<"button">,
-  "onClick"
+  ComponentProps<typeof Button>,
+  "onClick" | "variant" | "size"
 > {
   index: number;
   option: Option;
@@ -89,18 +89,14 @@ export const OptionListItem = ({
   const selected = isSelected(index);
 
   return (
-    <button
-      className={cn(
-        "inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) sm:gap-2 sm:px-3 sm:py-1.5 sm:text-sm",
-        selected
-          ? "border-foreground bg-foreground text-background"
-          : "border-foreground bg-transparent hover:bg-muted",
-        option.disabled && "!cursor-not-allowed opacity-50",
-        className
-      )}
+    // A chosen option is the Button's default look; a free one is its outline look.
+    <Button
+      className={className}
       disabled={option.disabled}
       onClick={() => select(option, index)}
+      size="sm"
       type="button"
+      variant={selected ? "default" : "outline"}
       {...props}
     >
       {children ?? (
@@ -111,7 +107,7 @@ export const OptionListItem = ({
             <span
               className={cn(
                 "text-xs",
-                selected ? "text-background/70" : "text-foreground/75"
+                selected ? "text-primary-foreground/70" : "text-muted-foreground"
               )}
             >
               · {option.description}
@@ -120,7 +116,7 @@ export const OptionListItem = ({
           {selected && multiple && <Check className="size-3 sm:size-3.5" />}
         </>
       )}
-    </button>
+    </Button>
   );
 };
 
