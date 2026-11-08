@@ -49,7 +49,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 - 5.1.1 A core interactive component's padding is at least the Figma `min-padding/component` token and always an even number. 5.1.2 An input inside a component has double that padding at the sides. 5.1.3 Card padding is `size-controls/card/padding/padding-md`.
 - 5.1.4 The theme `spacing` setting drives layout between components only; component padding stays fixed, so a control is the same size in every theme.
 
-**States (7.x)** One hover formula for every texture: light mode adds `alpha-dark-sm` over the background, dark mode adds `alpha-light-sm` (`--control-hover`). A hover, focus or press changes only the background layer, never text, icon, border or shadow colour.
+**States (7.x)** The default hover halves the opacity of the element's background. An element with no background fades as a whole. On an element with a background, a hover never changes text, icon, border or shadow colour. Prompt Bar, Streaming Text, Fluid Tabs, Morphing Discovery Bar, Control Button, Metal Surface, Native Select and Questionnaire keep the alpha wash instead: light mode adds `alpha-dark-sm` over the background and dark mode adds `alpha-light-sm` (`--control-hover`). Focus and press change only the background layer.
 
 **Motion (8.x)** Use only the `Timing` set (`instant fast faster long longer longest`); a hover or press is `fast`. The theme's `motion` supplies the easing; `motion=none` is `instant`. In code: CSS `duration-(--motion-fast) ease-(--motion-transition-ease)`, or `useThemeTransition()` / `useThemeSpring()` for the `motion` library. A component whose animation is its identity (metal) keeps its own timing. We follow Material Design's motion principles (purposeful, quick, responsive) but never override the design system with them: the timing set, the theme's easing and the motion tokens always win.
 
@@ -57,7 +57,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 **Sizing (10.x)** Core interactive components are Button, Icon, Copy, Share Button, Toggle, Toggle Group and Quick Reply (actions); Input, Amount Input, Textarea and Input Otp (inputs); Native Select, Combobox, Checkbox, Radio, Switch, Slider and Tag Select (selects); Discrete Tabs, Fluid Tabs, Pagination and Menubar (navigation). They have a minimum height and width from the `size-controls/interactive-component` tokens; height is a minimum and grows with content. Inside another component the `component-within-component` minimums apply. Figma size tokens are mirrored in `docs/figma-size-tokens.json`.
 
-**Popups (11.x)** Padding at least `spacing/padding/sm`, even. Corner is the card corner (`radius-md`), never the pill. Fill is the component's fill plus `alpha-dark-sm`; on glass there is no wash and the glass goes up one weight (Soft → Medium → Heavy). Backdrop blur is `--popup-blur` (40px under 1200px wide, 120px above). Opens at `Timing/faster`, closes at `Timing/fast`. A native select's dropdown is the browser's and keeps only the themed chip.
+**Popups (11.x)** Padding at least `spacing/padding/sm`, even. Corner is the card corner (`radius-md`), never the pill. Fill is the component's fill plus `alpha-dark-sm`; on glass there is no wash and a popup uses Heavy glass. There is no token for a popup's minimum width. Don't invent one or use a hand-written value. Backdrop blur is `--popup-blur` (40px under 1200px wide, 120px above). Opens at `Timing/faster`, closes at `Timing/fast`. A native select's dropdown is the browser's and keeps only the themed chip.
 
 **Metal (12.x)** On a light mode the ring sits on a darker line (`alpha-dark-xs`); the fill under the effect is translucent, never solid white; the effect shows and animates on every metal control, and metal controls shown together are the same height.
 
@@ -93,7 +93,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 ## 4. Open questions in the source guidance
 
-These are `?` points in the theming guidelines with no answer yet. Do not guess them; ask Luke: 7.1.3 (is the hover wash a shared token for every component), 8.1.4 (timing for the nav-bar pill), 11.1.4 (token for minimum popup width), 11.2.4 (Medium vs Heavy glass in popups).
+These are `?` points in the theming guidelines with no answer yet. Do not guess them; ask Luke: 8.1.4 (timing for the nav-bar pill).
 
 ## 5. Known gaps
 
