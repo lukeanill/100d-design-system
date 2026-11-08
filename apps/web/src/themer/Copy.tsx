@@ -62,7 +62,7 @@ function Preview({ theme }: { theme: Theme }) {
         ))}
       </dl>
       <div className="grid items-start gap-6 border-b py-8 sm:grid-cols-[1.1fr_1.5fr]" style={rule}>
-        <p className="text-[56px] leading-none" style={{ fontFamily: "var(--font-primary)", fontWeight: "var(--h1-weight)", color: p.primaryForeground === p.background ? "var(--primary)" : "var(--primary-foreground)" }}>
+        <p className="text-[56px] leading-none" style={{ fontFamily: "var(--font-primary)", fontWeight: "var(--h1-weight)", color: "var(--foreground)" }}>
           {specimenOf(theme).heading}
         </p>
         <p className="text-sm" style={{ fontFamily: "var(--font-body-token)", fontWeight: "var(--font-body-weight)" }}>
@@ -121,7 +121,7 @@ export function Copy({
                   ? {
                       ...themeStyle(t),
                       background: "var(--background)",
-                      color: t.palette.primaryForeground === t.palette.background ? "var(--primary)" : "var(--primary-foreground)",
+                      color: "var(--foreground)",
                       fontFamily: "var(--font-primary)",
                       fontWeight: "var(--h1-weight)",
                     }
