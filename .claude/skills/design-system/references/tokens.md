@@ -78,7 +78,7 @@ Counts: 207 custom properties, 49 token-backed classes (`text-*`, `glass-*`).
 | `--font-body-token` | `'Akkurat LL TT', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. `font-heading`, `font-sans`, `font-serif` alias these. | `font-heading`, `font-sans`, `font-serif` Tailwind classes |
 | `--font-body-weight` | `200` | Weight of body text. | `text-md`, `text-sm`, … |
 | `--font-body-weight-action` | `400` | Weight of text inside buttons (Figma font/body/action/weight). | button |
-| `--font-body-weight-emphasis` | `700` | Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 700 on every other theme. | `text-*-bold` |
+| `--font-body-weight-emphasis` | `600` | Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme. | `text-*-bold` |
 | `--font-primary-weight-regular` | `200` | Weight of the display (primary) face: regular / emphasis. | headings and `text-h*-pri`, `text-h*-pri-bold` |
 | `--font-primary-weight-emphasis` | `800` | Weight of the display (primary) face: regular / emphasis. | headings and `text-h*-pri`, `text-h*-pri-bold` |
 | `--font-primary-letter-spacing` | `0em` | Letter spacing of the display face, in em. | h1–h6 |

@@ -55,6 +55,9 @@ function shadowTokens(level: Shadow): Record<string, string> {
 const HEAVY = { blur: 14, bezel: 28, thickness: 40, scale: 1, specular: 0.5, fallbackBlur: 40 }
 const GLASS_EDGE = 0.6
 
+/** The Figma `font/body/emphasis/weight` of every theme that does not set its own. */
+const BODY_EMPHASIS_WEIGHT = 600
+
 /** The popup groups: menus, selects, popovers, sheets and drawers. */
 const POPUPS = ["select", "overlay"] as const
 
@@ -151,8 +154,8 @@ export function themeDeclarations(theme: Theme): string[] {
   set("font-body-weight", String(fonts.body.weight))
   // the Figma font/primary, font/secondary and font/body/action weights: the text classes and the buttons read these
   set("font-body-weight-action", String(fonts.body.actionWeight ?? fonts.body.weight))
-  // the Figma font/body/emphasis/weight: bold body text. Every theme but Fabrik keeps the 700 it always had
-  set("font-body-weight-emphasis", String(fonts.body.emphasis ?? 700))
+  // the Figma font/body/emphasis/weight: bold body text. Every theme but Fabrik (400) uses 600
+  set("font-body-weight-emphasis", String(fonts.body.emphasis ?? BODY_EMPHASIS_WEIGHT))
   set("font-primary-weight-regular", String(fonts.display.weight))
   set("font-primary-weight-emphasis", String(fonts.display.emphasis ?? fonts.display.weight))
   set("font-primary-letter-spacing", `${(fonts.display.letterSpacing ?? 0) / 100}em`)

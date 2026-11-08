@@ -168,7 +168,7 @@ const TOKEN_RULES = [
   [/^--font-secondary-letter-spacing$/, "Letter spacing of the secondary face, in em.", "`text-h*-sec`"],
   [/^--font-secondary-style$/, "normal or italic for the secondary face.", "`text-h*-sec`"],
   [/^--font-body-weight-action$/, "Weight of text inside buttons (Figma font/body/action/weight).", "`text-action-*`"],
-  [/^--font-body-weight-emphasis$/, "Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 700 on every other theme.", "`text-*-bold`"],
+  [/^--font-body-weight-emphasis$/, "Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme.", "`text-*-bold`"],
   [/^--font-body-weight$/, "Weight of body text.", "`text-md`, `text-sm`, …"],
   [/^--font-(body|primary|secondary)-line-height$/, "Line height of each font role (unitless): body 160%, primary and secondary (headings) 140% unless the theme sets its own.", "body and heading text styles, `text-*` sizes"],
   [/^--font-body-letter-spacing$/, "Letter spacing of body text, in em.", "body text styles"],

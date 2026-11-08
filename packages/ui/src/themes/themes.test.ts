@@ -410,12 +410,12 @@ describe("glass popups", () => {
 })
 
 describe("body emphasis weight", () => {
-  it("is Book (400) on Fabrik, whose regular is Thin (100), and the 700 it always was everywhere else", () => {
+  it("is Book (400) on Fabrik, whose regular is Thin (100), and 600 everywhere else", () => {
     const decl = (id: string) => themeDeclarations(getPreset(id)!)
     expect(decl("fabrik")).toContain("--font-body-weight: 100;")
     expect(decl("fabrik")).toContain("--font-body-weight-emphasis: 400;")
     for (const id of ["illuzion", "laroc", "bootshaus", "berghain", "savaya", "pacha", "amnesia", "ushuaia"]) {
-      expect(decl(id), id).toContain("--font-body-weight-emphasis: 700;")
+      expect(decl(id), id).toContain("--font-body-weight-emphasis: 600;")
     }
     expect(figmaVariableFor("font-body-weight-emphasis", getPreset("fabrik")!)).toEqual({ variable: "font/body/emphasis/weight", mode: "fabrik" })
   })
