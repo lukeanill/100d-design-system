@@ -47,8 +47,6 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 - 5.1.1 A core interactive component's padding is at least the Figma `min-padding/component` token and always an even number. 5.1.2 An input inside a component has double that padding at the sides. 5.1.3 Card padding is `size-controls/card/padding/padding-md`.
 - 5.1.4 The theme `spacing` setting drives layout between components only; component padding stays fixed, so a control is the same size in every theme.
 
-**Icons (6.x)** Phosphor, in the theme's icon weight, in the `icons/container/md` box (`ThemedIcon`). A Figma-provided icon is the exception.
-
 **States (7.x)** One hover formula for every texture: light mode adds `alpha-dark-sm` over the background, dark mode adds `alpha-light-sm` (`--control-hover`). A hover, focus or press changes only the background layer, never text, icon, border or shadow colour.
 
 **Motion (8.x)** Use only the `Timing` set (`instant fast faster long longer longest`); a hover or press is `fast`. The theme's `motion` supplies the easing; `motion=none` is `instant`. In code: CSS `duration-(--motion-fast) ease-(--motion-transition-ease)`, or `useThemeTransition()` / `useThemeSpring()` for the `motion` library. A component whose animation is its identity (metal) keeps its own timing.
