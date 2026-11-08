@@ -41,7 +41,9 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 **Corners (4.x)**
 - 4.1.1 Controls and elements inside a component wear `radius-button` (square on sharp, pill on rounded).
 - 4.1.2\* Cards and surfaces are not fully rounded on a rounded theme; they follow the numbered steps `xs sm md lg xl`.
-- 4.1.3 The outer corner of a component that contains elements = inner corner + the outer padding (border not counted), capped at `radius-outer-max` (4.1.4\*). A card is never fully rounded unless Figma draws it so (4.1.5\*). Fully rounded is `dimensions-max` (4.1.6).
+- 4.1.3 The outer corner of a card that contains another card = the inner card's corner + the outer padding (border not counted), capped at `radius-outer-max` (4.1.4\*). The inner card uses `radius-sm` and the outer card uses `radius-md`. A card is never fully rounded unless Figma draws it so (4.1.5\*). Fully rounded is `dimensions-max` (4.1.6).
+- 4.1.7 A card uses `radius-md`. It does not step up to a larger radius.
+- 4.1.8 Surfaces that float over the page (a fixed header, a fixed footer, a drawer) use `radius-lg`. They are not cards, so the cap in 4.1.3 does not apply to them. A tag uses `radius-sm`. Controls keep `radius-button` (4.1.1).
 
 **Spacing (5.x)**
 - 5.1.1 A core interactive component's padding is at least the Figma `min-padding/component` token and always an even number. 5.1.2 An input inside a component has double that padding at the sides. 5.1.3 Card padding is `size-controls/card/padding/padding-md`.
@@ -51,7 +53,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 **Motion (8.x)** Use only the `Timing` set (`instant fast faster long longer longest`); a hover or press is `fast`. The theme's `motion` supplies the easing; `motion=none` is `instant`. In code: CSS `duration-(--motion-fast) ease-(--motion-transition-ease)`, or `useThemeTransition()` / `useThemeSpring()` for the `motion` library. A component whose animation is its identity (metal) keeps its own timing. We follow Material Design's motion principles (purposeful, quick, responsive) but never override the design system with them: the timing set, the theme's easing and the motion tokens always win.
 
-**Shadow (9.x)** `shadow-*` tokens only, at the theme's strength. A popup sits one level above the component that opens it (xs → sm). We follow Material Design's elevation principles (higher means closer to the user) but never override the design system with them: the shadow tokens at the theme's strength always win.
+**Shadow (9.x)** `shadow-*` tokens only, at the theme's strength. A popup sits one level above the component that opens it (xs → sm). We follow Material Design's elevation principles (higher means closer to the user) but never override the design system with them: the shadow tokens at the theme's strength always win. Shadow follows the element's role, one step higher for each layer above the page: tag and button `shadow-xs`, card `shadow-sm`, fixed header and footer `shadow-md`, drawer `shadow-lg`.
 
 **Sizing (10.x)** Core interactive components (button, input, select, nav) have a minimum height and width from the `size-controls/interactive-component` tokens; height is a minimum and grows with content. Inside another component the `component-within-component` minimums apply. Figma size tokens are mirrored in `docs/figma-size-tokens.json`.
 
@@ -91,7 +93,7 @@ From `docs/component-theming-guidelines.md`. A rule names a token, never a value
 
 ## 4. Open questions in the source guidance
 
-These are `?` points in the theming guidelines with no answer yet. Do not guess them; ask Luke: 4.1.7 (which radius step caps a card), 4.1.8 (radius for other surfaces), 7.1.3 (is the hover wash a shared token for every component), 8.1.4 (timing for the nav-bar pill), 10.1.4 (what else counts as a core interactive component), 11.1.4 (token for minimum popup width), 11.2.4 (Medium vs Heavy glass in popups).
+These are `?` points in the theming guidelines with no answer yet. Do not guess them; ask Luke: 7.1.3 (is the hover wash a shared token for every component), 8.1.4 (timing for the nav-bar pill), 10.1.4 (what else counts as a core interactive component), 11.1.4 (token for minimum popup width), 11.2.4 (Medium vs Heavy glass in popups).
 
 ## 5. Known gaps
 
