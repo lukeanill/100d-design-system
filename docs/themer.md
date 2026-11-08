@@ -21,7 +21,8 @@ tells their AI how to build with it, including the four UX-direction answers.
 
 **The Look tab** is a column of tiles beside the preview, drawn to the Figma
 `Themer` frame: Theme name, Color (background, foreground, primary, secondary),
-Typography (heading and body font and weight, and Scale), Texture, Radius,
+UI Color (classic, modern or alternative: the colours for errors, success, focus and
+charts), Typography (heading and body font and weight, and Scale), Texture, Radius,
 Shadow, Spacing and Icons. A chosen option is ringed in liquid metal (metal-fx
 v1). Foreground is its own choice; left empty it is worked out from the
 background. **Scale** (Small, Medium, Large) is the Figma `typescale` mode

@@ -18,7 +18,7 @@ describe("the theming options", () => {
 
   it("are grouped as the Themer groups them", () => {
     expect(GROUPS.map((g) => g.title)).toEqual([
-      "Name", "Color", "Typography", "Texture", "Radius", "Shadow", "Spacing", "Icons",
+      "Name", "Color", "UI Color", "Typography", "Texture", "Radius", "Shadow", "Spacing", "Icons",
       "Component Animations", "Page Transitions", "Animated Background", "Hero Section", "Values",
     ])
   })

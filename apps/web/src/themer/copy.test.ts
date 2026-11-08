@@ -23,6 +23,7 @@ describe("the Copy a Theme preview", () => {
       expect(shown.spacing, t.id).toBe(WORDS[css["theme-spacing"]])
       expect(shown.texture, t.id).toBe(css["theme-material"])
       expect(shown.color, t.id).toBe(css["theme-color-mode"])
+      expect(shown["ui color"], t.id).toBe(css["theme-ui-color"])
       expect(shown.motion, t.id).toBe(css["theme-motion"])
     }
   })

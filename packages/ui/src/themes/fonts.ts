@@ -7,18 +7,20 @@ export interface FontChoice {
   kind: "sans" | "serif" | "mono" | "display"
   /** Weights the family actually has. */
   weights: number[]
+  /** A variable font: any weight between these two is real, so a weight like 420 is kept as it is. */
+  variable?: [number, number]
 }
 
 const g = (family: string, kind: FontChoice["kind"], weights: number[]): FontChoice => ({ family, source: "google", kind, weights })
-const b = (family: string, kind: FontChoice["kind"], weights: number[]): FontChoice => ({ family, source: "bundled", kind, weights })
+const b = (family: string, kind: FontChoice["kind"], weights: number[], variable?: [number, number]): FontChoice => ({ family, source: "bundled", kind, weights, variable })
 
 export const FONT_CHOICES: FontChoice[] = [
   b("Akkurat LL TT", "sans", [200, 300, 400, 500, 600, 700]),
   b("Folio Std", "sans", [700]),
-  b("DentonVariable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900]),
-  b("Denton Italic Variable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900]),
+  b("DentonVariable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900], [100, 900]),
+  b("Denton Italic Variable Test", "serif", [100, 200, 300, 400, 500, 600, 700, 800, 900], [100, 900]),
   b("PP Neue Montreal", "sans", [200, 400, 500, 600, 700]),
-  b("General Sans Variable", "sans", [200, 300, 400, 450, 500, 600, 700]),
+  b("General Sans Variable", "sans", [200, 300, 400, 500, 600, 700], [200, 700]),
   b("ITC Garamond Std", "serif", [800]),
   b("PP Editorial New", "serif", [400]),
   b("GT Pressura Mono Trial", "mono", [400, 700]),
@@ -52,7 +54,9 @@ export const fontChoice = (family: string) => FONT_CHOICES.find((f) => f.family 
 
 /** The weight a family offers closest to the one asked for. */
 export function nearestWeight(family: string, weight: number) {
-  const weights = fontChoice(family)?.weights
+  const choice = fontChoice(family)
+  if (choice?.variable && weight >= choice.variable[0] && weight <= choice.variable[1]) return weight
+  const weights = choice?.weights
   if (!weights?.length) return weight
   return weights.reduce((best, w) => (Math.abs(w - weight) < Math.abs(best - weight) ? w : best), weights[0])
 }

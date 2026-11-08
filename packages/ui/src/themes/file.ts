@@ -78,6 +78,7 @@ export function themeHeader(theme: Theme, { unset = [] as string[] } = {}) {
     ` *`,
     ` * SETTINGS`,
     ` *   type scale ${theme.scale} (the Figma typescale sizes, written out as --typescale-xs to --typescale-h1)`,
+    ` *   ui color ${theme.uiColor}: --destructive, --affirmative, --focus and --chart-1 to --chart-5 come from this ui-color mode`,
     ` *   spacing ${theme.spacing}, radius ${theme.radius}, shadow ${theme.shadow}, material ${theme.material}, motion ${theme.motion}`,
     ` *   Components do not read spacing or motion yet. They are carried as`,
     ` *   --theme-spacing and --theme-motion. The color mode shows on cards: --card is the`,

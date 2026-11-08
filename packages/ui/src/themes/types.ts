@@ -168,6 +168,8 @@ export interface ThemeDraft extends Partial<ThemeFeel> {
   material?: Material
   radius?: Radius
   shadow?: Shadow
+  /** The Figma `settings/ui-color`: which ui-color mode the status and chart colours come from. Left empty it is the baseline's. */
+  uiColor?: UiColor
   spacing?: Spacing
   iconStyle?: IconStyle
   iconWeight?: IconWeight

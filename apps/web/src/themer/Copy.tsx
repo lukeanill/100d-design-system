@@ -32,6 +32,7 @@ export const settingsOf = (t: Theme) => [
   ["radius", t.radius],
   ["texture", t.material],
   ["color", t.colorMode],
+  ["ui color", t.uiColor],
   ["motion", t.motion],
 ]
 

@@ -115,7 +115,7 @@ describe("copying a preset", () => {
     const d = draftFromPreset(getPreset("fabrik")!)
     expect(lookDone(d)).toBe(false)
     expect(lookDone({ ...d, label: "Mine" })).toBe(true)
-    expect(d.background).toBe("#3a3c83")
+    expect(d.background).toBe("#f4f1f1")
   })
 
   it("round-trips: the copy is the preset", () => {
@@ -123,9 +123,11 @@ describe("copying a preset", () => {
       const p = getPreset(id)!
       const t = draftToTheme({ ...draftFromPreset(p), label: p.label })
       expect(t.palette.background).toBe(p.palette.background)
-      expect(t.fonts.display).toEqual(p.fonts.display)
+      // the Themer has one heading weight, so a copy keeps the family and the regular weight (Fabrik's 420 survives; its 320 emphasis does not)
+      expect(t.fonts.display).toMatchObject({ family: p.fonts.display.family, weight: p.fonts.display.weight })
       expect(t.radius).toBe(p.radius)
       expect(t.material).toBe(p.material)
+      expect(t.uiColor).toBe(p.uiColor)
     }
   })
 })

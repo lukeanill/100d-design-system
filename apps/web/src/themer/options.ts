@@ -17,6 +17,7 @@ import {
   SHADOW_LEVELS,
   SCALES,
   SPACINGS,
+  UI_COLOR_MODES,
   SPEEDS,
   TRANSITIONS,
   TRANSITION_COLORS,
@@ -71,6 +72,12 @@ export const GROUPS: Group[] = [
       { name: "foreground", field: "foreground", kind: hex, description: "Foreground is used for text, icons and outlines on the background." },
       { name: "primary", field: "primary", kind: hex, description: "Primary is used for the main button and for anything that should stand out." },
       { name: "secondary", field: "secondary", kind: hex, description: "Secondary is used for quieter buttons, chips and highlights." },
+    ],
+  },
+  {
+    title: "UI Color",
+    options: [
+      { name: "ui color", field: "uiColor", kind: choice(UI_COLOR_MODES), description: "The colours for errors, success, focus and charts: classic is the familiar red, green and blue; modern is softer and brighter; alternative is warm coral, lime and teal." },
     ],
   },
   {
@@ -226,9 +233,10 @@ export function parseValue(o: Option, raw: string): Parsed {
     }
     case "weight": {
       const n = Number(text)
-      return Number.isInteger(n) && n >= 100 && n <= 900 && n % 100 === 0
+      // a variable font has weights in between (Fabrik's body is 200, its heading 420), so any whole number will do
+      return Number.isInteger(n) && n >= 100 && n <= 900
         ? { ok: true, value: n }
-        : { ok: false, error: `"${text}" is not a weight. Use 100, 200 ... 900.` }
+        : { ok: false, error: `"${text}" is not a weight. Use a whole number from 100 to 900, like 400.` }
     }
     case "toggle": {
       const t = text.toLowerCase()
