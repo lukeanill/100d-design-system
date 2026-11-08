@@ -68,5 +68,4 @@ Never start on your own. When a new component comes up, ask the user whether the
 
 ## Scope notes
 
-- The references describe `packages/ui` in this repo. The sibling `100d` folders and `ds-bundle/` are stale: ignore them.
 - This skill documents the system; it does not change it. QA runs go through the `qa-run` skill, which only tests.
