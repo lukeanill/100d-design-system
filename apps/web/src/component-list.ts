@@ -470,10 +470,6 @@ export const componentList: ComponentEntry[] = [
     "path": "animate-ui/components/base/tabs.tsx"
   },
   {
-    "name": "Tag Select",
-    "path": "ui/tag-select.tsx"
-  },
-  {
     "name": "Text Along Path",
     "path": "fancy/text/text-along-path.tsx"
   },

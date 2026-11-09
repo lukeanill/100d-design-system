@@ -375,39 +375,3 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 | `thumbIcon` | `ReactElement<unknown, string \| JSXElementConstructor<any>>` | no |  |
 
 Also accepts the props of `@base-ui/react`, `framer-motion`, `motion-dom`, `the underlying element or library` and standard HTML attributes.
-
-### Tag Select
-
-- File: `packages/ui/src/components/ui/tag-select.tsx`
-- Import: `@workspace/ui/components/ui/tag-select`
-- Storybook: [Components/Selects/Tag Select](https://ds.lukeai.space/storybook/?path=/story/components-selects-tag-select--tag-select)
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
-**`TagSelectItem`**
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `tag` | `Tag` | yes |  |
-| `tagId` | `string` | yes |  |
-
-**`TagSelectTags`**
-
-_No props of its own._
-
-**`TagSelectActions`**
-
-_No props of its own._
-
-**`TagSelectContent`**
-
-_No props of its own._
-
-**`TagSelect`**
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `actions` | `{ onValidate?: ((tagIds: string[]) => void) \| undefined; }` | no |  |
-| `appearance` | `{ mode?: "multiple" \| "single" \| undefined; showClear?: boolean \| undefined; showValidate?: boolean \| undef…` | no |  |
-| `control` | `{ selectedTagIds?: string[] \| undefined; }` | no |  |
-| `data` | `{ tags?: Tag[] \| undefined; }` | no |  |

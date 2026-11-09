@@ -4,7 +4,7 @@
 
 Every component in `packages/ui/src/components` (import `@workspace/ui/components/<path>`; published as `@lukeanill/ui/components/<path>`). Groups follow the Storybook sidebar.
 
-Total: 121 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
+Total: 120 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
 
 ## Actions
 
@@ -210,7 +210,6 @@ Detail: `references/components/selects.md`
 | Radio Group | `components/radio-group` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-radio-group--radio-group) | — |
 | Slider | `components/slider` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-slider--slider) | Explore |
 | Switch | `components/animate-ui/components/base/switch` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-switch--switch) | Explore |
-| Tag Select | `components/ui/tag-select` | [story](https://ds.lukeai.space/storybook/?path=/story/components-selects-tag-select--tag-select) | — |
 
 ## Shadcn
 

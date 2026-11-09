@@ -10,9 +10,9 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, gradient-background, kbd (+27) |
-| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, prompt-bar, streaming-text (+81) |
-| `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | insight-cards, task-rows, alert (+23) |
+| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, gradient-background, kbd (+26) |
+| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, prompt-bar, streaming-text (+80) |
+| `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | insight-cards, task-rows, alert (+22) |
 | `--card-image` | `none` | The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`. | Card |
 | `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
 | `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, calendar, navigation-menu (+1) |
@@ -21,14 +21,14 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, map-carousel, theme-colors |
 | `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, copy, icon (+5) |
 | `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+3) |
-| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | insight-cards, navigation-menu, table (+44) |
+| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | insight-cards, navigation-menu, table (+38) |
 | `--muted-foreground` | `oklch(0.988 0.001 286.38 / 65%)` | Foreground at 65% opacity for quiet text. | day-timeline |
 | `--accent` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | dropdown-menu, context-menu, menubar (+10) |
 | `--accent-foreground` | `var(--secondary-foreground)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | ripple |
-| `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour, from the theme's ui-color mode. | button, badge, insight-cards (+30) |
+| `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour, from the theme's ui-color mode. | button, copy, icon (+30) |
 | `--affirmative` | `oklch(0.894 0.187 153.03)` | Success colour, from the theme's ui-color mode (Figma ui-color/affirmative). | task-rows, thinking-state, context-cards (+2) |
 | `--affirmative-foreground` | `var(--foreground)` | Ink on the success colour: the theme's foreground. | text on success colour |
-| `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+30) |
+| `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+29) |
 | `--input` | `oklch(0.988 0.001 286.38 / 20%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | checkbox, bubble, button-group (+1) |
 | `--ring` | `oklch(0.988 0.001 286.38 / 70%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | button, questionnaire, files (+30) |
 | `--chart-1` | `oklch(0.647 0.217 36.85)` | Chart series colours (five per theme). | chart series (recharts) |
@@ -107,15 +107,15 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--typescale-h3` | `3rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
 | `--typescale-h2` | `3.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
 | `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
-| `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | map-carousel, message-bubble, sidebar (+27) |
+| `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | map-carousel, message-bubble, sidebar (+26) |
 | `--text-xs--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, menu (+53) |
+| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, menu (+52) |
 | `--text-sm--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-base` | `var(--typescale-md)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | questionnaire, date-time-picker, morphing-discovery-bar (+6) |
+| `--text-base` | `var(--typescale-md)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | questionnaire, date-time-picker, split-to-edit (+7) |
 | `--text-base--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-lg` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | hero, message-bubble, stat-card (+1) |
+| `--text-lg` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | hero, message-bubble, stat-card |
 | `--text-lg--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-xl` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | amount-input, hero, date-time-picker (+2) |
+| `--text-xl` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | amount-input, hero, date-time-picker (+1) |
 | `--text-xl--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
 | `--text-2xl` | `var(--typescale-h6)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | amount-input, hero |
 | `--text-2xl--line-height` | `var(--font-primary-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
@@ -140,20 +140,20 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, input-group, split-to-edit (+10) |
-| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+35) |
+| `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, input-group, split-to-edit (+11) |
+| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+34) |
 | `--dimensions-max` | `9999px` | Fully rounded (9999px). | `radius-button` on rounded themes |
 | `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | prompt-bar, menubar, morphing-discovery-bar (+14) |
 | `--radius-outer-max` | `0.5rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+4) |
 | `--radius-sm` | `0.25rem` | Corner radius steps; their size depends on the theme's radius setting. | menu, checkbox, kbd (+1) |
 | `--radius-xs` | `0.125rem` | Corner radius steps; their size depends on the theme's radius setting. | thread-insight-card, dialog |
 | `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, insight-cards, button (+18) |
-| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, sidebar (+14) |
+| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, sidebar (+13) |
 | `--shadow-2xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
 | `--shadow-xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | button, copy, icon (+14) |
-| `--shadow-sm` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | prompt-bar, morphing-discovery-bar, sidebar (+5) |
+| `--shadow-sm` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | prompt-bar, morphing-discovery-bar, sidebar (+9) |
 | `--shadow` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
-| `--shadow-md` | `0px 20px 40px rgb(34 34 34 / 16%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | menu, map-carousel, popover (+9) |
+| `--shadow-md` | `0px 20px 40px rgb(34 34 34 / 16%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | menu, map-carousel, popover (+6) |
 | `--shadow-lg` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | insight-cards, selection-actions, alert-dialog (+8) |
 | `--shadow-xl` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | dock, chart |
 | `--shadow-2xl` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | dropdown-menu, menubar, combobox (+3) |
@@ -187,8 +187,8 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | CSS transitions and the motion library |
 | `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | selection-actions, navigation-menu, thinking-state (+15) |
 | `--motion-spring-bounce` | `0` | Bounce of the Springy choice (0 for the others). | `useThemeSpring()` |
-| `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | prompt-bar, streaming-text, date-time-picker (+55) |
-| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | sidebar, prompt-bar, map-carousel (+49) |
+| `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | prompt-bar, streaming-text, date-time-picker (+54) |
+| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | sidebar, prompt-bar, map-carousel (+48) |
 
 ## Glass
 
