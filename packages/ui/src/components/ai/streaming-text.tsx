@@ -5,6 +5,7 @@ import { ArrowBendDownRightIcon } from "@phosphor-icons/react"
 import { ArrowDown, ArrowUp, Copy, CornerDownRight, RefreshCw } from "lucide-react"
 
 import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 import { ThemedIcon } from "@workspace/ui/components/themed-icon"
 
@@ -131,15 +132,10 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
           style={{ opacity: done ? 1 : 0, pointerEvents: done ? "auto" : "none" }}
         >
           {followUps.map((text, i) => (
-            <button
-              key={text}
-              type="button"
-              onClick={() => actions?.onFollowUp?.(text, i)}
-              className="text-md -mx-2 flex h-9 items-center gap-1 self-start rounded-(--radius-button) px-2 text-left text-foreground transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)"
-            >
+            <Button key={text} type="button" variant="ghost" onClick={() => actions?.onFollowUp?.(text, i)} className="text-md -mx-2 self-start px-2">
               <ThemedIcon phosphor={ArrowBendDownRightIcon} />
               {text}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -169,19 +165,14 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
             <Icon strokeWidth={1.8} />
           </IconButton>
         ))}
-        <button
-          type="button"
-          aria-expanded={sourcesOpen}
-          onClick={() => setSourcesOpen((current) => !current)}
-          className="ml-1.5 flex items-center gap-1.5 rounded-md px-1 py-0.5 text-left transition-colors duration-(--motion-fast) hover:bg-muted"
-        >
+        <Button type="button" variant="ghost" size="xs" aria-expanded={sourcesOpen} onClick={() => setSourcesOpen((current) => !current)} className="ml-1.5 gap-1.5 px-1">
           <span className="flex -space-x-1">
             {sources.map((source) => (
               <span key={source.domain} className="size-3.5 rounded-full bg-primary ring-2 ring-background" />
             ))}
           </span>
           <span className="text-xs text-foreground/75">{l.sources}</span>
-        </button>
+        </Button>
       </div>
 
       <div

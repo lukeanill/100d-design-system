@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, TrendingUp } from "lucide-react"
 import { Line, LineChart, ResponsiveContainer, Tooltip, YAxis } from "recharts"
 
 import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Paged agent insights with scrub-ready live charts. Ported from
@@ -123,18 +124,17 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
           <span className="text-xs text-foreground/75 tabular-nums">{metric === "spend" ? `${moneyLabel} threshold` : "82 kWh threshold"}</span>
           <span className="flex rounded-(--radius-button) bg-card p-0.5">
             {(["spend", "usage"] as const).map((item) => (
-              <button
+              <Button
                 key={item}
                 type="button"
+                variant="ghost"
+                size="xs"
                 aria-pressed={metric === item}
                 onClick={() => setMetric(item)}
-                className={cn(
-                  "rounded-(--radius-button) px-2 py-0.5 text-xs font-[weight:var(--font-body-weight-action)] transition-[background-color,color,box-shadow,transform] duration-(--motion-fast) active:scale-[0.96]",
-                  metric === item ? "bg-muted text-foreground shadow-xs" : "text-foreground/75 hover:text-foreground"
-                )}
+                className={cn("px-2", metric === item ? "bg-muted" : "text-foreground/75")}
               >
                 {item === "spend" ? "Spend" : "Usage"}
-              </button>
+              </Button>
             ))}
           </span>
         </div>
@@ -191,19 +191,18 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
       </div>
       <div className="mt-2 flex items-center gap-1.5">
         {segments.map((s) => (
-          <button
+          <Button
             key={s.name}
             type="button"
+            variant="ghost"
+            size="xs"
             aria-pressed={selected === s.name}
             onClick={() => setSelected(s.name)}
-            className={cn(
-              "flex items-center gap-1 rounded-(--radius-button) px-1.5 py-0.5 text-xs transition-[background-color,color,transform] duration-(--motion-fast) active:scale-[0.96]",
-              selected === s.name ? "bg-muted text-foreground" : "text-foreground/75 hover:bg-muted hover:text-foreground"
-            )}
+            className={cn("gap-1 px-1.5", selected === s.name ? "bg-muted" : "text-foreground/75")}
           >
             <span className={cn("size-1.5 rounded-full", s.cls)} />
             {s.name} <span className="tabular-nums">{s.pct}%</span>
-          </button>
+          </Button>
         ))}
       </div>
       <div className="mt-3 min-h-16 rounded-md bg-muted px-2.5 py-2 ring-1 ring-foreground/10">
@@ -294,7 +293,7 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
         <div className="mt-2">
           <Card />
         </div>
-        <button className="mt-2 rounded-(--radius-button) bg-card px-3 py-1.5 text-left text-xs text-foreground shadow-xs ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted">{pill}</button>
+        <Button type="button" variant="outline" size="xs" className="mt-2">{pill}</Button>
       </div>
     </div>
   )

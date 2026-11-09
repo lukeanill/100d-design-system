@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { ArrowUp, Clock, Ellipsis, Plus } from "lucide-react"
 
 import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Tabbed chat panel with reasoning replies and a composer. The reply
@@ -106,15 +107,17 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
       <div className="flex shrink-0 items-center justify-between border-b border-border p-1.5">
         <div className="flex items-center">
           {suggestions.map((item) => (
-            <button
+            <Button
               key={item}
               type="button"
+              variant="ghost"
+              size="xs"
               aria-pressed={tab === item}
               onClick={() => setTab(item)}
-              className={cn("rounded-md px-2 py-[3px] text-sm text-foreground transition-[background-color,opacity] duration-(--motion-fast)", tab === item ? "bg-muted" : "opacity-50 hover:opacity-75")}
+              className={cn("px-2", tab === item ? "bg-muted" : "opacity-50")}
             >
               {item}
-            </button>
+            </Button>
           ))}
         </div>
         <div className="flex items-center gap-1">

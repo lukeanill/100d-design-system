@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { Check, ChevronDown, Search, Sparkle } from "lucide-react"
 
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Expandable agent trace — Steps / Reasoning / Search / Coding. The trace
@@ -119,11 +120,13 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
         transition: "min-height 400ms cubic-bezier(0.23,1,0.32,1)",
       }}
     >
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="sm"
         aria-expanded={expanded}
         onClick={() => setManualExpanded((current) => !(current ?? autoExpanded))}
-        className="-mx-1.5 flex w-fit items-center gap-2 rounded-md px-1.5 py-1 transition-colors duration-(--motion-fast) hover:bg-muted"
+        className="-mx-1.5 w-fit gap-2 px-1.5"
       >
         <Sparkle
           className="size-4"
@@ -156,7 +159,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
           className="size-3.5 text-foreground/75 transition-transform duration-(--motion-duration)"
           style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)" }}
         />
-      </button>
+      </Button>
 
       <div
         className="grid transition-[grid-template-rows,opacity] duration-(--motion-duration)"
