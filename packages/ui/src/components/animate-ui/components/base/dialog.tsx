@@ -22,7 +22,7 @@ import {
   type DialogCloseProps as DialogClosePrimitiveProps,
 } from '@workspace/ui/components/animate-ui/primitives/base/dialog';
 import { cn } from '@workspace/ui/lib/utils'
-import { glass } from "@workspace/ui/lib/glass";
+import { SurfaceFill } from "@workspace/ui/components/themed-surface";
 
 type DialogProps = DialogPrimitiveProps;
 
@@ -68,11 +68,12 @@ function DialogPopup({
       <DialogBackdrop />
       <DialogPopupPrimitive
         className={cn(
-          `${glass("dialog")} fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg`,
+          `isolate fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg`,
           className,
         )}
         {...props}
       >
+        <SurfaceFill popup weight="heavy" />
         {children}
         {showCloseButton && (
           <DialogClosePrimitive className="ring-offset-background focus:ring-ring data-[open]:bg-accent data-[open]:text-foreground/75 absolute top-4 right-4 rounded-xs opacity-70 transition-opacity duration-(--motion-fast) ease-(--motion-transition-ease) hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">

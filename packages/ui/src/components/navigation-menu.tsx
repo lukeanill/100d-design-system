@@ -2,7 +2,7 @@ import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/naviga
 import { cva } from "class-variance-authority"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { glass } from "@workspace/ui/lib/glass"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { CaretDownIcon } from "@phosphor-icons/react"
 
 function NavigationMenu({
@@ -114,7 +114,8 @@ function NavigationMenuPositioner({
         )}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className={`data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg ${glass("overlay")} text-popover-foreground shadow ring-1 ring-foreground/5 transition-[opacity,transform,width,height,scale,translate] duration-(--motion-duration) ease-(--motion-transition-ease) outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-(--motion-fast) data-starting-style:scale-90 data-starting-style:opacity-0`}>
+        <NavigationMenuPrimitive.Popup className={`data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative isolate h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg text-popover-foreground shadow ring-1 ring-foreground/5 transition-[opacity,transform,width,height,scale,translate] duration-(--motion-duration) ease-(--motion-transition-ease) outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-(--motion-fast) data-starting-style:scale-90 data-starting-style:opacity-0`}>
+          <SurfaceFill popup weight="medium" />
           <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
         </NavigationMenuPrimitive.Popup>
       </NavigationMenuPrimitive.Positioner>

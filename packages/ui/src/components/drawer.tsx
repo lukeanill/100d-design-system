@@ -4,7 +4,7 @@ import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { glass } from "@workspace/ui/lib/glass"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 function Drawer({
   disablePreventScroll = false,
@@ -70,7 +70,7 @@ function DrawerContent({
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          `group/drawer-content fixed z-50 flex h-auto flex-col ${glass("overlay")} bg-clip-padding text-popover-foreground shadow-lg`,
+          `group/drawer-content fixed isolate z-50 flex h-auto flex-col bg-clip-padding text-popover-foreground shadow-lg`,
           "data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-t",
           "data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:rounded-b-xl data-[vaul-drawer-direction=top]:border-b",
           "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:rounded-l-xl data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=right]:sm:max-w-sm",
@@ -79,6 +79,7 @@ function DrawerContent({
         )}
         {...props}
       >
+        <SurfaceFill popup weight="heavy" />
         {showHandle && (
           <DrawerPrimitive.Handle
             data-slot="drawer-handle"

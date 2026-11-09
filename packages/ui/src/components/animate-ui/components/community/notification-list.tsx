@@ -3,7 +3,7 @@
 import { RotateCcw, ArrowUpRight } from 'lucide-react';
 import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { motion } from 'motion/react';
-import { glass } from '@workspace/ui/lib/glass';
+import { SurfaceFill } from '@workspace/ui/components/themed-surface';
 
 export type NotificationItem = {
   id: number;
@@ -76,12 +76,13 @@ function NotificationList({
         {items.map((notification, i) => (
           <motion.div
             key={notification.id}
-            className={`${glass("card")} rounded-lg px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-(--motion-fast) relative`}
+            className="rounded-lg px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-(--motion-fast) relative isolate"
             variants={getCardVariants(i)}
             style={{
               zIndex: items.length - i,
             }}
           >
+            <SurfaceFill popup weight="heavy" />
             <div className="flex justify-between items-center">
               <h1 className="text-sm font-[weight:var(--font-body-weight-action)]">{notification.title}</h1>
               {notification.count && (

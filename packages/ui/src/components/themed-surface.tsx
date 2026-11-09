@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import { observeTheme } from "@workspace/ui/lib/observe-theme"
-import { GlassLayer, type GlassTone } from "@workspace/ui/components/liquid-glass"
+import { GlassLayer, type GlassTone, type GlassWeight } from "@workspace/ui/components/liquid-glass"
 
 /**
  * The fill behind a control, from the theme's texture and colour (light or dark).
@@ -13,7 +13,8 @@ import { GlassLayer, type GlassTone } from "@workspace/ui/components/liquid-glas
  * - glass: the Soft glass from the Glass sheet, in the theme's light or dark
  *
  * A `popup` sits one level above the component that opens it: the same fill under the `alpha` dark sm wash,
- * or, on glass, the next glass weight up (Soft → Medium).
+ * or, on glass, the next glass weight up (Soft → Medium). `weight` picks the glass weight outright: overlays (menus,
+ * popovers, dialogs, sheets, drawers) ask for Heavy.
  *
  * Solid and gradient are one custom property (`--control-fill`, written by the theme); glass is a
  * layer, so the texture is read where the control sits and a scoped theme is followed too. Put it
@@ -37,7 +38,7 @@ function readSurface(el: HTMLElement | null): Surface {
   }
 }
 
-function SurfaceFill({ popup = false }: { popup?: boolean }) {
+function SurfaceFill({ popup = false, weight }: { popup?: boolean; weight?: GlassWeight }) {
   const ref = useRef<HTMLSpanElement>(null)
   const [surface, setSurface] = useState<Surface>({ material: "solid", tone: "dark", radius: 0 })
 
@@ -62,7 +63,13 @@ function SurfaceFill({ popup = false }: { popup?: boolean }) {
     const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(read)
     if (resize && parent) resize.observe(parent)
     parent?.addEventListener("transitionend", read)
+    // a popup that scrolls carries the fill with it, so the fill follows the scroll and stays put behind the content
+    const follow = () => {
+      if (ref.current && parent) ref.current.style.transform = `translateY(${parent.scrollTop}px)`
+    }
+    parent?.addEventListener("scroll", follow, { passive: true })
     return () => {
+      parent?.removeEventListener("scroll", follow)
       stop()
       resize?.disconnect()
       parent?.removeEventListener("transitionend", read)
@@ -81,7 +88,7 @@ function SurfaceFill({ popup = false }: { popup?: boolean }) {
           : { background: popup ? "linear-gradient(var(--alpha-dark-sm), var(--alpha-dark-sm)), var(--control-fill)" : "var(--control-fill)" }
       }
     >
-      {surface.material === "glass" && <GlassLayer weight={popup ? "medium" : "soft"} tone={surface.tone} radius={surface.radius} />}
+      {surface.material === "glass" && <GlassLayer weight={weight ?? (popup ? "medium" : "soft")} tone={surface.tone} radius={surface.radius} />}
     </span>
   )
 }

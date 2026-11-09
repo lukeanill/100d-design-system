@@ -39,7 +39,7 @@ import {
   type MenuSubmenuTriggerProps as MenuSubmenuTriggerPrimitiveProps,
 } from '@workspace/ui/components/animate-ui/primitives/base/menu';
 import { cn } from '@workspace/ui/lib/utils'
-import { glass } from "@workspace/ui/lib/glass";
+import { SurfaceFill } from "@workspace/ui/components/themed-surface";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react';
 
 type MenuProps = MenuPrimitiveProps;
@@ -83,10 +83,11 @@ function MenuPanel({
           transition={transition}
           id={id}
           className={cn(
-            `${glass("overlay")} text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md outline-none`,
+            `relative isolate text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md outline-none`,
             className,
           )}
         >
+          <SurfaceFill popup weight="heavy" />
           <MenuHighlightPrimitive className="absolute inset-0 bg-accent z-0 rounded-sm">
             {children}
           </MenuHighlightPrimitive>
@@ -315,10 +316,11 @@ function MenuSubmenuPanel({
           transition={transition}
           id={id}
           className={cn(
-            `${glass("overlay")} text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md`,
+            `relative isolate text-popover-foreground max-h-(--available-height) min-w-[8rem] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md`,
             className,
           )}
         >
+          <SurfaceFill popup weight="heavy" />
           {children}
         </MenuPopupPrimitive>
       </MenuPositionerPrimitive>

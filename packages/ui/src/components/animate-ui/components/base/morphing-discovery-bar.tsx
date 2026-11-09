@@ -6,7 +6,6 @@ import type { FC, ReactNode } from "react"
 import { AnimatePresence, LayoutGroup, motion } from "motion/react"
 import { Search, X } from "lucide-react"
 
-import { glass } from "@workspace/ui/lib/glass"
 import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 /* A search icon that expands into a search field, paired with a separate
@@ -49,7 +48,8 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
     <div className={`flex w-full flex-col items-center justify-center bg-transparent p-2 transition-colors duration-(--motion-duration) sm:p-4 ${className}`}>
       <div className="flex h-14 w-full max-w-full items-center justify-center">
         <LayoutGroup>
-          <motion.div layout className={`flex max-w-full items-center gap-1.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+8px))] p-1.5 ${glass("overlay")} sm:gap-3 sm:p-2`}>
+          <motion.div layout className={`flex max-w-full items-center gap-1.5 rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+8px))] p-1.5 relative isolate sm:gap-3 sm:p-2`}>
+            <SurfaceFill popup weight="medium" />
             <motion.div
               layout
               className={`relative flex h-11 items-center overflow-hidden rounded-(--radius-button) isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) ${

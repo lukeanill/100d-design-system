@@ -1,5 +1,5 @@
 
-import { glass } from "@workspace/ui/lib/glass";
+import { SurfaceFill } from "@workspace/ui/components/themed-surface";
 
 import {
   AlertDialog as AlertDialogPrimitive,
@@ -59,11 +59,14 @@ function AlertDialogPopup({ className, ...props }: AlertDialogPopupProps) {
       <AlertDialogBackdrop />
       <AlertDialogPopupPrimitive
         className={cn(
-          `${glass("dialog")} fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg`,
+          `isolate fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg sm:max-w-lg`,
           className,
         )}
         {...props}
-      />
+      >
+        <SurfaceFill popup weight="heavy" />
+        {props.children}
+      </AlertDialogPopupPrimitive>
     </AlertDialogPortalPrimitive>
   );
 }

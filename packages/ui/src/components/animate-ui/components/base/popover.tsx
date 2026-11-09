@@ -20,7 +20,7 @@ import {
 } from '@workspace/ui/components/animate-ui/primitives/base/popover';
 import { cn } from '@workspace/ui/lib/utils'
 import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition'
-import { glass } from "@workspace/ui/lib/glass";
+import { SurfaceFill } from "@workspace/ui/components/themed-surface";
 
 type PopoverProps = PopoverPrimitiveProps;
 
@@ -78,11 +78,12 @@ function PopoverPanel({
                 exit: { scale: 0.5, opacity: 0, transition: { opacity: { ...fast, delay: 0.1 } } },
               })}
           className={cn(
-            `${glass("overlay")} text-popover-foreground w-72 rounded-md border p-4 shadow-md outline-hidden origin-(--transform-origin)`,
+            `relative isolate text-popover-foreground w-72 rounded-md border p-4 shadow-md outline-hidden origin-(--transform-origin)`,
             className,
           )}
           style={style}
         >
+          <SurfaceFill popup weight="heavy" />
           {children}
         </PopoverPopupPrimitive>
       </PopoverPositionerPrimitive>
