@@ -67,23 +67,23 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
   return (
     <div className={cn("flex w-full max-w-95 flex-col gap-2", className)}>
       <div className="flex items-center gap-2 px-0.5" style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}>
-        <span className="text-[13px] font-[weight:var(--font-body-weight-emphasis)] text-foreground">{copy.header}</span>
-        <span className="inline-flex h-5 items-center rounded-md bg-muted px-1.5 text-[11.5px] font-[weight:var(--font-body-weight-action)] text-foreground/75 ring-1 ring-foreground/10 tabular-nums">{copy.count}</span>
+        <span className="text-sm font-[weight:var(--font-body-weight-emphasis)] text-foreground">{copy.header}</span>
+        <span className="inline-flex h-5 items-center rounded-md bg-muted px-1.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75 ring-1 ring-foreground/10 tabular-nums">{copy.count}</span>
       </div>
 
       {chunks.map((chunk, i) => (
         <div key={chunk.title} className="overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10" style={{ animation: `fade-up 400ms cubic-bezier(0.23,1,0.32,1) ${i * 100}ms both` }}>
           <div className="flex items-center gap-2.5 border-b border-border p-2.5">
-            <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-[weight:var(--font-body-weight-action)] text-foreground">
+            <span className="flex min-w-0 items-center gap-1.5 text-sm font-[weight:var(--font-body-weight-action)] text-foreground">
               <List className="size-3" strokeWidth={2.5} />
               <span className="truncate">{chunk.title}</span>
             </span>
-            <span className="ml-auto shrink-0 text-[12px] text-foreground/75 tabular-nums">{chunk.chars}</span>
+            <span className="ml-auto shrink-0 text-xs text-foreground/75 tabular-nums">{chunk.chars}</span>
           </div>
-          <p className="px-3 pt-2 pb-1 text-[12.5px] leading-relaxed text-foreground/75">{chunk.body}</p>
+          <p className="px-3 pt-2 pb-1 text-xs leading-relaxed text-foreground/75">{chunk.body}</p>
           <div className="px-3 pb-3">
             <span
-              className="inline-flex h-6 items-center gap-1.5 rounded-full bg-muted px-2 text-[12px] font-[weight:var(--font-body-weight-action)] text-foreground/75 shadow-xs transition-[opacity,transform,background-color] duration-(--motion-duration) hover:bg-muted/70"
+              className="inline-flex h-6 items-center gap-1.5 rounded-full bg-muted px-2 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75 shadow-xs transition-[opacity,transform,background-color] duration-(--motion-duration) hover:bg-muted/70"
               style={{
                 opacity: chipsShown ? 1 : 0,
                 transform: chipsShown ? "scale(1)" : "scale(0.95)",
@@ -91,7 +91,7 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
                 transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
               }}
             >
-              <span className={cn("flex size-3.5 items-center justify-center rounded-[4px] text-[7px] font-[weight:var(--font-body-weight-emphasis)] text-primary-foreground", chunk.tone === "destructive" ? "bg-destructive" : "bg-affirmative")}>
+              <span className={cn("flex size-3.5 items-center justify-center rounded-xs text-[7px] font-[weight:var(--font-body-weight-emphasis)] text-primary-foreground", chunk.tone === "destructive" ? "bg-destructive" : "bg-affirmative")}>
                 {chunk.badge}
               </span>
               {chunk.source}

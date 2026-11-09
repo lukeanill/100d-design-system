@@ -24,7 +24,6 @@ function useSequence(steps: number[]) {
 type Row = {
   primary: string
   secondary?: string
-  mono?: boolean
   add?: number
   del?: number
   href?: string
@@ -35,9 +34,9 @@ const VARIANTS: Record<string, { active: string; done: string; rows: Row[]; quer
     active: "Running tools",
     done: "Ran 3 tools",
     rows: [
-      { primary: "Read", secondary: "flavors.ts", mono: true },
-      { primary: "Edit", secondary: "ChurnSchedule.tsx", mono: true, add: 74, del: 41 },
-      { primary: "Run", secondary: "npm run freeze", mono: true },
+      { primary: "Read", secondary: "flavors.ts" },
+      { primary: "Edit", secondary: "ChurnSchedule.tsx", add: 74, del: 41 },
+      { primary: "Run", secondary: "npm run freeze" },
     ],
   },
   Reasoning: {
@@ -134,7 +133,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
         <span role="status" className="contents">
           {working ? (
             <span
-              className="bg-clip-text text-[13px] font-[weight:var(--font-body-weight-action)] whitespace-nowrap text-transparent"
+              className="bg-clip-text text-sm font-[weight:var(--font-body-weight-action)] whitespace-nowrap text-transparent"
               style={{
                 animation: "shimmer-text 1.4s linear infinite",
                 backgroundImage:
@@ -146,7 +145,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
             </span>
           ) : (
             <span
-              className="text-[13px] font-[weight:var(--font-body-weight-action)] whitespace-nowrap text-foreground/75"
+              className="text-sm font-[weight:var(--font-body-weight-action)] whitespace-nowrap text-foreground/75"
               style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}
             >
               {v.done}
@@ -181,7 +180,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                   style={{ animation: expanded ? "fade-up 300ms cubic-bezier(0.23,1,0.32,1) both" : undefined }}
                 >
                   <Search className="size-3.5 shrink-0 text-foreground/75" strokeWidth={2} />
-                  <span className="text-[12.5px] text-foreground/75">{v.query}</span>
+                  <span className="text-xs text-foreground/75">{v.query}</span>
                 </div>
               )}
               {v.rows.slice(0, visible).map((row, i) => {
@@ -199,7 +198,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                       ))}
                     <span
                       className={cn(
-                        "min-w-0 truncate text-[12.5px]",
+                        "min-w-0 truncate text-xs",
                         variant === "Reasoning" ? "whitespace-normal leading-relaxed text-foreground/75" : "font-[weight:var(--font-body-weight-action)] text-foreground",
                         variant === "Search" && "animated-underline"
                       )}
@@ -207,10 +206,10 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                       {row.primary}
                     </span>
                     {row.secondary && (
-                      <span className={cn("shrink-0 text-[11.5px] text-foreground/75", row.mono && "font-mono")}>{row.secondary}</span>
+                      <span className={cn("shrink-0 text-xs text-foreground/75")}>{row.secondary}</span>
                     )}
                     {row.add !== undefined && (
-                      <span className="shrink-0 font-mono text-[11px] tabular-nums">
+                      <span className="shrink-0 text-xs tabular-nums">
                         <span className="text-affirmative">+{row.add}</span> <span className="text-destructive">−{row.del}</span>
                       </span>
                     )}
@@ -250,7 +249,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                 )
               })}
               {variant === "Search" && stage >= 3 && (
-                <span className="text-[12px] text-foreground/75" style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}>
+                <span className="text-xs text-foreground/75" style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}>
                   +7 more
                 </span>
               )}

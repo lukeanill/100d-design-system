@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { ArrowUp, Clock, Ellipsis, Plus } from "lucide-react"
 
+import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Tabbed chat panel with reasoning replies and a composer. The reply
@@ -47,12 +48,12 @@ function Section({ label, sub, time, body, resolving }: { label: string; sub: st
         transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
       }}
     >
-      <div className="flex items-center gap-1 text-[12px] leading-[1.3]">
+      <div className="flex items-center gap-1 text-xs leading-[1.3]">
         <span className="font-[weight:var(--font-body-weight-action)] text-foreground">{label}</span>
         <span className="text-foreground/75">{sub}</span>
         <span className="text-foreground">for {time}</span>
       </div>
-      <p className="text-[13px] leading-normal text-foreground">{body}</p>
+      <p className="text-sm leading-normal text-foreground">{body}</p>
     </div>
   )
 }
@@ -110,7 +111,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
               type="button"
               aria-pressed={tab === item}
               onClick={() => setTab(item)}
-              className={cn("rounded-md px-2 py-[3px] text-[13px] text-foreground transition-[background-color,opacity] duration-(--motion-fast)", tab === item ? "bg-muted" : "opacity-50 hover:opacity-75")}
+              className={cn("rounded-md px-2 py-[3px] text-sm text-foreground transition-[background-color,opacity] duration-(--motion-fast)", tab === item ? "bg-muted" : "opacity-50 hover:opacity-75")}
             >
               {item}
             </button>
@@ -118,9 +119,9 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
         </div>
         <div className="flex items-center gap-1">
           {[Plus, Clock, Ellipsis].map((Icon, i) => (
-            <button key={i} type="button" aria-label="Action" className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-colors duration-(--motion-fast) hover:bg-muted hover:text-foreground">
-              <Icon className="size-3.5" strokeWidth={2} />
-            </button>
+            <IconButton key={i} type="button" aria-label="Action" variant="ghost" size="xs">
+              <Icon strokeWidth={2} />
+            </IconButton>
           ))}
         </div>
       </div>
@@ -128,7 +129,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
       <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto px-3 pt-2.5 pb-1">
         <div className="flex justify-end pl-14">
           <div
-            className="rounded-xl bg-muted px-3 py-1.5 text-[13px] leading-[1.4] text-foreground transition-[opacity,transform] duration-(--motion-duration)"
+            className="rounded-xl bg-muted px-3 py-1.5 text-sm leading-[1.4] text-foreground transition-[opacity,transform] duration-(--motion-duration)"
             style={{ opacity: sent ? 1 : 0, transform: sent ? "translateY(0)" : "translateY(10px)", transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
           >
             {submitted}
@@ -158,21 +159,12 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
             }}
             placeholder={l.placeholder}
             aria-label="Chat prompt"
-            className="min-h-4.5 bg-transparent text-[13px] leading-[1.4] text-foreground outline-none placeholder:text-foreground/75"
+            className="min-h-4.5 bg-transparent text-sm leading-[1.4] text-foreground outline-none placeholder:text-foreground/75"
           />
           <div className="flex items-center justify-end">
-            <button
-              type="button"
-              aria-label="Send"
-              disabled={!canSend}
-              onClick={send}
-              className={cn(
-                "flex size-7 items-center justify-center rounded-md transition-[background-color,color,transform] duration-(--motion-fast) enabled:active:scale-[0.96]",
-                canSend ? "bg-foreground text-background" : "bg-border text-foreground/75"
-              )}
-            >
-              <ArrowUp className="size-4" strokeWidth={2.4} />
-            </button>
+            <IconButton type="button" aria-label="Send" disabled={!canSend} onClick={send} size="xs">
+              <ArrowUp strokeWidth={2.4} />
+            </IconButton>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react"
 import { ArrowBendDownRightIcon } from "@phosphor-icons/react"
 import { ArrowDown, ArrowUp, Copy, CornerDownRight, RefreshCw } from "lucide-react"
 
+import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { cn } from "@workspace/ui/lib/utils"
 import { ThemedIcon } from "@workspace/ui/components/themed-icon"
 
@@ -40,10 +41,10 @@ function SourceChip({ source }: { source?: StreamingSource }) {
       href={source.href}
       target="_blank"
       rel="noreferrer"
-      className="mr-1 ml-0 inline-flex h-4.5 translate-y-[-1px] items-center gap-1 rounded-[5px] bg-muted pr-[3px] pl-[3px] align-middle font-mono text-[10.5px] text-foreground/75 ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted/70 hover:text-foreground"
+      className="mr-1 ml-0 inline-flex h-4.5 translate-y-[-1px] items-center gap-1 rounded-sm bg-muted pr-[3px] pl-[3px] align-middle text-xs text-foreground/75 ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted/70 hover:text-foreground"
       style={{ animation: "pop-in 250ms cubic-bezier(0.23,1,0.32,1) both" }}
     >
-      <span className="size-3 rounded-[3px] bg-primary" />
+      <span className="size-3 rounded-xs bg-primary" />
       <span>{source.domain}</span>
     </a>
   )
@@ -147,7 +148,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
 
   return (
     <div className={cn(fill ? "w-full" : "min-h-[15.5rem] w-full max-w-95", className)}>
-      <p className="text-[13px] leading-relaxed text-foreground">
+      <p className="text-sm leading-relaxed text-foreground">
         {content.slice(0, count).map((token, i) =>
           token.cite ? (
             <SourceChip key={i} source={sources[0]} />
@@ -164,14 +165,9 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
 
       <div className="mt-2 flex items-center gap-0.5 transition-opacity duration-(--motion-duration)" style={{ opacity: done ? 1 : 0, pointerEvents: done ? "auto" : "none" }}>
         {ACTION_ICONS.map((Icon, i) => (
-          <button
-            key={i}
-            type="button"
-            aria-label="Action"
-            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-colors duration-(--motion-fast) hover:bg-muted hover:text-foreground"
-          >
-            <Icon className="size-3.5" strokeWidth={1.8} />
-          </button>
+          <IconButton key={i} type="button" aria-label="Action" variant="ghost" size="xs">
+            <Icon strokeWidth={1.8} />
+          </IconButton>
         ))}
         <button
           type="button"
@@ -184,7 +180,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
               <span key={source.domain} className="size-3.5 rounded-full bg-primary ring-2 ring-background" />
             ))}
           </span>
-          <span className="text-[12px] text-foreground/75">{l.sources}</span>
+          <span className="text-xs text-foreground/75">{l.sources}</span>
         </button>
       </div>
 
@@ -204,11 +200,11 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
                 href={source.href}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 rounded-md px-1.5 py-1 text-[12px] text-foreground/75 transition-colors duration-(--motion-fast) hover:bg-muted/70 hover:text-foreground"
+                className="flex items-center gap-2 rounded-md px-1.5 py-1 text-xs text-foreground/75 transition-colors duration-(--motion-fast) hover:bg-muted/70 hover:text-foreground"
               >
-                <span className="size-4 rounded-[4px] bg-primary" />
+                <span className="size-4 rounded-xs bg-primary" />
                 <span className="animated-underline">{source.name}</span>
-                <span className="ml-auto font-mono text-[10.5px] text-foreground/75">{source.domain}</span>
+                <span className="ml-auto text-xs text-foreground/75">{source.domain}</span>
               </a>
             ))}
           </div>
@@ -216,13 +212,13 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
       </div>
 
       <div className="mt-2.5 transition-opacity duration-(--motion-duration)" style={{ opacity: done ? 1 : 0, pointerEvents: done ? "auto" : "none" }}>
-        <p className="text-[12px] font-[weight:var(--font-body-weight-action)] text-foreground/75">{l.followUps}</p>
+        <p className="text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">{l.followUps}</p>
         <div className="mt-0.5 flex flex-col">
           {followUps.map((text, i) => (
             <button
               key={text}
               onClick={() => actions?.onFollowUp?.(text, i)}
-              className="-mx-1.5 flex items-center gap-2 rounded-md border-b border-border px-1.5 py-1.5 text-left text-[12.5px] text-foreground transition-colors duration-(--motion-fast) hover:bg-muted"
+              className="-mx-1.5 flex items-center gap-2 rounded-md border-b border-border px-1.5 py-1.5 text-left text-xs text-foreground transition-colors duration-(--motion-fast) hover:bg-muted"
               style={done ? { animation: `fade-up 350ms cubic-bezier(0.23,1,0.32,1) ${i * 90}ms both` } : { opacity: 0 }}
             >
               <CornerDownRight className="size-2.5 shrink-0 text-foreground/75" strokeWidth={2} />

@@ -4,6 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import type { ReactNode, RefObject } from "react"
 import { ArrowUpIcon, CaretDownIcon, ChartLineIcon, CheckIcon, FileIcon, GlobeIcon, MicrophoneIcon, PaperclipIcon, PlusIcon, StackIcon, XIcon } from "@phosphor-icons/react"
 
+import { Button } from "@workspace/ui/components/button"
+import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { cn } from "@workspace/ui/lib/utils"
 import { ThemedIcon } from "@workspace/ui/components/themed-icon"
 import { SurfaceFill } from "@workspace/ui/components/themed-surface"
@@ -354,21 +356,23 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 >
                   <ThemedIcon phosphor={FileIcon} />
                   <span className="max-w-36 truncate">{file}</span>
-                  <button
+                  <IconButton
                     type="button"
                     aria-label={`Remove ${file}`}
                     onClick={() => setAttachments((current) => current.filter((_, j) => j !== i))}
-                    className={cn("-my-1 flex size-6 items-center justify-center text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)", pill ? "rounded-full" : "rounded-[5px]")}
+                    variant="ghost"
+                    size="xs"
+                    className={cn("-my-1", pill && "rounded-full")}
                   >
                     <ThemedIcon phosphor={XIcon} />
-                  </button>
+                  </IconButton>
                 </span>
               ))}
             </div>
           )}
 
           <div ref={controlsRef} className={cn("grid items-end gap-x-1 gap-y-1.5", wide ? "grid-cols-[36px_auto_minmax(0,1fr)_36px_36px]" : "grid-cols-[36px_minmax(0,1fr)_auto_36px_36px]")}>
-            <button
+            <IconButton
               type="button"
               aria-label="Add attachments and sources"
               aria-expanded={plusOpen}
@@ -377,15 +381,16 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 setPlusOpen((current) => !current)
                 inputRef.current?.focus()
               }}
+              variant="ghost"
               className={cn(
-                "flex size-9 shrink-0 items-center justify-center justify-self-start text-foreground/75 transition-[background-color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover) active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-(--radius-button)",
-                plusOpen && "bg-muted text-foreground",
+                "justify-self-start",
+                pill && "rounded-full",
+                plusOpen && "bg-muted",
                 wide ? "col-start-1 row-start-2" : "col-start-1 row-start-1"
               )}
             >
               <ThemedIcon phosphor={PlusIcon} />
-            </button>
+            </IconButton>
 
             <textarea
               ref={inputRef}
@@ -441,9 +446,10 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 {data.modelLabel}
               </span>
             ) : (
-              <button
+              <Button
                 ref={modelRef}
                 type="button"
+                variant="ghost"
                 aria-expanded={modelOpen}
                 aria-label="Choose model"
                 onClick={() => {
@@ -451,25 +457,25 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                   setModelOpen((current) => !current)
                 }}
                 className={cn(
-                  "text-md flex h-9 shrink-0 items-center gap-1 px-2 text-foreground/75 transition-[background-color] duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover)",
-                  pill ? "rounded-full" : "rounded-(--radius-button)",
+                  "text-md shrink-0 text-foreground/75",
+                  pill && "rounded-full",
                   wide ? "col-start-2 row-start-2 justify-self-start" : "col-start-3 row-start-1"
                 )}
               >
                 {model.name}
                 <ThemedIcon phosphor={CaretDownIcon} className="text-foreground/75" />
-              </button>
+              </Button>
             )}
 
-            <button
+            <IconButton
               type="button"
               aria-label={listening ? "Stop dictation" : "Start dictation"}
               aria-pressed={listening}
               onClick={() => setListening((current) => !current)}
+              variant="ghost"
               className={cn(
-                "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-(--radius-button)",
-                listening ? "bg-primary/14 text-primary" : "text-foreground/75 hover:bg-(--control-hover)",
+                pill && "rounded-full",
+                listening && "bg-primary/14 text-primary",
                 wide ? "col-start-4 row-start-2" : "col-start-4 row-start-1"
               )}
             >
@@ -482,22 +488,17 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               ) : (
                 <ThemedIcon phosphor={MicrophoneIcon} />
               )}
-            </button>
+            </IconButton>
 
-            <button
+            <IconButton
               type="button"
               aria-label="Send"
               disabled={!canSend}
               onClick={send}
-              className={cn(
-                "flex size-9 shrink-0 items-center justify-center transition-[background-color,color,transform] duration-(--motion-fast) enabled:active:scale-[0.94]",
-                pill ? "rounded-full" : "rounded-(--radius-button)",
-                canSend ? "bg-foreground text-background" : "bg-border text-foreground/75",
-                wide ? "col-start-5 row-start-2" : "col-start-5 row-start-1"
-              )}
+              className={cn(pill && "rounded-full", wide ? "col-start-5 row-start-2" : "col-start-5 row-start-1")}
             >
               <ThemedIcon phosphor={ArrowUpIcon} />
-            </button>
+            </IconButton>
           </div>
         </div>
       </div>

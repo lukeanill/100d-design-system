@@ -7,6 +7,7 @@ import { ArrowUp, Check, ChevronRight, MessageCircleQuestion, RotateCw, Scissors
 import { Button } from "@workspace/ui/components/button"
 import { EASING, TIMING, cubicBezier } from "@workspace/ui/themes/motion"
 import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
+import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* A contextual AI bar attached beneath selected text — highlight a passage
@@ -270,9 +271,9 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
   return (
     <div className="w-full max-w-[460px]">
       <div ref={hostRef} className="relative pb-12 select-none">
-        <p className="text-[13px] leading-relaxed text-foreground">
+        <p className="text-sm leading-relaxed text-foreground">
           {passage.lead}
-          <span ref={selectionRef} className="rounded-[3px] bg-primary/14 text-foreground box-decoration-clone">
+          <span ref={selectionRef} className="rounded-xs bg-primary/14 text-foreground box-decoration-clone">
             {mode === "idle" || mode === "thinking" ? passage.original : mode === "streaming" ? <StreamText text={passage.rewrite} onProgress={place} onDone={() => setMode("result")} /> : passage.rewrite}
           </span>
         </p>
@@ -289,7 +290,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
         >
           <div
             ref={barRef}
-            className="flex h-9 w-fit max-w-[calc(100vw-48px)] items-center justify-center gap-0.5 overflow-hidden rounded-full bg-card p-1 font-sans font-normal text-foreground shadow-lg ring-1 ring-foreground/10"
+            className="flex h-9 w-fit max-w-[calc(100vw-48px)] items-center justify-center gap-0.5 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] bg-card p-1 text-foreground shadow-lg ring-1 ring-foreground/10"
             style={{
               width: mode === "idle" && hasPrompt && typingWidth ? typingWidth : undefined,
               ...(visible ? { animation: "pop-in 220ms cubic-bezier(0.23,1,0.32,1) both" } : {}),
@@ -297,35 +298,26 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
           >
             <div ref={contentRef} className="flex w-fit shrink-0 items-center justify-center gap-0.5" style={{ width: mode === "idle" && hasPrompt && typingWidth ? typingWidth - 8 : undefined }}>
               {busy && (
-                <span className="inline-flex h-7 items-center gap-1.5 px-2.5 text-[12.5px] font-normal whitespace-nowrap text-foreground/75">
+                <span className="inline-flex h-7 items-center gap-1.5 px-2.5 text-xs font-normal whitespace-nowrap text-foreground/75">
                   <span className="size-3 shrink-0 rounded-full border-[1.5px] border-border border-t-secondary-foreground" style={{ animation: "spin 700ms linear infinite" }} />
-                  {mode === "thinking" ? <Shimmer className="text-[12.5px] font-normal">{busyLabel}…</Shimmer> : <span>{busyLabel}…</span>}
+                  {mode === "thinking" ? <Shimmer className="text-xs font-normal">{busyLabel}…</Shimmer> : <span>{busyLabel}…</span>}
                 </span>
               )}
 
               {mode === "result" && (
                 <>
-                  <button
-                    type="button"
-                    onClick={reset}
-                    className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full bg-foreground px-2.5 text-[12.5px] font-normal text-background shadow-xs transition-[opacity,transform] duration-(--motion-fast) hover:opacity-90 active:scale-[0.96]"
-                  >
+                  <Button type="button" size="xs" className="shrink-0" onClick={reset}>
                     {icons.keep}
                     {copy.keep}
-                  </button>
+                  </Button>
                   <Button type="button" variant="ghost" size="xs" className="shrink-0" onClick={reset}>
                     {icons.close}
                     {copy.discard}
                   </Button>
                   <span className="mx-0.5 h-4 w-px shrink-0 bg-border" />
-                  <button
-                    type="button"
-                    aria-label="Try again"
-                    onClick={() => run(action)}
-                    className="flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75 transition-[background-color,color,transform] duration-(--motion-fast) hover:bg-muted hover:text-foreground active:scale-[0.96]"
-                  >
+                  <IconButton type="button" aria-label="Try again" onClick={() => run(action)} variant="ghost" size="xs">
                     {icons.retry}
-                  </button>
+                  </IconButton>
                 </>
               )}
 
@@ -361,7 +353,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                         }}
                         aria-label={copy.placeholder}
                         placeholder={copy.placeholder}
-                        className="h-7 w-full bg-transparent pr-2.5 pl-3 text-[12.5px] text-foreground placeholder:text-foreground/75"
+                        className="h-7 w-full bg-transparent pr-2.5 pl-3 text-xs text-foreground placeholder:text-foreground/75"
                       />
                     </form>
                   </div>
@@ -396,31 +388,27 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                     </div>
 
                     <span className="mx-0.5 h-4 w-px shrink-0 bg-border" />
-                    <button
+                    <IconButton
                       type="button"
                       aria-label={expanded ? "Show fewer actions" : "Show more actions"}
                       aria-expanded={expanded}
                       onClick={() => setExpanded((value) => !value)}
-                      className="flex size-7 shrink-0 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-(--motion-fast) hover:bg-muted active:scale-[0.96]"
+                      variant="ghost"
+                      size="xs"
                     >
                       <span className="flex transition-transform duration-(--motion-duration)" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)", transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}>
                         {icons.chevron}
                       </span>
-                    </button>
+                    </IconButton>
                   </div>
 
                   <div
                     className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-(--motion-duration)"
                     style={{ maxWidth: hasPrompt ? 30 : 0, opacity: hasPrompt ? 1 : 0, transform: hasPrompt ? "scale(1)" : "scale(0.88)", transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
                   >
-                    <button
-                      type="button"
-                      aria-label="Send edit instruction"
-                      onClick={() => run(prompt.trim())}
-                      className="flex size-7 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-[opacity,transform] duration-(--motion-fast) active:scale-[0.94]"
-                    >
+                    <IconButton type="button" aria-label="Send edit instruction" onClick={() => run(prompt.trim())} size="xs">
                       {icons.send}
-                    </button>
+                    </IconButton>
                   </div>
                 </>
               )}

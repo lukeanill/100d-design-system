@@ -74,7 +74,7 @@ export const LoadingState = ({ appearance, data, className }: LoadingStateProps 
     <div role="status" className={cn("flex w-fit items-center gap-2.5", className)}>
       <LoaderGrid delays={delays} dur={dur} round={round} />
       <span
-        className="bg-clip-text text-[13px] font-[weight:var(--font-body-weight-action)] text-transparent"
+        className="bg-clip-text text-sm font-[weight:var(--font-body-weight-action)] text-transparent"
         style={{
           animation: "shimmer-text 1.4s linear infinite",
           backgroundImage:
@@ -84,7 +84,7 @@ export const LoadingState = ({ appearance, data, className }: LoadingStateProps 
       >
         {label}
       </span>
-      <span className="font-mono text-[12px] text-foreground/75 tabular-nums">{elapsed}</span>
+      <span className="text-xs text-foreground/75 tabular-nums">{elapsed}</span>
     </div>
   )
 }

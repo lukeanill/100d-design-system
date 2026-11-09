@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import { ChevronLeft, ChevronRight, TrendingUp } from "lucide-react"
 import { Line, LineChart, ResponsiveContainer, Tooltip, YAxis } from "recharts"
 
+import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Paged agent insights with scrub-ready live charts. Ported from
@@ -24,7 +25,7 @@ function Entity({ name }: { name: string }) {
 }
 
 function Mono({ children, tone }: { children: ReactNode; tone: "red" | "green" }) {
-  return <code className={cn("font-mono text-[11.5px]", tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{children}</code>
+  return <code className={cn("text-xs", tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{children}</code>
 }
 
 function CardChrome({ children }: { children: ReactNode }) {
@@ -34,7 +35,7 @@ function CardChrome({ children }: { children: ReactNode }) {
 function ChartTooltip({ active, payload, formatter }: { active?: boolean; payload?: { name: string; value: number; color?: string }[]; formatter: (v: number) => string }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="flex items-center gap-3 rounded-md border border-border bg-foreground px-2.5 py-1.5 text-[11.5px] whitespace-nowrap text-background tabular-nums shadow-lg">
+    <div className="flex items-center gap-3 rounded-md border border-border bg-foreground px-2.5 py-1.5 text-xs whitespace-nowrap text-background tabular-nums shadow-lg">
       {payload.map((row) => (
         <span key={row.name} className="inline-flex items-center gap-1.5">
           <span className="size-2 rounded-full" style={{ background: row.color }} />
@@ -67,19 +68,19 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
       <div className="flex items-center gap-4">
         {series.map((s) => (
           <div key={s.name} className="flex-1">
-            <span className="flex items-center gap-1.5 text-[11.5px] text-foreground/75">
+            <span className="flex items-center gap-1.5 text-xs text-foreground/75">
               <span className={cn("size-2 rounded-full", s.dot)} />
               {s.name}
             </span>
-            <span className={cn("block text-[17px] font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] tabular-nums", s.tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{formatPercent(s.values.at(-1) ?? 0)}</span>
+            <span className={cn("block text-lg font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] tabular-nums", s.tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{formatPercent(s.values.at(-1) ?? 0)}</span>
             <Mono tone={s.tone}>{s.sub}</Mono>
           </div>
         ))}
       </div>
       <div className="mt-2 overflow-hidden rounded-md bg-muted ring-1 ring-foreground/10">
         <div className="flex items-center justify-between border-b border-border px-2.5 py-1.5">
-          <span className="text-[11px] text-foreground/75 tabular-nums">Trend snapshot</span>
-          <span className="rounded-full bg-card px-2 py-0.5 text-[10.5px] font-[weight:var(--font-body-weight-action)] text-foreground/75">Snapshot</span>
+          <span className="text-xs text-foreground/75 tabular-nums">Trend snapshot</span>
+          <span className="rounded-(--radius) bg-card px-2 py-0.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">Snapshot</span>
         </div>
         <div className="h-[166px] pt-2">
           <ResponsiveContainer width="100%" height="100%">
@@ -111,16 +112,16 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
   return (
     <CardChrome>
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1.5 text-[12px] font-[weight:var(--font-body-weight-action)] text-foreground">
+        <span className="flex items-center gap-1.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground">
           <TrendingUp className="size-3 text-destructive" strokeWidth={2.5} />
           High freezer spend
         </span>
-        <span className="rounded-full bg-muted px-2 py-0.5 text-[10.5px] font-[weight:var(--font-body-weight-action)] text-foreground/75">Snapshot</span>
+        <span className="rounded-(--radius) bg-muted px-2 py-0.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">Snapshot</span>
       </div>
       <div className="mt-2 overflow-hidden rounded-md bg-muted ring-1 ring-foreground/10">
         <div className="flex items-center justify-between border-b border-border px-2.5 py-1.5">
-          <span className="text-[11px] text-foreground/75 tabular-nums">{metric === "spend" ? `${moneyLabel} threshold` : "82 kWh threshold"}</span>
-          <span className="flex rounded-full bg-card p-0.5">
+          <span className="text-xs text-foreground/75 tabular-nums">{metric === "spend" ? `${moneyLabel} threshold` : "82 kWh threshold"}</span>
+          <span className="flex rounded-(--radius-button) bg-card p-0.5">
             {(["spend", "usage"] as const).map((item) => (
               <button
                 key={item}
@@ -128,7 +129,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
                 aria-pressed={metric === item}
                 onClick={() => setMetric(item)}
                 className={cn(
-                  "rounded-full px-2 py-0.5 text-[10.5px] font-[weight:var(--font-body-weight-action)] transition-[background-color,color,box-shadow,transform] duration-(--motion-fast) active:scale-[0.96]",
+                  "rounded-(--radius-button) px-2 py-0.5 text-xs font-[weight:var(--font-body-weight-action)] transition-[background-color,color,box-shadow,transform] duration-(--motion-fast) active:scale-[0.96]",
                   metric === item ? "bg-muted text-foreground shadow-xs" : "text-foreground/75 hover:text-foreground"
                 )}
               >
@@ -148,9 +149,9 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
         </div>
       </div>
       <div className="mt-1.5 flex items-baseline gap-2">
-        <span className="text-[17px] font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] text-foreground tabular-nums">{moneyLabel} spent</span>
+        <span className="text-lg font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] text-foreground tabular-nums">{moneyLabel} spent</span>
         <Mono tone="red">+$1,834.66</Mono>
-        <span className="text-[11px] text-foreground/75">vs 3 months</span>
+        <span className="text-xs text-foreground/75">vs 3 months</span>
       </div>
     </CardChrome>
   )
@@ -170,12 +171,12 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
 
   return (
     <CardChrome>
-      <span className="flex items-center gap-1.5 text-[12px] font-[weight:var(--font-body-weight-action)] text-foreground">
+      <span className="flex items-center gap-1.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground">
         <span className="flex size-3.5 items-center justify-center rounded-full bg-destructive text-[8px] font-[weight:var(--font-body-weight-emphasis)] text-primary-foreground">V</span>
         Vanilla allocation
       </span>
-      <span className="mt-1 block text-[20px] font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] text-foreground tabular-nums">{active.amount}</span>
-      <div className="mt-3 flex h-9 gap-0.5 overflow-hidden rounded-full bg-muted p-0.5" role="group" aria-label="Allocation segments">
+      <span className="mt-1 block text-lg font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] text-foreground tabular-nums">{active.amount}</span>
+      <div className="mt-3 flex h-9 gap-0.5 overflow-hidden rounded-(--radius-button) bg-muted p-0.5" role="group" aria-label="Allocation segments">
         {segments.map((s) => (
           <button
             key={s.name}
@@ -183,7 +184,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
             aria-pressed={selected === s.name}
             aria-label={`${s.label}: ${s.pct}%`}
             onClick={() => setSelected(s.name)}
-            className={cn("relative h-full overflow-hidden rounded-full transition-[opacity,transform] duration-(--motion-duration) active:scale-[0.98]", s.cls)}
+            className={cn("relative h-full overflow-hidden rounded-(--radius-button) transition-[opacity,transform] duration-(--motion-duration) active:scale-[0.98]", s.cls)}
             style={{ opacity: selected === s.name ? 1 : 0.58, transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)", width: `${s.pct}%` }}
           />
         ))}
@@ -196,7 +197,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
             aria-pressed={selected === s.name}
             onClick={() => setSelected(s.name)}
             className={cn(
-              "flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[11px] transition-[background-color,color,transform] duration-(--motion-fast) active:scale-[0.96]",
+              "flex items-center gap-1 rounded-(--radius-button) px-1.5 py-0.5 text-xs transition-[background-color,color,transform] duration-(--motion-fast) active:scale-[0.96]",
               selected === s.name ? "bg-muted text-foreground" : "text-foreground/75 hover:bg-muted hover:text-foreground"
             )}
           >
@@ -206,8 +207,8 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
         ))}
       </div>
       <div className="mt-3 min-h-16 rounded-md bg-muted px-2.5 py-2 ring-1 ring-foreground/10">
-        <span className={cn("block text-[11.5px] font-[weight:var(--font-body-weight-action)]", active.tone)}>{active.label}</span>
-        <span className="mt-1 block text-[11px] leading-relaxed text-foreground/75">Contribution snapshot across current inventory value. Segment selection changes the inspected group without moving the card.</span>
+        <span className={cn("block text-xs font-[weight:var(--font-body-weight-action)]", active.tone)}>{active.label}</span>
+        <span className="mt-1 block text-xs leading-relaxed text-foreground/75">Contribution snapshot across current inventory value. Segment selection changes the inspected group without moving the card.</span>
       </div>
     </CardChrome>
   )
@@ -275,33 +276,25 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
     <div className={cn("min-h-[408px] w-full max-w-86", className)}>
       <div className="flex items-center justify-between">
         <span className="flex items-baseline gap-1.5">
-          <span className="text-[13px] font-[weight:var(--font-body-weight-emphasis)] text-foreground">{l.title}</span>
-          <span className="text-[13px] text-foreground/75 tabular-nums">{pages.length}</span>
+          <span className="text-sm font-[weight:var(--font-body-weight-emphasis)] text-foreground">{l.title}</span>
+          <span className="text-sm text-foreground/75 tabular-nums">{pages.length}</span>
         </span>
         <span className="flex items-center gap-0.5">
-          <button
-            aria-label="Previous insight"
-            onClick={() => move(-1)}
-            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-(--motion-fast) hover:bg-muted hover:text-foreground active:scale-[0.96]"
-          >
-            <ChevronLeft className="size-3.5" strokeWidth={2.2} />
-          </button>
-          <button
-            aria-label="Next insight"
-            onClick={() => move(1)}
-            className="flex size-6 items-center justify-center rounded-md text-foreground/75 transition-[background-color,color,transform] duration-(--motion-fast) hover:bg-muted hover:text-foreground active:scale-[0.96]"
-          >
-            <ChevronRight className="size-3.5" strokeWidth={2.2} />
-          </button>
+          <IconButton aria-label="Previous insight" onClick={() => move(-1)} variant="ghost" size="xs">
+            <ChevronLeft strokeWidth={2.2} />
+          </IconButton>
+          <IconButton aria-label="Next insight" onClick={() => move(1)} variant="ghost" size="xs">
+            <ChevronRight strokeWidth={2.2} />
+          </IconButton>
         </span>
       </div>
 
       <div>
-        <p className="mt-1.5 text-[12.5px] leading-relaxed text-foreground/75">{prose}</p>
+        <p className="mt-1.5 text-xs leading-relaxed text-foreground/75">{prose}</p>
         <div className="mt-2">
           <Card />
         </div>
-        <button className="mt-2 rounded-full bg-card px-3 py-1.5 text-left text-[12px] text-foreground shadow-xs ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted">{pill}</button>
+        <button className="mt-2 rounded-(--radius-button) bg-card px-3 py-1.5 text-left text-xs text-foreground shadow-xs ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted">{pill}</button>
       </div>
     </div>
   )
