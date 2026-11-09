@@ -661,6 +661,8 @@ _No props of its own._
 | Prop | Type | Required | Note |
 |---|---|---|---|
 | `items` | `NotificationItem[]` | no |  |
+| `label` | `string` | no |  |
+| `viewAllLabel` | `string` | no |  |
 
 ### Pinned List
 

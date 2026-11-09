@@ -12,7 +12,7 @@ export type NotificationItem = {
   count?: number;
 };
 
-const notifications: NotificationItem[] = [
+export const notifications: NotificationItem[] = [
   {
     id: 1,
     title: 'NPM Install Complete',
@@ -55,11 +55,19 @@ const viewAllTextVariants = {
   expanded: { opacity: 1, y: 0, pointerEvents: 'auto' },
 };
 
-function NotificationList({ items = notifications }: { items?: NotificationItem[] }) {
+function NotificationList({
+  items = notifications,
+  label = 'Notifications',
+  viewAllLabel = 'View all',
+}: {
+  items?: NotificationItem[];
+  label?: string;
+  viewAllLabel?: string;
+}) {
   const fast = useFastTransition();
   return (
     <motion.div
-      className="bg-muted p-3 rounded-lg w-xs space-y-3 shadow-md"
+      className="p-3 w-xs space-y-3"
       initial="collapsed"
       whileHover="expanded"
     >
@@ -67,7 +75,7 @@ function NotificationList({ items = notifications }: { items?: NotificationItem[
         {items.map((notification, i) => (
           <motion.div
             key={notification.id}
-            className="bg-card rounded-xl px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-(--motion-fast) relative"
+            className="bg-card rounded-lg px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-(--motion-fast) relative"
             variants={getCardVariants(i)}
             style={{
               zIndex: items.length - i,
@@ -101,14 +109,14 @@ function NotificationList({ items = notifications }: { items?: NotificationItem[
             variants={notificationTextVariants}
             transition={fast}
           >
-            Notifications
+            {label}
           </motion.span>
           <motion.span
             className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground flex items-center gap-1 cursor-pointer select-none row-start-1 col-start-1"
             variants={viewAllTextVariants}
             transition={fast}
           >
-            View all <ArrowUpRight className="size-4" />
+            {viewAllLabel} <ArrowUpRight className="size-4" />
           </motion.span>
         </span>
       </div>

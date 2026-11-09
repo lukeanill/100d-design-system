@@ -8,7 +8,7 @@
 - Import: `@workspace/ui/components/button`
 - Storybook: [Components/Actions/Button](https://ds.lukeai.space/storybook/?path=/story/components-actions-button--button)
 - Used in the web app: History page (/history); Explore; Themer (/themes); Themer preview: the Coeurdes Alpes product page
-- Used by other components: amount-input, attachment, calendar, carousel, combobox, date-time-picker, hero, input-group (+9)
+- Used by other components: amount-input, attachment, calendar, carousel, chat-composer, combobox, date-time-picker, hero (+15)
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
@@ -112,7 +112,7 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 - Import: `@workspace/ui/components/animate-ui/components/buttons/icon`
 - Storybook: [Components/Actions/Icon](https://ds.lukeai.space/storybook/?path=/story/components-actions-icon--icon)
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: amount-input
+- Used by other components: amount-input, beam-input, chat-composer, insight-cards, prompt-bar, selection-actions, streaming-text
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
