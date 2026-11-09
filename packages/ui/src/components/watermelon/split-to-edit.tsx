@@ -151,13 +151,13 @@ export function SplitToEdit({
   }
 
   const segmentClass = cn(
-    `flex items-center justify-end gap-1 border border-muted ${glass("input")} px-1 shadow-sm`,
+    `flex h-9 items-center justify-end gap-1 border border-muted ${glass("input")} px-1 shadow-sm`,
     disabled ? "cursor-not-allowed" : "cursor-pointer",
     isExpanded && "gap-2 px-2.5"
   )
   // Fonts are left to inherit from the root, so one class there restyles all.
   const inputClass = cn(
-    "h-9 w-[2ch] bg-transparent text-center text-base text-foreground outline-none",
+    "h-full w-[2ch] bg-transparent text-center text-base text-foreground outline-none",
     classNames?.input
   )
   const labelClass = cn(
