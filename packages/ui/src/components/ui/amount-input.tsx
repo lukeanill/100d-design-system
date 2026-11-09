@@ -12,6 +12,7 @@ import {
 import type { ChangeEvent, ComponentProps, KeyboardEvent } from "react";
 
 import { Button } from "@workspace/ui/components/button";
+import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon";
 import { cn } from "@workspace/ui/lib/utils";
 
 interface AmountInputContextValue {
@@ -110,15 +111,15 @@ export const AmountInputDisplay = ({
             {label}
           </span>
           <div className="flex items-center justify-center gap-2">
-            <Button
-              size="icon-sm"
+            <IconButton
+              size="sm"
               variant="outline"
               aria-label={`Decrease ${label}`}
               disabled={amount <= min}
               onClick={() => setAmount(amount - step)}
             >
               <Minus />
-            </Button>
+            </IconButton>
             <div className="min-w-24 text-center sm:min-w-28">
               {editing ? (
                 <div className="flex items-center justify-center gap-1">
@@ -146,15 +147,15 @@ export const AmountInputDisplay = ({
                 </button>
               )}
             </div>
-            <Button
-              size="icon-sm"
+            <IconButton
+              size="sm"
               variant="outline"
               aria-label={`Increase ${label}`}
               disabled={amount >= max}
               onClick={() => setAmount(amount + step)}
             >
               <Plus />
-            </Button>
+            </IconButton>
           </div>
         </>
       )}
