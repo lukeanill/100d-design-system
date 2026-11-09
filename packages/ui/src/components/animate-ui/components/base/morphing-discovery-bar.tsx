@@ -56,7 +56,6 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                 isSearching ? "xs:w-64 w-[calc(100vw-80px)] sm:w-80" : "w-11"
               }`}
             >
-              <SurfaceFill />
               <div className="relative flex h-full w-full items-center justify-center px-3 sm:px-4">
                 <motion.div layout="position">
                   <Search size={16} strokeWidth={2.25} className="shrink-0 text-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)" />
@@ -93,7 +92,6 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   exit={{ filter: "blur(10px)", opacity: 0, scale: 0.9 }}
                   className="flex h-11 items-center gap-1 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] isolate outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm p-1"
                 >
-                  <SurfaceFill />
                   {categories.map((cat) => {
                     const isActive = activeTab === cat.id
 
@@ -133,7 +131,6 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                   }}
                   className="relative isolate flex h-11 w-11 shrink-0 outline-1 -outline-offset-[0.5px] outline-(--control-edge) shadow-sm items-center justify-center rounded-(--radius-button) text-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
                 >
-                  <SurfaceFill />
                   <X size={16} strokeWidth={2.25} className="relative" />
                 </motion.button>
               )}

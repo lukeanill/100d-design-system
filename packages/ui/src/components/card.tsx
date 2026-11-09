@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { glass } from "@workspace/ui/lib/glass"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 function Card({
   className,
@@ -13,11 +13,14 @@ function Card({
       data-slot="card"
       data-size={size}
       className={cn(
-        `group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-lg ${glass("card")} py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(6)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(4)] *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl`,
+        `group/card flex flex-col gap-(--card-spacing) relative isolate overflow-hidden rounded-lg py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(6)] has-[>img:nth-child(2)]:pt-0 data-[size=sm]:[--card-spacing:--spacing(4)] *:[img:nth-child(2)]:rounded-t-xl *:[img:last-child]:rounded-b-xl`,
         className
       )}
       {...props}
-    />
+    >
+      <SurfaceFill popup weight="heavy" />
+      {props.children}
+    </div>
   )
 }
 
