@@ -4,7 +4,7 @@
 
 Every component in `packages/ui/src/components` (import `@workspace/ui/components/<path>`; published as `@lukeanill/ui/components/<path>`). Groups follow the Storybook sidebar.
 
-Total: 120 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
+Total: 119 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
 
 ## Actions
 
@@ -150,7 +150,6 @@ Detail: `references/components/navigation.md`
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
 | Breadcrumb | `components/breadcrumb` | [story](https://ds.lukeai.space/storybook/?path=/story/components-navigation-breadcrumb--breadcrumb) | — |
-| Discrete Tabs | `components/animate-ui/components/base/discrete-tabs` | [story](https://ds.lukeai.space/storybook/?path=/story/components-navigation-discrete-tabs--discrete-tabs) | — |
 | Dock | `components/animate-ui/components/base/dock` | [story](https://ds.lukeai.space/storybook/?path=/story/components-navigation-dock--dock) | — |
 | Dropdown Menu | `components/navigation-menu` | [story](https://ds.lukeai.space/storybook/?path=/story/components-navigation-dropdown-menu--navigation-menu) | — |
 | Fluid Tabs | `components/animate-ui/components/base/fluid-tabs` | [story](https://ds.lukeai.space/storybook/?path=/story/components-navigation-fluid-tabs--fluid-tabs) | Homepage preview |

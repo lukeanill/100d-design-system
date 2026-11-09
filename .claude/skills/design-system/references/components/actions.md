@@ -112,7 +112,7 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 - Import: `@workspace/ui/components/animate-ui/components/buttons/icon`
 - Storybook: [Components/Actions/Icon](https://ds.lukeai.space/storybook/?path=/story/components-actions-icon--icon)
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
+- Used by other components: amount-input
 
 | Prop | Type | Required | Note |
 |---|---|---|---|

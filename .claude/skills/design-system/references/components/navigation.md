@@ -40,20 +40,6 @@ _No props of its own._
 
 _No props of its own._
 
-### Discrete Tabs
-
-- File: `packages/ui/src/components/animate-ui/components/base/discrete-tabs.tsx`
-- Import: `@workspace/ui/components/animate-ui/components/base/discrete-tabs`
-- Storybook: [Components/Navigation/Discrete Tabs](https://ds.lukeai.space/storybook/?path=/story/components-navigation-discrete-tabs--discrete-tabs)
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `tabs` | `DiscreteTabItem[]` | yes |  |
-| `onTabChange` | `(tabId: string) => void` | no |  |
-| `defaultTab` | `string` | no |  |
-
 ### Dock
 
 - File: `packages/ui/src/components/animate-ui/components/base/dock.tsx`

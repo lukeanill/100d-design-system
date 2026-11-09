@@ -253,7 +253,7 @@ _No props of its own._
 - Import: `@workspace/ui/components/themed-surface`
 - Storybook: no story yet
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: beam-input, discrete-tabs, dock, fluid-tabs, metal-surface, morphing-discovery-bar, prompt-bar, themed-card
+- Used by other components: beam-input, dock, fluid-tabs, metal-surface, morphing-discovery-bar, prompt-bar, themed-card
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
