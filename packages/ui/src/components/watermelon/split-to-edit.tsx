@@ -151,7 +151,7 @@ export function SplitToEdit({
   }
 
   const segmentClass = cn(
-    `flex h-9 items-center justify-end gap-1 border border-muted ${glass("input")} px-1 shadow-sm`,
+    `flex h-9 items-center justify-end gap-1 border border-border ${glass("input")} px-1 shadow-sm`,
     disabled ? "cursor-not-allowed" : "cursor-pointer",
     isExpanded && "gap-2 px-2.5"
   )
@@ -256,7 +256,7 @@ export function SplitToEdit({
             borderBottomRightRadius: RADIUS,
           }}
           className={cn(
-            `flex size-9 items-center justify-center border border-muted ${glass("input")} shadow-sm will-change-transform`,
+            `flex size-9 items-center justify-center border border-border ${glass("input")} shadow-sm will-change-transform`,
             !isExpanded && "border-l-0",
             classNames?.action
           )}
