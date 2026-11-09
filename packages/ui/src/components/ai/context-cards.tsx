@@ -72,7 +72,7 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
       </div>
 
       {chunks.map((chunk, i) => (
-        <div key={chunk.title} className="overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10" style={{ animation: `fade-up 400ms cubic-bezier(0.23,1,0.32,1) ${i * 100}ms both` }}>
+        <div key={chunk.title} className="overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10" style={{ animation: `fade-up var(--motion-duration) var(--motion-transition-ease) calc(var(--duration-fast) * ${i * 0.5}) both` }}>
           <div className="flex items-center gap-2.5 border-b border-border p-2.5">
             <span className="flex min-w-0 items-center gap-1.5 text-sm font-[weight:var(--font-body-weight-action)] text-foreground">
               <List className="size-3" strokeWidth={2.5} />
@@ -87,11 +87,11 @@ export const ContextCards = ({ data, labels, className }: ContextCardsProps = {}
               style={{
                 opacity: chipsShown ? 1 : 0,
                 transform: chipsShown ? "scale(1)" : "scale(0.95)",
-                transitionDelay: `${i * 80}ms`,
-                transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
+                transitionDelay: `calc(var(--duration-fast) * ${i * 0.4})`,
+                transitionTimingFunction: "var(--motion-transition-ease)",
               }}
             >
-              <span className={cn("flex size-3.5 items-center justify-center rounded-xs text-[7px] font-[weight:var(--font-body-weight-emphasis)] text-primary-foreground", chunk.tone === "destructive" ? "bg-destructive" : "bg-affirmative")}>
+              <span className={cn("flex size-4 items-center justify-center rounded-xs text-xs font-[weight:var(--font-body-weight-emphasis)] text-primary-foreground", chunk.tone === "destructive" ? "bg-destructive" : "bg-affirmative")}>
                 {chunk.badge}
               </span>
               {chunk.source}

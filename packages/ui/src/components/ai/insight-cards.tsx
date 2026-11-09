@@ -30,7 +30,7 @@ function Mono({ children, tone }: { children: ReactNode; tone: "red" | "green" }
 }
 
 function CardChrome({ children }: { children: ReactNode }) {
-  return <div className="min-h-[278px] rounded-lg bg-card p-3 ring-1 ring-foreground/10">{children}</div>
+  return <div className="min-h-69.5 rounded-lg bg-card p-3 ring-1 ring-foreground/10">{children}</div>
 }
 
 function ChartTooltip({ active, payload, formatter }: { active?: boolean; payload?: { name: string; value: number; color?: string }[]; formatter: (v: number) => string }) {
@@ -73,7 +73,7 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
               <span className={cn("size-2 rounded-full", s.dot)} />
               {s.name}
             </span>
-            <span className={cn("block text-lg font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] tabular-nums", s.tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{formatPercent(s.values.at(-1) ?? 0)}</span>
+            <span className={cn("block text-lg font-[weight:var(--font-body-weight-emphasis)] tabular-nums", s.tone === "red" ? "text-destructive" : "text-affirmative-foreground")}>{formatPercent(s.values.at(-1) ?? 0)}</span>
             <Mono tone={s.tone}>{s.sub}</Mono>
           </div>
         ))}
@@ -83,7 +83,7 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
           <span className="text-xs text-foreground/75 tabular-nums">Trend snapshot</span>
           <span className="rounded-(--radius) bg-card px-2 py-0.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">Snapshot</span>
         </div>
-        <div className="h-[166px] pt-2">
+        <div className="h-41.5 pt-2">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ bottom: 8, left: 8, right: 8, top: 4 }}>
               <YAxis hide domain={["dataMin - 0.5", "dataMax + 0.5"]} />
@@ -138,7 +138,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
             ))}
           </span>
         </div>
-        <div className="h-[166px] pt-2">
+        <div className="h-41.5 pt-2">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ bottom: 8, left: 8, right: 8, top: 4 }}>
               <YAxis hide domain={["dataMin - 5", "dataMax + 5"]} />
@@ -149,7 +149,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
         </div>
       </div>
       <div className="mt-1.5 flex items-baseline gap-2">
-        <span className="text-lg font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] text-foreground tabular-nums">{moneyLabel} spent</span>
+        <span className="text-lg font-[weight:var(--font-body-weight-emphasis)] text-foreground tabular-nums">{moneyLabel} spent</span>
         <Mono tone="red">+$1,834.66</Mono>
         <span className="text-xs text-foreground/75">vs 3 months</span>
       </div>
@@ -172,21 +172,22 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
   return (
     <CardChrome>
       <span className="flex items-center gap-1.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground">
-        <span className="flex size-3.5 items-center justify-center rounded-full bg-destructive text-[8px] font-[weight:var(--font-body-weight-emphasis)] text-primary-foreground">V</span>
+        <span className="flex size-4 items-center justify-center rounded-full bg-destructive text-xs font-[weight:var(--font-body-weight-emphasis)] text-primary-foreground">V</span>
         Vanilla allocation
       </span>
-      <span className="mt-1 block text-lg font-[weight:var(--font-body-weight-emphasis)] tracking-[-0.01em] text-foreground tabular-nums">{active.amount}</span>
+      <span className="mt-1 block text-lg font-[weight:var(--font-body-weight-emphasis)] text-foreground tabular-nums">{active.amount}</span>
       <div className="mt-3 flex h-9 gap-0.5 overflow-hidden rounded-(--radius-button) bg-muted p-0.5" role="group" aria-label="Allocation segments">
         {segments.map((s) => (
-          <button
-            key={s.name}
-            type="button"
-            aria-pressed={selected === s.name}
-            aria-label={`${s.label}: ${s.pct}%`}
-            onClick={() => setSelected(s.name)}
-            className={cn("relative h-full overflow-hidden rounded-(--radius-button) transition-[opacity,transform] duration-(--motion-duration) active:scale-[0.98]", s.cls)}
-            style={{ opacity: selected === s.name ? 1 : 0.58, transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)", width: `${s.pct}%` }}
-          />
+          <div key={s.name} className="h-full min-w-0" style={{ width: `${s.pct}%` }}>
+            <Button
+              type="button"
+              variant="ghost"
+              aria-pressed={selected === s.name}
+              aria-label={`${s.label}: ${s.pct}%`}
+              onClick={() => setSelected(s.name)}
+              className={cn("h-full w-full p-0 hover:opacity-100", selected === s.name ? "opacity-100" : "opacity-50", s.cls)}
+            />
+          </div>
         ))}
       </div>
       <div className="mt-2 flex items-center gap-1.5">
@@ -272,7 +273,7 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
   const { prose, Card, pill } = pages[page]
 
   return (
-    <div className={cn("min-h-[408px] w-full max-w-86", className)}>
+    <div className={cn("min-h-102 w-full max-w-86", className)}>
       <div className="flex items-center justify-between">
         <span className="flex items-baseline gap-1.5">
           <span className="text-sm font-[weight:var(--font-body-weight-emphasis)] text-foreground">{l.title}</span>

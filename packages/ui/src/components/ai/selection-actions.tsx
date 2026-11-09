@@ -78,7 +78,7 @@ function Shimmer({ children, className }: { children: ReactNode; className?: str
     <span
       className={cn("inline-block bg-clip-text text-transparent", className)}
       style={{
-        animation: "shimmer-text 1.8s linear infinite",
+        animation: "shimmer-text var(--duration-longer) var(--ease-constant) infinite",
         backgroundImage: "linear-gradient(90deg, var(--secondary-foreground) 35%, var(--foreground) 50%, var(--secondary-foreground) 65%)",
         backgroundSize: "200% 100%",
       }}
@@ -269,7 +269,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
   const busyLabel = busyLabelMap[action] ?? "Editing"
 
   return (
-    <div className="w-full max-w-[460px]">
+    <div className="w-full max-w-115">
       <div ref={hostRef} className="relative pb-12 select-none">
         <p className="text-sm leading-relaxed text-foreground">
           {passage.lead}
@@ -284,22 +284,22 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
             opacity: visible ? 1 : 0,
             pointerEvents: visible ? "auto" : "none",
             transform: `translate3d(${anchor.x}px, ${anchor.y}px, 0) translateX(-50%)`,
-            transition: "transform 320ms cubic-bezier(0.77,0,0.175,1), opacity 180ms ease-(--motion-transition-ease)",
+            transition: "transform var(--motion-duration) var(--motion-transition-ease), opacity var(--motion-fast) ease-(--motion-transition-ease)",
             willChange: "transform",
           }}
         >
           <div
             ref={barRef}
-            className="flex h-9 w-fit max-w-[calc(100vw-48px)] items-center justify-center gap-0.5 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] bg-card p-1 text-foreground shadow-lg ring-1 ring-foreground/10"
+            className="flex h-9 w-fit max-w-[calc(100vw-var(--spacing)*12)] items-center justify-center gap-0.5 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] bg-card p-1 text-foreground shadow-lg ring-1 ring-foreground/10"
             style={{
               width: mode === "idle" && hasPrompt && typingWidth ? typingWidth : undefined,
-              ...(visible ? { animation: "pop-in 220ms cubic-bezier(0.23,1,0.32,1) both" } : {}),
+              ...(visible ? { animation: "pop-in var(--motion-fast) var(--motion-transition-ease) both" } : {}),
             }}
           >
             <div ref={contentRef} className="flex w-fit shrink-0 items-center justify-center gap-0.5" style={{ width: mode === "idle" && hasPrompt && typingWidth ? typingWidth - 8 : undefined }}>
               {busy && (
                 <span className="inline-flex h-7 items-center gap-1.5 px-2.5 text-xs font-normal whitespace-nowrap text-foreground/75">
-                  <span className="size-3 shrink-0 rounded-full border-[1.5px] border-border border-t-secondary-foreground" style={{ animation: "spin 700ms linear infinite" }} />
+                  <span className="size-3 shrink-0 rounded-full border-2 border-border border-t-secondary-foreground" style={{ animation: "spin var(--duration-long) var(--ease-constant) infinite" }} />
                   {mode === "thinking" ? <Shimmer className="text-xs font-normal">{busyLabel}…</Shimmer> : <span>{busyLabel}…</span>}
                 </span>
               )}
@@ -329,12 +329,12 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                       maxWidth: expanded ? 0 : hasPrompt && typingWidth ? typingWidth - 40 : 145,
                       opacity: expanded ? 0 : 1,
                       transform: expanded ? "translateX(-8px)" : "translateX(0)",
-                      transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)",
+                      transitionTimingFunction: "var(--motion-transition-ease)",
                     }}
                   >
                     <form
                       className="flex h-7 shrink-0 items-center transition-[width] duration-(--motion-duration)"
-                      style={{ transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)", width: hasPrompt && typingWidth ? typingWidth - 40 : 145 }}
+                      style={{ transitionTimingFunction: "var(--motion-transition-ease)", width: hasPrompt && typingWidth ? typingWidth - 40 : 145 }}
                       onSubmit={(event) => {
                         event.preventDefault()
                         run(prompt.trim() || "Improve")
@@ -364,7 +364,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                       maxWidth: hasPrompt ? 0 : expanded ? 462 : 224,
                       opacity: hasPrompt ? 0 : 1,
                       transform: hasPrompt ? "translateX(-8px)" : "translateX(0)",
-                      transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)",
+                      transitionTimingFunction: "var(--motion-transition-ease)",
                     }}
                   >
                     {!expanded && <span className="mx-1 h-4 w-px shrink-0 bg-border" />}
@@ -377,7 +377,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
 
                     <div
                       className="flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,margin] duration-(--motion-duration)"
-                      style={{ marginLeft: expanded ? 2 : 0, maxWidth: expanded ? 262 : 0, opacity: expanded ? 1 : 0, transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
+                      style={{ marginLeft: expanded ? 2 : 0, maxWidth: expanded ? 262 : 0, opacity: expanded ? 1 : 0, transitionTimingFunction: "var(--motion-transition-ease)" }}
                     >
                       {actionSet.more.map((item) => (
                         <Button key={item.id} type="button" variant="ghost" size="xs" className="shrink-0" onClick={item.action ? () => run(item.action!) : undefined}>
@@ -396,7 +396,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
                       variant="ghost"
                       size="xs"
                     >
-                      <span className="flex transition-transform duration-(--motion-duration)" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)", transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}>
+                      <span className="flex transition-transform duration-(--motion-duration)" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)", transitionTimingFunction: "var(--motion-transition-ease)" }}>
                         {icons.chevron}
                       </span>
                     </IconButton>
@@ -404,7 +404,7 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
 
                   <div
                     className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-(--motion-duration)"
-                    style={{ maxWidth: hasPrompt ? 30 : 0, opacity: hasPrompt ? 1 : 0, transform: hasPrompt ? "scale(1)" : "scale(0.88)", transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)" }}
+                    style={{ maxWidth: hasPrompt ? 30 : 0, opacity: hasPrompt ? 1 : 0, transform: hasPrompt ? "scale(1)" : "scale(0.88)", transitionTimingFunction: "var(--motion-transition-ease)" }}
                   >
                     <IconButton type="button" aria-label="Send edit instruction" onClick={() => run(prompt.trim())} size="xs">
                       {icons.send}

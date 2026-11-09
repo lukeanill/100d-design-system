@@ -42,8 +42,8 @@ function SourceChip({ source }: { source?: StreamingSource }) {
       href={source.href}
       target="_blank"
       rel="noreferrer"
-      className="mr-1 ml-0 inline-flex h-4.5 translate-y-[-1px] items-center gap-1 rounded-sm bg-muted pr-[3px] pl-[3px] align-middle text-xs text-foreground/75 ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted/70 hover:text-foreground"
-      style={{ animation: "pop-in 250ms cubic-bezier(0.23,1,0.32,1) both" }}
+      className="mr-1 ml-0 inline-flex h-4.5 -translate-y-px items-center gap-1 rounded-sm bg-muted px-0.75 align-middle text-xs text-foreground/75 ring-1 ring-foreground/10 transition-colors duration-(--motion-fast) hover:bg-muted/70 hover:text-foreground"
+      style={{ animation: "pop-in var(--motion-duration) var(--motion-transition-ease) both" }}
     >
       <span className="size-3 rounded-xs bg-primary" />
       <span>{source.domain}</span>
@@ -143,7 +143,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
   }
 
   return (
-    <div className={cn(fill ? "w-full" : "min-h-[15.5rem] w-full max-w-95", className)}>
+    <div className={cn(fill ? "w-full" : "min-h-62 w-full max-w-95", className)}>
       <p className="text-sm leading-relaxed text-foreground">
         {content.slice(0, count).map((token, i) =>
           token.cite ? (
@@ -180,7 +180,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
         style={{
           gridTemplateRows: done && sourcesOpen ? "1fr" : "0fr",
           opacity: done && sourcesOpen ? 1 : 0,
-          transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
+          transitionTimingFunction: "var(--motion-transition-ease)",
         }}
       >
         <div className="overflow-hidden">
@@ -206,15 +206,17 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
         <p className="text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">{l.followUps}</p>
         <div className="mt-0.5 flex flex-col">
           {followUps.map((text, i) => (
-            <button
-              key={text}
-              onClick={() => actions?.onFollowUp?.(text, i)}
-              className="-mx-1.5 flex items-center gap-2 rounded-md border-b border-border px-1.5 py-1.5 text-left text-xs text-foreground transition-colors duration-(--motion-fast) hover:bg-muted"
-              style={done ? { animation: `fade-up 350ms cubic-bezier(0.23,1,0.32,1) ${i * 90}ms both` } : { opacity: 0 }}
-            >
-              <CornerDownRight className="size-2.5 shrink-0 text-foreground/75" strokeWidth={2} />
-              {text}
-            </button>
+            <div key={text} className="-mx-1.5" style={done ? { animation: `fade-up var(--motion-duration) var(--motion-transition-ease) calc(var(--duration-fast) * ${i * 0.45}) both` } : { opacity: 0 }}>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => actions?.onFollowUp?.(text, i)}
+                className="h-auto w-full justify-start gap-2 border-b-border px-1.5 py-1.5 text-left text-xs text-foreground hover:opacity-100"
+              >
+                <CornerDownRight className="size-2.5 shrink-0 text-foreground/75" strokeWidth={2} />
+                {text}
+              </Button>
+            </div>
           ))}
         </div>
       </div>

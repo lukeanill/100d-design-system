@@ -67,7 +67,7 @@ export function StatCard({ label = "New followers", periods = PERIODS, defaultPe
   const period = periods.find((p) => p.id === id) ?? periods[0]
 
   return (
-    <ThemedCard ref={seen} className={cn("min-w-[325px]", className)}>
+    <ThemedCard ref={seen} className={cn("min-w-81.25", className)}>
       {/* the label holds the left edge and the select the right, whatever width the card is */}
       <div className="flex items-center justify-between gap-2">
         <p className="text-md whitespace-nowrap">{label}</p>

@@ -41,15 +41,15 @@ function Section({ label, sub, time, body, resolving }: { label: string; sub: st
     <div
       className="flex w-full flex-col gap-1.5 transition-[opacity,filter,transform] duration-(--motion-duration)"
       style={{
-        animation: "fade-up 400ms cubic-bezier(0.23,1,0.32,1) both",
+        animation: "fade-up var(--motion-duration) var(--motion-transition-ease) both",
         filter: resolving ? "blur(0.5px)" : "blur(0)",
         opacity: resolving ? 0.55 : 1,
         transform: resolving ? "scale(0.985)" : "scale(1)",
         transformOrigin: "top left",
-        transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
+        transitionTimingFunction: "var(--motion-transition-ease)",
       }}
     >
-      <div className="flex items-center gap-1 text-xs leading-[1.3]">
+      <div className="flex items-center gap-1 text-xs">
         <span className="font-[weight:var(--font-body-weight-action)] text-foreground">{label}</span>
         <span className="text-foreground/75">{sub}</span>
         <span className="text-foreground">for {time}</span>
@@ -103,7 +103,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
   }
 
   return (
-    <div className={cn("flex h-[288px] w-full max-w-95 flex-col self-start overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10", className)}>
+    <div className={cn("flex h-72 w-full max-w-95 flex-col self-start overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10", className)}>
       <div className="flex shrink-0 items-center justify-between border-b border-border p-1.5">
         <div className="flex items-center">
           {suggestions.map((item) => (
@@ -132,8 +132,8 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
       <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto px-3 pt-2.5 pb-1">
         <div className="flex justify-end pl-14">
           <div
-            className="rounded-xl bg-muted px-3 py-1.5 text-sm leading-[1.4] text-foreground transition-[opacity,transform] duration-(--motion-duration)"
-            style={{ opacity: sent ? 1 : 0, transform: sent ? "translateY(0)" : "translateY(10px)", transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
+            className="rounded-xl bg-muted px-3 py-1.5 text-sm text-foreground transition-[opacity,transform] duration-(--motion-duration)"
+            style={{ opacity: sent ? 1 : 0, transform: sent ? "translateY(0)" : "translateY(10px)", transitionTimingFunction: "var(--motion-transition-ease)" }}
           >
             {submitted}
           </div>
@@ -162,7 +162,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
             }}
             placeholder={l.placeholder}
             aria-label="Chat prompt"
-            className="min-h-4.5 bg-transparent text-sm leading-[1.4] text-foreground outline-none placeholder:text-foreground/75"
+            className="min-h-4.5 bg-transparent text-sm text-foreground outline-none placeholder:text-foreground/75"
           />
           <div className="flex items-center justify-end">
             <IconButton type="button" aria-label="Send" disabled={!canSend} onClick={send} size="xs">

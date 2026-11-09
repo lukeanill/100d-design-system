@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 import { Check, ChevronDown, RefreshCw, X } from "lucide-react"
 
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Live agent task status — running, failed, completed — with expandable
@@ -28,7 +29,7 @@ function SpinnerRing({ active, children }: { active?: boolean; children?: ReactN
   const c = 2 * Math.PI * r
   return (
     <span className="relative inline-flex shrink-0 items-center justify-center" style={{ height: size, width: size }}>
-      <svg width={size} height={size} className="absolute inset-0" style={active ? { animation: "spin 1.1s linear infinite" } : undefined}>
+      <svg width={size} height={size} className="absolute inset-0" style={active ? { animation: "spin var(--duration-longer) var(--ease-constant) infinite" } : undefined}>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--border)" strokeWidth={stroke} />
         {active && (
           <circle
@@ -52,7 +53,7 @@ function Badge({ tone, children }: { tone: "red" | "green"; children: ReactNode 
   return (
     <span
       className={cn("flex size-5.5 shrink-0 items-center justify-center rounded-full text-affirmative-foreground", tone === "red" ? "bg-destructive" : "bg-affirmative")}
-      style={{ animation: "pop-in 300ms cubic-bezier(0.23,1,0.32,1) both" }}
+      style={{ animation: "pop-in var(--motion-duration) var(--motion-transition-ease) both" }}
     >
       {children}
     </span>
@@ -155,7 +156,7 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
     if (row.status === "running") return null
     return row2 === "failed" ? (
       <span className="inline-flex h-5.5 items-center gap-1.5 rounded-(--radius) bg-destructive/10 px-2 text-xs font-[weight:var(--font-body-weight-action)] text-destructive" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
-        {copy.failed} <RefreshCw className="size-3" style={{ animation: "spin 1.2s linear infinite" }} />
+        {copy.failed} <RefreshCw className="size-3" style={{ animation: "spin var(--duration-longer) var(--ease-constant) infinite" }} />
       </span>
     ) : row2 === "done" ? (
       <span className="inline-flex h-5.5 items-center gap-1.5 rounded-(--radius) bg-affirmative/15 px-2 text-xs font-[weight:var(--font-body-weight-action)] text-affirmative-foreground" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
@@ -166,7 +167,7 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
 
   const list = variant === "List"
   return (
-    <div className={cn("flex w-full max-w-110 flex-col", list ? "gap-0 self-start overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10" : "min-h-[196px] gap-2", className)}>
+    <div className={cn("flex w-full max-w-110 flex-col", list ? "gap-0 self-start overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10" : "min-h-49 gap-2", className)}>
       {rows.map((row, i) => {
         const open = manualOpen[row.key] ?? (row.key === "index" && tick === 2)
         return (
@@ -176,16 +177,17 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
               "self-stretch overflow-hidden transition-[border-radius,background-color] duration-(--motion-duration) hover:bg-muted",
               list ? "border-b border-border last:border-0" : "bg-card ring-1 ring-foreground/10"
             )}
-            style={{ animation: `fade-up 450ms cubic-bezier(0.23,1,0.32,1) ${i * 80}ms both`, borderRadius: list ? 0 : open ? 14 : 22 }}
+            style={{ animation: `fade-up var(--motion-duration) var(--motion-transition-ease) calc(var(--duration-fast) * ${i * 0.4}) both`, borderRadius: list ? 0 : open ? "var(--radius-md)" : "var(--radius-lg)" }}
           >
-            <button
+            <Button
               type="button"
+              variant="ghost"
               aria-expanded={open}
               onClick={() => {
                 setManualOpen((current) => ({ ...current, [row.key]: !open }))
                 actions?.onToggleRow?.(row.key, !open)
               }}
-              className="flex h-11 w-full items-center gap-2.5 px-2.5 text-left"
+              className="h-11 w-full gap-2.5 rounded-none px-2.5 justify-start text-left hover:opacity-100"
             >
               <span className="flex size-6 shrink-0 items-center justify-center">{badgeFor(row)}</span>
               <span className="min-w-0 flex-1 truncate text-sm font-[weight:var(--font-body-weight-action)] text-foreground">{row.label}</span>
@@ -194,18 +196,18 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
               <span aria-hidden="true" className="-ml-2 flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75">
                 <ChevronDown className="size-3.5 transition-transform duration-(--motion-duration)" style={{ transform: open ? "rotate(180deg)" : "rotate(0)" }} />
               </span>
-            </button>
+            </Button>
 
             <div
               className="grid transition-[grid-template-rows,opacity] duration-(--motion-duration)"
-              style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0, transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
+              style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0, transitionTimingFunction: "var(--motion-transition-ease)" }}
             >
               <div className="overflow-hidden">
-                <div className="mb-2.5 grid grid-cols-[24px_1fr] gap-2.5 px-2.5">
+                <div className="mb-2.5 grid grid-cols-[calc(var(--spacing)*6)_1fr] gap-2.5 px-2.5">
                   <span aria-hidden className="mx-auto h-full w-px bg-border" />
                   <div className="flex flex-col gap-1.5">
                     {row.details.map((d, j) => (
-                      <div key={d.label} className="flex items-center justify-between" style={open ? { animation: `fade-up 300ms cubic-bezier(0.23,1,0.32,1) ${120 + j * 100}ms both` } : undefined}>
+                      <div key={d.label} className="flex items-center justify-between" style={open ? { animation: `fade-up var(--motion-duration) var(--motion-transition-ease) calc(var(--duration-fast) * ${0.6 + j * 0.5}) both` } : undefined}>
                         <span className="text-xs text-foreground/75">{d.label}</span>
                         <span className="text-xs text-foreground/75 tabular-nums">{d.meta}</span>
                       </div>

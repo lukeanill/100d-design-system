@@ -20,21 +20,22 @@ const orbit = Array.from({ length: 9 }, (_, i) => {
   return k === -1 ? null : k * 110
 })
 
-const PATTERNS: Record<string, { delays: (number | null)[]; dur: number; round: boolean }> = {
-  Dots: { delays: chevron, dur: 650, round: true },
-  Drive: { delays: chevron, dur: 650, round: false },
-  Orbit: { delays: orbit, dur: 950, round: false },
+// each cycle is a theme timing (Figma `timing/long`, `timing/longer`); `cycle` is the length the delays below were written for, in ms
+const PATTERNS: Record<string, { delays: (number | null)[]; cycle: number; dur: string; round: boolean }> = {
+  Dots: { delays: chevron, cycle: 650, dur: "var(--duration-long)", round: true },
+  Drive: { delays: chevron, cycle: 650, dur: "var(--duration-long)", round: false },
+  Orbit: { delays: orbit, cycle: 950, dur: "var(--duration-longer)", round: false },
 }
 
-function LoaderGrid({ delays, dur, round }: { delays: (number | null)[]; dur: number; round: boolean }) {
+function LoaderGrid({ delays, cycle, dur, round }: { delays: (number | null)[]; cycle: number; dur: string; round: boolean }) {
   return (
-    <span aria-hidden className="grid shrink-0 grid-cols-[repeat(3,4px)] gap-[1.5px]">
+    <span aria-hidden className="grid shrink-0 grid-cols-[repeat(3,calc(var(--spacing)*1))] gap-0.5">
       {delays.map((delay, index) => (
         <span
           key={index}
-          className={cn("size-[4px] bg-foreground", round ? "rounded-full" : "rounded-[1px]")}
+          className={cn("size-1 bg-foreground", round ? "rounded-full" : "rounded-none")}
           style={{
-            animation: delay === null ? "none" : `pixel-on ${dur}ms ease-in-out ${delay}ms infinite`,
+            animation: delay === null ? "none" : `pixel-on ${dur} var(--ease-in-out-normal) calc(${dur} * ${delay / cycle}) infinite`,
             opacity: delay === null ? 0.07 : 0.15,
           }}
         />
@@ -68,15 +69,15 @@ export const LoadingState = ({ appearance, data, className }: LoadingStateProps 
   const variant = appearance?.variant ?? "Drive"
   const elapsed = useElapsed()
   const label = data?.label ?? "Churning"
-  const { delays, dur, round } = PATTERNS[variant] ?? PATTERNS.Drive
+  const { delays, cycle, dur, round } = PATTERNS[variant] ?? PATTERNS.Drive
 
   return (
     <div role="status" className={cn("flex w-fit items-center gap-2.5", className)}>
-      <LoaderGrid delays={delays} dur={dur} round={round} />
+      <LoaderGrid delays={delays} cycle={cycle} dur={dur} round={round} />
       <span
         className="bg-clip-text text-sm font-[weight:var(--font-body-weight-action)] text-transparent"
         style={{
-          animation: "shimmer-text 1.4s linear infinite",
+          animation: "shimmer-text var(--duration-longer) var(--ease-constant) infinite",
           backgroundImage:
             "linear-gradient(90deg, var(--secondary-foreground) 35%, var(--foreground) 50%, var(--secondary-foreground) 65%)",
           backgroundSize: "200% 100%",

@@ -243,14 +243,14 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
   }
 
   return (
-    <div data-promptbar className={demo ? "flex min-h-[384px] w-full max-w-105 flex-col justify-end pb-8" : "w-full"} onPointerDownCapture={takeOver} onKeyDownCapture={takeOver}>
+    <div data-promptbar className={demo ? "flex min-h-96 w-full max-w-105 flex-col justify-end pb-8" : "w-full"} onPointerDownCapture={takeOver} onKeyDownCapture={takeOver}>
       {/* Elevation: the composer sits at shadow-xs, so the menus it opens sit one level up, at shadow-sm */}
       <div ref={composerAnchorRef} className="relative">
         {menu && (
           <div
             onMouseLeave={() => setEngaged(false)}
             className="absolute inset-x-0 bottom-full z-10 mb-2 rounded-(--radius-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
-            style={{ animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom center" }}
+            style={{ animation: "pop-in var(--motion-fast) var(--motion-transition-ease) both", transformOrigin: "bottom center" }}
           >
             <SurfaceFill popup />
             <span
@@ -266,9 +266,10 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
             {rows.map((row, i) => {
               const source = menu === "at" ? SOURCES.find((s) => s.key === row.key) : undefined
               return (
-                <button
+                <Button
                   key={row.key}
                   type="button"
+                  variant="ghost"
                   ref={(el) => {
                     rowRefs.current[i] = el
                   }}
@@ -278,7 +279,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                     setEngaged(true)
                   }}
                   onClick={() => pick(row)}
-                  className="relative z-10 flex h-9 w-full items-center gap-2.5 rounded-(--radius-button) px-2 text-left"
+                  className="relative z-10 w-full gap-2.5 px-2 justify-start text-left hover:opacity-100"
                 >
                   {source && <span className="flex size-5.5 shrink-0 items-center justify-center text-foreground/75">{GLYPHS[source.glyph ?? "clip"]}</span>}
                   <span className="text-md shrink-0 text-foreground">{row.name}</span>
@@ -296,7 +297,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                       {connected ? "Connected" : "Connect"}
                     </span>
                   )}
-                </button>
+                </Button>
               )
             })}
             {rows.length === 0 && <div className="text-md flex h-9 items-center px-2 text-foreground/75">No matches for "{query}"</div>}
@@ -308,27 +309,28 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
           <div
             onMouseLeave={() => setModelHovered(null)}
             className="absolute bottom-full left-0 z-10 mb-2 w-44 min-w-1/2 rounded-(--radius-md) outline-1 -outline-offset-[0.5px] outline-(--control-edge) isolate p-2 shadow-sm backdrop-blur-(--popup-blur)"
-            style={{ animation: "pop-in 180ms cubic-bezier(0.23,1,0.32,1) both", transformOrigin: "bottom left" }}
+            style={{ animation: "pop-in var(--motion-fast) var(--motion-transition-ease) both", transformOrigin: "bottom left" }}
           >
             <SurfaceFill popup />
             {MODELS.map((m, i) => (
-              <button
+              <Button
                 key={m.key}
                 type="button"
+                variant="ghost"
                 onMouseDown={(event) => event.preventDefault()}
                 onMouseEnter={() => setModelHovered(i)}
                 onClick={() => {
                   selectModel(m)
                   inputRef.current?.focus()
                 }}
-                className={cn("relative z-10 flex h-7.5 w-full items-center gap-2 rounded-(--radius-button) px-2 text-left", modelHovered === i && "bg-(--control-hover)")}
+                className={cn("relative z-10 h-7.5 w-full gap-2 px-2 justify-start text-left hover:opacity-100", modelHovered === i && "bg-(--control-hover)")}
               >
                 <span className="text-md min-w-0 flex-1 truncate text-foreground">{m.name}</span>
                 <span className="text-md shrink-0 text-foreground/75">{m.tag}</span>
                 <span className={cn("shrink-0 text-foreground", m.key === model.key ? "" : "invisible")}>
                   <ThemedIcon phosphor={CheckIcon} />
                 </span>
-              </button>
+              </Button>
             ))}
           </div>
         )}
@@ -352,7 +354,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
                 <span
                   key={`${file}-${i}`}
                   className={cn("flex h-6.5 items-center gap-1.5 bg-muted py-1 pr-1 pl-1.5 text-md text-foreground/75 ring-1 ring-(--control-edge)", pill ? "rounded-full" : "rounded-(--radius-button)")}
-                  style={{ animation: "pop-in 200ms cubic-bezier(0.23,1,0.32,1) both" }}
+                  style={{ animation: "pop-in var(--motion-fast) var(--motion-transition-ease) both" }}
                 >
                   <ThemedIcon phosphor={FileIcon} />
                   <span className="max-w-36 truncate">{file}</span>
@@ -371,7 +373,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
             </div>
           )}
 
-          <div ref={controlsRef} className={cn("grid items-end gap-x-1 gap-y-1.5", wide ? "grid-cols-[36px_auto_minmax(0,1fr)_36px_36px]" : "grid-cols-[36px_minmax(0,1fr)_auto_36px_36px]")}>
+          <div ref={controlsRef} className={cn("grid items-end gap-x-1 gap-y-1.5", wide ? "grid-cols-[calc(var(--spacing)*9)_auto_minmax(0,1fr)_calc(var(--spacing)*9)_calc(var(--spacing)*9)]" : "grid-cols-[calc(var(--spacing)*9)_minmax(0,1fr)_auto_calc(var(--spacing)*9)_calc(var(--spacing)*9)]")}>
             <IconButton
               type="button"
               aria-label="Add attachments and sources"
@@ -430,7 +432,7 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               className={cn(
                 "w-full min-w-0 resize-none bg-transparent text-foreground outline-none [overflow-wrap:anywhere] placeholder:text-foreground/75",
                 // an input inside a component takes double the component's padding at the sides: 8px in the 4px bar, 28px in the 14px tall one
-                tall ? "text-md min-h-[68px] px-7 py-2" : "text-md min-h-9 px-2 py-[calc((2.25rem-1lh)/2)]",
+                tall ? "text-md min-h-17 px-7 py-2" : "text-md min-h-9 px-2 py-[calc((calc(var(--spacing)*9)-1lh)/2)]",
                 wide ? "col-span-full col-start-1 row-start-1" : "col-start-2 row-start-1"
               )}
             />
@@ -480,9 +482,9 @@ export const PromptBar = ({ appearance, data, actions }: PromptBarProps = {}) =>
               )}
             >
               {listening ? (
-                <span className="flex h-3.5 items-center gap-[2.5px]">
+                <span className="flex h-3.5 items-center gap-0.5">
                   {[0, 1, 2].map((i) => (
-                    <span key={i} className="w-[2.5px] rounded-full bg-current" style={{ animation: `eq-bounce 900ms ease-in-out ${i * 150}ms infinite`, height: "100%" }} />
+                    <span key={i} className="w-0.5 rounded-full bg-current" style={{ animation: `eq-bounce var(--duration-long) var(--ease-in-out-normal) calc(var(--duration-fast) * ${i * 0.75}) infinite`, height: "100%" }} />
                   ))}
                 </span>
               ) : (

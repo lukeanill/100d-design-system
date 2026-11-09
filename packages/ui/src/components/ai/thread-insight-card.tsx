@@ -59,7 +59,7 @@ export function ThreadInsightCard({ image, content = CONTENT, followUps = ["Do p
         />
       ) : (
         // the card's shape holds its place while it waits, with the picture's skeleton already showing
-        <div className="h-[116px]">
+        <div className="h-29">
           <Skeleton className="size-16 rounded-(--radius-xs)" />
         </div>
       )}

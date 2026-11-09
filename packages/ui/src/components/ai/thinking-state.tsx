@@ -117,7 +117,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
       className={cn("flex w-full max-w-95 flex-col", className)}
       style={{
         minHeight: working || expanded ? 176 : undefined,
-        transition: "min-height 400ms cubic-bezier(0.23,1,0.32,1)",
+        transition: "min-height var(--motion-duration) var(--motion-transition-ease)",
       }}
     >
       <Button
@@ -138,7 +138,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
             <span
               className="bg-clip-text text-sm font-[weight:var(--font-body-weight-action)] whitespace-nowrap text-transparent"
               style={{
-                animation: "shimmer-text 1.4s linear infinite",
+                animation: "shimmer-text var(--duration-longer) var(--ease-constant) infinite",
                 backgroundImage:
                   "linear-gradient(90deg, var(--secondary-foreground) 35%, var(--foreground) 50%, var(--secondary-foreground) 65%)",
                 backgroundSize: "200% 100%",
@@ -166,21 +166,21 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
         style={{
           gridTemplateRows: expanded ? "1fr" : "0fr",
           opacity: expanded ? 1 : 0,
-          transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
+          transitionTimingFunction: "var(--motion-transition-ease)",
         }}
       >
         <div className="overflow-hidden">
-          <div className="relative mt-1 ml-[5px] pl-4">
+          <div className="relative mt-1 ml-1.25 pl-4">
             <span
               aria-hidden
-              className="absolute left-[3px] w-px bg-border"
-              style={{ height: lineHeight ? lineHeight - 2 : 0, top: -8, transition: "height 500ms cubic-bezier(0.23,1,0.32,1)" }}
+              className="absolute left-0.75 w-px bg-border"
+              style={{ height: lineHeight ? lineHeight - 2 : 0, top: -8, transition: "height var(--motion-duration) var(--motion-transition-ease)" }}
             />
             <div ref={traceRef} className="flex flex-col gap-1 py-1">
               {v.query && (
                 <div
                   className="flex h-6 items-center gap-2 px-1.5"
-                  style={{ animation: expanded ? "fade-up 300ms cubic-bezier(0.23,1,0.32,1) both" : undefined }}
+                  style={{ animation: expanded ? "fade-up var(--motion-duration) var(--motion-transition-ease) both" : undefined }}
                 >
                   <Search className="size-3.5 shrink-0 text-foreground/75" strokeWidth={2} />
                   <span className="text-xs text-foreground/75">{v.query}</span>
@@ -195,8 +195,8 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                         <Check className="size-3.5 shrink-0 text-foreground/75" strokeWidth={2.5} />
                       ) : (
                         <span
-                          className="size-3 shrink-0 rounded-full border-[1.5px] border-border border-t-secondary-foreground"
-                          style={{ animation: "spin 700ms linear infinite" }}
+                          className="size-3 shrink-0 rounded-full border-2 border-border border-t-secondary-foreground"
+                          style={{ animation: "spin var(--duration-long) var(--ease-constant) infinite" }}
                         />
                       ))}
                     <span
@@ -219,7 +219,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                   </>
                 )
                 const rowClass = "flex min-h-7 w-full items-center gap-2 rounded-md px-1.5 py-0.5 text-left"
-                const animation = { animation: `fade-up 320ms cubic-bezier(0.23,1,0.32,1) ${i * 120}ms both` }
+                const animation = { animation: `fade-up var(--motion-duration) var(--motion-transition-ease) calc(var(--duration-fast) * ${i * 0.6}) both` }
 
                 if (variant === "Search") {
                   return (
@@ -232,16 +232,17 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                 if (variant === "Coding") {
                   const selected = selectedTool === row.primary
                   return (
-                    <button
-                      key={row.primary}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() => setSelectedTool(selected ? null : row.primary)}
-                      className={cn(rowClass, "transition-colors duration-(--motion-fast)", selected ? "bg-muted" : "hover:bg-muted")}
-                      style={animation}
-                    >
-                      {content}
-                    </button>
+                    <div key={row.primary} style={animation}>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        aria-pressed={selected}
+                        onClick={() => setSelectedTool(selected ? null : row.primary)}
+                        className={cn(rowClass, "h-auto justify-start hover:opacity-100", selected && "bg-muted")}
+                      >
+                        {content}
+                      </Button>
+                    </div>
                   )
                 }
 
