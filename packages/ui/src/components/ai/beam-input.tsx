@@ -8,6 +8,7 @@ import { ArrowUpIcon } from "@phosphor-icons/react"
 import { cn } from "@workspace/ui/lib/utils"
 import { useTheme } from "@workspace/ui/components/theme-provider"
 import { ThemedIcon } from "@workspace/ui/components/themed-icon"
+import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { DEFAULT_THEME_ID, getPreset, presets } from "@workspace/ui/themes/presets"
 import { themeStyle } from "@workspace/ui/themes/css"
@@ -96,17 +97,9 @@ export function BeamInput({ texture, colorMode, motion = "rotate", type = "large
         aria-label="Message"
         className="text-md min-h-9 w-full min-w-0 flex-1 bg-transparent px-2 text-foreground outline-none placeholder:text-foreground/75"
       />
-      <button
-        type="submit"
-        aria-label="Send"
-        disabled={!canSend}
-        className={cn(
-          "flex size-9 shrink-0 items-center justify-center rounded-(--radius-button) transition-[background-color,color,transform] duration-(--motion-fast) ease-(--motion-transition-ease) enabled:active:scale-[0.94]",
-          canSend ? "bg-foreground text-background" : "bg-border text-foreground/75"
-        )}
-      >
+      <IconButton type="submit" aria-label="Send" disabled={!canSend}>
         <ThemedIcon phosphor={ArrowUpIcon} />
-      </button>
+      </IconButton>
     </form>
     </BorderBeam>
   )
