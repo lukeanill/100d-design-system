@@ -134,7 +134,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
         <span role="status" className="contents">
           {working ? (
             <span
-              className="bg-clip-text text-[13px] font-medium whitespace-nowrap text-transparent"
+              className="bg-clip-text text-[13px] font-[weight:var(--font-body-weight-action)] whitespace-nowrap text-transparent"
               style={{
                 animation: "shimmer-text 1.4s linear infinite",
                 backgroundImage:
@@ -146,7 +146,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
             </span>
           ) : (
             <span
-              className="text-[13px] font-medium whitespace-nowrap text-foreground/75"
+              className="text-[13px] font-[weight:var(--font-body-weight-action)] whitespace-nowrap text-foreground/75"
               style={{ animation: "fade-in var(--motion-duration) var(--motion-transition-ease) both" }}
             >
               {v.done}
@@ -200,7 +200,7 @@ export const ThinkingState = ({ appearance, onSettled, className }: ThinkingStat
                     <span
                       className={cn(
                         "min-w-0 truncate text-[12.5px]",
-                        variant === "Reasoning" ? "whitespace-normal leading-relaxed text-foreground/75" : "font-medium text-foreground",
+                        variant === "Reasoning" ? "whitespace-normal leading-relaxed text-foreground/75" : "font-[weight:var(--font-body-weight-action)] text-foreground",
                         variant === "Search" && "animated-underline"
                       )}
                     >

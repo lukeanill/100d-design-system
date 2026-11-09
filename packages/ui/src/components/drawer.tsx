@@ -122,7 +122,7 @@ function DrawerTitle({
     <DrawerPrimitive.Title asChild>
       <h6
         data-slot="drawer-title"
-        className={cn("font-medium text-foreground", className)}
+        className={cn("font-[weight:var(--font-body-weight-action)] text-foreground", className)}
         {...props}
       />
     </DrawerPrimitive.Title>

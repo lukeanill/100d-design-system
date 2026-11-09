@@ -260,7 +260,7 @@ export const TableHeader = ({
                 src={titleImage}
               />
             )}
-            {title && <h2 className="truncate font-semibold">{title}</h2>}
+            {title && <h2 className="truncate font-[weight:var(--font-body-weight-emphasis)]">{title}</h2>}
           </div>
           <div className="flex items-center gap-2">
             {displayMode === "fullscreen" && (
@@ -363,7 +363,7 @@ export const TableGrid = ({ className, ...props }: ComponentProps<"div">) => {
               return (
                 <th
                   className={cn(
-                    "px-3 py-2 font-medium text-foreground/75",
+                    "px-3 py-2 font-[weight:var(--font-body-weight-action)] text-foreground/75",
                     column.align === "center" && "text-center",
                     column.align === "right" && "text-right",
                     column.align !== "center" &&
@@ -424,7 +424,7 @@ export const TableGrid = ({ className, ...props }: ComponentProps<"div">) => {
                         compact ? "py-2" : "py-3",
                         column.align === "center" && "text-center",
                         column.align === "right" && "text-right",
-                        columnIndex === 0 && "font-medium"
+                        columnIndex === 0 && "font-[weight:var(--font-body-weight-action)]"
                       )}
                       key={String(column.accessor ?? columnIndex)}
                     >

@@ -50,7 +50,7 @@ const Avatar = ({ src, fallback, className }: InternalAvatarOptions) => {
   return (
     <div
       className={cn(
-        "size-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold shrink-0",
+        "size-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-[weight:var(--font-body-weight-emphasis)] shrink-0",
         className
       )}
     >
@@ -603,7 +603,7 @@ export const VoiceMessageBubble = ({
                 style={{ width: `${progress || 33}%` }}
               />
             </div>
-            <span className="text-xs font-medium">
+            <span className="text-xs font-[weight:var(--font-body-weight-action)]">
               {isPlaying ? currentTime : (duration ?? "0:00")}
             </span>
           </div>

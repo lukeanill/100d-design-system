@@ -102,7 +102,7 @@ export const StatCardItem = ({
           {(stat.value !== undefined || stat.change !== undefined) && (
             <div className="flex flex-wrap items-baseline gap-1 sm:gap-2">
               {stat.value !== undefined && (
-                <span className="font-bold text-base sm:text-xl">
+                <span className="font-[weight:var(--font-body-weight-emphasis)] text-base sm:text-xl">
                   {stat.value}
                 </span>
               )}
@@ -110,7 +110,7 @@ export const StatCardItem = ({
                 <span
                   data-apps-sdk-status={TREND_STATUS[trend]}
                   className={cn(
-                    "flex shrink-0 items-center gap-0.5 font-medium text-xs",
+                    "flex shrink-0 items-center gap-0.5 font-[weight:var(--font-body-weight-action)] text-xs",
                     TREND_CLASSES[trend]
                   )}
                 >

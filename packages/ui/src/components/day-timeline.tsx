@@ -197,7 +197,7 @@ function DayTimeline({
           >
             <div className="flex items-baseline gap-2">
               <span className="tabular-nums text-muted-foreground">{e.at}</span>
-              <span className="font-medium">{e.label}</span>
+              <span className="font-[weight:var(--font-body-weight-action)]">{e.label}</span>
             </div>
             {e.repeat && (
               <div className="text-xs text-muted-foreground">

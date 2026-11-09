@@ -72,7 +72,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                       exit={{ opacity: 0, x: -5 }}
                       transition={fast}
                       placeholder="Search"
-                      className="ml-2 w-full border-none bg-transparent text-sm font-medium text-foreground outline-none placeholder:text-foreground/75 sm:text-base"
+                      className="ml-2 w-full border-none bg-transparent text-sm font-[weight:var(--font-body-weight-action)] text-foreground outline-none placeholder:text-foreground/75 sm:text-base"
                       value={searchValue}
                       onChange={(event) => setSearchValue(event.target.value)}
                     />
@@ -105,7 +105,7 @@ export const MorphingDiscoveryBar: FC<MorphingDiscoveryBarProps> = ({ categories
                           setActiveTab(cat.id)
                           onChange?.(cat.id)
                         }}
-                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-(--radius-button) px-3 text-sm font-bold tracking-tight whitespace-nowrap transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover) ${isActive ? "text-primary-foreground" : "text-foreground"}`}
+                        className={`relative z-0 flex h-full items-center gap-1.5 rounded-(--radius-button) px-3 text-sm font-[weight:var(--font-body-weight-emphasis)] tracking-tight whitespace-nowrap transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:bg-(--control-hover) ${isActive ? "text-primary-foreground" : "text-foreground"}`}
                       >
                         {isActive && (
                           <motion.div

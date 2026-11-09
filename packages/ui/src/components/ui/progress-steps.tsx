@@ -80,7 +80,7 @@ export const ProgressStep = ({
               <span
                 className={cn(
                   "text-xs sm:text-sm",
-                  status === "current" && "font-medium",
+                  status === "current" && "font-[weight:var(--font-body-weight-action)]",
                   status === "pending" && "text-foreground/75"
                 )}
               >

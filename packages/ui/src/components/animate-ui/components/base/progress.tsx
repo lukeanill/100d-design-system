@@ -36,7 +36,7 @@ function ProgressTrack({ className, ...props }: ProgressTrackProps) {
 type ProgressLabelProps = ProgressLabelPrimitiveProps;
 
 function ProgressLabel(props: ProgressLabelProps) {
-  return <ProgressLabelPrimitive className="text-sm font-medium" {...props} />;
+  return <ProgressLabelPrimitive className="text-sm font-[weight:var(--font-body-weight-action)]" {...props} />;
 }
 
 type ProgressValueProps = ProgressValuePrimitiveProps;

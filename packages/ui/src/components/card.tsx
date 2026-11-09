@@ -38,7 +38,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"h6">) {
   return (
     <h6
       data-slot="card-title"
-      className={cn("font-medium", className)}
+      className={cn("font-[weight:var(--font-body-weight-action)]", className)}
       {...props}
     />
   )

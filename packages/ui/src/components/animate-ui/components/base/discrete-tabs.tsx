@@ -62,7 +62,7 @@ export const DiscreteTabs: FC<DiscreteTabsProps> = ({ tabs, onTabChange, default
                 <div className={`flex shrink-0 items-center justify-center ${isActive ? "text-primary-foreground" : "text-foreground"}`}>{tab.icon}</div>
                 <motion.span
                   animate={{ opacity: isActive ? 1 : 0, width: isActive ? "auto" : 0 }}
-                  className="relative overflow-hidden text-sm font-bold whitespace-nowrap text-primary-foreground"
+                  className="relative overflow-hidden text-sm font-[weight:var(--font-body-weight-emphasis)] whitespace-nowrap text-primary-foreground"
                 >
                   {tab.label}
                   <AnimatePresence>

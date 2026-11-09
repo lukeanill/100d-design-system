@@ -111,7 +111,7 @@ function MenuGroupLabel({ className, inset, ...props }: MenuGroupLabelProps) {
     <MenuGroupLabelPrimitive
       data-inset={inset}
       className={cn(
-        'px-2 py-1.5 text-sm font-medium data-[inset]:pl-8',
+        'px-2 py-1.5 text-sm font-[weight:var(--font-body-weight-action)] data-[inset]:pl-8',
         className,
       )}
       {...props}

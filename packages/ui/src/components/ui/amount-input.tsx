@@ -122,12 +122,12 @@ export const AmountInputDisplay = ({
             <div className="min-w-24 text-center sm:min-w-28">
               {editing ? (
                 <div className="flex items-center justify-center gap-1">
-                  <span className="font-bold text-foreground/75 text-xl sm:text-2xl">
+                  <span className="font-[weight:var(--font-body-weight-emphasis)] text-foreground/75 text-xl sm:text-2xl">
                     {currencySymbol}
                   </span>
                   <input
                     ref={inputRef}
-                    className="w-16 border-foreground border-b-2 bg-transparent text-center font-bold text-xl outline-none sm:w-20 sm:text-2xl"
+                    className="w-16 border-foreground border-b-2 bg-transparent text-center font-[weight:var(--font-body-weight-emphasis)] text-xl outline-none sm:w-20 sm:text-2xl"
                     onBlur={() => setEditing(false)}
                     onChange={handleInputChange}
                     onKeyDown={handleInputKeyDown}
@@ -137,7 +137,7 @@ export const AmountInputDisplay = ({
                 </div>
               ) : (
                 <button
-                  className="cursor-pointer font-bold text-xl transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:text-primary sm:text-2xl"
+                  className="cursor-pointer font-[weight:var(--font-body-weight-emphasis)] text-xl transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) hover:text-primary sm:text-2xl"
                   onClick={() => setEditing(true)}
                   type="button"
                 >

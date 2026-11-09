@@ -74,15 +74,15 @@ function NotificationList({ items = notifications }: { items?: NotificationItem[
             }}
           >
             <div className="flex justify-between items-center">
-              <h1 className="text-sm font-medium">{notification.title}</h1>
+              <h1 className="text-sm font-[weight:var(--font-body-weight-action)]">{notification.title}</h1>
               {notification.count && (
-                <div className="flex items-center text-xs gap-0.5 font-medium text-foreground/75">
+                <div className="flex items-center text-xs gap-0.5 font-[weight:var(--font-body-weight-action)] text-foreground/75">
                   <RotateCcw className="size-3" />
                   <span>{notification.count}</span>
                 </div>
               )}
             </div>
-            <div className="text-xs text-foreground/75 font-medium">
+            <div className="text-xs text-foreground/75 font-[weight:var(--font-body-weight-action)]">
               <span>{notification.time}</span>
               &nbsp;•&nbsp;
               <span>{notification.subtitle}</span>
@@ -92,19 +92,19 @@ function NotificationList({ items = notifications }: { items?: NotificationItem[
       </div>
 
       <div className="flex items-center gap-2">
-        <div className="size-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-medium">
+        <div className="size-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-[weight:var(--font-body-weight-action)]">
           {items.length}
         </div>
         <span className="grid">
           <motion.span
-            className="text-sm font-medium text-foreground row-start-1 col-start-1"
+            className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground row-start-1 col-start-1"
             variants={notificationTextVariants}
             transition={fast}
           >
             Notifications
           </motion.span>
           <motion.span
-            className="text-sm font-medium text-foreground flex items-center gap-1 cursor-pointer select-none row-start-1 col-start-1"
+            className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground flex items-center gap-1 cursor-pointer select-none row-start-1 col-start-1"
             variants={viewAllTextVariants}
             transition={fast}
           >

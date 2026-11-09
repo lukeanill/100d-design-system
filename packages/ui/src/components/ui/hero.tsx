@@ -105,7 +105,7 @@ const Logo = ({ logo }: { logo: HeroLogo }) => {
   if (logo.text) {
     return (
       <div className="flex size-16 items-center justify-center rounded-xl border bg-background p-3 sm:size-20">
-        <span className="font-heading font-bold text-foreground text-xl tracking-tight sm:text-2xl">
+        <span className="font-heading font-[weight:var(--font-primary-weight-emphasis)] text-foreground text-xl tracking-tight sm:text-2xl">
           {logo.text}
         </span>
       </div>
@@ -142,7 +142,7 @@ export const HeroLogos = ({
         <>
           {hasLogo1 && logo1 && <Logo logo={logo1} />}
           {hasLogo1 && hasLogo2 && (
-            <span className="font-medium text-lg text-foreground sm:text-xl">
+            <span className="font-[weight:var(--font-body-weight-action)] text-lg text-foreground sm:text-xl">
               {data.logoSeparator ?? "x"}
             </span>
           )}
@@ -167,7 +167,7 @@ export const HeroTitle = ({
   return (
     <h1
       className={cn(
-        "mb-4 max-w-4xl text-center font-bold text-3xl text-foreground sm:mb-6 sm:text-4xl lg:text-5xl",
+        "mb-4 max-w-4xl text-center font-[weight:var(--font-body-weight-emphasis)] text-3xl text-foreground sm:mb-6 sm:text-4xl lg:text-5xl",
         className
       )}
       {...props}

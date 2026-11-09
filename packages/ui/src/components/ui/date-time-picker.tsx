@@ -355,7 +355,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
   return (
     <div className="w-full bg-card rounded-xl p-6">
       {showTitle && title && (
-        <h2 className="text-xl font-semibold text-foreground mb-6">{title}</h2>
+        <h2 className="text-xl font-[weight:var(--font-body-weight-emphasis)] text-foreground mb-6">{title}</h2>
       )}
 
       <div className="flex justify-center">
@@ -375,7 +375,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             >
               <ChevronLeft className="size-5 text-foreground/75" />
             </button>
-            <span className="text-base font-medium text-foreground min-w-[140px] text-center">
+            <span className="text-base font-[weight:var(--font-body-weight-action)] text-foreground min-w-[140px] text-center">
               {MONTHS[month]} {year}
             </span>
             <button
@@ -392,7 +392,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
             {orderedDays.map((day) => (
               <div
                 key={day}
-                className="text-center text-xs font-medium text-foreground/75 py-2"
+                className="text-center text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75 py-2"
               >
                 {day}
               </div>
@@ -424,9 +424,9 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                     item.isCurrentMonth &&
                       isAvailable &&
                       !isSelected &&
-                      "text-primary font-medium hover:bg-primary/10 cursor-pointer",
+                      "text-primary font-[weight:var(--font-body-weight-action)] hover:bg-primary/10 cursor-pointer",
                     isSelected &&
-                      "bg-primary text-primary-foreground font-medium",
+                      "bg-primary text-primary-foreground font-[weight:var(--font-body-weight-action)]",
                     isAvailable && !isSelected && "bg-primary/10"
                   )}
                 >
@@ -442,7 +442,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
           {/* Timezone */}
           {showTimezone && (
             <div className="mt-6">
-              <p className="text-sm font-medium text-foreground mb-2">
+              <p className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground mb-2">
                 Time zone
               </p>
               <Popover
@@ -533,7 +533,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
               <span>Back to calendar</span>
             </button>
 
-            <p className="text-base font-medium text-foreground mb-4 whitespace-nowrap">
+            <p className="text-base font-[weight:var(--font-body-weight-action)] text-foreground mb-4 whitespace-nowrap">
               {selectedDate ? formatDateHeader(selectedDate) : ""}
             </p>
 
@@ -546,7 +546,7 @@ const DateTimePickerView = (props: DateTimePickerProps) => {
                     <button
                       onClick={() => handleTimeSelect(time)}
                       className={cn(
-                        "h-[52px] rounded-lg border text-sm font-semibold transition-all duration-(--motion-fast)",
+                        "h-[52px] rounded-lg border text-sm font-[weight:var(--font-body-weight-emphasis)] transition-all duration-(--motion-fast)",
                         isTimeSelected
                           ? "bg-muted-foreground text-background border-muted-foreground"
                           : "col-span-2 border-primary text-primary hover:bg-primary/5"

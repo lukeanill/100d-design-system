@@ -107,7 +107,7 @@ type PopoverTitleProps = PopoverTitlePrimitiveProps;
 function PopoverTitle({ className, ...props }: PopoverTitleProps) {
   return (
     <PopoverTitlePrimitive
-      className={cn('text-sm leading-5 font-medium', className)}
+      className={cn('text-sm leading-5 font-[weight:var(--font-body-weight-action)]', className)}
       {...props}
     />
   );

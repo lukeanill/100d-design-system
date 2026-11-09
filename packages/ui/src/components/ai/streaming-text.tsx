@@ -216,7 +216,7 @@ export const StreamingText = ({ appearance, data, labels, actions, className }: 
       </div>
 
       <div className="mt-2.5 transition-opacity duration-(--motion-duration)" style={{ opacity: done ? 1 : 0, pointerEvents: done ? "auto" : "none" }}>
-        <p className="text-[12px] font-medium text-foreground/75">{l.followUps}</p>
+        <p className="text-[12px] font-[weight:var(--font-body-weight-action)] text-foreground/75">{l.followUps}</p>
         <div className="mt-0.5 flex flex-col">
           {followUps.map((text, i) => (
             <button

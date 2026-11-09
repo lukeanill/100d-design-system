@@ -99,7 +99,7 @@ function AlertDialogTitle({ className, ...props }: AlertDialogTitleProps) {
   return (
     <AlertDialogTitlePrimitive
       render={<h6 />}
-      className={cn('font-medium', className)}
+      className={cn('font-[weight:var(--font-body-weight-action)]', className)}
       {...props}
     />
   );

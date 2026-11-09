@@ -48,7 +48,7 @@ function Section({ label, sub, time, body, resolving }: { label: string; sub: st
       }}
     >
       <div className="flex items-center gap-1 text-[12px] leading-[1.3]">
-        <span className="font-medium text-foreground">{label}</span>
+        <span className="font-[weight:var(--font-body-weight-action)] text-foreground">{label}</span>
         <span className="text-foreground/75">{sub}</span>
         <span className="text-foreground">for {time}</span>
       </div>

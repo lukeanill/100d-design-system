@@ -217,7 +217,7 @@ const HotelCard = ({
   >
     {/* Rating badge - top right */}
     {location.rating && (
-      <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs font-bold rounded-md px-1.5 py-0.5">
+      <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs font-[weight:var(--font-body-weight-emphasis)] rounded-md px-1.5 py-0.5">
         {location.rating}
       </div>
     )}
@@ -237,7 +237,7 @@ const HotelCard = ({
     {/* Content */}
     <div className="flex flex-col justify-center min-w-0 flex-1 pointer-events-none">
       {location.name && (
-        <h3 className="font-medium text-sm leading-tight truncate pr-8">
+        <h3 className="font-[weight:var(--font-body-weight-action)] text-sm leading-tight truncate pr-8">
           {location.name}
         </h3>
       )}
@@ -250,9 +250,9 @@ const HotelCard = ({
         {location.price !== undefined && (
           <p className="text-sm">
             {location.priceLabel ? (
-              <span className="font-semibold">{location.priceLabel}</span>
+              <span className="font-[weight:var(--font-body-weight-emphasis)]">{location.priceLabel}</span>
             ) : (
-              <span className="font-semibold">${location.price} total</span>
+              <span className="font-[weight:var(--font-body-weight-emphasis)]">${location.price} total</span>
             )}
           </p>
         )}
@@ -301,13 +301,13 @@ const LocationListCard = ({
     {/* Location Info */}
     <div className="flex-1 min-w-0">
       {location.price !== undefined && (
-        <p className="font-semibold text-sm">${location.price} total</p>
+        <p className="font-[weight:var(--font-body-weight-emphasis)] text-sm">${location.price} total</p>
       )}
       {location.priceSubtext && (
         <p className="text-xs text-foreground/75">{location.priceSubtext}</p>
       )}
       {location.name && (
-        <p className="text-sm font-medium mt-1 line-clamp-1">{location.name}</p>
+        <p className="text-sm font-[weight:var(--font-body-weight-action)] mt-1 line-clamp-1">{location.name}</p>
       )}
       {location.subtitle && (
         <p className="text-xs text-foreground/75 mt-0.5 line-clamp-1">
@@ -316,7 +316,7 @@ const LocationListCard = ({
       )}
       {location.rating && (
         <div className="flex items-center gap-1 mt-1">
-          <span className="bg-primary text-primary-foreground text-xs font-bold rounded-md px-1.5 py-0.5">
+          <span className="bg-primary text-primary-foreground text-xs font-[weight:var(--font-body-weight-emphasis)] rounded-md px-1.5 py-0.5">
             {location.rating}
           </span>
         </div>
@@ -357,7 +357,7 @@ const FilterSection = ({
     <div className="border-b border-border/50">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-between py-4 text-sm font-medium hover:text-foreground/80 transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
+        className="flex w-full items-center justify-between py-4 text-sm font-[weight:var(--font-body-weight-action)] hover:text-foreground/80 transition-colors duration-(--motion-fast) ease-(--motion-transition-ease)"
       >
         <span>{title}</span>
         <ChevronDown
@@ -452,7 +452,7 @@ const FilterPanel = ({
         {/* Header */}
         <div className="flex items-center justify-between border-b px-4 py-3">
           <div className="flex items-center gap-2">
-            <span className="font-semibold">Filters</span>
+            <span className="font-[weight:var(--font-body-weight-emphasis)]">Filters</span>
             {activeFiltersCount > 0 && (
               <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full">
                 {activeFiltersCount}
@@ -916,7 +916,7 @@ const MapCarouselView = ({ data, actions, appearance }: MapCarouselProps) => {
           {/* Header */}
           <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
             <div className="flex items-center gap-2 min-w-0">
-              {title && <span className="font-semibold truncate">{title}</span>}
+              {title && <span className="font-[weight:var(--font-body-weight-emphasis)] truncate">{title}</span>}
               <span className="text-foreground/75 text-xs whitespace-nowrap">
                 | {filteredLocations.length}
               </span>

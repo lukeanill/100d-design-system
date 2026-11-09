@@ -28,7 +28,7 @@ function QuestionnaireProgress({
     <QuestionnairePrimitive.Progress
       data-slot="questionnaire-progress"
       className={cn(
-        "min-h-[1lh] w-fit min-w-[14ch] text-xs font-medium text-foreground/75 tabular-nums",
+        "min-h-[1lh] w-fit min-w-[14ch] text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75 tabular-nums",
         className
       )}
       {...props}
@@ -135,7 +135,7 @@ function QuestionnaireChoice({
       </QuestionnairePrimitive.ChoiceLabel>
       <QuestionnairePrimitive.ChoiceShortcut
         data-slot="questionnaire-choice-shortcut"
-        className="pointer-events-none ms-auto hidden size-5 shrink-0 items-center justify-center rounded-full border border-foreground bg-transparent font-mono text-xs leading-none font-medium text-foreground/75 group-data-checked/questionnaire-choice:border-primary-foreground group-data-checked/questionnaire-choice:text-primary-foreground/75 group-data-[shortcut]/questionnaire-choice:inline-flex"
+        className="pointer-events-none ms-auto hidden size-5 shrink-0 items-center justify-center rounded-full border border-foreground bg-transparent font-mono text-xs leading-none font-[weight:var(--font-body-weight-action)] text-foreground/75 group-data-checked/questionnaire-choice:border-primary-foreground group-data-checked/questionnaire-choice:text-primary-foreground/75 group-data-[shortcut]/questionnaire-choice:inline-flex"
       />
     </QuestionnairePrimitive.Choice>
   )

@@ -43,7 +43,7 @@ function SpinnerRing({ active, children }: { active?: boolean; children?: ReactN
           />
         )}
       </svg>
-      <span className="relative text-[10.5px] font-semibold tabular-nums text-foreground">{children}</span>
+      <span className="relative text-[10.5px] font-[weight:var(--font-body-weight-emphasis)] tabular-nums text-foreground">{children}</span>
     </span>
   )
 }
@@ -151,14 +151,14 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
 
   const pillFor = (row: TaskRow) => {
     if (row.status === "done")
-      return <span className="inline-flex h-5.5 items-center rounded-full bg-affirmative/15 px-2 text-[11.5px] font-medium text-affirmative-foreground">{copy.completed}</span>
+      return <span className="inline-flex h-5.5 items-center rounded-full bg-affirmative/15 px-2 text-[11.5px] font-[weight:var(--font-body-weight-action)] text-affirmative-foreground">{copy.completed}</span>
     if (row.status === "running") return null
     return row2 === "failed" ? (
-      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-destructive/10 px-2 text-[11.5px] font-medium text-destructive" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
+      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-destructive/10 px-2 text-[11.5px] font-[weight:var(--font-body-weight-action)] text-destructive" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
         {copy.failed} <RefreshCw className="size-3" style={{ animation: "spin 1.2s linear infinite" }} />
       </span>
     ) : row2 === "done" ? (
-      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-affirmative/15 px-2 text-[11.5px] font-medium text-affirmative-foreground" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
+      <span className="inline-flex h-5.5 items-center gap-1.5 rounded-full bg-affirmative/15 px-2 text-[11.5px] font-[weight:var(--font-body-weight-action)] text-affirmative-foreground" style={{ animation: "fade-in var(--motion-fast) var(--motion-transition-ease) both" }}>
         {copy.completed}
       </span>
     ) : null
@@ -188,7 +188,7 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
               className="flex h-11 w-full items-center gap-2.5 px-2.5 text-left"
             >
               <span className="flex size-6 shrink-0 items-center justify-center">{badgeFor(row)}</span>
-              <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-foreground">{row.label}</span>
+              <span className="min-w-0 flex-1 truncate text-[13px] font-[weight:var(--font-body-weight-action)] text-foreground">{row.label}</span>
               <span className="text-[12.5px] text-foreground/75 tabular-nums">{row.amount}</span>
               {pillFor(row)}
               <span aria-hidden="true" className="-ml-2 flex size-7 shrink-0 items-center justify-center rounded-full text-foreground/75">

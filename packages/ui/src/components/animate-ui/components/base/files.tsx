@@ -143,7 +143,7 @@ function FileItem({
         </div>
 
         {gitStatus && (
-          <span className="text-sm font-medium">
+          <span className="text-sm font-[weight:var(--font-body-weight-action)]">
             {gitStatus === 'untracked' && 'U'}
             {gitStatus === 'modified' && 'M'}
             {gitStatus === 'deleted' && 'D'}

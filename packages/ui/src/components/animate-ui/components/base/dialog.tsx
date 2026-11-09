@@ -116,7 +116,7 @@ function DialogTitle({ className, ...props }: DialogTitleProps) {
   return (
     <DialogTitlePrimitive
       render={<h6 />}
-      className={cn('leading-none font-medium', className)}
+      className={cn('leading-none font-[weight:var(--font-body-weight-action)]', className)}
       {...props}
     />
   );
