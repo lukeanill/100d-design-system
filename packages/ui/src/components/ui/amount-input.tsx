@@ -110,15 +110,15 @@ export const AmountInputDisplay = ({
             {label}
           </span>
           <div className="flex items-center justify-center gap-2">
-            <button
-              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-[color,background-color,opacity] duration-(--motion-fast) ease-(--motion-transition-ease) hover:opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
+            <Button
+              size="icon-sm"
+              variant="outline"
               aria-label={`Decrease ${label}`}
               disabled={amount <= min}
               onClick={() => setAmount(amount - step)}
-              type="button"
             >
-              <Minus className="size-4" />
-            </button>
+              <Minus />
+            </Button>
             <div className="min-w-24 text-center sm:min-w-28">
               {editing ? (
                 <div className="flex items-center justify-center gap-1">
@@ -146,15 +146,15 @@ export const AmountInputDisplay = ({
                 </button>
               )}
             </div>
-            <button
-              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-border transition-[color,background-color,opacity] duration-(--motion-fast) ease-(--motion-transition-ease) hover:opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
+            <Button
+              size="icon-sm"
+              variant="outline"
               aria-label={`Increase ${label}`}
               disabled={amount >= max}
               onClick={() => setAmount(amount + step)}
-              type="button"
             >
-              <Plus className="size-4" />
-            </button>
+              <Plus />
+            </Button>
           </div>
         </>
       )}
