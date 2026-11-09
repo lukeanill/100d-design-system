@@ -3,6 +3,7 @@
 import { RotateCcw, ArrowUpRight } from 'lucide-react';
 import { useFastTransition } from '@workspace/ui/hooks/use-fast-transition';
 import { motion } from 'motion/react';
+import { glass } from '@workspace/ui/lib/glass';
 
 export type NotificationItem = {
   id: number;
@@ -75,7 +76,7 @@ function NotificationList({
         {items.map((notification, i) => (
           <motion.div
             key={notification.id}
-            className="bg-card rounded-lg px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-(--motion-fast) relative"
+            className={`${glass("card")} rounded-lg px-4 py-2 shadow-sm hover:shadow-lg transition-shadow duration-(--motion-fast) relative`}
             variants={getCardVariants(i)}
             style={{
               zIndex: items.length - i,
