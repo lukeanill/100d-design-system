@@ -7,7 +7,7 @@
 // segments when clicked, and closes back up on save.
 //
 // Changes from the original:
-// - Theme tokens (bg-muted, text-foreground) instead of hardcoded zinc, and
+// - The Input surface (border, glass input fill, shadow) and theme tokens (text-foreground) instead of hardcoded zinc, and
 //   --radius for the corners, so it follows the active theme.
 // - Phosphor icons, matching the rest of the design system.
 // - maxHours, so the same control serves a duration (default, 0-99) or a
@@ -29,6 +29,7 @@ import {
 import { CheckIcon, PencilSimpleIcon } from "@phosphor-icons/react"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { glass } from "@workspace/ui/lib/glass"
 
 export interface SplitToEditProps {
   hours?: number
@@ -148,7 +149,7 @@ export function SplitToEdit({
   }
 
   const segmentClass = cn(
-    "flex items-center justify-end gap-1 bg-muted px-1",
+    `flex items-center justify-end gap-1 border border-muted ${glass("input")} px-1 shadow-sm`,
     disabled ? "cursor-not-allowed" : "cursor-pointer",
     isExpanded && "gap-2 px-2.5"
   )
@@ -252,7 +253,7 @@ export function SplitToEdit({
             borderBottomRightRadius: RADIUS,
           }}
           className={cn(
-            "flex size-10 items-center justify-center bg-muted will-change-transform",
+            `flex size-10 items-center justify-center border border-muted ${glass("input")} shadow-sm will-change-transform`,
             classNames?.action
           )}
         >
