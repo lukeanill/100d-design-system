@@ -7,6 +7,8 @@
 // segments when clicked, and closes back up on save.
 //
 // Changes from the original:
+// - Body font and foreground text like the Input (the original used a mono font
+//   and muted labels).
 // - The Input surface (border, glass input fill, shadow) and theme tokens (text-foreground) instead of hardcoded zinc, and
 //   --radius for the corners, so it follows the active theme.
 // - Phosphor icons, matching the rest of the design system.
@@ -155,14 +157,14 @@ export function SplitToEdit({
   )
   // Fonts are left to inherit from the root, so one class there restyles all.
   const inputClass = cn(
-    "h-10 w-[2ch] bg-transparent text-center text-xl font-semibold text-foreground outline-none",
+    "h-9 w-[2ch] bg-transparent text-center text-base text-foreground outline-none",
     classNames?.input
   )
   const labelClass = cn(
-    "text-lg font-medium text-muted-foreground",
+    "text-base text-foreground",
     classNames?.label
   )
-  const iconClass = cn("size-5 text-muted-foreground", classNames?.icon)
+  const iconClass = cn("size-5 text-foreground", classNames?.icon)
 
   return (
     <>
@@ -173,7 +175,7 @@ export function SplitToEdit({
         aria-disabled={disabled || undefined}
         data-state={isExpanded ? "open" : "closed"}
         className={cn(
-          "group/split flex items-center font-mono",
+          "group/split flex items-center",
           isExpanded && "gap-2",
           disabled && "opacity-40",
           className
@@ -221,6 +223,7 @@ export function SplitToEdit({
           className={cn(
             segmentClass,
             "will-change-transform",
+            !isExpanded && "border-l-0",
             classNames?.minutes
           )}
           onClick={open}
@@ -253,7 +256,8 @@ export function SplitToEdit({
             borderBottomRightRadius: RADIUS,
           }}
           className={cn(
-            `flex size-10 items-center justify-center border border-muted ${glass("input")} shadow-sm will-change-transform`,
+            `flex size-9 items-center justify-center border border-muted ${glass("input")} shadow-sm will-change-transform`,
+            !isExpanded && "border-l-0",
             classNames?.action
           )}
         >
