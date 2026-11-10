@@ -36,8 +36,8 @@ export default {
 
 type Args = { paused: boolean; useThemeColors: boolean; inverse: boolean; scrim: number }
 
-/** A background with content above it, as it is meant to be used. */
-function Scene({ Background, title, paused, useThemeColors, inverse, scrim }: Args & { Background: ComponentType<EffectBackgroundProps>; title: string }) {
+/** The background on its own, filling the canvas. */
+function Scene({ Background, paused, useThemeColors, inverse, scrim }: Args & { Background: ComponentType<EffectBackgroundProps> }) {
   return (
     <section className="relative isolate min-h-screen overflow-hidden">
       <Background
@@ -47,23 +47,20 @@ function Scene({ Background, title, paused, useThemeColors, inverse, scrim }: Ar
         scrim={scrim}
         scrimColor={useThemeColors && inverse ? "var(--foreground)" : undefined}
       />
-      <div className="relative z-10 flex min-h-screen items-center justify-center p-8">
-        <h1 className={useThemeColors ? (inverse ? "text-h2-pri text-background" : "text-h2-pri text-foreground") : "text-h2-pri text-white"}>{title}</h1>
-      </div>
     </section>
   )
 }
 
-export const DitherCanvas = (args: Args) => <Scene {...args} Background={DitherCanvasBackground} title="Dither Canvas" />
-export const PatternWaves = (args: Args) => <Scene {...args} Background={PatternWavesBackground} title="Pattern Waves" />
-export const Topography = (args: Args) => <Scene {...args} Background={TopographyBackground} title="Topography" />
-export const AcidSquares = (args: Args) => <Scene {...args} Background={AcidSquaresBackground} title="Acid Squares" />
-export const Ferrofluid = (args: Args) => <Scene {...args} Background={FerrofluidBackground} title="Ferrofluid" />
-export const Prism = (args: Args) => <Scene {...args} Background={PrismBackground} title="Prism" />
-export const Lightning = (args: Args) => <Scene {...args} Background={LightningBackground} title="Lightning" />
-export const DotField = (args: Args) => <Scene {...args} Background={DotFieldBackground} title="Dot Field" />
-export const Iridescence = (args: Args) => <Scene {...args} Background={IridescenceBackground} title="Iridescence" />
-export const Waves = (args: Args) => <Scene {...args} Background={WavesBackground} title="Waves" />
-export const MagnetLines = (args: Args) => <Scene {...args} Background={MagnetLinesBackground} title="Magnet Lines" />
-export const LetterGlitch = (args: Args) => <Scene {...args} Background={LetterGlitchBackground} title="Letter Glitch" />
-export const LiquidChrome = (args: Args) => <Scene {...args} Background={LiquidChromeBackground} title="Liquid Chrome" />
+export const DitherCanvas = (args: Args) => <Scene {...args} Background={DitherCanvasBackground} />
+export const PatternWaves = (args: Args) => <Scene {...args} Background={PatternWavesBackground} />
+export const Topography = (args: Args) => <Scene {...args} Background={TopographyBackground} />
+export const AcidSquares = (args: Args) => <Scene {...args} Background={AcidSquaresBackground} />
+export const Ferrofluid = (args: Args) => <Scene {...args} Background={FerrofluidBackground} />
+export const Prism = (args: Args) => <Scene {...args} Background={PrismBackground} />
+export const Lightning = (args: Args) => <Scene {...args} Background={LightningBackground} />
+export const DotField = (args: Args) => <Scene {...args} Background={DotFieldBackground} />
+export const Iridescence = (args: Args) => <Scene {...args} Background={IridescenceBackground} />
+export const Waves = (args: Args) => <Scene {...args} Background={WavesBackground} />
+export const MagnetLines = (args: Args) => <Scene {...args} Background={MagnetLinesBackground} />
+export const LetterGlitch = (args: Args) => <Scene {...args} Background={LetterGlitchBackground} />
+export const LiquidChrome = (args: Args) => <Scene {...args} Background={LiquidChromeBackground} />
