@@ -8,7 +8,7 @@
 - Import: `@workspace/ui/components/button`
 - Storybook: [Components/Actions/Button](https://ds.lukeai.space/storybook/?path=/story/components-actions-button--button)
 - Used in the web app: History page (/history); Explore; Themer (/themes); Themer preview: the Coeurdes Alpes product page
-- Used by other components: amount-input, attachment, calendar, carousel, chat-composer, combobox, date-time-picker, hero (+15)
+- Used by other components: amount-input, attachment, calendar, carousel, chat-composer, combobox, date-time-picker, hero (+16)
 
 | Prop | Type | Required | Note |
 |---|---|---|---|

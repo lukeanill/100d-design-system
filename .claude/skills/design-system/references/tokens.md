@@ -17,18 +17,18 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
 | `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, map-carousel, calendar (+3) |
 | `--popover-foreground` | `var(--foreground)` | Popup surface and text. Equals background. | map-carousel |
-| `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+31) |
-| `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, map-carousel, theme-colors |
-| `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, theme-colors, copy (+4) |
-| `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+3) |
-| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | navigation-menu, table, message-bubble (+34) |
+| `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+32) |
+| `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, tokens-theme, map-carousel (+1) |
+| `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, theme-colors, tokens-theme (+5) |
+| `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+4) |
+| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | navigation-menu, table, message-bubble (+35) |
 | `--muted-foreground` | `oklch(0.988 0.001 286.38 / 65%)` | Foreground at 65% opacity for quiet text. | day-timeline |
-| `--accent` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | dropdown-menu, context-menu, menubar (+10) |
+| `--accent` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | dropdown-menu, context-menu, menubar (+11) |
 | `--accent-foreground` | `var(--secondary-foreground)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | ripple |
-| `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour, from the theme's ui-color mode. | button, copy, icon (+30) |
-| `--affirmative` | `oklch(0.894 0.187 153.03)` | Success colour, from the theme's ui-color mode (Figma ui-color/affirmative). | task-rows, thinking-state, context-cards (+2) |
+| `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour, from the theme's ui-color mode. | button, copy, icon (+31) |
+| `--affirmative` | `oklch(0.894 0.187 153.03)` | Success colour, from the theme's ui-color mode (Figma ui-color/affirmative). | task-rows, thinking-state, tokens-theme (+3) |
 | `--affirmative-foreground` | `var(--foreground)` | Ink on the success colour: the theme's foreground. | text on success colour |
-| `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+28) |
+| `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+29) |
 | `--input` | `oklch(0.988 0.001 286.38 / 20%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | checkbox, bubble, button-group (+1) |
 | `--ring` | `oklch(0.988 0.001 286.38 / 70%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | button, questionnaire, files (+30) |
 | `--chart-1` | `oklch(0.647 0.217 36.85)` | Chart series colours (five per theme). | chart series (recharts) |
@@ -53,10 +53,10 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--alpha-dark-xs` | `oklch(0.235 0.000 0.00 / 4%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
 | `--alpha-dark-sm` | `oklch(0.235 0.000 0.00 / 8%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | themed-surface |
 | `--alpha-dark-md` | `oklch(0.235 0.000 0.00 / 16%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
-| `--alpha-dark-lg` | `oklch(0.235 0.000 0.00 / 32%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
+| `--alpha-dark-lg` | `oklch(0.235 0.000 0.00 / 32%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | tokens-theme |
 | `--alpha-dark-xl` | `oklch(0.235 0.000 0.00 / 80%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | alert-dialog, dialog, sheet |
 | `--alpha-light-xs` | `oklch(0.969 0.002 17.20 / 6%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
-| `--alpha-light-sm` | `oklch(0.969 0.002 17.20 / 12%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | insight-cards |
+| `--alpha-light-sm` | `oklch(0.969 0.002 17.20 / 12%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | insight-cards, tokens-theme |
 | `--alpha-light-md` | `oklch(0.969 0.002 17.20 / 24%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
 | `--alpha-light-lg` | `oklch(0.969 0.002 17.20 / 48%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
 | `--alpha-light-xl` | `oklch(0.969 0.002 17.20 / 96%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
@@ -107,13 +107,13 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--typescale-h3` | `3rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
 | `--typescale-h2` | `3.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
 | `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
-| `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | insight-cards, map-carousel, task-rows (+34) |
+| `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | insight-cards, map-carousel, task-rows (+35) |
 | `--text-xs--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, menu (+58) |
+| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, tokens-theme (+59) |
 | `--text-sm--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
 | `--text-base` | `var(--typescale-md)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | questionnaire, date-time-picker, split-to-edit (+7) |
 | `--text-base--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-lg` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | insight-cards, hero, message-bubble (+1) |
+| `--text-lg` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | insight-cards, tokens-theme, hero (+2) |
 | `--text-lg--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
 | `--text-xl` | `var(--typescale-lg)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | amount-input, hero, date-time-picker (+1) |
 | `--text-xl--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
@@ -132,7 +132,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--h1-size` | `var(--typescale-h1)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h2-size` | `var(--typescale-h2)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h3-size` | `var(--typescale-h3)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
-| `--h4-size` | `var(--typescale-h4)` | Per-heading weight and size (size reads the typescale). | tokens-sheet |
+| `--h4-size` | `var(--typescale-h4)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h5-size` | `var(--typescale-h5)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 | `--h6-size` | `var(--typescale-h6)` | Per-heading weight and size (size reads the typescale). | `<h1>`–`<h6>` base styles |
 
@@ -145,16 +145,16 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--dimensions-max` | `9999px` | Fully rounded (9999px). | `radius-button` on rounded themes |
 | `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+14) |
 | `--radius-outer-max` | `0.5rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+4) |
-| `--radius-sm` | `0.25rem` | Corner radius steps; their size depends on the theme's radius setting. | menu, checkbox, streaming-text (+2) |
-| `--radius-xs` | `0.125rem` | Corner radius steps; their size depends on the theme's radius setting. | thread-insight-card, streaming-text, context-cards (+2) |
-| `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, button, insight-cards (+19) |
-| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, sidebar (+12) |
+| `--radius-sm` | `0.25rem` | Corner radius steps; their size depends on the theme's radius setting. | menu, tokens-theme, checkbox (+3) |
+| `--radius-xs` | `0.125rem` | Corner radius steps; their size depends on the theme's radius setting. | thread-insight-card, streaming-text, context-cards (+3) |
+| `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, button, tokens-theme (+20) |
+| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, tokens-theme (+13) |
 | `--shadow-2xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
-| `--shadow-xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | button, copy, icon (+11) |
-| `--shadow-sm` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | prompt-bar, morphing-discovery-bar, sidebar (+8) |
+| `--shadow-xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | button, copy, icon (+12) |
+| `--shadow-sm` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | prompt-bar, morphing-discovery-bar, sidebar (+9) |
 | `--shadow` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
-| `--shadow-md` | `0px 20px 40px rgb(34 34 34 / 16%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | menu, map-carousel, popover (+5) |
-| `--shadow-lg` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | insight-cards, selection-actions, alert-dialog (+8) |
+| `--shadow-md` | `0px 20px 40px rgb(34 34 34 / 16%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | tokens-theme, menu, map-carousel (+6) |
+| `--shadow-lg` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | insight-cards, selection-actions, alert-dialog (+9) |
 | `--shadow-xl` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | dock, chart |
 | `--shadow-2xl` | `0px 40px 80px rgb(34 34 34 / 24%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | dropdown-menu, menubar, combobox (+3) |
 
@@ -177,18 +177,18 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--spring-bounce-normal` | `0.7005` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
 | `--spring-bounce-expressive` | `0.75` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
 | `--duration-instant` | `0s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
-| `--duration-fast` | `0.2s` | Motion token from the Figma `motion` collection. Same in every theme. | context-cards, task-rows, prompt-bar (+2) |
-| `--duration-faster` | `0.4s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
-| `--duration-long` | `0.8s` | Motion token from the Figma `motion` collection. Same in every theme. | loading-state, prompt-bar, selection-actions (+1) |
-| `--duration-longer` | `1.2s` | Motion token from the Figma `motion` collection. Same in every theme. | loading-state, task-rows, selection-actions (+1) |
-| `--duration-longest` | `2.4s` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
+| `--duration-fast` | `0.2s` | Motion token from the Figma `motion` collection. Same in every theme. | context-cards, task-rows, prompt-bar (+3) |
+| `--duration-faster` | `0.4s` | Motion token from the Figma `motion` collection. Same in every theme. | tokens-theme |
+| `--duration-long` | `0.8s` | Motion token from the Figma `motion` collection. Same in every theme. | loading-state, prompt-bar, selection-actions (+2) |
+| `--duration-longer` | `1.2s` | Motion token from the Figma `motion` collection. Same in every theme. | loading-state, task-rows, selection-actions (+2) |
+| `--duration-longest` | `2.4s` | Motion token from the Figma `motion` collection. Same in every theme. | tokens-theme |
 | `--ease-hold` | `cubic-bezier(0, 0, 0.58, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
 | `--ease-constant` | `linear` | Motion token from the Figma `motion` collection. Same in every theme. | selection-actions, task-rows, thinking-state (+1) |
-| `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | CSS transitions and the motion library |
-| `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | thinking-state, selection-actions, task-rows (+14) |
+| `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | tokens-theme |
+| `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | thinking-state, selection-actions, task-rows (+15) |
 | `--motion-spring-bounce` | `0` | Bounce of the Springy choice (0 for the others). | `useThemeSpring()` |
 | `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | date-time-picker, prompt-bar, map-carousel (+52) |
-| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | selection-actions, sidebar, thinking-state (+48) |
+| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | selection-actions, sidebar, thinking-state (+49) |
 
 ## Glass
 
@@ -257,7 +257,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 | Code name | Meaning | Applied in (sampled) |
 |---|---|---|
-| `text-md` | Body medium, regular (default control + paragraph size) | prompt-bar, insight-cards, stat-card |
+| `text-md` | Body medium, regular (default control + paragraph size) | prompt-bar, tokens-theme, insight-cards |
 | `text-xs-bold` | Body style, bold | — |
 | `text-xs-italic` | Body style, italic | — |
 | `text-sm-bold` | Body style, bold | — |
@@ -273,12 +273,12 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `text-label-md` | A label (comp/label), 100% line | — |
 | `text-label-lg` | A label (comp/label), 100% line | — |
 | `text-h1-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
-| `text-h2-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
+| `text-h2-pri` | Display face, regular weight (Figma pri/reg/hN) | tokens-theme |
 | `text-h3-pri` | Display face, regular weight (Figma pri/reg/hN) | stat-card |
 | `text-h4-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
-| `text-h5-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
+| `text-h5-pri` | Display face, regular weight (Figma pri/reg/hN) | tokens-theme |
 | `text-h6-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
-| `text-h1-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | — |
+| `text-h1-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | tokens-theme |
 | `text-h2-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | — |
 | `text-h3-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | — |
 | `text-h4-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | — |

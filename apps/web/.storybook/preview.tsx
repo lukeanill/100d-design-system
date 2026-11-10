@@ -23,7 +23,7 @@ const preview: Preview = {
         method: "alphabetical",
         order: [
           "Tokens",
-          ["Colors", "Typography", "Effects", "Glass"],
+          ["Theme", "Glass"],
           "Components",
           [
             "Actions",

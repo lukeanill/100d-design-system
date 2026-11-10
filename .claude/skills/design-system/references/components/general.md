@@ -10,22 +10,6 @@
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
 
-### Colors
-
-- File: `packages/ui/src/components/tokens-colors.stories.tsx`
-- Import: (story only, no component file)
-- Storybook: [Tokens/Colors](https://ds.lukeai.space/storybook/?path=/story/tokens-colors--colors)
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
-### Effects
-
-- File: `packages/ui/src/components/tokens-effects.stories.tsx`
-- Import: (story only, no component file)
-- Storybook: [Tokens/Effects](https://ds.lukeai.space/storybook/?path=/story/tokens-effects--effects)
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
 ### Glass
 
 - File: `packages/ui/src/components/tokens-glass.stories.tsx`
@@ -34,10 +18,12 @@
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
 
-### Typography
+### Theme
 
-- File: `packages/ui/src/components/tokens-typography.stories.tsx`
-- Import: (story only, no component file)
-- Storybook: [Tokens/Typography](https://ds.lukeai.space/storybook/?path=/story/tokens-typography--typography)
+- File: `packages/ui/src/components/tokens-theme.tsx`
+- Import: `@workspace/ui/components/tokens-theme`
+- Storybook: [Tokens/Theme](https://ds.lukeai.space/storybook/?path=/story/tokens-theme--theme)
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
+
+_No props of its own._

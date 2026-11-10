@@ -4,7 +4,7 @@
 
 Every component in `packages/ui/src/components` (import `@workspace/ui/components/<path>`; published as `@lukeanill/ui/components/<path>`). Groups follow the Storybook sidebar.
 
-Total: 118 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
+Total: 115 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
 
 ## Actions
 
@@ -99,10 +99,8 @@ Detail: `references/components/general.md`
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
 | All Tokens | story only | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-all-tokens--all-tokens) | — |
-| Colors | story only | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-colors--colors) | — |
-| Effects | story only | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-effects--effects) | — |
 | Glass | story only | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-glass--glass) | — |
-| Typography | story only | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-typography--typography) | — |
+| Theme | `components/tokens-theme` | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-theme--theme) | — |
 
 ## Inputs
 
@@ -176,7 +174,6 @@ Detail: `references/components/not-in-storybook.md`
 | themed-icon | `components/themed-icon` | — | Homepage preview |
 | themed-surface | `components/themed-surface` | — | — |
 | thread-insight-card | `components/ai/thread-insight-card` | — | — |
-| tokens-sheet | `components/tokens-sheet` | — | — |
 
 ## Overlays
 

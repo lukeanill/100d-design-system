@@ -87,7 +87,7 @@ _No props of its own._
 - Import: `@workspace/ui/components/liquid-glass`
 - Storybook: no story yet
 - Used in the web app: Homepage (/); Homepage preview; apps/web/src/Versions.tsx; Themer (/themes)
-- Used by other components: themed-surface
+- Used by other components: themed-surface, tokens-theme
 
 **`LiquidGlass`**
 
@@ -217,7 +217,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 - Import: `@workspace/ui/components/theme-provider`
 - Storybook: no story yet
 - Used in the web app: App shell (every page)
-- Used by other components: beam-input
+- Used by other components: beam-input, tokens-theme
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
@@ -276,28 +276,3 @@ _No props of its own._
 | `startDelay` | `number` | no | How long the card is in view before the sentence starts, in ms. |
 | `onFollowUp` | `(text: string) => void` | no |  |
 | `className` | `string` | no |  |
-
-### tokens-sheet
-
-- File: `packages/ui/src/components/tokens-sheet.tsx`
-- Import: `@workspace/ui/components/tokens-sheet`
-- Storybook: no story yet
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
-**`Sheet`**
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `children` | `string \| number \| bigint \| boolean \| ReactElement<unknown, string \| JSXElementConstructor<any>> \| Iterable<…` | yes |  |
-| `gap` | `number` | no |  |
-
-**`SheetLabel`**
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `children` | `string \| number \| bigint \| boolean \| ReactElement<unknown, string \| JSXElementConstructor<any>> \| Iterable<…` | yes |  |
-
-**`Rule`**
-
-_No props of its own._
