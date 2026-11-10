@@ -33,7 +33,7 @@ function Mono({ children, tone }: { children: ReactNode; tone: "red" | "green" }
 function CardChrome({ children }: { children: ReactNode }) {
   return (
     <div className="relative isolate min-h-69.5 rounded-lg p-3 ring-1 ring-foreground/10">
-      <SurfaceFill popup weight="heavy" />
+      <SurfaceFill popup weight="medium" />
       {children}
     </div>
   )
