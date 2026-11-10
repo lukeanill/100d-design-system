@@ -48,7 +48,7 @@ export default {
   },
 }
 
-export const ChatConversation = (args: ComponentProps<typeof ChatConversationImpl>) => (
+export const Chat = (args: ComponentProps<typeof ChatConversationImpl>) => (
   <ChatConversationImpl {...args} className="w-96">
     <ChatConversationMessages />
   </ChatConversationImpl>

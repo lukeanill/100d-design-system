@@ -27,7 +27,7 @@
 
 - File: `packages/ui/src/components/ai/chat-composer.tsx`
 - Import: `@workspace/ui/components/ai/chat-composer`
-- Storybook: [Components/AI/Chat](https://ds.lukeai.space/storybook/?path=/story/components-ai-chat--chat-composer)
+- Storybook: [Components/AI/Chat](https://ds.lukeai.space/storybook/?path=/story/components-ai-chat--chat)
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
 

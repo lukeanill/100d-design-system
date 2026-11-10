@@ -38,7 +38,7 @@ export default {
   },
 }
 
-export const PinnedListAnimate = ({ items: ALL_ITEMS, pinned: initialPinned, pinnedLabel, unpinnedLabel, width }: PinnedListArgs) => {
+export const PinnedList = ({ items: ALL_ITEMS, pinned: initialPinned, pinnedLabel, unpinnedLabel, width }: PinnedListArgs) => {
   const [pinned, setPinned] = React.useState<string[]>(initialPinned)
   // a change to the pinned control starts the list over from it
   React.useEffect(() => setPinned(initialPinned), [initialPinned])

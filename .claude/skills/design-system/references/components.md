@@ -29,7 +29,7 @@ Detail: `references/components/ai.md`
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
 | Beam Input | `components/ai/beam-input` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-beam-input--beam-input) | — |
-| Chat | `components/ai/chat-composer` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-chat--chat-composer) | — |
+| Chat | `components/ai/chat-composer` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-chat--chat) | — |
 | Context Cards | `components/ai/context-cards` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-context-cards--context-cards) | — |
 | Insight Cards | `components/ai/insight-cards` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-insight-cards--insight-cards) | Explore |
 | Loading State | `components/ai/loading-state` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-loading-state--loading-state) | — |
@@ -64,7 +64,7 @@ Detail: `references/components/content.md`
 | Card | `components/card` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-card--card) | — |
 | Carousel | `components/carousel` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-carousel--carousel) | Homepage preview |
 | Chart | `components/chart` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-chart--chart) | — |
-| Chat | `components/ui/chat-conversation` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-chat--chat-conversation) | — |
+| Chat | `components/ui/chat-conversation` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-chat--chat) | — |
 | Data Table | `components/ui/table` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-data-table--data-table) | — |
 | Files | `components/animate-ui/components/base/files` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-files--files) | — |
 | Hero | `components/ui/hero` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-hero--hero) | — |
@@ -73,9 +73,9 @@ Detail: `references/components/content.md`
 | Message | `components/message` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-message--message) | — |
 | Message Bubble | `components/ui/message-bubble` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-message-bubble--message-bubble) | — |
 | Notification List | `components/animate-ui/components/community/notification-list` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-notification-list--notification-list) | — |
-| Pinned List | `components/animate-ui/primitives/animate/pinned-list` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-pinned-list--pinned-list-animate) | — |
+| Pinned List | `components/animate-ui/primitives/animate/pinned-list` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-pinned-list--pinned-list) | — |
 | Playful Todolist | `components/animate-ui/components/community/playful-todolist` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-playful-todolist--playful-todolist) | Explore |
-| Scroll Progress | `components/animate-ui/primitives/animate/scroll-progress` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-scroll-progress--scroll-progress-animate) | — |
+| Scroll Progress | `components/animate-ui/primitives/animate/scroll-progress` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-scroll-progress--scroll-progress) | — |
 | Stat Card | `components/ui/stat-card` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-stat-card--stat-card) | — |
 
 ## Feedback

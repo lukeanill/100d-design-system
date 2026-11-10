@@ -30,7 +30,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--affirmative-foreground` | `var(--foreground)` | Ink on the success colour: the theme's foreground. | text on success colour |
 | `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+29) |
 | `--input` | `oklch(0.988 0.001 286.38 / 20%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | checkbox, bubble, button-group (+1) |
-| `--ring` | `oklch(0.988 0.001 286.38 / 70%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | button, questionnaire, files (+30) |
+| `--ring` | `oklch(0.988 0.001 286.38 / 70%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | button, questionnaire, files (+31) |
 | `--chart-1` | `oklch(0.647 0.217 36.85)` | Chart series colours (five per theme). | chart series (recharts) |
 | `--chart-2` | `oklch(0.605 0.107 184.17)` | Chart series colours (five per theme). | chart series (recharts) |
 | `--chart-3` | `oklch(0.397 0.070 227.19)` | Chart series colours (five per theme). | chart series (recharts) |
@@ -185,10 +185,10 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--ease-hold` | `cubic-bezier(0, 0, 0.58, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
 | `--ease-constant` | `linear` | Motion token from the Figma `motion` collection. Same in every theme. | selection-actions, task-rows, thinking-state (+1) |
 | `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | tokens-theme |
-| `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | thinking-state, selection-actions, task-rows (+15) |
+| `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | thinking-state, selection-actions, task-rows (+14) |
 | `--motion-spring-bounce` | `0` | Bounce of the Springy choice (0 for the others). | `useThemeSpring()` |
 | `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | date-time-picker, prompt-bar, map-carousel (+52) |
-| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | selection-actions, sidebar, thinking-state (+49) |
+| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | selection-actions, sidebar, thinking-state (+48) |
 
 ## Glass
 

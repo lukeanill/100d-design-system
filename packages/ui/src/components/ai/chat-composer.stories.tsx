@@ -19,4 +19,4 @@ export default {
   },
 }
 
-export const ChatComposer = (args: ComponentProps<typeof ChatComposerImpl>) => <ChatComposerImpl {...args} />
+export const Chat = (args: ComponentProps<typeof ChatComposerImpl>) => <ChatComposerImpl {...args} />

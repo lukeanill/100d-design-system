@@ -328,7 +328,7 @@ Also accepts the props of `recharts` and standard HTML attributes.
 
 - File: `packages/ui/src/components/ui/chat-conversation.tsx`
 - Import: `@workspace/ui/components/ui/chat-conversation`
-- Storybook: [Components/Content/Chat](https://ds.lukeai.space/storybook/?path=/story/components-content-chat--chat-conversation)
+- Storybook: [Components/Content/Chat](https://ds.lukeai.space/storybook/?path=/story/components-content-chat--chat)
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
 
@@ -668,7 +668,7 @@ _No props of its own._
 
 - File: `packages/ui/src/components/animate-ui/primitives/animate/pinned-list.tsx`
 - Import: `@workspace/ui/components/animate-ui/primitives/animate/pinned-list`
-- Storybook: [Components/Content/Pinned List](https://ds.lukeai.space/storybook/?path=/story/components-content-pinned-list--pinned-list-animate)
+- Storybook: [Components/Content/Pinned List](https://ds.lukeai.space/storybook/?path=/story/components-content-pinned-list--pinned-list)
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
 
@@ -735,7 +735,7 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 
 - File: `packages/ui/src/components/animate-ui/primitives/animate/scroll-progress.tsx`
 - Import: `@workspace/ui/components/animate-ui/primitives/animate/scroll-progress`
-- Storybook: [Components/Content/Scroll Progress](https://ds.lukeai.space/storybook/?path=/story/components-content-scroll-progress--scroll-progress-animate)
+- Storybook: [Components/Content/Scroll Progress](https://ds.lukeai.space/storybook/?path=/story/components-content-scroll-progress--scroll-progress)
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
 

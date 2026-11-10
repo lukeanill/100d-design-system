@@ -15,7 +15,7 @@ export default {
   args: { mode: "width" },
 }
 
-export const ScrollProgressAnimate = (args: ComponentProps<typeof ScrollProgressImpl>) => (
+export const ScrollProgress = (args: ComponentProps<typeof ScrollProgressImpl>) => (
   <ScrollProgressProvider>
     <div style={{ position: "relative", width: 320 }}>
       <ScrollProgressImpl
