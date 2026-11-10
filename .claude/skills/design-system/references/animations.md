@@ -12,8 +12,8 @@ Detail: `references/animations/backgrounds.md`
 
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
-| Effects | story only | [story](https://ds.lukeai.space/storybook/?path=/story/animation-backgrounds-effects--dither-canvas) | — |
 | FX | story only | [story](https://ds.lukeai.space/storybook/?path=/story/animation-backgrounds-fx--aurora) | — |
+| Interactive | story only | [story](https://ds.lukeai.space/storybook/?path=/story/animation-backgrounds-interactive--dither-canvas) | — |
 
 ## General
 

@@ -54,7 +54,7 @@ Also accepts the props of `framer-motion`, `@base-ui/react`, `motion-dom`, `the 
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -272,10 +272,15 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
+| `pixelSize` | `number` | no | Size of one dither pixel in CSS px. |
+| `speed` | `number` | no | Animation speed multiplier. |
+| `threshold` | `number` | no | Shifts the field brighter (positive) or darker (negative), -0.5 to 0.5. |
+| `scale` | `number` | no | Scale of the noise features: larger is broader. |
+| `pointerStrength` | `number` | no | How strongly the pointer pushes the field (0 turns it off). |
 
 ### dot-field
 
@@ -289,7 +294,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -326,7 +331,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -345,7 +350,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -520,7 +525,7 @@ _No props of its own._
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -556,7 +561,7 @@ _No props of its own._
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -591,7 +596,7 @@ _No props of its own._
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -627,7 +632,7 @@ _No props of its own._
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -661,7 +666,7 @@ _No props of its own._
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -890,7 +895,7 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -1111,7 +1116,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -1522,7 +1527,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |
@@ -1567,7 +1572,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 |---|---|---|---|
 | `paused` | `boolean` | no | Hold the current frame. |
 | `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
-| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `inverse` | `boolean` | no | Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. |
 | `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
 | `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
 | `className` | `string` | no |  |

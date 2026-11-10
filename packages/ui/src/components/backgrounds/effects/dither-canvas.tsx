@@ -198,10 +198,18 @@ function TheEffect({
   )
 }
 
-export function DitherCanvasBackground(props: EffectBackgroundProps) {
+export function DitherCanvasBackground({ paused, useThemeColors, inverse, scrim, scrimColor, className, ...effect }: EffectBackgroundProps & DitherCanvasProps) {
   return (
-    <EffectBackground colors={DEFAULT_COLORS} {...props}>
-      {({ colors, running }) => <TheEffect colors={colors} running={running} />}
+    <EffectBackground
+      colors={DEFAULT_COLORS}
+      paused={paused}
+      useThemeColors={useThemeColors}
+      inverse={inverse}
+      scrim={scrim}
+      scrimColor={scrimColor}
+      className={className}
+    >
+      {({ colors, running }) => <TheEffect colors={colors} running={running} {...effect} />}
     </EffectBackground>
   )
 }

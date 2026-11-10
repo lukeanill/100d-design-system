@@ -28,7 +28,7 @@ export interface EffectBackgroundProps {
   paused?: boolean
   /** Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). */
   useThemeColors?: boolean
-  /** With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. */
+  /** Swap base and highlight: the theme's background and foreground with `useThemeColors` (set `scrimColor` to the foreground to match), or the effect's own first and last colours without it. */
   inverse?: boolean
   /** Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. */
   scrim?: boolean | number
@@ -92,7 +92,8 @@ export function EffectBackground({
 }) {
   const rootRef = React.useRef<HTMLDivElement>(null)
   const themeColors = useThemeColors(rootRef, themed, inverse)
-  const colors = themeColors ?? ownColors
+  // `inverse` swaps the roles of base and highlight: the theme's, or the effect's own when it paints with its own colours
+  const colors = themeColors ?? (inverse ? [...ownColors].reverse() : ownColors)
   const running = useRunning(rootRef, paused)
 
   const scrimOpacity =
