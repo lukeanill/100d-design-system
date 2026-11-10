@@ -39,7 +39,7 @@ function VersionCard({ major, releases }: { major: string; releases: VersionEntr
         <div key={release.version} className="flex flex-col gap-4">
           <p className="text-md-bold">{release.version}</p>
           <div className="flex flex-col gap-2 sm:flex-row sm:gap-6">
-            <p className="text-md shrink-0 sm:w-[160px]">{formatDate(release.at)}</p>
+            <p className="text-md shrink-0 sm:w-[120px]">{formatDate(release.at)}</p>
             {release.notes.length > 0 && (
               <ul className="text-md min-w-0 flex-1 list-disc ps-6">
                 {release.notes.map((note) => (
