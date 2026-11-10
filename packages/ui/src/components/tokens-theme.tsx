@@ -199,36 +199,47 @@ function Principles({ values }: { values?: readonly ("a" | "b")[] }) {
   )
 }
 
-/** A track with a ball that slides to the far end on hover or tap and back again, on one timing and the theme's curve. */
+/**
+ * A track with a ball. A hover or a tap plays one whole run, out to the far end and back, on one timing and the theme's
+ * curve; leaving the track part-way does not turn it round, and a second trigger while it runs is ignored.
+ */
 function Track({ name, duration, ease }: { name: string; duration: string; ease: string }) {
-  const [on, setOn] = React.useState(false)
-  const pointer = React.useRef<string>("")
+  const [phase, setPhase] = React.useState<"idle" | "out" | "back">("idle")
+  const ball = React.useRef<HTMLSpanElement>(null)
+  const trigger = () => setPhase((current) => (current === "idle" ? "out" : current))
+
+  // with no transition to wait for (motion none, reduced motion) the run finishes at once
+  React.useEffect(() => {
+    if (phase === "idle" || !ball.current) return
+    const seconds = parseFloat(getComputedStyle(ball.current).transitionDuration) || 0
+    if (seconds === 0) setPhase(phase === "out" ? "back" : "idle")
+  }, [phase])
+
   return (
     <div className="flex min-w-0 flex-1 flex-col gap-4">
       <p className={caption}>{name}</p>
       <div
         role="button"
         tabIndex={0}
-        aria-label={`${name}: move the ball`}
-        aria-pressed={on}
+        aria-label={`${name}: play`}
         className="relative h-[42px] cursor-pointer rounded-[20px] border border-(--alpha-light-sm) outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-        onPointerDown={(event) => {
-          pointer.current = event.pointerType
-        }}
-        onPointerEnter={(event) => event.pointerType === "mouse" && setOn(true)}
-        onPointerLeave={(event) => event.pointerType === "mouse" && setOn(false)}
-        // a tap (or the keyboard) toggles it; a mouse already moved it on enter
-        onClick={() => pointer.current !== "mouse" && setOn((current) => !current)}
+        onPointerEnter={(event) => event.pointerType === "mouse" && trigger()}
+        onClick={trigger}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault()
-            setOn((current) => !current)
+            trigger()
           }
         }}
       >
         <span
+          ref={ball}
           className="absolute top-0 size-10 rounded-full bg-primary motion-reduce:transition-none"
-          style={{ left: on ? "calc(100% - 2.5rem)" : 0, transition: `left ${duration} ${ease}` }}
+          style={{ left: phase === "out" ? "calc(100% - 2.5rem)" : 0, transition: `left ${duration} ${ease}` }}
+          onTransitionEnd={(event) => {
+            if (event.propertyName !== "left") return
+            setPhase((current) => (current === "out" ? "back" : "idle"))
+          }}
         />
       </div>
     </div>
