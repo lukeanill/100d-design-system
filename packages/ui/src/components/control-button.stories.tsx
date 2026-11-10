@@ -37,7 +37,7 @@ function Toggle({ on, disabled, onClick, children }: { on: boolean; disabled?: b
   )
 }
 
-export const MetalControls = () => {
+export const ControlButton = () => {
   const [engine, setEngine] = useState<"v1" | "v2">("v1")
   const [metal, setMetal] = useState<Set<string>>(() => new Set(["play"]))
   const [halo, setHalo] = useState<Set<string>>(() => new Set())

@@ -6,7 +6,7 @@
 
 - File: `packages/ui/src/components/control-button.tsx`
 - Import: `@workspace/ui/components/control-button`
-- Storybook: [Special FX Components/Metal/Control Button](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--metal-controls)
+- Storybook: [Special FX Components/Metal/Control Button](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--control-button)
 - Used in the web app: Homepage preview
 - Used by other components: none
 
@@ -40,7 +40,7 @@ _No props of its own._
 
 - File: `packages/ui/src/components/metal-surface.tsx`
 - Import: `@workspace/ui/components/metal-surface`
-- Storybook: [Special FX Components/Metal/Metal Surface](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-metal-surface--metal-surface) (stories: MetalSurface, EnginesSideBySide)
+- Storybook: [Special FX Components/Metal/Metal Surface](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-metal-surface--metal-surface)
 - Used in the web app: Homepage (/); Homepage preview
 - Used by other components: control-button, thinking-orb, voice-glow, voice-ring
 

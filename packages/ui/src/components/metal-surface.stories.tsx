@@ -19,6 +19,7 @@ export default {
 type Args = { engine: "v1" | "v2"; variant: "circle" | "button"; preset: "chromatic" | "silver" | "gold"; active: boolean; halo: boolean; strength: number }
 
 export const MetalSurface = (args: Args) => (
+  <div className="flex flex-col">
   <div className="flex items-center gap-6 p-10">
     <MetalSurfaceImpl {...args}>
       {args.variant === "circle" ? (
@@ -32,9 +33,7 @@ export const MetalSurface = (args: Args) => (
       )}
     </MetalSurfaceImpl>
   </div>
-)
-
-export const EnginesSideBySide = () => (
+    {/* both engines side by side, as before the two stories were one */}
   <div className="flex flex-wrap items-center gap-10 p-10">
     {(["v1", "v2"] as const).map((engine) => (
       <div key={engine} className="flex flex-col items-center gap-3">
@@ -53,5 +52,6 @@ export const EnginesSideBySide = () => (
         <span className="text-xs text-muted-foreground">metal-fx {engine}</span>
       </div>
     ))}
+  </div>
   </div>
 )

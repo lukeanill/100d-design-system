@@ -139,7 +139,7 @@ Detail: `references/components/metal.md`
 
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
-| Control Button | `components/control-button` | [story](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--metal-controls) | Homepage preview |
+| Control Button | `components/control-button` | [story](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--control-button) | Homepage preview |
 | Metal Surface | `components/metal-surface` | [story](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-metal-surface--metal-surface) | Homepage (/); Homepage preview |
 
 ## Navigation
