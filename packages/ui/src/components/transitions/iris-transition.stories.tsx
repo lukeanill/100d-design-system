@@ -34,10 +34,12 @@ export const IrisFromClickDemo = (args: {
     null
   )
 
-  // The circle grows from the click itself, so the transition starts where the
-  // person was looking rather than at the centre of the page.
-  function handleClick(event: React.MouseEvent) {
-    setOrigin({ x: event.clientX, y: event.clientY })
+  // The circle grows from the centre of the element that was clicked, so the
+  // transition starts where the person was looking rather than at the centre
+  // of the page.
+  function handleClick(event: React.MouseEvent<HTMLElement>) {
+    const box = event.currentTarget.getBoundingClientRect()
+    setOrigin({ x: box.left + box.width / 2, y: box.top + box.height / 2 })
     setRun((r) => r + 1)
   }
 
