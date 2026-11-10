@@ -214,7 +214,7 @@ function AllocationCard({ segments = ALLOCATION_SEGMENTS }: { segments?: Allocat
       </div>
       <div className="mt-3 min-h-16 rounded-md bg-muted px-2.5 py-2 ring-1 ring-foreground/10">
         <span className={cn("block text-xs font-[weight:var(--font-body-weight-action)]", active.tone)}>{active.label}</span>
-        <span className="mt-1 block text-xs text-foreground/75">Contribution snapshot across current inventory value. Segment selection changes the inspected group without moving the card.</span>
+        <span className="mt-1 block text-md text-foreground/75">Contribution snapshot across current inventory value. Segment selection changes the inspected group without moving the card.</span>
       </div>
     </CardChrome>
   )
@@ -296,7 +296,7 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
       </div>
 
       <div>
-        <p className="mt-1.5 text-xs text-foreground/75">{prose}</p>
+        <p className="mt-1.5 text-md text-foreground/75">{prose}</p>
         <div className="mt-2">
           <Card />
         </div>
