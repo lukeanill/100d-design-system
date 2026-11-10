@@ -87,7 +87,7 @@ function CompareCard({ series = COMPARE_SERIES }: { series?: CompareSeries[] }) 
       <div className="mt-2 overflow-hidden rounded-md bg-muted ring-1 ring-foreground/10">
         <div className="flex items-center justify-between border-b border-border px-2.5 py-1.5">
           <span className="text-xs text-foreground/75 tabular-nums">Trend snapshot</span>
-          <span className="rounded-(--radius) bg-card px-2 py-0.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">Snapshot</span>
+          <Button type="button" variant="ghost" size="sm">Snapshot</Button>
         </div>
         <div className="h-41.5 pt-2">
           <ResponsiveContainer width="100%" height="100%">
@@ -123,7 +123,7 @@ function AnomalyCard({ data: anomaly = ANOMALY_DATA }: { data?: AnomalyData }) {
           <TrendingUp className="size-3 text-destructive" strokeWidth={2.5} />
           High freezer spend
         </span>
-        <span className="rounded-(--radius) bg-muted px-2 py-0.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">Snapshot</span>
+        <Button type="button" variant="ghost" size="sm">Snapshot</Button>
       </div>
       <div className="mt-2 overflow-hidden rounded-md bg-muted ring-1 ring-foreground/10">
         <div className="flex items-center justify-between border-b border-border px-2.5 py-1.5">
