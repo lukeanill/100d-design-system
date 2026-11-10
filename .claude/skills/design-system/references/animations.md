@@ -4,7 +4,7 @@
 
 Animated components and effects: page transitions, text effects, interactions, backgrounds, buttons. These live under "Animation" in Storybook. The motion tokens that drive them are in `tokens.md`; the theme choices in `themes.md` (motion, feel).
 
-Total: 86 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/animations/`; read only the group you need.
+Total: 101 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/animations/`; read only the group you need.
 
 ## Backgrounds
 
@@ -12,6 +12,7 @@ Detail: `references/animations/backgrounds.md`
 
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
+| Effects | story only | [story](https://ds.lukeai.space/storybook/?path=/story/animation-backgrounds-effects--dither-canvas) | — |
 | FX | story only | [story](https://ds.lukeai.space/storybook/?path=/story/animation-backgrounds-fx--aurora) | — |
 
 ## General
@@ -53,17 +54,29 @@ Detail: `references/animations/not-in-storybook.md`
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
 | accordion | `components/animate-ui/primitives/base/accordion` | — | — |
+| acid-squares | `components/backgrounds/effects/acid-squares` | — | — |
 | alert-dialog | `components/animate-ui/primitives/base/alert-dialog` | — | — |
 | button | `components/animate-ui/primitives/buttons/button` | — | — |
 | checkbox | `components/animate-ui/primitives/base/checkbox` | — | — |
 | dialog | `components/animate-ui/primitives/base/dialog` | — | — |
+| dither-canvas | `components/backgrounds/effects/dither-canvas` | — | — |
+| dot-field | `components/backgrounds/effects/dot-field` | — | — |
+| effect-background | `components/backgrounds/effect-background` | — | — |
+| ferrofluid | `components/backgrounds/effects/ferrofluid` | — | — |
 | files | `components/animate-ui/primitives/base/files` | — | — |
 | gradient-background | `components/backgrounds/gradient-background` | — | Homepage preview |
+| iridescence | `components/backgrounds/effects/iridescence` | — | — |
+| letter-glitch | `components/backgrounds/effects/letter-glitch` | — | — |
+| lightning | `components/backgrounds/effects/lightning` | — | — |
+| liquid-chrome | `components/backgrounds/effects/liquid-chrome` | — | — |
+| magnet-lines | `components/backgrounds/effects/magnet-lines` | — | — |
 | menu | `components/animate-ui/primitives/base/menu` | — | — |
 | particles | `components/animate-ui/primitives/effects/particles` | — | — |
+| pattern-waves | `components/backgrounds/effects/pattern-waves` | — | — |
 | popover | `components/animate-ui/primitives/base/popover` | — | — |
 | preview-card | `components/animate-ui/primitives/base/preview-card` | — | — |
 | preview-link-card | `components/animate-ui/primitives/base/preview-link-card` | — | — |
+| prism | `components/backgrounds/effects/prism` | — | — |
 | progress | `components/animate-ui/primitives/base/progress` | — | — |
 | radio | `components/animate-ui/primitives/base/radio` | — | — |
 | ripple | `components/animate-ui/primitives/buttons/ripple` | — | — |
@@ -74,6 +87,8 @@ Detail: `references/animations/not-in-storybook.md`
 | toggle | `components/animate-ui/primitives/base/toggle` | — | — |
 | toggle-group | `components/animate-ui/primitives/base/toggle-group` | — | — |
 | tooltip | `components/animate-ui/primitives/base/tooltip` | — | — |
+| topography | `components/backgrounds/effects/topography` | — | — |
+| waves | `components/backgrounds/effects/waves` | — | — |
 
 ## Page Transitions
 

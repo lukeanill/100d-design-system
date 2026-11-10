@@ -42,6 +42,56 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 
 Also accepts the props of `framer-motion`, `@base-ui/react`, `motion-dom`, `the underlying element or library` and standard HTML attributes.
 
+### acid-squares
+
+- File: `packages/ui/src/components/backgrounds/effects/acid-squares.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/acid-squares`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `pulse` | `number` | no |  |
+| `gap` | `number` | no |  |
+| `opacity` | `number` | no |  |
+| `zoom` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `shape` | `AcidSquaresShape` | no |  |
+| `fade` | `number` | no |  |
+| `tileSize` | `number` | no |  |
+| `roundness` | `number` | no |  |
+| `softness` | `number` | no |  |
+| `bulge` | `number` | no |  |
+| `rotation` | `number` | no |  |
+| `gloss` | `number` | no |  |
+| `waves` | `number` | no |  |
+| `waveScale` | `number` | no |  |
+| `pulseSpeed` | `number` | no |  |
+| `pulseSpacing` | `number` | no |  |
+| `pulseWidth` | `number` | no |  |
+| `pulseOrigin` | `AcidSquaresPulseOrigin` | no |  |
+| `brightness` | `number` | no |  |
+| `lighting` | `AcidSquaresLighting` | no |  |
+| `tilt` | `number` | no |  |
+| `depth` | `number` | no |  |
+| `grain` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `mouseInteraction` | `boolean` | no |  |
+| `hoverEffect` | `AcidSquaresHoverEffect` | no |  |
+| `mouseStrength` | `number` | no |  |
+| `mouseRadius` | `number` | no |  |
+| `pulseOnClick` | `boolean` | no |  |
+| `detail` | `AcidSquaresDetail` | no |  |
+| `lightMode` | `boolean` | no | Dark tiles on a light ground. By default this follows the base colour. |
+| `dpr` | `number` | no |  |
+
 ### alert-dialog
 
 - File: `packages/ui/src/components/animate-ui/primitives/base/alert-dialog.tsx`
@@ -210,6 +260,116 @@ _No props of its own._
 
 Also accepts the props of `@base-ui/react` and standard HTML attributes.
 
+### dither-canvas
+
+- File: `packages/ui/src/components/backgrounds/effects/dither-canvas.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/dither-canvas`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+
+### dot-field
+
+- File: `packages/ui/src/components/backgrounds/effects/dot-field.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/dot-field`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `pattern` | `Pattern` | no |  |
+| `opacity` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `lightMode` | `boolean` | no | Darker ink for a light base. Defaults to whether the base colour is light. |
+| `dotRadius` | `number` | no |  |
+| `dotSpacing` | `number` | no |  |
+| `gradientAngle` | `number` | no |  |
+| `cursorRadius` | `number` | no |  |
+| `bulgeStrength` | `number` | no |  |
+| `twist` | `number` | no |  |
+| `glowColor` | `string` | no | Defaults to the gradient's end colour. |
+| `glowRadius` | `number` | no |  |
+| `glowIntensity` | `number` | no |  |
+| `baseOpacity` | `number` | no |  |
+| `waveAmplitude` | `number` | no |  |
+| `sparkle` | `boolean` | no |  |
+| `interactive` | `boolean` | no |  |
+| `holdToZoom` | `boolean` | no |  |
+| `maxDevicePixelRatio` | `number` | no |  |
+
+### effect-background
+
+- File: `packages/ui/src/components/backgrounds/effect-background.tsx`
+- Import: `@workspace/ui/components/backgrounds/effect-background`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: acid-squares, dither-canvas, dot-field, ferrofluid, iridescence, letter-glitch, lightning, liquid-chrome (+5)
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `colors` | `string[]` | yes | The effect's own colours, used when `useThemeColors` is off. |
+| `children` | `(context: EffectContext) => ReactNode` | yes |  |
+
+### ferrofluid
+
+- File: `packages/ui/src/components/backgrounds/effects/ferrofluid.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/ferrofluid`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `speed` | `number` | no |  |
+| `scale` | `number` | no |  |
+| `spikeHeight` | `number` | no |  |
+| `sharpness` | `number` | no |  |
+| `turbulence` | `number` | no |  |
+| `fluidity` | `number` | no |  |
+| `tilt` | `number` | no |  |
+| `magnetism` | `number` | no |  |
+| `variation` | `number` | no |  |
+| `flowDirection` | `FerrofluidFlow` | no |  |
+| `brightness` | `number` | no |  |
+| `mouseInteraction` | `boolean` | no |  |
+| `mouseStrength` | `number` | no |  |
+| `mouseRadius` | `number` | no |  |
+| `mouseDampening` | `number` | no |  |
+| `clickPulse` | `boolean` | no |  |
+| `intro` | `boolean` | no |  |
+| `lightMode` | `boolean` | no | Ink on a light base instead of light on a dark one. By default it follows the base colour. |
+| `opacity` | `number` | no |  |
+| `dpr` | `number` | no |  |
+
 ### files
 
 - File: `packages/ui/src/components/animate-ui/primitives/base/files.tsx`
@@ -347,6 +507,190 @@ _No props of its own._
 | `scrim` | `number \| boolean` | no | Lay the page background over the field for legibility; true is 0.65. |
 | `scrimColor` | `string` | no |  |
 | `className` | `string` | no |  |
+
+### iridescence
+
+- File: `packages/ui/src/components/backgrounds/effects/iridescence.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/iridescence`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `opacity` | `number` | no |  |
+| `scale` | `number` | no |  |
+| `amplitude` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `fade` | `number` | no |  |
+| `rotation` | `number` | no |  |
+| `brightness` | `number` | no |  |
+| `grain` | `number` | no |  |
+| `detail` | `number` | no |  |
+| `themedSpectrum` | `number` | no | How much of the spectrum shows over the theme ramp when painting with theme colours: 0 to 1. |
+| `mouseReact` | `boolean` | no |  |
+| `warp` | `number` | no |  |
+| `hueShift` | `number` | no |  |
+| `saturation` | `number` | no |  |
+| `contrast` | `number` | no |  |
+| `stir` | `number` | no |  |
+| `sheen` | `number` | no |  |
+| `clickSwirl` | `boolean` | no |  |
+| `resolution` | `number` | no |  |
+
+### letter-glitch
+
+- File: `packages/ui/src/components/backgrounds/effects/letter-glitch.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/letter-glitch`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `style` | `CSSProperties` | no |  |
+| `characters` | `string` | no |  |
+| `fontFamily` | `string` | no | The glyph font; by default the theme's body font (--font-body). |
+| `fontSize` | `number` | no |  |
+| `spacing` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `dpr` | `number` | no |  |
+| `cursorRadius` | `number` | no |  |
+| `baseOpacity` | `number` | no |  |
+| `interactive` | `boolean` | no |  |
+| `density` | `number` | no |  |
+| `glitchAmount` | `number` | no |  |
+| `smooth` | `boolean` | no |  |
+| `clickEffect` | `ClickEffect` | no |  |
+| `flow` | `number` | no |  |
+| `edgeFade` | `number` | no |  |
+| `centerFade` | `number` | no |  |
+
+### lightning
+
+- File: `packages/ui/src/components/backgrounds/effects/lightning.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/lightning`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `bolts` | `number` | no |  |
+| `spread` | `number` | no |  |
+| `branches` | `number` | no |  |
+| `xOffset` | `number` | no |  |
+| `angle` | `number` | no |  |
+| `size` | `number` | no |  |
+| `thickness` | `number` | no |  |
+| `glow` | `number` | no |  |
+| `intensity` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `flicker` | `number` | no |  |
+| `mouseInteraction` | `boolean` | no |  |
+| `mouseStrength` | `number` | no |  |
+| `clickStrike` | `boolean` | no |  |
+| `intro` | `boolean` | no |  |
+| `fade` | `number` | no |  |
+| `opacity` | `number` | no |  |
+| `lightMode` | `boolean` | no | Ink on a light base instead of light on a dark one. By default it follows the base colour. |
+| `dpr` | `number` | no |  |
+
+### liquid-chrome
+
+- File: `packages/ui/src/components/backgrounds/effects/liquid-chrome.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/liquid-chrome`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `style` | `CSSProperties` | no |  |
+| `amplitude` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `tilt` | `number` | no |  |
+| `depth` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `detail` | `number` | no |  |
+| `lightMode` | `boolean` | no | The bright studio, for a light base. By default it follows the base colour. |
+| `interactive` | `boolean` | no |  |
+| `maxDevicePixelRatio` | `number` | no |  |
+| `frequencyX` | `number` | no |  |
+| `frequencyY` | `number` | no |  |
+| `thickness` | `number` | no |  |
+| `roughness` | `number` | no |  |
+| `exposure` | `number` | no |  |
+| `rippleStrength` | `number` | no |  |
+| `rippleSize` | `number` | no |  |
+
+### magnet-lines
+
+- File: `packages/ui/src/components/backgrounds/effects/magnet-lines.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/magnet-lines`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `style` | `CSSProperties` | no |  |
+| `idle` | `boolean` | no |  |
+| `columns` | `number` | no |  |
+| `lineHeight` | `string \| number` | no |  |
+| `mode` | `Mode` | no |  |
+| `radius` | `number` | no |  |
+| `spacing` | `number` | no |  |
+| `bounce` | `number` | no |  |
+| `shape` | `Shape` | no |  |
+| `rows` | `number` | no |  |
+| `ripple` | `number` | no |  |
+| `fade` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `maxDevicePixelRatio` | `number` | no |  |
+| `scatter` | `number` | no |  |
+| `edgeFade` | `number` | no |  |
+| `containerSize` | `string \| number` | no |  |
+| `lineWidth` | `string \| number` | no |  |
+| `baseAngle` | `number` | no |  |
+| `rainbow` | `boolean` | no |  |
+| `stretch` | `number` | no |  |
+| `reach` | `number` | no |  |
+| `inertia` | `number` | no |  |
+| `clickPulse` | `boolean` | no |  |
+| `tiltX` | `number` | no |  |
+| `tiltY` | `number` | no |  |
 
 ### menu
 
@@ -534,6 +878,43 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 
 Also accepts the props of `the underlying element or library`, `framer-motion`, `motion-dom` and standard HTML attributes.
 
+### pattern-waves
+
+- File: `packages/ui/src/components/backgrounds/effects/pattern-waves.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/pattern-waves`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `pattern` | `PatternKind` | no |  |
+| `light` | `number` | no |  |
+| `characters` | `string` | no |  |
+| `direction` | `number` | no |  |
+| `opacity` | `number` | no |  |
+| `scale` | `number` | no |  |
+| `spacing` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `fade` | `FadeKind` | no |  |
+| `depth` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `interactive` | `boolean` | no |  |
+| `contrast` | `number` | no |  |
+| `wave` | `WaveKind` | no |  |
+| `markSize` | `number` | no |  |
+| `shine` | `number` | no |  |
+| `preset` | `SurfacePreset` | no |  |
+| `fadeSize` | `number` | no |  |
+| `cursorSize` | `number` | no |  |
+| `cursorStrength` | `number` | no |  |
+
 ### popover
 
 - File: `packages/ui/src/components/animate-ui/primitives/base/popover.tsx`
@@ -717,6 +1098,41 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 _No props of its own._
 
 Also accepts the props of `@base-ui/react` and standard HTML attributes.
+
+### prism
+
+- File: `packages/ui/src/components/backgrounds/effects/prism.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/prism`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `height` | `number` | no |  |
+| `baseWidth` | `number` | no |  |
+| `animationType` | `PrismAnimation` | no |  |
+| `glow` | `number` | no |  |
+| `offset` | `{ x?: number \| undefined; y?: number \| undefined; }` | no |  |
+| `noise` | `number` | no |  |
+| `scale` | `number` | no |  |
+| `hueShift` | `number` | no |  |
+| `colorFrequency` | `number` | no |  |
+| `saturation` | `number` | no |  |
+| `timeScale` | `number` | no |  |
+| `interactive` | `boolean` | no |  |
+| `hoverStrength` | `number` | no |  |
+| `inertia` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `resolution` | `number` | no |  |
+| `lightMode` | `boolean` | no | Ink on a light base instead of light on a dark one. By default it follows the base colour. |
+| `dpr` | `number` | no |  |
 
 ### progress
 
@@ -1093,3 +1509,85 @@ Also accepts the props of `framer-motion`, `@base-ui/react`, `motion-dom`, `the 
 _No props of its own._
 
 Also accepts the props of `@base-ui/react` and standard HTML attributes.
+
+### topography
+
+- File: `packages/ui/src/components/backgrounds/effects/topography.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/topography`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `direction` | `TopographyDirection` | no |  |
+| `opacity` | `number` | no |  |
+| `scale` | `number` | no |  |
+| `elevation` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `brightness` | `number` | no |  |
+| `tilt` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `mouseInteraction` | `boolean` | no |  |
+| `hoverEffect` | `TopographyHoverEffect` | no |  |
+| `mouseStrength` | `number` | no |  |
+| `mouseRadius` | `number` | no |  |
+| `detail` | `number` | no |  |
+| `lightMode` | `boolean` | no | Draw dark lines on a light ground. By default this follows the base colour. |
+| `dpr` | `number` | no |  |
+| `clickEffect` | `TopographyClickEffect` | no |  |
+| `lineWidth` | `number` | no |  |
+| `lineCount` | `number` | no |  |
+| `majorLines` | `boolean` | no |  |
+| `foreground` | `number` | no |  |
+| `morph` | `number` | no |  |
+| `glow` | `number` | no |  |
+| `depthOfField` | `number` | no |  |
+| `fog` | `number` | no |  |
+| `trail` | `number` | no |  |
+| `parallax` | `number` | no |  |
+| `markers` | `TopographyMarkers` | no |  |
+| `glitch` | `number` | no |  |
+
+### waves
+
+- File: `packages/ui/src/components/backgrounds/effects/waves.tsx`
+- Import: `@workspace/ui/components/backgrounds/effects/waves`
+- Storybook: no story yet
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `paused` | `boolean` | no | Hold the current frame. |
+| `useThemeColors` | `boolean` | no | Paint with the active theme's colours instead of the effect's own (switch themes in the toolbar). |
+| `inverse` | `boolean` | no | With `useThemeColors`: swap the roles of background and foreground. Set `scrimColor` to the foreground to match. |
+| `scrim` | `number \| boolean` | no | Lay a colour over the effect for legibility: 0 to 1, or true for 0.65. |
+| `scrimColor` | `string` | no | The scrim's colour, the page background by default. |
+| `className` | `string` | no |  |
+| `opacity` | `number` | no |  |
+| `scale` | `number` | no |  |
+| `amplitude` | `number` | no |  |
+| `spacing` | `number` | no |  |
+| `speed` | `number` | no |  |
+| `bounce` | `number` | no |  |
+| `fade` | `number` | no |  |
+| `rotation` | `number` | no |  |
+| `intro` | `boolean` | no |  |
+| `mouseInteraction` | `boolean` | no |  |
+| `mouseStrength` | `number` | no |  |
+| `mouseRadius` | `number` | no |  |
+| `lightMode` | `boolean` | no | Darker lines for a light base. Defaults to whether the base colour is light. |
+| `dpr` | `number` | no |  |
+| `twist` | `number` | no |  |
+| `lineWidth` | `number` | no |  |
+| `lineStyle` | `WavesLineStyle` | no |  |
+| `variation` | `number` | no |  |
+| `returnDuration` | `number` | no |  |
+| `clickRipple` | `boolean` | no |  |

@@ -10,16 +10,16 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, gradient-background, kbd (+21) |
-| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, date-time-picker, dropdown-menu (+79) |
+| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, kbd, sidebar (+23) |
+| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, date-time-picker, dropdown-menu (+80) |
 | `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | combobox, map-carousel, message-bubble (+19) |
 | `--card-image` | `none` | The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`. | Card |
 | `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
 | `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, map-carousel, calendar (+3) |
 | `--popover-foreground` | `var(--foreground)` | Popup surface and text. Equals background. | map-carousel |
-| `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+32) |
+| `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+31) |
 | `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, map-carousel, theme-colors |
-| `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, copy, icon (+5) |
+| `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, theme-colors, copy (+4) |
 | `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+3) |
 | `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | navigation-menu, table, message-bubble (+34) |
 | `--muted-foreground` | `oklch(0.988 0.001 286.38 / 65%)` | Foreground at 65% opacity for quiet text. | day-timeline |

@@ -2,6 +2,14 @@
 
 # Animations: Backgrounds
 
+### Effects
+
+- File: `packages/ui/src/components/backgrounds/effects.stories.tsx`
+- Import: (story only, no component file)
+- Storybook: [Animation/Backgrounds/Effects](https://ds.lukeai.space/storybook/?path=/story/animation-backgrounds-effects--dither-canvas) (stories: DitherCanvas, PatternWaves, Topography, AcidSquares, Ferrofluid, Prism, Lightning, DotField, Iridescence, Waves, MagnetLines, LetterGlitch, LiquidChrome)
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
 ### FX
 
 - File: `packages/ui/src/components/backgrounds/gradients.stories.tsx`

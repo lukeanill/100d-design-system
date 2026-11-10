@@ -109,7 +109,7 @@ _No props of its own._
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
-| `weight` | `"soft" \| "medium" \| "heavy"` | yes |  |
+| `weight` | `"medium" \| "soft" \| "heavy"` | yes |  |
 | `tone` | `"light" \| "dark" \| "clear"` | no |  |
 | `tint` | `string` | no |  |
 | `radius` | `number` | no |  |
@@ -258,7 +258,7 @@ _No props of its own._
 | Prop | Type | Required | Note |
 |---|---|---|---|
 | `popup` | `boolean` | no |  |
-| `weight` | `"soft" \| "medium" \| "heavy"` | no |  |
+| `weight` | `"medium" \| "soft" \| "heavy"` | no |  |
 
 ### thread-insight-card
 
