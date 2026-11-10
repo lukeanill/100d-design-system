@@ -16,7 +16,7 @@ export type VersionEntry = {
 }
 
 export const versionEntries: VersionEntry[] = [
-  { version: "8.1.0", at: "2026-11-10T19:00:00Z", notes: ["13 animated background effects in a new Interactive group", "Panel Toggle removed", "Insight Cards, Pinned List, Notification List, Selection Actions, Task Rows, Stat Card and Badge follow the theme's glass and text styles"] },
+  { version: "8.1.0", at: "2026-11-10T18:32:02Z", notes: ["13 animated background effects in a new Interactive group", "Panel Toggle removed", "Insight Cards, Pinned List, Notification List, Selection Actions, Task Rows, Stat Card and Badge follow the theme's glass and text styles"] },
   { version: "8.0.0", at: "2026-11-10T13:46:05Z", notes: ["Tag Select and Discrete Tabs removed", "Overlays, cards, alerts and navigation on the real glass layers; buttons, inputs and selects solid", "AI components follow the theme's tokens, Notification List has controls"] },
   { version: "7.1.0", at: "2026-11-09T00:30:05Z", notes: ["Default hover on core components", "Skill updates"] },
   { version: "7.0.0", at: "2026-11-08T22:10:59Z", notes: ["uiColor setting and the new Fabrik palette", "PP Neue Montreal v3", "Tinted glass removed"] },
