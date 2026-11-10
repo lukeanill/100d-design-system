@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router"
 import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 import { Backdrop } from "./Showcase"
+import { DragScroll } from "./DragScroll"
 import { BackButton, Header } from "./themer/Chrome"
 import { versionEntries, type VersionEntry } from "./versions-data"
 
@@ -39,21 +40,22 @@ function VersionCard({ major, releases }: { major: string; releases: VersionEntr
         <div key={release.version} className="flex flex-col gap-4">
           <p className="text-md-bold">{release.version}</p>
           {release.newComponents && (
-            <div className="flex flex-wrap gap-4">
+            <DragScroll label={`New in ${release.version}`}>
               {release.newComponents.map((component) => (
-                <figure key={component.name} className="flex flex-col gap-2">
+                <figure key={component.name} className="flex shrink-0 flex-col gap-2">
                   <img
                     alt={`${component.name}, new in ${release.version}`}
                     src={component.image}
                     width={component.width}
                     height={component.height}
                     loading="lazy"
-                    className="h-[180px] w-auto max-w-full rounded-[12px] border border-white/10 object-contain"
+                    draggable={false}
+                    className="h-[180px] w-auto max-w-none rounded-[12px] border border-white/10 object-contain"
                   />
                   <figcaption className="text-sm opacity-75">{component.name}</figcaption>
                 </figure>
               ))}
-            </div>
+            </DragScroll>
           )}
           <div className="flex flex-col gap-2 sm:flex-row sm:gap-6">
             <p className="text-md shrink-0 sm:w-[120px]">{formatDate(release.at)}</p>
