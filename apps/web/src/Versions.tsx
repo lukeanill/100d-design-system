@@ -57,8 +57,8 @@ export function Versions() {
       <Backdrop />
 
       <div className="relative z-10 flex w-full flex-col">
-        {/* Figma 511:6515: Back, the title, and a hidden Continue that is left out */}
-        <header className="flex h-[129px] w-full items-center justify-between p-[clamp(20px,3.125vw,40px)]">
+        {/* Figma 511:6515: 129 tall; Back sits 40 from the top, with the title centred on it, and a hidden Continue that is left out */}
+        <header className="flex h-[129px] w-full items-start justify-between p-[clamp(20px,3.125vw,40px)]">
           <Link
             to="/"
             className="text-action-sm flex h-12 w-[120px] shrink-0 items-center justify-center gap-2 rounded-[12px] border border-[#fbfbfc] px-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
@@ -66,11 +66,13 @@ export function Versions() {
             <img alt="" src="/versions/arrow-up-right.svg" className="size-6 shrink-0 -scale-y-100 rotate-180" />
             Back
           </Link>
-          <h1 className="text-h5-pri">Versioning</h1>
+          <div className="flex h-12 flex-1 items-center justify-center">
+            <h1 className="text-h5-pri">Versioning</h1>
+          </div>
           <span aria-hidden className="w-[120px] shrink-0" />
         </header>
 
-        <div className="w-full px-[clamp(20px,9.375vw,120px)] pt-[105px] pb-[clamp(48px,6.25vw,80px)]">
+        <div className="w-full px-[clamp(20px,9.375vw,120px)] pt-12 pb-[clamp(48px,6.25vw,80px)]">
           <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6">
             {byMajor(versionEntries).map(([major, releases]) => (
               <VersionCard key={major} major={major} releases={releases} />
