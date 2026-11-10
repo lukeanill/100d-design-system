@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import { ArrowUp, Check, ChevronRight, MessageCircleQuestion, RotateCw, Scissors, SpellCheck, Sparkles, Smile, X } from "lucide-react"
 
 import { Button } from "@workspace/ui/components/button"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { EASING, TIMING, cubicBezier } from "@workspace/ui/themes/motion"
 import { useThemeTransition } from "@workspace/ui/hooks/use-theme-motion"
 import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
@@ -290,12 +291,13 @@ export const SelectionActions = ({ data, labels, actions: callbacks }: Selection
         >
           <div
             ref={barRef}
-            className="flex h-9 w-fit max-w-[calc(100vw-var(--spacing)*12)] items-center justify-center gap-0.5 overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] bg-card p-1 text-foreground shadow-lg ring-1 ring-foreground/10"
+            className="flex h-9 w-fit max-w-[calc(100vw-var(--spacing)*12)] items-center justify-center gap-0.5 relative isolate overflow-hidden rounded-[min(var(--radius-outer-max),calc(var(--radius-button)+4px))] p-1 text-foreground shadow-lg ring-1 ring-foreground/10"
             style={{
               width: mode === "idle" && hasPrompt && typingWidth ? typingWidth : undefined,
               ...(visible ? { animation: "pop-in var(--motion-fast) var(--motion-transition-ease) both" } : {}),
             }}
           >
+            <SurfaceFill popup weight="heavy" />
             <div ref={contentRef} className="flex w-fit shrink-0 items-center justify-center gap-0.5" style={{ width: mode === "idle" && hasPrompt && typingWidth ? typingWidth - 8 : undefined }}>
               {busy && (
                 <span className="inline-flex h-7 items-center gap-1.5 px-2.5 text-xs font-normal whitespace-nowrap text-foreground/75">

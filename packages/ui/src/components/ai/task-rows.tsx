@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 import { Check, ChevronDown, RefreshCw, X } from "lucide-react"
 
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 
@@ -167,7 +168,8 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
 
   const list = variant === "List"
   return (
-    <div className={cn("flex w-full max-w-110 flex-col", list ? "gap-0 self-start overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10" : "min-h-49 gap-2", className)}>
+    <div className={cn("flex w-full max-w-110 flex-col", list ? "relative isolate gap-0 self-start overflow-hidden rounded-lg ring-1 ring-foreground/10" : "min-h-49 gap-2", className)}>
+      {list && <SurfaceFill popup weight="heavy" />}
       {rows.map((row, i) => {
         const open = manualOpen[row.key] ?? (row.key === "index" && tick === 2)
         return (
@@ -175,10 +177,11 @@ export const TaskRows = ({ appearance, data, labels, actions, className }: TaskR
             key={row.key}
             className={cn(
               "self-stretch overflow-hidden transition-[border-radius,background-color] duration-(--motion-duration) hover:bg-muted",
-              list ? "border-b border-border last:border-0" : "bg-card ring-1 ring-foreground/10"
+              list ? "border-b border-border last:border-0" : "relative isolate ring-1 ring-foreground/10"
             )}
             style={{ animation: `fade-up var(--motion-duration) var(--motion-transition-ease) calc(var(--duration-fast) * ${i * 0.4}) both`, borderRadius: list ? 0 : open ? "var(--radius-md)" : "var(--radius-lg)" }}
           >
+            {!list && <SurfaceFill popup weight="heavy" />}
             <Button
               type="button"
               variant="ghost"

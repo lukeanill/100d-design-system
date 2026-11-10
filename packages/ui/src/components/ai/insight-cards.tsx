@@ -7,6 +7,7 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, YAxis } from "recharts"
 
 import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { Button } from "@workspace/ui/components/button"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Paged agent insights with scrub-ready live charts. Ported from
@@ -30,7 +31,12 @@ function Mono({ children, tone }: { children: ReactNode; tone: "red" | "green" }
 }
 
 function CardChrome({ children }: { children: ReactNode }) {
-  return <div className="min-h-69.5 rounded-lg bg-card p-3 ring-1 ring-foreground/10">{children}</div>
+  return (
+    <div className="relative isolate min-h-69.5 rounded-lg p-3 ring-1 ring-foreground/10">
+      <SurfaceFill popup weight="heavy" />
+      {children}
+    </div>
+  )
 }
 
 function ChartTooltip({ active, payload, formatter }: { active?: boolean; payload?: { name: string; value: number; color?: string }[]; formatter: (v: number) => string }) {
