@@ -73,7 +73,7 @@ export function Page({
  * the screen has to say in the middle (the build screen's Look / Feel / Values),
  * actions on the right. It stays put, and once the page has scrolled it shortens and blurs what passes under it, under a dark wash.
  */
-export function Header({ nav, center, actions }: { nav: ReactNode; center?: ReactNode; actions?: ReactNode }) {
+export function Header({ nav, center, actions, alignTop = false }: { nav: ReactNode; center?: ReactNode; actions?: ReactNode; /** Holds the bar's content 40 from the top (the versions frame) instead of centring it in the 129 */ alignTop?: boolean }) {
   // the blur and fill are for when the page has scrolled under the bar; at the top there is nothing to blur
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
@@ -92,7 +92,8 @@ export function Header({ nav, center, actions }: { nav: ReactNode; center?: Reac
       {/* once scrolled the bar closes up to the phone's 89px, with the buttons held by 20px above and below */}
       <div
         className={cn(
-          "mx-auto flex max-w-[1280px] items-center justify-between gap-6 px-10 transition-[min-height,padding] duration-200 max-sm:min-h-[89px] max-sm:gap-3 max-sm:p-4",
+          "mx-auto flex max-w-[1280px] justify-between gap-6 px-10 transition-[min-height,padding] duration-200 max-sm:min-h-[89px] max-sm:gap-3 max-sm:p-4",
+          alignTop ? "items-start" : "items-center",
           scrolled ? "min-h-[89px] py-5" : "min-h-[129px] py-10"
         )}
       >
