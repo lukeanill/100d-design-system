@@ -38,6 +38,23 @@ function VersionCard({ major, releases }: { major: string; releases: VersionEntr
       {releases.map((release) => (
         <div key={release.version} className="flex flex-col gap-4">
           <p className="text-md-bold">{release.version}</p>
+          {release.newComponents && (
+            <div className="flex flex-wrap gap-4">
+              {release.newComponents.map((component) => (
+                <figure key={component.name} className="flex flex-col gap-2">
+                  <img
+                    alt={`${component.name}, new in ${release.version}`}
+                    src={component.image}
+                    width={component.width}
+                    height={component.height}
+                    loading="lazy"
+                    className="h-[180px] w-auto max-w-full rounded-[12px] border border-white/10 object-contain"
+                  />
+                  <figcaption className="text-sm opacity-75">{component.name}</figcaption>
+                </figure>
+              ))}
+            </div>
+          )}
           <div className="flex flex-col gap-2 sm:flex-row sm:gap-6">
             <p className="text-md shrink-0 sm:w-[120px]">{formatDate(release.at)}</p>
             {release.notes.length > 0 && (
