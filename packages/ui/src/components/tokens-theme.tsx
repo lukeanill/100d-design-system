@@ -84,7 +84,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   )
 }
 
-const caption = "text-sm opacity-40"
+const caption = "text-sm opacity-60"
 
 /** A row of swatches, a token each. */
 function Swatches({ children }: { children: React.ReactNode }) {
