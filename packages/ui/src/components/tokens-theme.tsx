@@ -6,7 +6,7 @@ import { Button } from "@workspace/ui/components/button"
 import { LiquidGlass, glassProps, type GlassWeight } from "@workspace/ui/components/liquid-glass"
 import { useTheme } from "@workspace/ui/components/theme-provider"
 import { VALUE_QUESTIONS, answerOf, getPreset } from "@workspace/ui/themes"
-import background from "./tokens-glass-bg.mp4"
+import texture from "./tokens-texture.jpg"
 
 /**
  * The page for one theme, built to the Figma "Tokens" frame (Themes file, node 514:6564): the theme's name and its
@@ -122,7 +122,7 @@ function Texture() {
   return (
     <Section title="texture">
       <div className="relative isolate overflow-hidden rounded-xl p-16">
-        <video src={background} autoPlay loop muted playsInline aria-hidden="true" className="absolute inset-0 -z-10 size-full object-cover" />
+        <img src={texture} alt="" aria-hidden="true" className="absolute inset-0 -z-10 size-full object-cover" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-(--alpha-dark-lg)" />
         <div className="flex gap-4 py-10">
           {(["soft", "medium", "heavy"] as const).map((weight) => (
@@ -160,7 +160,7 @@ function Shadow() {
 function Radius() {
   return (
     <Section title="radius">
-      <div className="flex flex-wrap items-center gap-10">
+      <div className="flex flex-wrap items-end gap-10">
         <Button size="sm">Button</Button>
         <Button>Button</Button>
         <GlassTile weight="medium" className="h-20 w-30 rounded-md shadow-md">
@@ -199,20 +199,36 @@ function Principles({ values }: { values?: readonly ("a" | "b")[] }) {
   )
 }
 
-const MOTION_CSS = `
-@keyframes tokens-ball { from { left: 0 } to { left: calc(100% - var(--ball)) } }
-@media (prefers-reduced-motion: reduce) { .tokens-ball { animation: none !important } }
-`
-
-/** A track with a ball that slides along it once and back, on one timing, on the theme's curve. */
-function Track({ name, duration, ease }: { name?: string; duration: string; ease: string }) {
+/** A track with a ball that slides to the far end on hover or tap and back again, on one timing and the theme's curve. */
+function Track({ name, duration, ease }: { name: string; duration: string; ease: string }) {
+  const [on, setOn] = React.useState(false)
+  const pointer = React.useRef<string>("")
   return (
     <div className="flex min-w-0 flex-1 flex-col gap-4">
-      {name && <p className={caption}>{name}</p>}
-      <div className="relative h-[42px] rounded-[20px] border border-(--alpha-light-sm)">
+      <p className={caption}>{name}</p>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label={`${name}: move the ball`}
+        aria-pressed={on}
+        className="relative h-[42px] cursor-pointer rounded-[20px] border border-(--alpha-light-sm) outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        onPointerDown={(event) => {
+          pointer.current = event.pointerType
+        }}
+        onPointerEnter={(event) => event.pointerType === "mouse" && setOn(true)}
+        onPointerLeave={(event) => event.pointerType === "mouse" && setOn(false)}
+        // a tap (or the keyboard) toggles it; a mouse already moved it on enter
+        onClick={() => pointer.current !== "mouse" && setOn((current) => !current)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            setOn((current) => !current)
+          }
+        }}
+      >
         <span
-          className="tokens-ball absolute top-0 left-0 size-10 rounded-full bg-primary"
-          style={{ ["--ball" as string]: "2.5rem", animation: `tokens-ball ${duration} ${ease} 0.4s infinite alternate` }}
+          className="absolute top-0 size-10 rounded-full bg-primary motion-reduce:transition-none"
+          style={{ left: on ? "calc(100% - 2.5rem)" : 0, transition: `left ${duration} ${ease}` }}
         />
       </div>
     </div>
@@ -223,7 +239,6 @@ function Motion() {
   const ease = "var(--motion-ease)"
   return (
     <Section title="motion">
-      <style>{MOTION_CSS}</style>
       <div className="flex flex-col gap-6">
         <div className="flex gap-10">
           <Track name="Fast" duration="var(--duration-fast)" ease={ease} />
@@ -233,10 +248,7 @@ function Motion() {
           <Track name="Long" duration="var(--duration-long)" ease={ease} />
           <Track name="Longer" duration="var(--duration-longer)" ease={ease} />
         </div>
-        <div className="flex flex-col gap-6">
-          <Track name="Longest" duration="var(--duration-longest)" ease={ease} />
-          <Track duration="var(--motion-duration)" ease="var(--motion-transition-ease)" />
-        </div>
+        <Track name="Longest" duration="var(--duration-longest)" ease={ease} />
       </div>
     </Section>
   )
