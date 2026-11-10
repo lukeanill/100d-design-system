@@ -13,6 +13,10 @@ import {
 } from "./dialog"
 import { Button } from "@workspace/ui/components/button"
 
+// A dialog opens and closes on the theme's animation, and the glass layer builds as it opens; under a full parallel run
+// that can take longer than the default one-second wait.
+const ANIMATION_WAIT = 4000
+
 export default {
   title: "Components/Overlays/Dialog",
   component: DialogImpl,
@@ -40,8 +44,8 @@ Dialog.play = async ({ canvasElement }: StoryContext) => {
 
   await userEvent.click(canvas.getByRole("button", { name: "Open dialog" }))
   const dialog = await screen.findByRole("dialog")
-  await waitFor(() => expect(within(dialog).getByText("Edit profile")).toBeVisible())
+  await waitFor(() => expect(within(dialog).getByText("Edit profile")).toBeVisible(), { timeout: ANIMATION_WAIT })
 
   await userEvent.click(within(dialog).getByRole("button", { name: "Cancel" }))
-  await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+  await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument(), { timeout: ANIMATION_WAIT })
 }

@@ -14,6 +14,10 @@ import {
 } from "./alert-dialog"
 import { Button } from "@workspace/ui/components/button"
 
+// A dialog opens and closes on the theme's animation, and the glass layer builds as it opens; under a full parallel run
+// that can take longer than the default one-second wait.
+const ANIMATION_WAIT = 4000
+
 export default {
   title: "Components/Animate UI/Alert Dialog",
   tags: ["!dev"],
@@ -42,8 +46,8 @@ AlertDialog.play = async ({ canvasElement }: StoryContext) => {
 
   await userEvent.click(canvas.getByRole("button", { name: "Delete account" }))
   const dialog = await screen.findByRole("alertdialog")
-  await waitFor(() => expect(within(dialog).getByText("Are you absolutely sure?")).toBeVisible())
+  await waitFor(() => expect(within(dialog).getByText("Are you absolutely sure?")).toBeVisible(), { timeout: ANIMATION_WAIT })
 
   await userEvent.click(within(dialog).getByRole("button", { name: "Cancel" }))
-  await waitFor(() => expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument())
+  await waitFor(() => expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument(), { timeout: ANIMATION_WAIT })
 }
