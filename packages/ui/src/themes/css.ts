@@ -53,7 +53,7 @@ function shadowTokens(level: Shadow): Record<string, string> {
  * LiquidGlass's heavy weight; themes.test.ts holds the two together. `edge` scales the highlight, as it does there.
  */
 const HEAVY = { blur: 14, bezel: 28, thickness: 40, scale: 1, specular: 0.5, fallbackBlur: 40 }
-const GLASS_EDGE = 0.6
+const GLASS_EDGE = 0.4
 
 /** The Figma `font/body/emphasis/weight` of every theme that does not set its own. */
 const BODY_EMPHASIS_WEIGHT = 600

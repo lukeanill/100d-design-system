@@ -1,5 +1,5 @@
 import background from "./tokens-glass-bg.mp4"
-import { GLASS_EDGE, LiquidGlass, glassProps, glassTones, glassWeights, type GlassTone, type GlassWeight } from "./liquid-glass"
+import { LiquidGlass, glassProps, glassTones, glassWeights, type GlassTone, type GlassWeight } from "./liquid-glass"
 
 /**
  * The glass sheet from the Figma file (100DS, "Glass"): three weights (Soft,
@@ -17,10 +17,9 @@ export default {
   argTypes: {
     edge: {
       control: { type: "range", min: 0, max: 1, step: 0.05 },
-      description: "How strongly the rim catches the light: 0 is none, 1 is the Glass sheet.",
+      description: "How strongly the rim catches the light: 0 is none, 1 is the Glass sheet. Unset, each weight uses its own (soft 0.2, medium 0.3, heavy 0.4).",
     },
   },
-  args: { edge: GLASS_EDGE },
 }
 
 const Background = () => (
@@ -35,7 +34,7 @@ const Background = () => (
   />
 )
 
-export const Glass = ({ edge }: { edge: number }) => (
+export const Glass = ({ edge }: { edge?: number }) => (
   <section
     style={{
       position: "relative",
@@ -55,8 +54,8 @@ export const Glass = ({ edge }: { edge: number }) => (
         <LiquidGlass
           key={`${weight}-${tone}`}
           radius={16}
-          edge={edge}
           {...glassProps(weight, tone)}
+          {...(edge === undefined ? {} : { edge })}
           style={{ height: 241 }}
         >
           <div
@@ -95,7 +94,7 @@ export const Playground = ({ weight, tone, edge, radius, width, height }: Playgr
     }}
   >
     <Background />
-    <LiquidGlass radius={radius} edge={edge} {...glassProps(weight, tone)} style={{ width, height }}>
+    <LiquidGlass radius={radius} {...glassProps(weight, tone)} edge={edge} style={{ width, height }}>
       <div
         className="text-sm"
         style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, height: "100%", color: "white", textTransform: "capitalize" }}
@@ -114,4 +113,4 @@ Playground.argTypes = {
   width: { control: { type: "range", min: 120, max: 720, step: 10 } },
   height: { control: { type: "range", min: 80, max: 480, step: 10 } },
 }
-Playground.args = { weight: "soft", tone: "clear", edge: GLASS_EDGE, radius: 16, width: 320, height: 380 }
+Playground.args = { weight: "soft", tone: "clear", edge: 0.2, radius: 16, width: 320, height: 380 }

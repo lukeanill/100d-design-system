@@ -16,7 +16,7 @@ import { buildMaps, supportsSvgBackdrop } from "@workspace/ui/lib/refraction"
  */
 
 /** How strongly every glass catches the light at its rim, unless a surface asks otherwise: 0 is none, 1 is the Figma Glass sheet. */
-export const GLASS_EDGE = 0.6
+export const GLASS_EDGE = 0.4
 
 export type LiquidGlassProps = React.ComponentProps<"div"> & {
   /** Corner radius in px. */
@@ -33,7 +33,7 @@ export type LiquidGlassProps = React.ComponentProps<"div"> & {
   scaleRatio?: number
   specularOpacity?: number
   specularSaturation?: number
-  /** How strongly the rim catches the light, from 0 (no rim) to 1 (the Figma Glass sheet); GLASS_EDGE by default. Scales the specular highlight and the inner glow together. */
+  /** How strongly the rim catches the light, from 0 (no rim) to 1 (the Figma Glass sheet); the glass weight sets it (soft 0.2, medium 0.3, heavy 0.4). Scales the specular highlight and the inner glow together. */
   edge?: number
   /** Any CSS background: a colour or a gradient. */
   tint?: string
@@ -147,9 +147,9 @@ export function LiquidGlass({
  * asks for one of these rather than choosing its own blur.
  */
 const WEIGHTS = {
-  soft: { blur: 1, bezel: 12, thickness: 20, scaleRatio: 0.5, specularOpacity: 0.8, fallbackBlur: 2, light: 0.16, dark: 0.4 },
-  medium: { blur: 5, bezel: 30, thickness: 60, scaleRatio: 0.6, specularOpacity: 0.8, fallbackBlur: 10, light: 0.24, dark: 0.48 },
-  heavy: { blur: 14, bezel: 28, thickness: 40, scaleRatio: 1, specularOpacity: 0.5, fallbackBlur: 40, light: 0.32, dark: 0.48 },
+  soft: { blur: 1, bezel: 12, thickness: 20, scaleRatio: 0.5, specularOpacity: 0.8, fallbackBlur: 2, light: 0.16, dark: 0.4, edge: 0.2 },
+  medium: { blur: 5, bezel: 30, thickness: 60, scaleRatio: 0.6, specularOpacity: 0.8, fallbackBlur: 10, light: 0.24, dark: 0.48, edge: 0.3 },
+  heavy: { blur: 14, bezel: 28, thickness: 40, scaleRatio: 1, specularOpacity: 0.5, fallbackBlur: 40, light: 0.32, dark: 0.48, edge: 0.4 },
 }
 
 export type GlassWeight = keyof typeof WEIGHTS
@@ -167,8 +167,8 @@ export const glassTones = Object.keys(TONES) as GlassTone[]
 
 /** The LiquidGlass props for a weight and tone; `tint` replaces the tone's fill when a surface has its own. */
 export function glassProps(weight: GlassWeight, tone: GlassTone = "clear", tint?: string) {
-  const { blur, bezel, thickness, scaleRatio, specularOpacity, fallbackBlur } = WEIGHTS[weight]
-  return { blur, bezel, thickness, scaleRatio, specularOpacity, fallbackBlur, tint: tint ?? TONES[tone](WEIGHTS[weight]) }
+  const { blur, bezel, thickness, scaleRatio, specularOpacity, fallbackBlur, edge } = WEIGHTS[weight]
+  return { blur, bezel, thickness, scaleRatio, specularOpacity, fallbackBlur, edge, tint: tint ?? TONES[tone](WEIGHTS[weight]) }
 }
 
 /**
@@ -193,8 +193,8 @@ export function GlassLayer({
     <LiquidGlass
       aria-hidden="true"
       radius={radius}
-      edge={edge}
       {...glassProps(weight, tone, tint)}
+      {...(edge === undefined ? {} : { edge })}
       style={{ position: "absolute", inset: 0, pointerEvents: "none", boxShadow: "none" }}
     />
   )
