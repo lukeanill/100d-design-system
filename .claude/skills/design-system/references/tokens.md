@@ -12,16 +12,16 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 |---|---|---|---|
 | `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, gradient-background, kbd (+21) |
 | `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, date-time-picker, dropdown-menu (+79) |
-| `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | insight-cards, task-rows, alert (+22) |
+| `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | combobox, map-carousel, message-bubble (+19) |
 | `--card-image` | `none` | The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`. | Card |
 | `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
-| `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, calendar, navigation-menu (+1) |
+| `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, map-carousel, calendar (+3) |
 | `--popover-foreground` | `var(--foreground)` | Popup surface and text. Equals background. | map-carousel |
 | `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+32) |
 | `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, map-carousel, theme-colors |
 | `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, copy, icon (+5) |
 | `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+3) |
-| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | navigation-menu, insight-cards, table (+35) |
+| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | navigation-menu, table, message-bubble (+34) |
 | `--muted-foreground` | `oklch(0.988 0.001 286.38 / 65%)` | Foreground at 65% opacity for quiet text. | day-timeline |
 | `--accent` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | dropdown-menu, context-menu, menubar (+10) |
 | `--accent-foreground` | `var(--secondary-foreground)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | ripple |
@@ -56,7 +56,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--alpha-dark-lg` | `oklch(0.235 0.000 0.00 / 32%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
 | `--alpha-dark-xl` | `oklch(0.235 0.000 0.00 / 80%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | alert-dialog, dialog, sheet |
 | `--alpha-light-xs` | `oklch(0.969 0.002 17.20 / 6%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
-| `--alpha-light-sm` | `oklch(0.969 0.002 17.20 / 12%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
+| `--alpha-light-sm` | `oklch(0.969 0.002 17.20 / 12%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | insight-cards |
 | `--alpha-light-md` | `oklch(0.969 0.002 17.20 / 24%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
 | `--alpha-light-lg` | `oklch(0.969 0.002 17.20 / 48%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
 | `--alpha-light-xl` | `oklch(0.969 0.002 17.20 / 96%)` | Translucent wash (dark or light) in steps xs–xl. One value set for every theme. | hover, solid control fill, borders, overlays |
@@ -77,7 +77,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--font-primary` | `'Migra', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. | headings, body text and secondary text |
 | `--font-body-token` | `'Akkurat LL TT', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. | headings, body text and secondary text |
 | `--font-body-weight` | `200` | Weight of body text. | body text |
-| `--font-body-weight-action` | `400` | Weight of text inside buttons (Figma font/body/action/weight). | insight-cards, notification-list, date-time-picker (+48) |
+| `--font-body-weight-action` | `400` | Weight of text inside buttons (Figma font/body/action/weight). | insight-cards, notification-list, date-time-picker (+47) |
 | `--font-body-weight-emphasis` | `600` | Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme. | map-carousel, insight-cards, amount-input (+8) |
 | `--font-primary-weight-regular` | `200` | Weight of the display (primary) face: regular / emphasis. | display headings (regular and bold) |
 | `--font-primary-weight-emphasis` | `800` | Weight of the display (primary) face: regular / emphasis. | hero |
@@ -140,8 +140,8 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, task-rows, input-group (+12) |
-| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+34) |
+| `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, task-rows, input-group (+11) |
+| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+33) |
 | `--dimensions-max` | `9999px` | Fully rounded (9999px). | `radius-button` on rounded themes |
 | `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+14) |
 | `--radius-outer-max` | `0.5rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+4) |
@@ -297,7 +297,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `text-h5-sec-bold` | Secondary face, emphasis weight (Figma sec/emp/hN) | — |
 | `text-h6-sec-bold` | Secondary face, emphasis weight (Figma sec/emp/hN) | — |
 | `text-xs` | Text size | insight-cards, map-carousel, task-rows |
-| `glass-surface` | Base class that creates the blur layer | button |
+| `glass-surface` | Base class that creates the blur layer | — |
 | `glass-card` | Glass recipe for one surface group (card, action, input, select, overlay, dialog) | — |
 | `glass-action` | Glass recipe for one surface group (card, action, input, select, overlay, dialog) | — |
 | `glass-input` | Glass recipe for one surface group (card, action, input, select, overlay, dialog) | — |
