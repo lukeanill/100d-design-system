@@ -1,6 +1,8 @@
 import { useState, type CSSProperties, type ReactNode } from "react"
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "@workspace/ui/components/drawer"
 import { CopyButton } from "@workspace/ui/components/animate-ui/components/buttons/copy"
+import VerticalCutReveal from "@workspace/ui/components/fancy/text/vertical-cut-reveal"
+import { Effect } from "@workspace/ui/components/animate-ui/primitives/effects/effect"
 import { BODY, LinkTile, MIGRA } from "./LinkTile"
 import { Pill } from "./Pill"
 import { Preview } from "./Preview"
@@ -13,6 +15,37 @@ const STORYBOOK_URL = import.meta.env.DEV ? "http://localhost:6006" : "/storyboo
 const GITHUB_URL = "https://github.com/lukeanill/100d-design-system"
 
 const PAD = "px-[clamp(20px,9.375vw,120px)]"
+
+/* The page loads in from the top down: each line of the headline cuts in (Animation / Text / Reveal / Vertical Cut Reveal),
+ * then the byline and the three tiles fade and slide in (Animation / Transitions / Combined), one after the other. */
+const LINE = 0.25 // seconds between one element and the next
+const useReducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+const TILE_SPRING = { type: "spring", stiffness: 60, damping: 18 } as const
+
+/** One line of the headline, cut in after `step` lines have started. */
+function HeroLine({ step, children }: { step: number; children: string }) {
+  const reduce = useReducedMotion()
+  return (
+    <VerticalCutReveal
+      containerClassName="justify-center"
+      splitBy="words"
+      staggerDuration={reduce ? 0 : 0.08}
+      transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 190, damping: 22, delay: step * LINE }}
+    >
+      {children}
+    </VerticalCutReveal>
+  )
+}
+
+/** A block that fades and slides in once the lines above it have started. */
+function LoadIn({ step, className, children }: { step: number; className?: string; children: ReactNode }) {
+  const reduce = useReducedMotion()
+  return (
+    <Effect className={className} fade={!reduce} slide={reduce ? false : { direction: "up", offset: 40 }} delay={step * LINE * 1000} transition={TILE_SPRING}>
+      {children}
+    </Effect>
+  )
+}
 
 /** A section: 1280 wide, the 1040 column held by 120 of padding either side. */
 function Section({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -158,13 +191,14 @@ export function Showcase() {
         <Section className="flex flex-col items-center gap-10 pt-[clamp(96px,12.5vw,160px)]">
           {/* Figma 436:8485: 36 / 60 / 48 on a 1.4 line, each line pulled 6px into the next; "design system" carries a double space */}
           <div className="flex flex-col items-center text-center leading-[1.4]">
-            <p className="text-h4-pri mb-[-6px]">A themeable AI</p>
-            <p className="text-h2-pri-bold mb-[-6px] whitespace-pre">{"design  system"}</p>
-            <p className="text-h3-sec">on a mission.</p>
+            <p className="text-h4-pri mb-[-6px]"><HeroLine step={0}>A themeable AI</HeroLine></p>
+            <p className="text-h2-pri-bold mb-[-6px] whitespace-pre"><HeroLine step={1}>{"design  system"}</HeroLine></p>
+            <p className="text-h3-sec"><HeroLine step={2}>on a mission.</HeroLine></p>
           </div>
           {/* Figma 436:8489: the line, then who made it, with Luke's photo and the Claude mark */}
           <div className={`${BODY} flex flex-col items-center leading-[1.6]`}>
-            <p className="text-md opacity-75">for AI Product Builders,</p>
+            <p className="text-md opacity-75"><HeroLine step={3}>for AI Product Builders,</HeroLine></p>
+            <LoadIn step={4}>
             <p className="text-lg flex items-center gap-1 whitespace-nowrap">
               <span className="opacity-75">by</span>
               <span className="flex items-center gap-1">
@@ -179,13 +213,14 @@ export function Showcase() {
                 <span className="text-secondary-foreground">Claude</span>
               </span>
             </p>
+            </LoadIn>
           </div>
         </Section>
 
         {/* Three link tiles */}
         <Section className="pt-10 pb-[clamp(40px,6.25vw,80px)]">
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-center sm:gap-4 lg:gap-10">
-          <LinkTile
+          <LoadIn step={5} className="flex w-full max-w-[320px] sm:min-w-0 sm:flex-1"><LinkTile
             image="/home/tile-blob.png"
             title={
               <>
@@ -196,14 +231,14 @@ export function Showcase() {
             }
             label="View storybook"
             href={STORYBOOK_URL}
-          />
-          <LinkTile image="/home/tile-box.png" title="Your look, feel and principles" label="Build your theme" to="/themes" />
-          <LinkTile
+          /></LoadIn>
+          <LoadIn step={6} className="flex w-full max-w-[320px] sm:min-w-0 sm:flex-1"><LinkTile image="/home/tile-box.png" title="Your look, feel and principles" label="Build your theme" to="/themes" /></LoadIn>
+          <LoadIn step={7} className="flex w-full max-w-[320px] sm:min-w-0 sm:flex-1"><LinkTile
             image="/home/tile-star.png"
             title="Use the system in your AI tool"
             label="Install package"
             onClick={() => setInstallOpen(true)}
-          />
+          /></LoadIn>
           </div>
           <InstallDrawer open={installOpen} onOpenChange={setInstallOpen} />
         </Section>
