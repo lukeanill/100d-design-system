@@ -300,7 +300,7 @@ export const InsightCards = ({ data, labels, className }: InsightCardsProps = {}
         <div className="mt-2">
           <Card />
         </div>
-        <Button type="button" variant="outline" size="xs" className="mt-2">{pill}</Button>
+        <Button type="button" variant="outline" size="sm" className="mt-2">{pill}</Button>
       </div>
     </div>
   )
