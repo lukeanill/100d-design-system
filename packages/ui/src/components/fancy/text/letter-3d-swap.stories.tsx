@@ -14,14 +14,7 @@ export default {
 }
 
 export const Letter3dSwap = (args: ComponentProps<typeof Letter3DSwapImpl>) => (
-  <div
-    style={{
-      fontFamily: "'Bricolage Grotesque Variable', sans-serif",
-      fontSize: 40,
-      fontWeight: 400,
-      lineHeight: 1.2,
-    }}
-  >
+  <div className="text-h5-pri">
     <Letter3DSwapImpl {...args} />
   </div>
 )

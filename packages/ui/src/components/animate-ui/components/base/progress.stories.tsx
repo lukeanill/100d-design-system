@@ -13,7 +13,7 @@ export default {
 }
 
 export const Progress = (args: ComponentProps<typeof ProgressImpl>) => (
-  <ProgressImpl {...args} className="w-64">
+  <ProgressImpl {...args} className="flex w-64 flex-col gap-2">
     <ProgressLabel>Uploading</ProgressLabel>
     <ProgressTrack />
     <ProgressValue />
