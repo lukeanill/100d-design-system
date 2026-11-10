@@ -4,7 +4,7 @@
 
 Every component in `packages/ui/src/components` (import `@workspace/ui/components/<path>`; published as `@lukeanill/ui/components/<path>`). Groups follow the Storybook sidebar.
 
-Total: 119 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
+Total: 118 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
 
 ## Actions
 
@@ -139,9 +139,8 @@ Detail: `references/components/metal.md`
 
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
-| Control Button | `components/control-button` | [story](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--control-button) | Homepage preview |
+| Control Button | `components/control-button` | [story](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--metal-controls) | Homepage preview |
 | Metal Surface | `components/metal-surface` | [story](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-metal-surface--metal-surface) | Homepage (/); Homepage preview |
-| Panel Toggle | `components/panel-toggle` | [story](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-panel-toggle--panel-toggle) | — |
 
 ## Navigation
 

@@ -144,7 +144,7 @@ Detail: `references/animations/text-reveal.md`
 | Splitting | `components/animate-ui/primitives/texts/splitting` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-text-reveal-splitting--splitting-texts) | — |
 | Typewriter | `components/fancy/text/typewriter` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-text-reveal-typewriter--typewriter) | — |
 | Typing | `components/animate-ui/primitives/texts/typing` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-text-reveal-typing--typing-texts) | — |
-| Vertical Cut Reveal | `components/fancy/text/vertical-cut-reveal` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-text-reveal-vertical-cut-reveal--vertical-cut-reveal) | — |
+| Vertical Cut Reveal | `components/fancy/text/vertical-cut-reveal` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-text-reveal-vertical-cut-reveal--vertical-cut-reveal) | Homepage (/) |
 
 ## Text/Underlines
 
@@ -165,6 +165,6 @@ Detail: `references/animations/transitions.md`
 |---|---|---|---|
 | Auto Height | `components/animate-ui/primitives/effects/auto-height` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-transitions-auto-height--auto-height-effects) | — |
 | Blur | `components/animate-ui/primitives/effects/blur` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-transitions-blur--blur-effects) | Explore |
-| Combined | `components/animate-ui/primitives/effects/effect` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-transitions-combined--effect-effects) | — |
+| Combined | `components/animate-ui/primitives/effects/effect` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-transitions-combined--effect-effects) | Homepage (/) |
 | Fade | `components/animate-ui/primitives/effects/fade` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-transitions-fade--fade-effects) | — |
 | Slide | `components/animate-ui/primitives/effects/slide` | [story](https://ds.lukeai.space/storybook/?path=/story/animation-transitions-slide--slide-effects) | — |

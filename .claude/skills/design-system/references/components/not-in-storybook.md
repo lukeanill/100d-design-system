@@ -86,7 +86,7 @@ _No props of its own._
 - File: `packages/ui/src/components/liquid-glass.tsx`
 - Import: `@workspace/ui/components/liquid-glass`
 - Storybook: no story yet
-- Used in the web app: Homepage (/); Homepage preview; Themer (/themes)
+- Used in the web app: Homepage (/); Homepage preview; apps/web/src/Versions.tsx; Themer (/themes)
 - Used by other components: themed-surface
 
 **`LiquidGlass`**
@@ -253,11 +253,12 @@ _No props of its own._
 - Import: `@workspace/ui/components/themed-surface`
 - Storybook: no story yet
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: beam-input, dock, fluid-tabs, metal-surface, morphing-discovery-bar, prompt-bar, themed-card
+- Used by other components: alert, alert-dialog, attachment, beam-input, card, context-menu, dialog, dock (+17)
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
 | `popup` | `boolean` | no |  |
+| `weight` | `"soft" \| "medium" \| "heavy"` | no |  |
 
 ### thread-insight-card
 

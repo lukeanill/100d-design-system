@@ -1,5 +1,6 @@
 import * as React from "react"
 import { FadeTransition } from "./fade-transition"
+import { Button } from "@workspace/ui/components/button"
 
 const COLORS = {
   foreground: "var(--foreground)",
@@ -36,13 +37,9 @@ export const FadeDemo = (args: {
       duration={SPEEDS[args.speed]}
     >
       <div className="flex min-h-svh items-center justify-center bg-background">
-        <button
-          type="button"
-          onClick={() => setRun((r) => r + 1)}
-          className="rounded-md bg-primary px-5 py-2.5 text-primary-foreground"
-        >
+        <Button type="button" variant="ghost" onClick={() => setRun((r) => r + 1)}>
           Test
-        </button>
+        </Button>
       </div>
     </FadeTransition>
   )

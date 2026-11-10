@@ -6,9 +6,9 @@
 
 - File: `packages/ui/src/components/control-button.tsx`
 - Import: `@workspace/ui/components/control-button`
-- Storybook: [Special FX Components/Metal/Control Button](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--control-button) (stories: ControlButton, ZoomGroup, MetalControls)
+- Storybook: [Special FX Components/Metal/Control Button](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-control-button--metal-controls)
 - Used in the web app: Homepage preview
-- Used by other components: panel-toggle
+- Used by other components: none
 
 **`ControlButton`**
 
@@ -59,21 +59,3 @@ _No props of its own._
 | `themedFill` | `boolean` | no | Fill the control from the theme's texture and colour (see SurfaceFill) instead of the plain glass tint. |
 | `ringWidth` | `number` | no | Ring thickness in CSS px; the engine's own default when omitted (v1 only). |
 | `filled` | `boolean` | no | The metal fills the whole control instead of ringing it, at a strength that keeps the content readable. v1 has no mask, so give it a `ringWidth` of half the control's height: a ring as thick as the control. |
-
-### Panel Toggle
-
-- File: `packages/ui/src/components/panel-toggle.tsx`
-- Import: `@workspace/ui/components/panel-toggle`
-- Storybook: [Special FX Components/Metal/Panel Toggle](https://ds.lukeai.space/storybook/?path=/story/special-fx-components-metal-panel-toggle--panel-toggle)
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `open` | `boolean` | yes |  |
-| `onClick` | `() => void` | no |  |
-| `icon` | `string \| number \| bigint \| boolean \| ReactElement<unknown, string \| JSXElementConstructor<any>> \| Iterable<…` | yes | Shown while closed. |
-| `label` | `string` | yes | Accessible name while closed. |
-| `closeLabel` | `string` | no |  |
-| `metal` | `boolean` | no |  |
-| `className` | `string` | no |  |

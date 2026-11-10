@@ -1,5 +1,6 @@
 import * as React from "react"
 import { CurtainTransition } from "./curtain-transition"
+import { Button } from "@workspace/ui/components/button"
 
 // Token names rather than raw colours, so the curtain follows the theme.
 const COLORS = {
@@ -38,13 +39,9 @@ export const CurtainIrisDemo = (args: {
       duration={SPEEDS[args.speed]}
     >
       <div className="flex min-h-svh items-center justify-center bg-background">
-        <button
-          type="button"
-          onClick={() => setRun((r) => r + 1)}
-          className="rounded-md bg-primary px-5 py-2.5 text-primary-foreground"
-        >
+        <Button type="button" variant="ghost" onClick={() => setRun((r) => r + 1)}>
           Test
-        </button>
+        </Button>
       </div>
     </CurtainTransition>
   )

@@ -1,5 +1,6 @@
 import * as React from "react"
 import { IrisTransition } from "./iris-transition"
+import { Button } from "@workspace/ui/components/button"
 
 const COLORS = {
   foreground: "var(--foreground)",
@@ -48,13 +49,9 @@ export const IrisFromClickDemo = (args: {
       origin={origin}
     >
       <div className="flex min-h-svh items-center justify-center bg-background">
-        <button
-          type="button"
-          onClick={handleClick}
-          className="rounded-md bg-primary px-5 py-2.5 text-primary-foreground"
-        >
+        <Button type="button" variant="ghost" onClick={handleClick}>
           Test
-        </button>
+        </Button>
       </div>
     </IrisTransition>
   )

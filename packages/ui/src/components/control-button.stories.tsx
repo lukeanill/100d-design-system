@@ -1,46 +1,11 @@
-import { useState, type ComponentProps } from "react"
+import { useState } from "react"
 import { Check, Compass, Info, Layers, MessageCircle, Minus, Play, Plus, Search, Square, Video } from "lucide-react"
 import { ControlButton as ControlButtonImpl, ControlGroup, ControlGroupItem } from "./control-button"
 
 export default {
   title: "Special FX Components/Metal/Control Button",
   component: ControlButtonImpl,
-  argTypes: {
-    shape: { control: "inline-radio", options: ["circle", "pill"] },
-    size: { control: "inline-radio", options: ["default", "lg"] },
-    engine: { control: "inline-radio", options: ["v1", "v2"] },
-    metal: { control: "boolean" },
-    halo: { control: "boolean" },
-  },
-  args: { shape: "circle", size: "default", engine: "v1", metal: false, halo: false },
 }
-
-export const ControlButton = (args: ComponentProps<typeof ControlButtonImpl>) => (
-  <div className="flex items-center gap-4 p-10">
-    <ControlButtonImpl {...args} aria-label="Search">
-      {args.shape === "pill" ? (
-        <>
-          <Video /> Scene
-        </>
-      ) : (
-        <Search />
-      )}
-    </ControlButtonImpl>
-  </div>
-)
-
-export const ZoomGroup = () => (
-  <div className="p-10">
-    <ControlGroup>
-      <ControlGroupItem aria-label="Zoom in">
-        <Plus />
-      </ControlGroupItem>
-      <ControlGroupItem aria-label="Zoom out">
-        <Minus />
-      </ControlGroupItem>
-    </ControlGroup>
-  </div>
-)
 
 // Every control from the SLOPES app, with a Metal and a Halo switch each — and the whole set in
 // either metal-fx engine.

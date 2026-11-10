@@ -132,5 +132,5 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 - File: `packages/ui/src/components/fancy/text/vertical-cut-reveal.tsx`
 - Import: `@workspace/ui/components/fancy/text/vertical-cut-reveal`
 - Storybook: [Animation/Text/Reveal/Vertical Cut Reveal](https://ds.lukeai.space/storybook/?path=/story/animation-text-reveal-vertical-cut-reveal--vertical-cut-reveal)
-- Used in the web app: not used in apps/web (Storybook only)
+- Used in the web app: Homepage (/)
 - Used by other components: none

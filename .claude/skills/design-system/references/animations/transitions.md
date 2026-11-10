@@ -66,7 +66,7 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 - File: `packages/ui/src/components/animate-ui/primitives/effects/effect.tsx`
 - Import: `@workspace/ui/components/animate-ui/primitives/effects/effect`
 - Storybook: [Animation/Transitions/Combined](https://ds.lukeai.space/storybook/?path=/story/animation-transitions-combined--effect-effects)
-- Used in the web app: not used in apps/web (Storybook only)
+- Used in the web app: Homepage (/)
 - Used by other components: none
 
 **`Effect`**
