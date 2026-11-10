@@ -72,6 +72,28 @@ function NotificationList({
       initial="collapsed"
       whileHover="expanded"
     >
+      <div className="flex items-center gap-2">
+        <div className="size-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-[weight:var(--font-body-weight-action)]">
+          {items.length}
+        </div>
+        <span className="grid">
+          <motion.span
+            className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground row-start-1 col-start-1"
+            variants={notificationTextVariants}
+            transition={fast}
+          >
+            {label}
+          </motion.span>
+          <motion.span
+            className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground flex items-center gap-1 cursor-pointer select-none row-start-1 col-start-1"
+            variants={viewAllTextVariants}
+            transition={fast}
+          >
+            {viewAllLabel} <ArrowUpRight className="size-4" />
+          </motion.span>
+        </span>
+      </div>
+
       <div>
         {items.map((notification, i) => (
           <motion.div
@@ -99,28 +121,6 @@ function NotificationList({
             </div>
           </motion.div>
         ))}
-      </div>
-
-      <div className="flex items-center gap-2">
-        <div className="size-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-[weight:var(--font-body-weight-action)]">
-          {items.length}
-        </div>
-        <span className="grid">
-          <motion.span
-            className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground row-start-1 col-start-1"
-            variants={notificationTextVariants}
-            transition={fast}
-          >
-            {label}
-          </motion.span>
-          <motion.span
-            className="text-sm font-[weight:var(--font-body-weight-action)] text-foreground flex items-center gap-1 cursor-pointer select-none row-start-1 col-start-1"
-            variants={viewAllTextVariants}
-            transition={fast}
-          >
-            {viewAllLabel} <ArrowUpRight className="size-4" />
-          </motion.span>
-        </span>
       </div>
     </motion.div>
   );
