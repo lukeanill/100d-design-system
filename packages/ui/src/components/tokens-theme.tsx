@@ -222,7 +222,7 @@ function Track({ name, duration, ease }: { name: string; duration: string; ease:
         role="button"
         tabIndex={0}
         aria-label={`${name}: play`}
-        className="relative h-[42px] cursor-pointer rounded-[20px] border border-(--alpha-light-sm) outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        className="relative h-[42px] cursor-pointer rounded-[20px] [container-type:inline-size] border border-(--alpha-light-sm) outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
         onPointerEnter={(event) => event.pointerType === "mouse" && trigger()}
         onClick={trigger}
         onKeyDown={(event) => {
@@ -234,11 +234,17 @@ function Track({ name, duration, ease }: { name: string; duration: string; ease:
       >
         <span
           ref={ball}
-          className="absolute top-0 size-10 rounded-full bg-primary motion-reduce:transition-none"
-          style={{ left: phase === "out" ? "calc(100% - 2.5rem)" : 0, transition: `left ${duration} ${ease}` }}
+          className="absolute top-0 left-0 size-10 rounded-full bg-primary motion-reduce:transition-none"
+          style={{
+            transform: phase === "out" ? "translateX(calc(100cqw - 2.5rem))" : "translateX(0)",
+            transition: `transform ${duration} ${ease}`,
+            willChange: "transform",
+          }}
           onTransitionEnd={(event) => {
-            if (event.propertyName !== "left") return
-            setPhase((current) => (current === "out" ? "back" : "idle"))
+            if (event.propertyName !== "transform") return
+            // a short rest at the far end, so the return reads as its own move
+            if (phase === "out") window.setTimeout(() => setPhase("back"), 300)
+            else setPhase("idle")
           }}
         />
       </div>
