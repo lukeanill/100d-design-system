@@ -5,6 +5,7 @@ import { createContext, useContext } from "react";
 import type { ComponentProps, ReactNode } from "react";
 
 import { cn } from "@workspace/ui/lib/utils";
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 
 export interface StatCard {
   change?: number;
@@ -82,7 +83,7 @@ export const StatCardItem = ({
   return (
     <div
       className={cn(
-        "space-y-0.5 rounded-md border bg-card p-2 sm:space-y-1 sm:rounded-lg sm:p-3",
+        "relative isolate space-y-0.5 rounded-md border p-2 sm:space-y-1 sm:rounded-lg sm:p-3",
         className
       )}
       {...props}
@@ -127,6 +128,8 @@ export const StatCardItem = ({
           )}
         </>
       )}
+      {/* last, so the stacked spacing of the card does not shorten it */}
+      <SurfaceFill popup weight="heavy" />
     </div>
   );
 };

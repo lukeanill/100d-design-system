@@ -1,4 +1,5 @@
 import * as React from "react"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import {
   PinnedList as PinnedListImpl,
   PinnedListPinned,
@@ -48,24 +49,19 @@ export const PinnedListAnimate = ({ items: ALL_ITEMS, pinned: initialPinned, pin
     )
   }
 
-  const itemStyle: React.CSSProperties = {
-    padding: "8px 12px",
-    marginBottom: 6,
-    borderRadius: 6,
-    backgroundColor: "var(--muted)",
-    cursor: "pointer",
-    fontSize: 14,
-  }
+  // the items are glass on a glass theme (Heavy, as Card), the theme's texture otherwise
+  const itemClass = "relative isolate mb-1.5 cursor-pointer rounded-lg px-3 py-2 text-sm"
 
   return (
     <PinnedListImpl onPinnedChange={togglePin} style={{ width }}>
       <PinnedListPinned>
-        <PinnedListLabel hide={pinned.length === 0} style={{ fontSize: 12, fontWeight: 600, color: "var(--muted-foreground)", marginBottom: 6 }}>
+        <PinnedListLabel hide={pinned.length === 0} className="mb-1.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">
           {pinnedLabel}
         </PinnedListLabel>
         <PinnedListItems>
           {ALL_ITEMS.filter((item) => pinned.includes(item)).map((item) => (
-            <PinnedListItem key={item} id={item} style={itemStyle}>
+            <PinnedListItem key={item} id={item} className={itemClass}>
+              <SurfaceFill popup weight="heavy" />
               {item}
             </PinnedListItem>
           ))}
@@ -73,12 +69,13 @@ export const PinnedListAnimate = ({ items: ALL_ITEMS, pinned: initialPinned, pin
       </PinnedListPinned>
 
       <PinnedListUnpinned>
-        <PinnedListLabel hide={pinned.length === ALL_ITEMS.length} style={{ fontSize: 12, fontWeight: 600, color: "var(--muted-foreground)", margin: "12px 0 6px" }}>
+        <PinnedListLabel hide={pinned.length === ALL_ITEMS.length} className="mt-3 mb-1.5 text-xs font-[weight:var(--font-body-weight-action)] text-foreground/75">
           {unpinnedLabel}
         </PinnedListLabel>
         <PinnedListItems>
           {ALL_ITEMS.filter((item) => !pinned.includes(item)).map((item) => (
-            <PinnedListItem key={item} id={item} style={itemStyle}>
+            <PinnedListItem key={item} id={item} className={itemClass}>
+              <SurfaceFill popup weight="heavy" />
               {item}
             </PinnedListItem>
           ))}

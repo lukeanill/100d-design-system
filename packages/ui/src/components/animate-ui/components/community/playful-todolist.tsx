@@ -44,7 +44,7 @@ function PlayfulTodolist({ items: checkboxItems = defaultItems }: { items?: Todo
   );
 
   return (
-    <div className="bg-muted rounded-lg p-6 space-y-2">
+    <div className="space-y-2">
       {checkboxItems.map((item, idx) => (
         <div key={item.id} className="space-y-2">
           <div className="flex items-center space-x-2">

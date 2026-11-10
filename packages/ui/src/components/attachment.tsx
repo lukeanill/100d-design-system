@@ -4,10 +4,11 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { Button } from "@workspace/ui/components/button"
 
 const attachmentVariants = cva(
-  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-lg border bg-card text-card-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) focus-within:ring-1 focus-within:ring-ring/50 has-[>a,>button]:hover:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed",
+  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap isolate rounded-lg border text-card-foreground transition-colors duration-(--motion-fast) ease-(--motion-transition-ease) focus-within:ring-1 focus-within:ring-ring/50 has-[>a,>button]:hover:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed",
   {
     variants: {
       size: {
@@ -42,7 +43,11 @@ function Attachment({
       data-orientation={orientation}
       className={cn(attachmentVariants({ size, orientation }), className)}
       {...props}
-    />
+    >
+      {props.children}
+      {/* last, so it takes no place among the attachment's own children */}
+      <SurfaceFill popup weight="heavy" />
+    </div>
   )
 }
 
