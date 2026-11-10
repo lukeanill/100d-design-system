@@ -25,6 +25,7 @@
 - Work goes to `staging` first. **When a piece of work is finished and checked, commit and push it to `staging` automatically**, then give the preview link and what to check. **Never push to `master` until the user says "go live".**
 - **"Go live" means:** check the latest `staging` preview built, merge `staging` into `master` (fast-forward where possible), push `master`, confirm the production deploy finished, **and publish the npm package (`@lukeanill/ui`)**.
 - **Always ask the user for the version number first**, before publishing: say what changed since the last release, whether it breaks anything, and recommend a version (semver). Publish only after they answer.
+- **Add the release to the /versions page.** Before merging to master, add an entry for the new version (publish time in UTC, one-line notes of what changed) to `apps/web/src/versions-data.ts`, newest first. Take the publish time from the package registry after publishing, and push that follow-up to `staging` and `master`.
 
 ## Before saying done
 

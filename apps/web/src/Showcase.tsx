@@ -86,7 +86,7 @@ function Footer() {
 }
 
 /** The fixed backdrop: a textured plate under a rotated, blurred glow. Neither is clipped to the 848 frame, so the glow carries on behind the tiles, as in the Figma. */
-function Backdrop() {
+export function Backdrop() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[848px]">
       <div className="absolute inset-x-0 top-[54px] h-[848px]">

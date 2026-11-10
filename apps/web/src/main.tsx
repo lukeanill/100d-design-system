@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router"
 import "@workspace/ui/globals.css"
 import { History } from "./History.tsx"
 import { Showcase } from "./Showcase.tsx"
+import { Versions } from "./Versions.tsx"
 import { Themer } from "./themer/Themer"
 import { ThemeProvider } from "@workspace/ui/components/theme-provider"
 import { ThemePageTransition } from "@workspace/ui/components/transitions/theme-page-transition"
@@ -25,6 +26,7 @@ function AppRoutes() {
         <Route path="/" element={<Showcase />} />
         <Route path="/history" element={<History />} />
         <Route path="/themes" element={<Themer />} />
+        <Route path="/versions" element={<Versions />} />
       </Routes>
     </ThemePageTransition>
   )
