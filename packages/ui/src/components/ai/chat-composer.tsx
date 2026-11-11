@@ -5,6 +5,7 @@ import { ArrowUp, Clock, Ellipsis, Plus } from "lucide-react"
 
 import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { Button } from "@workspace/ui/components/button"
+import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { cn } from "@workspace/ui/lib/utils"
 
 /* Tabbed chat panel with reasoning replies and a composer. The reply
@@ -54,7 +55,7 @@ function Section({ label, sub, time, body, resolving }: { label: string; sub: st
         <span className="text-foreground/75">{sub}</span>
         <span className="text-foreground">for {time}</span>
       </div>
-      <p className="text-sm leading-normal text-foreground">{body}</p>
+      <p className="text-sm text-foreground">{body}</p>
     </div>
   )
 }
@@ -103,8 +104,9 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
   }
 
   return (
-    <div className={cn("flex h-72 w-full max-w-95 flex-col self-start overflow-hidden rounded-lg bg-card ring-1 ring-foreground/10", className)}>
-      <div className="flex shrink-0 items-center justify-between border-b border-border p-1.5">
+    <div className={cn("relative isolate flex h-72 w-full max-w-95 flex-col self-start rounded-(--radius-md) shadow-xs outline-1 -outline-offset-[0.5px] outline-(--control-edge)", className)}>
+      <SurfaceFill />
+      <div className="relative flex shrink-0 items-center justify-between border-b border-border p-1.5">
         <div className="flex items-center">
           {suggestions.map((item) => (
             <Button
@@ -129,10 +131,10 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto px-3 pt-2.5 pb-1">
+      <div className="relative flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto px-3 pt-2.5 pb-1">
         <div className="flex justify-end pl-14">
           <div
-            className="rounded-xl bg-muted px-3 py-1.5 text-sm text-foreground transition-[opacity,transform] duration-(--motion-duration)"
+            className="rounded-(--radius-md) bg-muted px-3 py-1.5 text-md text-foreground transition-[opacity,transform] duration-(--motion-duration)"
             style={{ opacity: sent ? 1 : 0, transform: sent ? "translateY(0)" : "translateY(10px)", transitionTimingFunction: "var(--motion-transition-ease)" }}
           >
             {submitted}
@@ -147,11 +149,11 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
         ) : null}
       </div>
 
-      <div className="mt-auto shrink-0 p-1.5">
+      <div className="relative mt-auto shrink-0 p-1.5">
         <div
           role="presentation"
           onClick={() => inputRef.current?.focus()}
-          className="flex cursor-text flex-col gap-2 rounded-md border border-border bg-muted p-2.5 shadow-xs transition-[border-color,box-shadow] duration-(--motion-fast) focus-within:border-foreground/20"
+          className="flex cursor-text flex-col gap-2 rounded-(--radius-md) bg-muted p-2.5 shadow-xs outline-1 -outline-offset-[0.5px] outline-(--control-edge) transition-[outline-color,box-shadow] duration-(--motion-fast) ease-(--motion-transition-ease) focus-within:outline-ring/50"
         >
           <input
             ref={inputRef}
@@ -162,7 +164,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
             }}
             placeholder={l.placeholder}
             aria-label="Chat prompt"
-            className="min-h-4.5 bg-transparent text-sm text-foreground outline-none placeholder:text-foreground/75"
+            className="bg-transparent text-md text-foreground outline-none placeholder:text-foreground/75"
           />
           <div className="flex items-center justify-end">
             <IconButton type="button" aria-label="Send" disabled={!canSend} onClick={send} size="xs">
