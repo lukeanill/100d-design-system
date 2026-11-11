@@ -89,9 +89,6 @@ export function SkillsOverview() {
           <Command note="Run this in your project folder. It adds the skill to the project, in the folder where Claude Code looks for skills, and changes nothing else.">
             npx @lukeanill/ui install-skill
           </Command>
-          <Command note="For every project on your machine instead of one.">npx @lukeanill/ui install-skill --global</Command>
-          <Command note="For another project folder.">npx @lukeanill/ui install-skill --dir ../my-app</Command>
-          <p className="text-md opacity-60">Run it again after you update the package to refresh the skill.</p>
         </Section>
 
         <Section title="make your first theme">
