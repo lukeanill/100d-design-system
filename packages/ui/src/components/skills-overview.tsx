@@ -28,16 +28,6 @@ const GET_STARTED: { title: string; body: string }[] = [
   { title: "3. Ask a question or describe what to build", body: "Ask about themes, colours, components or screen sizes, or say what you want built. It answers from the design system, not from guesswork." },
 ]
 
-const RULES: { title: string; body: string }[] = [
-  { title: "Use the design system first", body: "Before building anything it checks whether a component, colour, style or theme setting already does the job, and copies the closest thing that exists." },
-  { title: "Never fake what the system provides", body: "No hand-made gradients, blurs, shadows, rounded corners or colours when the design system already has one." },
-  { title: "Reads your Figma first", body: "With a Figma link it reads the design in detail, points out anything that is not part of the design system, and asks its questions before it builds." },
-  { title: "Numbered points", body: "Every question, option, assumption and finding is numbered, so you can answer by number." },
-  { title: "Questions before a new build", body: "For something new it asks twelve questions first: theme, devices, what gets saved, hosting, speed, sign-in, scope and how you want to work together." },
-  { title: "Says what is missing", body: "“There is no example for that yet” is a real answer. If it does not know, it says so instead of guessing." },
-  { title: "Finishes with a report", body: "What it reused, what is new and why, what was tested and what was not, then it asks you to check it, with links and what to look for." },
-]
-
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="flex flex-col gap-10">
@@ -115,19 +105,6 @@ export function SkillsOverview() {
               </React.Fragment>
             ))}
           </ItemGroup>
-        </Section>
-
-        <Section title="how it works">
-          <div className="grid gap-4 md:grid-cols-2">
-            {RULES.map((rule) => (
-              <Card key={rule.title}>
-                <CardHeader>
-                  <CardTitle>{rule.title}</CardTitle>
-                  <CardDescription>{rule.body}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
         </Section>
       </div>
     </div>
