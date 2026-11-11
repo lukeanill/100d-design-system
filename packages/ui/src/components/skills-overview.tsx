@@ -16,7 +16,6 @@ const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] 
   { ask: "Colors, fonts and styling", file: "tokens.md", prompts: ["Tell me about the colors and fonts", "Which colors can I use, and what is each one for?"], note: "Colors, fonts, corner radius, shadows and glass effects, and what each is for." },
   { ask: "Components", file: "components.md", prompts: ["What components are available?", "Can I add my own components?"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
   { ask: "Animation", file: "animations.md", prompts: ["What animations are there?", "Which page transitions are there?"], note: "Page transitions, text effects and how things move." },
-  { ask: "Rules for designing with it", file: "guidance.md", prompts: ["What are the rules for using the design system?", "What isn't finished yet?"], note: "What to do and not to do, and what is still missing." },
   { ask: "Screen sizes", file: "breakpoints.md", prompts: ["What screen sizes does it support?", "How does it change on a phone?"], note: "How layouts change from phone to desktop." },
   { ask: "What it is built with", file: "tech.md", prompts: ["What is the design system built with?"], note: "The technology behind it." },
   { ask: "Who uses it", file: "sites.md", prompts: ["Which sites are built with the design system?"], note: "Sites built with it, kept apart from ones that only say they are." },
