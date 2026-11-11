@@ -3,40 +3,39 @@
 import * as React from "react"
 
 import { CopyButton } from "@workspace/ui/components/animate-ui/components/buttons/copy"
-import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from "@workspace/ui/components/item"
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from "@workspace/ui/components/item"
 
-/** What the design-system skill can answer, and the reference file that holds the answer. */
-const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
-  { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", prompts: ["Which themes are there, and what are their settings?", "Help me create a new theme"], note: "Fixed order, Berghain is the default." },
-  { ask: "A design token: meaning, value, where it is used", file: "tokens.md", prompts: ["Tell me about the tokens", "Which colours can I use, and what is each one for?"], note: "Colour, alpha, type, radius, shadow, motion, glass and the text styles." },
-  { ask: "A component: props, where it is used, its Storybook link", file: "components.md", prompts: ["What components are available?", "Can I add my own components?"], note: "An index, then one file per Storybook group." },
-  { ask: "An animation, transition or text effect", file: "animations.md", prompts: ["What animations does the Splitting text effect have?", "Which page transitions are there?"], note: "An index, then one file per group." },
-  { ask: "Direction, rules, what to do and not do", file: "guidance.md", prompts: ["What are the rules for theming a component?", "What are the known gaps?"], note: "Working rules, theming rules, known gaps." },
-  { ask: "Breakpoints", file: "breakpoints.md", prompts: ["What are the breakpoints?", "Which components use fixed widths?"], note: "The standard widths and the fixed widths in code." },
-  { ask: "Tech stack, commands, hosting, publishing", file: "tech.md", prompts: ["What is the tech stack?", "How do I publish the package?"], note: "" },
-  { ask: "Which sites are built with it", file: "sites.md", prompts: ["Which sites are built with the design system?"], note: "Verified and claimed, kept apart." },
-  { ask: "Building or checking anything from a Figma design", file: "figma.md", prompts: ["Build this from Figma: <link>", "Check the Themes file variables against the code"], note: "Dev mode, annotations, non-token values, questions first." },
-  { ask: "Starting a new build on the package", file: "kickoff.md", prompts: ["I'm starting a new app with this design system"], note: "Twelve questions, asked before any code." },
-  { ask: "Adding or importing a component", file: "import.md", prompts: ["Import this shadcn component into the design system: <name>"], note: "Step by step, starting with a question to you." },
-  { ask: "Anything that runs in a mobile web browser", file: "mobile-web-guidelines.md", prompts: ["Make this page work well on phones"], note: "Applied by default." },
+/** What you can ask the skill about, in a designer's words, with prompts to copy. */
+const ANSWERS: { ask: string; prompts: string[]; note: string }[] = [
+  { ask: "Themes", prompts: ["Which themes are there, and what are they like?", "Help me create a new theme"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
+  { ask: "Colours, fonts and styling", prompts: ["Tell me about the colours and fonts", "Which colours can I use, and what is each one for?"], note: "Colours, fonts, corner radius, shadows and glass effects, and what each is for." },
+  { ask: "Components", prompts: ["What components are available?", "Can I add my own components?"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
+  { ask: "Animation", prompts: ["What animations are there?", "Which page transitions are there?"], note: "Page transitions, text effects and how things move." },
+  { ask: "Rules for designing with it", prompts: ["What are the rules for using the design system?", "What isn't finished yet?"], note: "What to do and not to do, and what is still missing." },
+  { ask: "Screen sizes", prompts: ["What screen sizes does it support?", "How does it change on a phone?"], note: "How layouts change from phone to desktop." },
+  { ask: "What it is built with", prompts: ["What is the design system built with?"], note: "The technology behind it." },
+  { ask: "Who uses it", prompts: ["Which sites are built with the design system?"], note: "Sites built with it, kept apart from ones that only say they are." },
+  { ask: "Figma designs", prompts: ["Build this from my Figma design: <link>", "Check my Figma variables against what is built"], note: "Turn a design into a build, or check a build against the design." },
+  { ask: "Starting something new", prompts: ["I'm starting a new app with this design system"], note: "Before it builds anything new, it asks you a few questions about what you need." },
+  { ask: "Bringing in a component", prompts: ["Add this component to the design system: <name>"], note: "Add a component from somewhere else so it follows your theme." },
+  { ask: "Phones", prompts: ["Make this page work well on phones"], note: "Anything that runs in a mobile browser." },
 ]
 
 const GET_STARTED: { title: string; body: string }[] = [
   { title: "1. Install the skill", body: "Run the install command below in your project folder. It adds the skill to the project so Claude Code can find it." },
   { title: "2. Open your project in Claude Code", body: "Claude Code loads the skill by itself. You never switch it on or call it by name." },
-  { title: "3. Ask a question or describe what to build", body: "Ask about themes, tokens, components or breakpoints, or say what you want built. It answers from the design system, not from guesswork." },
+  { title: "3. Ask a question or describe what to build", body: "Ask about themes, colours, components or screen sizes, or say what you want built. It answers from the design system, not from guesswork." },
 ]
 
 const RULES: { title: string; body: string }[] = [
-  { title: "Use the design system first", body: "Before writing UI it looks for the component, token, glass layer or theme setting that already does the job, and copies the closest thing already built." },
-  { title: "Never fake what the system provides", body: "No hand-made gradients, blurs, shadows, radii or colours where a token, a glass weight or a component exists." },
-  { title: "Figma gate", body: "With a Figma link it reads the guide first, then dev mode specs, variables, annotations and comments, lists every non-token value, and asks its questions before building." },
+  { title: "Use the design system first", body: "Before building anything it checks whether a component, colour, style or theme setting already does the job, and copies the closest thing that exists." },
+  { title: "Never fake what the system provides", body: "No hand-made gradients, blurs, shadows, rounded corners or colours when the design system already has one." },
+  { title: "Reads your Figma first", body: "With a Figma link it reads the design in detail, points out anything that is not part of the design system, and asks its questions before it builds." },
   { title: "Numbered points", body: "Every question, option, assumption and finding is numbered, so you can answer by number." },
-  { title: "Kickoff before a new build", body: "It asks the twelve kickoff questions (theme, devices, storage, hosting, performance, sign-in, scope and how to work together) before writing code." },
-  { title: "Say what is missing", body: "“No story yet” and “not used in the app” are real answers. If a fact is not in the references or the source, it says it is unknown." },
-  { title: "Finish with a report", body: "What was reused, what is new and why, what was tested and what was not, then a request for you to QA with URLs and what to check." },
+  { title: "Questions before a new build", body: "For something new it asks twelve questions first: theme, devices, what gets saved, hosting, speed, sign-in, scope and how you want to work together." },
+  { title: "Says what is missing", body: "“There is no example for that yet” is a real answer. If it does not know, it says so instead of guessing." },
+  { title: "Finishes with a report", body: "What it reused, what is new and why, what was tested and what was not, then it asks you to check it, with links and what to look for." },
 ]
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -67,7 +66,7 @@ export function SkillsOverview() {
         <header className="flex flex-col gap-6">
           <h1 className="text-h1-pri-bold">Design System skill</h1>
           <p className="max-w-3xl text-h5-pri">
-            New to this design system? This is where to start. A skill is a set of notes that Claude Code reads before it helps you, so it already knows this design system: its themes, tokens, components and animations, and the rules for building with them. It comes with the @lukeanill/ui package, and you do not need to learn any of it first.
+            New to this design system? This is where to start. A skill is a set of notes that Claude Code reads before it helps you, so it already knows this design system: its themes, colours, fonts, components and animations, and the rules for building with them. It comes with the @lukeanill/ui package, and you do not need to learn any of it first.
           </p>
         </header>
 
@@ -94,10 +93,10 @@ export function SkillsOverview() {
           <Command note="Ask Claude to do it with you. It will point you to the Themer and take you through the choices.">Help me create a new theme</Command>
         </Section>
 
-        <Section title="what it answers">
+        <Section title="what you can ask">
           <ItemGroup>
             {ANSWERS.map((row, i) => (
-              <React.Fragment key={row.file}>
+              <React.Fragment key={row.ask}>
                 {i > 0 ? <ItemSeparator /> : null}
                 <Item>
                   <ItemContent>
@@ -112,9 +111,6 @@ export function SkillsOverview() {
                       ))}
                     </div>
                   </ItemContent>
-                  <ItemActions>
-                    <Badge variant="secondary" className="font-mono">{row.file}</Badge>
-                  </ItemActions>
                 </Item>
               </React.Fragment>
             ))}
