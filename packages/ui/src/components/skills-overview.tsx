@@ -2,7 +2,10 @@
 
 import * as React from "react"
 
-import { CopyButton } from "@workspace/ui/components/animate-ui/components/buttons/copy"
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
+
+import { Button } from "@workspace/ui/components/button"
+import { ThemedIcon } from "@workspace/ui/components/themed-icon"
 import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparator } from "@workspace/ui/components/item"
@@ -28,6 +31,28 @@ const GET_STARTED: { title: string; body: string; copy?: string; copyLabel: stri
   { title: "2. Open your project in Claude Code", body: "Claude Code loads the skill by itself. You never switch it on or call it by name.", copyLabel: "" },
   { title: "3. Ask a question or describe what to build", body: "Ask about themes, colors, components or screen sizes, or say what you want built. To try it, ask for a new theme. Claude will point you to the Themer and take you through the choices. More to ask is listed below.", copy: "Help me create a new theme", copyLabel: "Copy prompt" },
 ]
+
+/** A line of text that copies itself when you tap anywhere on it; the icon turns to a tick for a moment. */
+function CopyRow({ text, label, mono }: { text: string; label: string; mono?: boolean }) {
+  const [copied, setCopied] = React.useState(false)
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      aria-label={`${label}: ${text}`}
+      className="h-auto w-full min-w-0 justify-between gap-4 py-1.5 text-left whitespace-normal"
+      onClick={() => {
+        void navigator.clipboard?.writeText(text).then(() => {
+          setCopied(true)
+          window.setTimeout(() => setCopied(false), 2000)
+        })
+      }}
+    >
+      <span className={mono ? "min-w-0 font-mono" : "min-w-0"}>{mono ? text : `\u201c${text}\u201d`}</span>
+      <ThemedIcon phosphor={copied ? CheckIcon : CopyIcon} className="size-4" />
+    </Button>
+  )
+}
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -58,9 +83,8 @@ export function SkillsOverview() {
                   <CardDescription>{step.body}</CardDescription>
                 </CardHeader>
                 {step.copy ? (
-                  <CardContent className="flex items-center justify-between gap-4">
-                    <code className="min-w-0 overflow-x-auto font-mono text-md whitespace-nowrap">{step.copy}</code>
-                    <CopyButton content={step.copy} variant="ghost" size="xs" aria-label={step.copyLabel} />
+                  <CardContent>
+                    <CopyRow text={step.copy} label={step.copyLabel} mono />
                   </CardContent>
                 ) : null}
               </Card>
@@ -77,12 +101,9 @@ export function SkillsOverview() {
                   <ItemContent>
                     <h3 className="text-h4-pri">{row.ask}</h3>
                     {row.note ? <ItemDescription>{row.note}</ItemDescription> : null}
-                    <div className="mt-2 flex flex-col gap-1">
+                    <div className="mt-2 flex flex-col">
                       {row.prompts.map((prompt) => (
-                        <div key={prompt} className="flex items-center gap-2">
-                          <p className="text-sm">&ldquo;{prompt}&rdquo;</p>
-                          <CopyButton content={prompt} variant="ghost" size="xs" aria-label={`Copy: ${prompt}`} />
-                        </div>
+                        <CopyRow key={prompt} text={prompt} label="Copy prompt" />
                       ))}
                     </div>
                   </ItemContent>
