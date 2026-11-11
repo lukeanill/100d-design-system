@@ -22,7 +22,6 @@ const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] 
   { ask: "Figma designs", file: "figma.md", prompts: ["Build this from my Figma design: <link>", "Check my Figma variables against what is built"], note: "Turn a design into a build, or check a build against the design." },
   { ask: "Starting something new", file: "kickoff.md", prompts: ["I'm starting a new app with this design system"], note: "Before it builds anything new, it asks you a few questions about what you need." },
   { ask: "Bringing in a component", file: "import.md", prompts: ["How do I bring a component into the design system?"], note: "Add a component from somewhere else so it follows your theme." },
-  { ask: "Phones", file: "mobile-web-guidelines.md", prompts: ["Make this page work well on phones"], note: "Anything that runs in a mobile browser." },
 ]
 
 const GET_STARTED: { title: string; body: string; copy?: string; command?: boolean; copyLabel: string }[] = [
