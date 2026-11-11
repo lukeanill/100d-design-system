@@ -8,20 +8,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@work
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from "@workspace/ui/components/item"
 
 /** What the design-system skill can answer, and the reference file that holds the answer. */
-const ANSWERS: { ask: string; file: string; note: string }[] = [
-  { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", note: "Fixed order, Berghain is the default." },
-  { ask: "What a custom property is in a theme", file: "themes-resolved.md", note: "Every --name for every theme." },
-  { ask: "A design token: meaning, value, where it is used", file: "tokens.md", note: "Colour, alpha, type, radius, shadow, motion, glass and the text styles." },
-  { ask: "A component: props, where it is used, its Storybook link", file: "components.md", note: "An index, then one file per Storybook group." },
-  { ask: "An animation, transition or text effect", file: "animations.md", note: "An index, then one file per group." },
-  { ask: "Direction, rules, what to do and not do", file: "guidance.md", note: "Working rules, theming rules, known gaps." },
-  { ask: "Breakpoints", file: "breakpoints.md", note: "The standard widths and the fixed widths in code." },
-  { ask: "Tech stack, commands, hosting, publishing", file: "tech.md", note: "" },
-  { ask: "Which sites are built with it", file: "sites.md", note: "Verified and claimed, kept apart." },
-  { ask: "Building or checking anything from a Figma design", file: "figma.md", note: "Dev mode, annotations, non-token values, questions first." },
-  { ask: "Starting a new build on the package", file: "kickoff.md", note: "Twelve questions, asked before any code." },
-  { ask: "Adding or importing a component", file: "import.md", note: "Step by step, starting with a question to you." },
-  { ask: "Anything that runs in a mobile web browser", file: "mobile-web-guidelines.md", note: "Applied by default." },
+const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
+  { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", prompts: ["Which themes are there, and what are their settings?", "Which theme has glass?"], note: "Fixed order, Berghain is the default." },
+  { ask: "What a custom property is in a theme", file: "themes-resolved.md", prompts: ["What is --primary in Fabrik?", "What does --radius-button resolve to in each theme?"], note: "Every --name for every theme." },
+  { ask: "A design token: meaning, value, where it is used", file: "tokens.md", prompts: ["Tell me about the tokens", "What is --control-edge and where is it used?"], note: "Colour, alpha, type, radius, shadow, motion, glass and the text styles." },
+  { ask: "A component: props, where it is used, its Storybook link", file: "components.md", prompts: ["How do I use the Dialog? Give me its props and a link to its story", "Which components use glass?"], note: "An index, then one file per Storybook group." },
+  { ask: "An animation, transition or text effect", file: "animations.md", prompts: ["What animations does the Splitting text effect have?", "Which page transitions are there?"], note: "An index, then one file per group." },
+  { ask: "Direction, rules, what to do and not do", file: "guidance.md", prompts: ["What are the rules for theming a component?", "What are the known gaps?"], note: "Working rules, theming rules, known gaps." },
+  { ask: "Breakpoints", file: "breakpoints.md", prompts: ["What are the breakpoints?", "Which components use fixed widths?"], note: "The standard widths and the fixed widths in code." },
+  { ask: "Tech stack, commands, hosting, publishing", file: "tech.md", prompts: ["What is the tech stack?", "How do I publish the package?"], note: "" },
+  { ask: "Which sites are built with it", file: "sites.md", prompts: ["Which sites are built with the design system?"], note: "Verified and claimed, kept apart." },
+  { ask: "Building or checking anything from a Figma design", file: "figma.md", prompts: ["Build this from Figma: <link>", "Check the Themes file variables against the code"], note: "Dev mode, annotations, non-token values, questions first." },
+  { ask: "Starting a new build on the package", file: "kickoff.md", prompts: ["I'm starting a new app with this design system"], note: "Twelve questions, asked before any code." },
+  { ask: "Adding or importing a component", file: "import.md", prompts: ["Import this shadcn component into the design system: <name>"], note: "Step by step, starting with a question to you." },
+  { ask: "Anything that runs in a mobile web browser", file: "mobile-web-guidelines.md", prompts: ["Make this page work well on phones"], note: "Applied by default." },
+]
+
+const HOW_TO_ASK: { title: string; body: string }[] = [
+  { title: "Just ask in plain words", body: "In a project with the skill installed, ask Claude about the design system as you would a colleague. The skill loads by itself whenever a question or a build touches it; you do not call it by name." },
+  { title: "Ask for all of it, or one thing", body: "“Tell me about the tokens” lists every token with its meaning and where it is used. Name one (“what is --control-edge?”) or one theme (“in Fabrik”) to narrow it down." },
+  { title: "Give it your designs", body: "Paste a Figma link with a build request and it reads dev mode, variables and annotations first, flags anything that is not a token, and asks its questions before it builds." },
 ]
 
 const RULES: { title: string; body: string }[] = [
@@ -75,6 +81,19 @@ export function SkillsOverview() {
           <p className="text-md opacity-60">Run it again after you update the package to refresh the skill.</p>
         </Section>
 
+        <Section title="how to ask">
+          <div className="grid gap-4 md:grid-cols-3">
+            {HOW_TO_ASK.map((tip) => (
+              <Card key={tip.title}>
+                <CardHeader>
+                  <CardTitle>{tip.title}</CardTitle>
+                  <CardDescription>{tip.body}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </Section>
+
         <Section title="what it answers">
           <ItemGroup>
             {ANSWERS.map((row, i) => (
@@ -84,6 +103,14 @@ export function SkillsOverview() {
                   <ItemContent>
                     <ItemTitle>{row.ask}</ItemTitle>
                     {row.note ? <ItemDescription>{row.note}</ItemDescription> : null}
+                    <div className="mt-2 flex flex-col gap-1">
+                      {row.prompts.map((prompt) => (
+                        <div key={prompt} className="flex items-center gap-2">
+                          <p className="text-sm">&ldquo;{prompt}&rdquo;</p>
+                          <CopyButton content={prompt} variant="ghost" size="xs" aria-label={`Copy: ${prompt}`} />
+                        </div>
+                      ))}
+                    </div>
                   </ItemContent>
                   <ItemActions>
                     <Badge variant="secondary" className="font-mono">{row.file}</Badge>
