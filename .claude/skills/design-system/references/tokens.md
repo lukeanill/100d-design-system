@@ -257,7 +257,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 | Code name | Meaning | Applied in (sampled) |
 |---|---|---|
-| `text-md` | Body medium, regular (default control + paragraph size) | prompt-bar, tokens-theme, skills-overview |
+| `text-md` | Body medium, regular (default control + paragraph size) | prompt-bar, tokens-theme, insight-cards |
 | `text-xs-bold` | Body style, bold | — |
 | `text-xs-italic` | Body style, italic | — |
 | `text-sm-bold` | Body style, bold | — |

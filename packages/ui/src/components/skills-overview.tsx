@@ -9,7 +9,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparat
 
 /** What the design-system skill can answer, and the reference file that holds the answer. */
 const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
-  { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", prompts: ["Which themes are there, and what are their settings?", "Which theme has glass?"], note: "Fixed order, Berghain is the default." },
+  { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", prompts: ["Which themes are there, and what are their settings?", "Which theme has glass?", "Help me create a new theme"], note: "Fixed order, Berghain is the default." },
   { ask: "What a custom property is in a theme", file: "themes-resolved.md", prompts: ["What is --primary in Fabrik?", "What does --radius-button resolve to in each theme?"], note: "Every --name for every theme." },
   { ask: "A design token: meaning, value, where it is used", file: "tokens.md", prompts: ["Tell me about the tokens", "What is --control-edge and where is it used?"], note: "Colour, alpha, type, radius, shadow, motion, glass and the text styles." },
   { ask: "A component: props, where it is used, its Storybook link", file: "components.md", prompts: ["How do I use the Dialog? Give me its props and a link to its story", "Which components use glass?"], note: "An index, then one file per Storybook group." },
@@ -22,6 +22,19 @@ const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] 
   { ask: "Starting a new build on the package", file: "kickoff.md", prompts: ["I'm starting a new app with this design system"], note: "Twelve questions, asked before any code." },
   { ask: "Adding or importing a component", file: "import.md", prompts: ["Import this shadcn component into the design system: <name>"], note: "Step by step, starting with a question to you." },
   { ask: "Anything that runs in a mobile web browser", file: "mobile-web-guidelines.md", prompts: ["Make this page work well on phones"], note: "Applied by default." },
+]
+
+const GET_STARTED: { title: string; body: string }[] = [
+  { title: "1. Install the skill", body: "Run the install command below in your project folder. It adds the skill to the project so Claude Code can find it." },
+  { title: "2. Open your project in Claude Code", body: "Claude Code loads the skill by itself. You never switch it on or call it by name." },
+  { title: "3. Ask a question or describe what to build", body: "Ask about themes, tokens, components or breakpoints, or say what you want built. It answers from the design system, not from guesswork." },
+]
+
+const NEW_THEME: { title: string; body: string }[] = [
+  { title: "1. Open the Themer", body: "Go to ds.lukeai.space/themes. Choose Copy a Theme to start from one of the nine, Build from Scratch to answer its questions and set your own colours and fonts, or Get the Code for the blank template." },
+  { title: "2. Download your theme", body: "When it says your theme has been generated, press Download. You get one CSS file named after your theme, for example my-theme.css." },
+  { title: "3. Put the file in your project", body: "Save it in your project's folder. You can leave it as it is; it is safe to edit by hand later." },
+  { title: "4. Ask Claude to apply it", body: "In Claude Code, say: “Use the theme file I downloaded.” The file starts with notes written for Claude, so it knows how to import it and switch the theme on." },
 ]
 
 const HOW_TO_ASK: { title: string; body: string }[] = [
@@ -68,12 +81,25 @@ export function SkillsOverview() {
         <header className="flex flex-col gap-6">
           <h1 className="text-h1-pri-bold">Design System skill</h1>
           <p className="max-w-3xl text-h5-pri">
-            A Claude Code skill that knows this design system: the themes, tokens, components and animations, and the rules for building with them. It ships inside the package, so anyone using @lukeanill/ui can have Claude work from it.
+            New to this design system? This is where to start. A skill is a set of notes that Claude Code reads before it helps you, so it already knows this design system: its themes, tokens, components and animations, and the rules for building with them. It comes with the @lukeanill/ui package, and you do not need to learn any of it first.
           </p>
         </header>
 
+        <Section title="get started">
+          <div className="grid gap-4 md:grid-cols-3">
+            {GET_STARTED.map((step) => (
+              <Card key={step.title}>
+                <CardHeader>
+                  <CardTitle>{step.title}</CardTitle>
+                  <CardDescription>{step.body}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </Section>
+
         <Section title="install">
-          <Command note="Run in your project folder. It copies the skill to .claude/skills/design-system, where Claude Code looks for skills, and touches nothing else.">
+          <Command note="Run this in your project folder. It adds the skill to the project, in the folder where Claude Code looks for skills, and changes nothing else.">
             npx @lukeanill/ui install-skill
           </Command>
           <Command note="For every project on your machine instead of one.">npx @lukeanill/ui install-skill --global</Command>
@@ -92,6 +118,20 @@ export function SkillsOverview() {
               </Card>
             ))}
           </div>
+        </Section>
+
+        <Section title="make your first theme">
+          <div className="grid gap-4 md:grid-cols-2">
+            {NEW_THEME.map((step) => (
+              <Card key={step.title}>
+                <CardHeader>
+                  <CardTitle>{step.title}</CardTitle>
+                  <CardDescription>{step.body}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+          <Command note="Or ask Claude to do it with you. It will point you to the Themer and take you through the choices.">Help me create a new theme</Command>
         </Section>
 
         <Section title="what it answers">
@@ -132,15 +172,6 @@ export function SkillsOverview() {
               </Card>
             ))}
           </div>
-        </Section>
-
-        <Section title="keeping it current">
-          <p className="max-w-3xl text-md opacity-60">
-            Most of the references are generated from the source: the themes, tokens, components and animations. In this repository, regenerate them after changing any of those.
-          </p>
-          <Command note="Rewrites the generated references from packages/ui/src and the stories. The hand-written ones (guidance, breakpoints, tech, sites, import) are updated by hand.">
-            node .claude/skills/design-system/scripts/generate.mjs
-          </Command>
         </Section>
       </div>
     </div>
