@@ -42,6 +42,7 @@ const preview: Preview = {
           "Special FX Components",
           ["Metal"],
           "Animation",
+          "Skills",
         ],
       },
     },

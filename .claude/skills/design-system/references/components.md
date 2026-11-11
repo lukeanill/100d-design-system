@@ -4,7 +4,7 @@
 
 Every component in `packages/ui/src/components` (import `@workspace/ui/components/<path>`; published as `@lukeanill/ui/components/<path>`). Groups follow the Storybook sidebar.
 
-Total: 114 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
+Total: 116 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
 
 ## Actions
 
@@ -98,6 +98,7 @@ Detail: `references/components/general.md`
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
 | All Tokens | story only | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-all-tokens--all-tokens) | — |
+| Design System | `components/skills-overview` | [story](https://ds.lukeai.space/storybook/?path=/story/skills-design-system--design-system) | — |
 | Glass | story only | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-glass--glass) | — |
 | Theme | `components/tokens-theme` | [story](https://ds.lukeai.space/storybook/?path=/story/tokens-theme--theme) | — |
 
@@ -167,6 +168,7 @@ Detail: `references/components/not-in-storybook.md`
 | liquid-glass | `components/liquid-glass` | — | Homepage (/); Homepage preview |
 | management-bar | `components/animate-ui/components/community/management-bar` | — | — |
 | select | `components/select` | — | History page (/history) |
+| skills-copy-button | `components/skills-copy-button` | — | — |
 | stat-card | `components/ai/stat-card` | — | — |
 | theme-provider | `components/theme-provider` | — | App shell (every page) |
 | themed-card | `components/themed-card` | — | — |
