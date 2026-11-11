@@ -168,7 +168,7 @@ const codeBlockLineVariants = cva(
         default: "",
         added: "bg-muted after:content-['+']",
         removed: "bg-destructive/10 after:text-destructive after:content-['−']",
-        highlighted: "bg-muted",
+        highlighted: "bg-(--control-hover)",
       },
     },
     defaultVariants: { variant: "default" },
