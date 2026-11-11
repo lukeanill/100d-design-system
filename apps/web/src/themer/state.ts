@@ -63,8 +63,8 @@ export const badColors = (d: ThemeDraft) =>
 
 /** Names for the empty values, as the file's header lists them. */
 const LABELS: Record<(typeof LOOK_KEYS)[number], string> = {
-  background: "background", foreground: "foreground", primary: "primary", secondary: "secondary", headingFont: "heading font",
-  headingWeight: "heading weight", bodyFont: "body font", bodyWeight: "body weight", scale: "type scale", material: "texture",
+  background: "background", foreground: "foreground", primary: "primary", secondary: "secondary", headingFont: "primary font",
+  headingWeight: "primary weight", bodyFont: "body font", bodyWeight: "body weight", scale: "type scale", material: "texture",
   radius: "radius", shadow: "shadow", spacing: "spacing", iconWeight: "icons",
 }
 export const unsetLabels = (d: ThemeDraft) => {
