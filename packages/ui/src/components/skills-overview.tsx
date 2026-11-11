@@ -13,8 +13,8 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 /** What you can ask the skill about, in a designer's words, with prompts to copy. */
 const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
   { ask: "Themes", file: "themes.md", prompts: ["Which themes are there, and what are they like?", "Help me create a new theme"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
-  { ask: "Colors, fonts and styling", file: "tokens.md", prompts: ["What colors and fonts are available?", "Can I change the colors and fonts?"], note: "Colors, fonts, corner radius, shadows and glass effects, and what each is for." },
-  { ask: "Components", file: "components.md", prompts: ["What components are available?", "Can I add my own components?"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
+  { ask: "Colors, fonts and styling", file: "tokens.md", prompts: ["What colors and fonts are available?", "How do I change the colors and fonts?"], note: "Colors, fonts, corner radius, shadows and glass effects, and what each is for." },
+  { ask: "Components", file: "components.md", prompts: ["What components are available?", "How do I add my own components?"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
   { ask: "Animation", file: "animations.md", prompts: ["What animations are there?", "Which page transitions are there?"], note: "Page transitions, text effects and how things move." },
   { ask: "Screen sizes", file: "breakpoints.md", prompts: ["What screen sizes does it support?", "How does it change on a phone?"], note: "How layouts change from phone to desktop." },
   { ask: "What it is built with", file: "tech.md", prompts: ["What is the design system built with?"], note: "The technology behind it." },
