@@ -94,7 +94,7 @@ export function SkillsOverview() {
           <div className="flex flex-col gap-16">
             {(["Build with it", "Explore the system"] as const).map((group) => (
               <div key={group} className="flex flex-col gap-6">
-                <h3 className="text-h4-pri opacity-60">{group}</h3>
+                <h3 className="text-h4-pri">{group}</h3>
                 <div className="flex flex-col gap-4">
                   {ANSWERS.filter((row) => row.group === group).map((row) => (
                     <Card key={row.ask}>
