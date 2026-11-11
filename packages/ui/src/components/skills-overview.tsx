@@ -57,7 +57,7 @@ export function SkillsOverview() {
         <header className="flex flex-col gap-6">
           <h1 className="text-h1-pri-bold">Design System skill</h1>
           <p className="max-w-3xl text-h5-pri">
-            New to this design system? This is where to start. A skill is a set of notes that Claude Code reads before it helps you, so it already knows this design system: its themes, colors, fonts, components and animations, and the rules for building with them. It comes with the @lukeanill/ui package, and you do not need to learn any of it first.
+            New to this design system? This is where to start. A skill is a set of notes that Claude Code reads before it helps you, so it already knows this design system: its themes, colors, fonts, components and animations, and the rules for building with them.
           </p>
         </header>
 
