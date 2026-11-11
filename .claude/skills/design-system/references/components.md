@@ -4,7 +4,7 @@
 
 Every component in `packages/ui/src/components` (import `@workspace/ui/components/<path>`; published as `@lukeanill/ui/components/<path>`). Groups follow the Storybook sidebar.
 
-Total: 115 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
+Total: 114 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
 
 ## Actions
 
@@ -29,7 +29,6 @@ Detail: `references/components/ai.md`
 | Name | Import | Storybook | Used in web app |
 |---|---|---|---|
 | Beam Input | `components/ai/beam-input` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-beam-input--beam-input) | — |
-| Chat | `components/ai/chat-composer` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-chat--chat) | — |
 | Context Cards | `components/ai/context-cards` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-context-cards--context-cards) | — |
 | Insight Cards | `components/ai/insight-cards` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-insight-cards--insight-cards) | Explore |
 | Loading State | `components/ai/loading-state` | [story](https://ds.lukeai.space/storybook/?path=/story/components-ai-loading-state--loading-state) | — |

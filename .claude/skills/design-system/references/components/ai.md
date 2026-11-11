@@ -23,21 +23,6 @@
 | `placeholder` | `string` | no |  |
 | `onSend` | `(text: string) => void` | no |  |
 
-### Chat
-
-- File: `packages/ui/src/components/ai/chat-composer.tsx`
-- Import: `@workspace/ui/components/ai/chat-composer`
-- Storybook: [Components/AI/Chat](https://ds.lukeai.space/storybook/?path=/story/components-ai-chat--chat)
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `data` | `{ messages?: ChatMessage[] \| undefined; suggestions?: string[] \| undefined; }` | no |  |
-| `labels` | `Partial<ChatComposerLabels>` | no |  |
-| `actions` | `{ onSend?: ((text: string) => void) \| undefined; }` | no |  |
-| `className` | `string` | no |  |
-
 ### Context Cards
 
 - File: `packages/ui/src/components/ai/context-cards.tsx`

@@ -11,8 +11,8 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
 | `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, kbd, sidebar (+23) |
-| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, date-time-picker, dropdown-menu (+80) |
-| `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | combobox, map-carousel, message-bubble (+19) |
+| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, date-time-picker, dropdown-menu (+79) |
+| `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | combobox, map-carousel, message-bubble (+18) |
 | `--card-image` | `none` | The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`. | Card |
 | `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
 | `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, map-carousel, calendar (+3) |
@@ -21,14 +21,14 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, tokens-theme, map-carousel (+1) |
 | `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, theme-colors, tokens-theme (+5) |
 | `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+4) |
-| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | navigation-menu, table, message-bubble (+35) |
+| `--muted` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | navigation-menu, table, message-bubble (+34) |
 | `--muted-foreground` | `oklch(0.988 0.001 286.38 / 65%)` | Foreground at 65% opacity for quiet text. | day-timeline |
 | `--accent` | `var(--secondary)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | dropdown-menu, context-menu, menubar (+11) |
 | `--accent-foreground` | `var(--secondary-foreground)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | ripple |
 | `--destructive` | `oklch(0.702 0.189 22.23)` | Error / delete colour, from the theme's ui-color mode. | button, copy, icon (+31) |
 | `--affirmative` | `oklch(0.894 0.187 153.03)` | Success colour, from the theme's ui-color mode (Figma ui-color/affirmative). | task-rows, thinking-state, tokens-theme (+3) |
 | `--affirmative-foreground` | `var(--foreground)` | Ink on the success colour: the theme's foreground. | text on success colour |
-| `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+29) |
+| `--border` | `oklch(0.988 0.001 286.38 / 15%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | insight-cards, chart, selection-actions (+28) |
 | `--input` | `oklch(0.988 0.001 286.38 / 20%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | checkbox, bubble, button-group (+1) |
 | `--ring` | `oklch(0.988 0.001 286.38 / 70%)` | Foreground at 15% / 20% / 70% opacity for borders, input outlines and focus rings. | button, questionnaire, files (+31) |
 | `--chart-1` | `oklch(0.647 0.217 36.85)` | Chart series colours (five per theme). | chart series (recharts) |
@@ -77,7 +77,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--font-primary` | `'Migra', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. | headings, body text and secondary text |
 | `--font-body-token` | `'Akkurat LL TT', ui-sans-serif, system-ui, sans-serif` | Font family. `primary` = display face, `secondary` = secondary face, `body` = body face. | headings, body text and secondary text |
 | `--font-body-weight` | `200` | Weight of body text. | body text |
-| `--font-body-weight-action` | `400` | Weight of text inside buttons (Figma font/body/action/weight). | insight-cards, notification-list, date-time-picker (+47) |
+| `--font-body-weight-action` | `400` | Weight of text inside buttons (Figma font/body/action/weight). | insight-cards, notification-list, date-time-picker (+46) |
 | `--font-body-weight-emphasis` | `600` | Weight of bold body text (Figma font/body/emphasis/weight): 400 on Fabrik, 600 on every other theme. | map-carousel, insight-cards, amount-input (+8) |
 | `--font-primary-weight-regular` | `200` | Weight of the display (primary) face: regular / emphasis. | display headings (regular and bold) |
 | `--font-primary-weight-emphasis` | `800` | Weight of the display (primary) face: regular / emphasis. | hero |
@@ -107,9 +107,9 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--typescale-h3` | `3rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
 | `--typescale-h2` | `3.75rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
 | `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
-| `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | insight-cards, map-carousel, task-rows (+35) |
+| `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | insight-cards, map-carousel, task-rows (+34) |
 | `--text-xs--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, tokens-theme (+59) |
+| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, tokens-theme (+58) |
 | `--text-sm--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
 | `--text-base` | `var(--typescale-md)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | questionnaire, date-time-picker, split-to-edit (+7) |
 | `--text-base--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
@@ -141,16 +141,16 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
 | `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, task-rows, input-group (+11) |
-| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+33) |
+| `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+32) |
 | `--dimensions-max` | `9999px` | Fully rounded (9999px). | `radius-button` on rounded themes |
 | `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+14) |
 | `--radius-outer-max` | `0.5rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+4) |
 | `--radius-sm` | `0.25rem` | Corner radius steps; their size depends on the theme's radius setting. | menu, tokens-theme, checkbox (+3) |
 | `--radius-xs` | `0.125rem` | Corner radius steps; their size depends on the theme's radius setting. | thread-insight-card, streaming-text, context-cards (+3) |
-| `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, button, tokens-theme (+20) |
-| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, tokens-theme (+13) |
+| `--radius-md` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | sidebar, button, tokens-theme (+19) |
+| `--radius-xl` | `1rem` | Corner radius steps; their size depends on the theme's radius setting. | context-menu, dropdown-menu, tokens-theme (+12) |
 | `--shadow-2xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
-| `--shadow-xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | button, copy, icon (+12) |
+| `--shadow-xs` | `0px 4px 8px rgb(34 34 34 / 8%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | button, copy, icon (+11) |
 | `--shadow-sm` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | prompt-bar, morphing-discovery-bar, sidebar (+9) |
 | `--shadow` | `0px 12px 20px rgb(34 34 34 / 12%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | elevation of cards, menus, dialogs |
 | `--shadow-md` | `0px 20px 40px rgb(34 34 34 / 16%)` | Elevation shadows 2xs–2xl; all `none` when the theme's shadow is none. | tokens-theme, menu, map-carousel (+6) |
@@ -185,10 +185,10 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--ease-hold` | `cubic-bezier(0, 0, 0.58, 1)` | Motion token from the Figma `motion` collection. Same in every theme. | CSS transitions and the motion library |
 | `--ease-constant` | `linear` | Motion token from the Figma `motion` collection. Same in every theme. | selection-actions, task-rows, thinking-state (+1) |
 | `--motion-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing curve of the theme's Component Animations choice. | tokens-theme |
-| `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | thinking-state, selection-actions, task-rows (+14) |
+| `--motion-duration` | `0.8s` | Duration of the theme's Component Animations choice (0s for none). | thinking-state, selection-actions, task-rows (+13) |
 | `--motion-spring-bounce` | `0` | Bounce of the Springy choice (0 for the others). | `useThemeSpring()` |
-| `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | date-time-picker, prompt-bar, map-carousel (+52) |
-| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | selection-actions, sidebar, thinking-state (+48) |
+| `--motion-fast` | `var(--duration-fast)` | How long a hover takes: `--duration-fast`, or instant when motion is none. | date-time-picker, prompt-bar, map-carousel (+51) |
+| `--motion-transition-ease` | `cubic-bezier(0, 0, 0.35, 1)` | Easing for plain CSS transitions: the theme curve, or the spring sampled as `linear()`. | selection-actions, sidebar, thinking-state (+47) |
 
 ## Glass
 
@@ -206,7 +206,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--glass-select-refraction-bezel` | `28` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-select-refraction-thickness` | `40` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-select-refraction-scale` | `1` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
-| `--glass-select-refraction-specular` | `0.3` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-select-refraction-specular` | `0.2` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-overlay-surface` | `transparent` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-overlay-blur` | `40px` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-overlay-saturate` | `100%` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
@@ -215,7 +215,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--glass-overlay-refraction-bezel` | `28` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-overlay-refraction-thickness` | `40` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-overlay-refraction-scale` | `1` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
-| `--glass-overlay-refraction-specular` | `0.3` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
+| `--glass-overlay-refraction-specular` | `0.2` | Per-surface glass recipe: `layer` (switch), `blur`, `saturate`, `surface` colour. | `glass('card')` class string |
 | `--glass-popup-border` | `transparent` | Resolved glass values on a surface (set per element by the group class). | .glass-surface |
 | `--glass-popup-color` | `var(--foreground)` | Resolved glass values on a surface (set per element by the group class). | .glass-surface |
 | `--glass-popup-shadow` | `0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / …` | Resolved glass values on a surface (set per element by the group class). | .glass-surface |

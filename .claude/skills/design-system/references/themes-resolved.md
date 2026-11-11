@@ -180,7 +180,7 @@ color-scheme: light;
 --glass-select-refraction-bezel: 28;
 --glass-select-refraction-thickness: 40;
 --glass-select-refraction-scale: 1;
---glass-select-refraction-specular: 0.3;
+--glass-select-refraction-specular: 0.2;
 --glass-overlay-surface: transparent;
 --glass-overlay-blur: 40px;
 --glass-overlay-saturate: 100%;
@@ -189,10 +189,10 @@ color-scheme: light;
 --glass-overlay-refraction-bezel: 28;
 --glass-overlay-refraction-thickness: 40;
 --glass-overlay-refraction-scale: 1;
---glass-overlay-refraction-specular: 0.3;
+--glass-overlay-refraction-specular: 0.2;
 --glass-popup-border: transparent;
 --glass-popup-color: var(--foreground);
---glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 27%);
+--glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 18%);
 ```
 
 ## Illuzion (`illuzion`)
@@ -753,7 +753,7 @@ color-scheme: dark;
 --glass-select-refraction-bezel: 28;
 --glass-select-refraction-thickness: 40;
 --glass-select-refraction-scale: 1;
---glass-select-refraction-specular: 0.3;
+--glass-select-refraction-specular: 0.2;
 --glass-overlay-surface: transparent;
 --glass-overlay-blur: 40px;
 --glass-overlay-saturate: 100%;
@@ -762,10 +762,10 @@ color-scheme: dark;
 --glass-overlay-refraction-bezel: 28;
 --glass-overlay-refraction-thickness: 40;
 --glass-overlay-refraction-scale: 1;
---glass-overlay-refraction-specular: 0.3;
+--glass-overlay-refraction-specular: 0.2;
 --glass-popup-border: transparent;
 --glass-popup-color: var(--foreground);
---glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 27%);
+--glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 18%);
 ```
 
 ## Berghain (`berghain`)
@@ -944,7 +944,7 @@ color-scheme: dark;
 --glass-select-refraction-bezel: 28;
 --glass-select-refraction-thickness: 40;
 --glass-select-refraction-scale: 1;
---glass-select-refraction-specular: 0.3;
+--glass-select-refraction-specular: 0.2;
 --glass-overlay-surface: transparent;
 --glass-overlay-blur: 40px;
 --glass-overlay-saturate: 100%;
@@ -953,10 +953,10 @@ color-scheme: dark;
 --glass-overlay-refraction-bezel: 28;
 --glass-overlay-refraction-thickness: 40;
 --glass-overlay-refraction-scale: 1;
---glass-overlay-refraction-specular: 0.3;
+--glass-overlay-refraction-specular: 0.2;
 --glass-popup-border: transparent;
 --glass-popup-color: var(--foreground);
---glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 27%);
+--glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 18%);
 ```
 
 ## Savaya (`savaya`)
@@ -1135,7 +1135,7 @@ color-scheme: dark;
 --glass-select-refraction-bezel: 28;
 --glass-select-refraction-thickness: 40;
 --glass-select-refraction-scale: 1;
---glass-select-refraction-specular: 0.3;
+--glass-select-refraction-specular: 0.2;
 --glass-overlay-surface: transparent;
 --glass-overlay-blur: 40px;
 --glass-overlay-saturate: 100%;
@@ -1144,10 +1144,10 @@ color-scheme: dark;
 --glass-overlay-refraction-bezel: 28;
 --glass-overlay-refraction-thickness: 40;
 --glass-overlay-refraction-scale: 1;
---glass-overlay-refraction-specular: 0.3;
+--glass-overlay-refraction-specular: 0.2;
 --glass-popup-border: transparent;
 --glass-popup-color: var(--foreground);
---glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 27%);
+--glass-popup-shadow: 0 4px 24px rgb(0 0 0 / 18%), inset 0 0 20px -5px rgb(255 255 255 / 18%);
 ```
 
 ## Pacha (`pacha`)

@@ -101,7 +101,7 @@ _No props of its own._
 | `scaleRatio` | `number` | no | Multiplier on the displacement strength. |
 | `specularOpacity` | `number` | no |  |
 | `specularSaturation` | `number` | no |  |
-| `edge` | `number` | no | How strongly the rim catches the light, from 0 (no rim) to 1 (the Figma Glass sheet); GLASS_EDGE by default. Scales the specular highlight and the inner glow together. |
+| `edge` | `number` | no | How strongly the rim catches the light, from 0 (no rim) to 1 (the Figma Glass sheet); the glass weight sets it (soft 0.2, medium 0.3, heavy 0.4). Scales the specular highlight and the inner glow together. |
 | `tint` | `string` | no | Any CSS background: a colour or a gradient. |
 | `fallbackBlur` | `number` | no | Backdrop blur used where SVG backdrop filters are unavailable. |
 
