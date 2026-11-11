@@ -6,9 +6,9 @@ import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
 
 import { Button } from "@workspace/ui/components/button"
 import { ThemedIcon } from "@workspace/ui/components/themed-icon"
+import { Separator } from "@workspace/ui/components/separator"
 import { Badge } from "@workspace/ui/components/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparator } from "@workspace/ui/components/item"
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
 
 /** What you can ask the skill about, in a designer's words, with prompts to copy. */
 const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
@@ -75,9 +75,10 @@ export function SkillsOverview() {
         </header>
 
         <Section title="get started">
-          <div className="flex flex-col gap-4">
-            {GET_STARTED.map((step) => (
-              <Card key={step.title}>
+          <Card>
+            {GET_STARTED.map((step, i) => (
+              <React.Fragment key={step.title}>
+                {i > 0 ? <Separator /> : null}
                 <CardHeader>
                   <CardTitle>{step.title}</CardTitle>
                   <CardDescription>{step.body}</CardDescription>
@@ -87,33 +88,30 @@ export function SkillsOverview() {
                     <CopyRow text={step.copy} label={step.copyLabel} mono />
                   </CardContent>
                 ) : null}
-              </Card>
+              </React.Fragment>
             ))}
-          </div>
+          </Card>
         </Section>
 
         <Section title="what you can ask">
-          <ItemGroup>
-            {ANSWERS.map((row, i) => (
-              <React.Fragment key={row.ask}>
-                {i > 0 ? <ItemSeparator /> : null}
-                <Item>
-                  <ItemContent>
-                    <h3 className="text-h4-pri">{row.ask}</h3>
-                    {row.note ? <ItemDescription>{row.note}</ItemDescription> : null}
-                    <div className="mt-2 flex flex-col">
-                      {row.prompts.map((prompt) => (
-                        <CopyRow key={prompt} text={prompt} label="Copy prompt" />
-                      ))}
-                    </div>
-                  </ItemContent>
-                  <ItemActions className="self-start">
+          <div className="flex flex-col gap-4">
+            {ANSWERS.map((row) => (
+              <Card key={row.ask}>
+                <CardHeader>
+                  <CardTitle>{row.ask}</CardTitle>
+                  {row.note ? <CardDescription>{row.note}</CardDescription> : null}
+                  <CardAction>
                     <Badge variant="secondary" className="font-mono">{row.file}</Badge>
-                  </ItemActions>
-                </Item>
-              </React.Fragment>
+                  </CardAction>
+                </CardHeader>
+                <CardContent className="flex flex-col">
+                  {row.prompts.map((prompt) => (
+                    <CopyRow key={prompt} text={prompt} label="Copy prompt" />
+                  ))}
+                </CardContent>
+              </Card>
             ))}
-          </ItemGroup>
+          </div>
         </Section>
       </div>
     </div>
