@@ -25,8 +25,8 @@ const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] 
   { ask: "Phones", file: "mobile-web-guidelines.md", prompts: ["Make this page work well on phones"], note: "Anything that runs in a mobile browser." },
 ]
 
-const GET_STARTED: { title: string; body: string; copy?: string; copyLabel: string }[] = [
-  { title: "1. Install the skill", body: "Run this in your project folder. It adds the skill to the project, in the folder where Claude Code looks for skills, and changes nothing else.", copy: "npx @lukeanill/ui install-skill", copyLabel: "Copy command" },
+const GET_STARTED: { title: string; body: string; copy?: string; command?: boolean; copyLabel: string }[] = [
+  { title: "1. Install the skill", body: "Run this in your project folder. It adds the skill to the project, in the folder where Claude Code looks for skills, and changes nothing else.", copy: "npx @lukeanill/ui install-skill", command: true, copyLabel: "Copy command" },
   { title: "2. Open your project in Claude Code", body: "Claude Code loads the skill by itself. You never switch it on or call it by name.", copyLabel: "" },
   { title: "3. Ask a question or describe what to build", body: "Ask about themes, colors, components or screen sizes, or say what you want built. To try it, ask for a new theme. Claude will point you to the Themer and take you through the choices. More to ask is listed below.", copy: "Help me create a new theme", copyLabel: "Copy prompt" },
 ]
@@ -84,7 +84,7 @@ export function SkillsOverview() {
                 </CardHeader>
                 {step.copy ? (
                   <CardContent>
-                    <CopyRow text={step.copy} label={step.copyLabel} mono />
+                    <CopyRow text={step.copy} label={step.copyLabel} mono={step.command} />
                   </CardContent>
                 ) : null}
               </React.Fragment>
