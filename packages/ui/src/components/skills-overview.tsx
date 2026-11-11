@@ -37,12 +37,6 @@ const NEW_THEME: { title: string; body: string }[] = [
   { title: "4. Ask Claude to apply it", body: "In Claude Code, say: “Use the theme file I downloaded.” The file starts with notes written for Claude, so it knows how to import it and switch the theme on." },
 ]
 
-const HOW_TO_ASK: { title: string; body: string }[] = [
-  { title: "Just ask in plain words", body: "In a project with the skill installed, ask Claude about the design system as you would a colleague. The skill loads by itself whenever a question or a build touches it; you do not call it by name." },
-  { title: "Ask for all of it, or one thing", body: "“Tell me about the tokens” lists every token with its meaning and where it is used. Name one (“what is --control-edge?”) or one theme (“in Fabrik”) to narrow it down." },
-  { title: "Give it your designs", body: "Paste a Figma link with a build request and it reads dev mode, variables and annotations first, flags anything that is not a token, and asks its questions before it builds." },
-]
-
 const RULES: { title: string; body: string }[] = [
   { title: "Use the design system first", body: "Before writing UI it looks for the component, token, glass layer or theme setting that already does the job, and copies the closest thing already built." },
   { title: "Never fake what the system provides", body: "No hand-made gradients, blurs, shadows, radii or colours where a token, a glass weight or a component exists." },
@@ -105,19 +99,6 @@ export function SkillsOverview() {
           <Command note="For every project on your machine instead of one.">npx @lukeanill/ui install-skill --global</Command>
           <Command note="For another project folder.">npx @lukeanill/ui install-skill --dir ../my-app</Command>
           <p className="text-md opacity-60">Run it again after you update the package to refresh the skill.</p>
-        </Section>
-
-        <Section title="how to ask">
-          <div className="grid gap-4 md:grid-cols-3">
-            {HOW_TO_ASK.map((tip) => (
-              <Card key={tip.title}>
-                <CardHeader>
-                  <CardTitle>{tip.title}</CardTitle>
-                  <CardDescription>{tip.body}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
         </Section>
 
         <Section title="make your first theme">
