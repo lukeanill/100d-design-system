@@ -146,7 +146,7 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 - Import: `@workspace/ui/components/badge`
 - Storybook: [Components/Content/Badge](https://ds.lukeai.space/storybook/?path=/story/components-content-badge--badge)
 - Used in the web app: History page (/history)
-- Used by other components: none
+- Used by other components: skills-overview
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
@@ -192,7 +192,7 @@ Also accepts the props of `@base-ui/react` and standard HTML attributes.
 - Import: `@workspace/ui/components/card`
 - Storybook: [Components/Content/Card](https://ds.lukeai.space/storybook/?path=/story/components-content-card--card)
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
+- Used by other components: skills-overview
 
 **`Card`**
 
@@ -489,7 +489,7 @@ _No props of its own._
 - Import: `@workspace/ui/components/item`
 - Storybook: [Components/Content/Item](https://ds.lukeai.space/storybook/?path=/story/components-content-item--item)
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
+- Used by other components: skills-overview
 
 **`Item`**
 

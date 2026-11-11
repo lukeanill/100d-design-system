@@ -195,18 +195,6 @@ _No props of its own._
 
 Also accepts the props of `@base-ui/react` and standard HTML attributes.
 
-### skills-copy-button
-
-- File: `packages/ui/src/components/skills-copy-button.tsx`
-- Import: `@workspace/ui/components/skills-copy-button`
-- Storybook: no story yet
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: skills-overview
-
-| Prop | Type | Required | Note |
-|---|---|---|---|
-| `text` | `string` | yes |  |
-
 ### stat-card
 
 - File: `packages/ui/src/components/ai/stat-card.tsx`
@@ -253,7 +241,7 @@ _No props of its own._
 - Import: `@workspace/ui/components/themed-icon`
 - Storybook: no story yet
 - Used in the web app: Homepage preview
-- Used by other components: beam-input, fluid-tabs, native-select, prompt-bar, skills-copy-button, stat-card, streaming-text
+- Used by other components: beam-input, fluid-tabs, native-select, prompt-bar, stat-card, streaming-text
 
 | Prop | Type | Required | Note |
 |---|---|---|---|

@@ -90,7 +90,7 @@ Also accepts the props of `cmdk` and standard HTML attributes.
 - Import: `@workspace/ui/components/animate-ui/components/buttons/copy`
 - Storybook: [Components/Actions/Copy](https://ds.lukeai.space/storybook/?path=/story/components-actions-copy--copy)
 - Used in the web app: Homepage (/)
-- Used by other components: none
+- Used by other components: skills-overview
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
@@ -112,7 +112,7 @@ Also accepts the props of `the underlying element or library`, `framer-motion`, 
 - Import: `@workspace/ui/components/animate-ui/components/buttons/icon`
 - Storybook: [Components/Actions/Icon](https://ds.lukeai.space/storybook/?path=/story/components-actions-icon--icon)
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: amount-input, beam-input, insight-cards, prompt-bar, selection-actions, skills-copy-button, streaming-text
+- Used by other components: amount-input, beam-input, insight-cards, prompt-bar, selection-actions, streaming-text
 
 | Prop | Type | Required | Note |
 |---|---|---|---|

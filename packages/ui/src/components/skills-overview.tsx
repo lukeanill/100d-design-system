@@ -2,7 +2,10 @@
 
 import * as React from "react"
 
-import { CopyButton } from "@workspace/ui/components/skills-copy-button"
+import { CopyButton } from "@workspace/ui/components/animate-ui/components/buttons/copy"
+import { Badge } from "@workspace/ui/components/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from "@workspace/ui/components/item"
 
 /** What the design-system skill can answer, and the reference file that holds the answer. */
 const ANSWERS: { ask: string; file: string; note: string }[] = [
@@ -42,13 +45,13 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function Command({ children, note }: { children: string; note: string }) {
   return (
-    <div className="flex flex-col gap-3">
-      <div className="relative isolate flex items-center justify-between gap-4 rounded-(--radius-md) bg-muted px-5 py-4 outline-1 -outline-offset-[0.5px] outline-(--control-edge)">
+    <Card size="sm">
+      <CardContent className="flex items-center justify-between gap-4">
         <code className="min-w-0 overflow-x-auto font-mono text-md whitespace-nowrap">{children}</code>
-        <CopyButton text={children} />
-      </div>
-      <p className="text-md opacity-60">{note}</p>
-    </div>
+        <CopyButton content={children} variant="ghost" size="xs" aria-label="Copy command" />
+      </CardContent>
+      <CardDescription className="px-(--card-spacing)">{note}</CardDescription>
+    </Card>
   )
 }
 
@@ -73,26 +76,33 @@ export function SkillsOverview() {
         </Section>
 
         <Section title="what it answers">
-          <div className="flex flex-col">
-            {ANSWERS.map((row) => (
-              <div key={row.file} className="grid gap-2 border-t border-border py-5 md:grid-cols-[1fr_auto] md:gap-10">
-                <div className="flex flex-col gap-1">
-                  <p className="text-md">{row.ask}</p>
-                  {row.note ? <p className="text-sm opacity-60">{row.note}</p> : null}
-                </div>
-                <code className="font-mono text-sm opacity-60 md:text-right">{row.file}</code>
-              </div>
+          <ItemGroup>
+            {ANSWERS.map((row, i) => (
+              <React.Fragment key={row.file}>
+                {i > 0 ? <ItemSeparator /> : null}
+                <Item>
+                  <ItemContent>
+                    <ItemTitle>{row.ask}</ItemTitle>
+                    {row.note ? <ItemDescription>{row.note}</ItemDescription> : null}
+                  </ItemContent>
+                  <ItemActions>
+                    <Badge variant="secondary" className="font-mono">{row.file}</Badge>
+                  </ItemActions>
+                </Item>
+              </React.Fragment>
             ))}
-          </div>
+          </ItemGroup>
         </Section>
 
         <Section title="how it works">
-          <div className="grid gap-x-10 gap-y-12 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             {RULES.map((rule) => (
-              <div key={rule.title} className="flex flex-col gap-3">
-                <h3 className="text-h4-pri">{rule.title}</h3>
-                <p className="text-md opacity-60">{rule.body}</p>
-              </div>
+              <Card key={rule.title}>
+                <CardHeader>
+                  <CardTitle>{rule.title}</CardTitle>
+                  <CardDescription>{rule.body}</CardDescription>
+                </CardHeader>
+              </Card>
             ))}
           </div>
         </Section>
