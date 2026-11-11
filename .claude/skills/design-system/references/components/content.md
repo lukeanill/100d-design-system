@@ -348,6 +348,62 @@ _No props of its own._
 |---|---|---|---|
 | `data` | `{ messages?: ChatMessage[] \| undefined; }` | no |  |
 
+### Code Block
+
+- File: `packages/ui/src/components/code-block.tsx`
+- Import: `@workspace/ui/components/code-block`
+- Storybook: [Components/Content/Code Block](https://ds.lukeai.space/storybook/?path=/story/components-content-code-block--code-block) (stories: CodeBlock, Highlighted, Diff, Destructive)
+- Used in the web app: not used in apps/web (Storybook only)
+- Used by other components: none
+
+**`CodeBlock`**
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `variant` | `"default" \| "destructive"` | no |  |
+| `size` | `"sm" \| "default"` | no |  |
+
+**`CodeBlockHeader`**
+
+_No props of its own._
+
+**`CodeBlockTitle`**
+
+_No props of its own._
+
+**`CodeBlockActions`**
+
+_No props of its own._
+
+**`CodeBlockCopyButton`**
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `value` | `string \| (readonly string[] & string)` | yes |  |
+| `variant` | `"link" \| "default" \| "destructive" \| "outline" \| "secondary" \| "ghost"` | no |  |
+| `size` | `"sm" \| "default" \| "lg" \| "icon" \| "icon-sm" \| "icon-lg" \| "xs" \| "icon-xs"` | no |  |
+| `tapScale` | `number` | no |  |
+
+Also accepts the props of `@base-ui/react` and standard HTML attributes.
+
+**`CodeBlockContent`**
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `wrap` | `boolean` | no |  |
+| `lineNumbers` | `boolean` | no |  |
+| `startLine` | `number` | no |  |
+
+**`CodeBlockLine`**
+
+| Prop | Type | Required | Note |
+|---|---|---|---|
+| `variant` | `"default" \| "added" \| "removed" \| "highlighted"` | no |  |
+
+**`CodeBlockFooter`**
+
+_No props of its own._
+
 ### Data Table
 
 - File: `packages/ui/src/components/ui/table.tsx`

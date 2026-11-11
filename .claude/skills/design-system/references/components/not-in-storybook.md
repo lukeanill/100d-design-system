@@ -241,7 +241,7 @@ _No props of its own._
 - Import: `@workspace/ui/components/themed-icon`
 - Storybook: no story yet
 - Used in the web app: Homepage preview
-- Used by other components: beam-input, fluid-tabs, native-select, prompt-bar, stat-card, streaming-text
+- Used by other components: beam-input, code-block, fluid-tabs, native-select, prompt-bar, stat-card, streaming-text
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
@@ -253,7 +253,7 @@ _No props of its own._
 - Import: `@workspace/ui/components/themed-surface`
 - Storybook: no story yet
 - Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: alert, alert-dialog, attachment, beam-input, card, context-menu, dialog, dock (+17)
+- Used by other components: alert, alert-dialog, attachment, beam-input, card, code-block, context-menu, dialog (+18)
 
 | Prop | Type | Required | Note |
 |---|---|---|---|

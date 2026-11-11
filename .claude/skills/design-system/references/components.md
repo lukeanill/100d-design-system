@@ -4,7 +4,7 @@
 
 Every component in `packages/ui/src/components` (import `@workspace/ui/components/<path>`; published as `@lukeanill/ui/components/<path>`). Groups follow the Storybook sidebar.
 
-Total: 114 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
+Total: 115 entries. Storybook base: https://ds.lukeai.space/storybook/. Detail files (props, usage, link) are in `references/components/`; read only the group you need.
 
 ## Actions
 
@@ -64,6 +64,7 @@ Detail: `references/components/content.md`
 | Carousel | `components/carousel` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-carousel--carousel) | Homepage preview |
 | Chart | `components/chart` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-chart--chart) | — |
 | Chat | `components/ui/chat-conversation` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-chat--chat) | — |
+| Code Block | `components/code-block` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-code-block--code-block) | — |
 | Data Table | `components/ui/table` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-data-table--data-table) | — |
 | Files | `components/animate-ui/components/base/files` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-files--files) | — |
 | Hero | `components/ui/hero` | [story](https://ds.lukeai.space/storybook/?path=/story/components-content-hero--hero) | — |
