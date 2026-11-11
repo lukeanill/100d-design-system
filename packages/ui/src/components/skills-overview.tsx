@@ -73,7 +73,7 @@ export function SkillsOverview() {
           </p>
         </header>
 
-        <Section title="get started">
+        <Section title="Get Started">
           <Card>
             {GET_STARTED.map((step, i) => (
               <React.Fragment key={step.title}>
@@ -92,7 +92,7 @@ export function SkillsOverview() {
           </Card>
         </Section>
 
-        <Section title="what you can ask">
+        <Section title="What You Can Ask">
           <div className="flex flex-col gap-4">
             {ANSWERS.map((row) => (
               <Card key={row.ask}>
