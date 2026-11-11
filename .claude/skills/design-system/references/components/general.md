@@ -10,16 +10,6 @@
 - Used in the web app: not used in apps/web (Storybook only)
 - Used by other components: none
 
-### Design System
-
-- File: `packages/ui/src/components/skills-overview.tsx`
-- Import: `@workspace/ui/components/skills-overview`
-- Storybook: [Skills/Design System](https://ds.lukeai.space/storybook/?path=/story/skills-design-system--design-system)
-- Used in the web app: not used in apps/web (Storybook only)
-- Used by other components: none
-
-_No props of its own._
-
 ### Glass
 
 - File: `packages/ui/src/components/tokens-glass.stories.tsx`

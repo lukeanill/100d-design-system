@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { Link } from "react-router"
 import { PopoverTrigger } from "@workspace/ui/components/animate-ui/components/base/popover"
+import { Badge } from "@workspace/ui/components/badge"
 import { GlassLayer } from "@workspace/ui/components/liquid-glass"
 
 /* The link tile from the Figma HOME frame, shared by the homepage and the Themer. */
@@ -34,6 +35,9 @@ export function LinkTile({
   imageOpacity = 0.4,
   popoverTrigger,
   showArrow = true,
+  description,
+  badge,
+  inert,
 }: {
   image: string
   title: ReactNode
@@ -50,6 +54,12 @@ export function LinkTile({
   /** makes the tile the trigger of the surrounding <Popover> */
   popoverTrigger?: boolean
   showArrow?: boolean
+  /** a short line under the title, in the body face */
+  description?: ReactNode
+  /** a small label in the tile's top right corner */
+  badge?: string
+  /** a tile that only shows something: no link, no button, no popover */
+  inert?: boolean
 }) {
   const className =
     "group relative flex h-[380px] w-full max-w-[320px] flex-col justify-end overflow-clip rounded-[16px] p-8 text-left isolate transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 sm:aspect-[320/380] sm:h-auto sm:min-w-0 sm:flex-1 sm:p-4 md:p-6 lg:p-10 motion-reduce:transition-none"
@@ -69,8 +79,10 @@ export function LinkTile({
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[12px] bg-[rgba(30,30,30,0.08)] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 motion-reduce:transition-none"
       />
+      {badge && <Badge variant="secondary" className="absolute top-4 right-4 font-mono sm:top-5 sm:right-5">{badge}</Badge>}
       <div className="relative flex w-full flex-col items-start justify-end gap-4 transition-[gap] duration-300 ease-out group-hover:gap-6 motion-reduce:transition-none">
         <p className={`${MIGRA} w-full [overflow-wrap:anywhere] text-[30px] leading-[1.14] font-extralight sm:text-[clamp(18px,2.8125vw,36px)]`}>{title}</p>
+        {description && <p className={`${BODY} text-[14px] leading-[1.5] opacity-75 sm:text-[clamp(12px,1.0625vw,14px)]`}>{description}</p>}
         {(label || showArrow) && (
           <div className={`flex w-full items-center gap-2 ${label ? "" : "justify-end"}`}>
             {label && (
@@ -84,6 +96,7 @@ export function LinkTile({
       </div>
     </>
   )
+  if (inert) return <div className={className}>{content}</div>
   if (to)
     return (
       <Link to={to} className={className}>

@@ -10,14 +10,14 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 
 | Token | Default value | Meaning | Applied in (sampled) |
 |---|---|---|---|
-| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, kbd, sidebar (+24) |
-| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, date-time-picker, dropdown-menu (+80) |
+| `--background` | `oklch(0.000 0.000 0.00)` | Page surface. Everything else (card, popover) is derived from it. | avatar, kbd, sidebar (+23) |
+| `--foreground` | `oklch(0.988 0.001 286.38)` | Ink on the page; border, input, ring and muted-foreground are this colour at set opacities. | insight-cards, date-time-picker, dropdown-menu (+79) |
 | `--card` | `var(--background)` | Card surface colour. No Figma variable: it comes from the theme's texture setting (Figma settings/texture) and colour mode. Solid: the background 20% toward white (light) or black (dark). Gradient: 15% toward. Glass: the background itself, because the blur layer is the surface. See "Texture and the card" in themes.md. | combobox, map-carousel, message-bubble (+18) |
 | `--card-image` | `none` | The card's gradient fill. Only the gradient texture sets it (background 10% to 20% toward white or black, top to bottom); solid and glass leave it `none`. | Card |
 | `--card-foreground` | `var(--foreground)` | Ink on a card. The theme foreground (Figma color/semantic/card-foreground). | Card, popups |
 | `--popover` | `var(--background)` | Popup surface and text. Equals background. | select, map-carousel, calendar (+3) |
 | `--popover-foreground` | `var(--foreground)` | Popup surface and text. Equals background. | map-carousel |
-| `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+33) |
+| `--primary` | `oklch(1.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | date-time-picker, message-bubble, map-carousel (+32) |
 | `--primary-foreground` | `oklch(0.000 0.000 0.00)` | Primary brand/action colour and the ink on it. | ripple, tokens-theme, map-carousel (+1) |
 | `--secondary` | `oklch(0.333 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | button, theme-colors, tokens-theme (+5) |
 | `--secondary-foreground` | `oklch(1.000 0.000 0.00)` | Secondary colour and the ink on it. `muted` and `accent` alias secondary. | thinking-state, selection-actions, loading-state (+4) |
@@ -63,7 +63,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--alpha-blur-320-sm` | `40px` | Backdrop blur strength for popups, for pages narrower than 1200px (320) and wider (1200). | `--popup-blur` |
 | `--alpha-blur-1200-sm` | `120px` | Backdrop blur strength for popups, for pages narrower than 1200px (320) and wider (1200). | `--popup-blur` |
 | `--control-fill` | `transparent` | Fill behind a control, from material + colour mode (glass has none). | themed-surface |
-| `--control-edge` | `transparent` | A control's 1px outline (transparent for glass). | prompt-bar, morphing-discovery-bar, beam-input (+4) |
+| `--control-edge` | `transparent` | A control's 1px outline (transparent for glass). | prompt-bar, morphing-discovery-bar, beam-input (+3) |
 | `--control-hover` | `var(--alpha-light-sm)` | What a hover adds over a control. | prompt-bar, control-button, fluid-tabs (+4) |
 | `--gradient-downlight` | `linear-gradient(180deg, var(--background) 0%, var(--card) 50%, var(…` | Named gradients built from the palette. | gradient backgrounds, headline text |
 | `--gradient-rise` | `linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%)` | Named gradients built from the palette. | gradient backgrounds, headline text |
@@ -109,7 +109,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--typescale-h1` | `4.5rem` | Font size of one step of the theme's scale (sm/md/lg set). | every text style |
 | `--text-xs` | `var(--typescale-xs)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | insight-cards, map-carousel, task-rows (+34) |
 | `--text-xs--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
-| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, tokens-theme (+59) |
+| `--text-sm` | `var(--typescale-sm)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | date-time-picker, map-carousel, tokens-theme (+58) |
 | `--text-sm--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
 | `--text-base` | `var(--typescale-md)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | questionnaire, date-time-picker, split-to-edit (+7) |
 | `--text-base--line-height` | `var(--font-body-line-height)` | Text size ladder (xs to 7xl): each size maps to a typescale step and carries its line height. | text sizes |
@@ -143,7 +143,7 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `--radius` | `0.5rem` | Corner radius steps; their size depends on the theme's radius setting. | metal-surface, task-rows, input-group (+11) |
 | `--radius-lg` | `0.75rem` | Corner radius steps; their size depends on the theme's radius setting. | command, navigation-menu, message-bubble (+32) |
 | `--dimensions-max` | `9999px` | Fully rounded (9999px). | `radius-button` on rounded themes |
-| `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+15) |
+| `--radius-button` | `0.25rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+14) |
 | `--radius-outer-max` | `0.5rem` | Corner for controls (`button`) and the cap for a container's corner (`outer-max`). | menubar, prompt-bar, morphing-discovery-bar (+4) |
 | `--radius-sm` | `0.25rem` | Corner radius steps; their size depends on the theme's radius setting. | menu, tokens-theme, checkbox (+3) |
 | `--radius-xs` | `0.125rem` | Corner radius steps; their size depends on the theme's radius setting. | thread-insight-card, streaming-text, context-cards (+3) |
@@ -273,12 +273,12 @@ Counts: 207 custom properties, 49 text styles and glass surfaces.
 | `text-label-md` | A label (comp/label), 100% line | — |
 | `text-label-lg` | A label (comp/label), 100% line | — |
 | `text-h1-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
-| `text-h2-pri` | Display face, regular weight (Figma pri/reg/hN) | skills-overview, tokens-theme |
+| `text-h2-pri` | Display face, regular weight (Figma pri/reg/hN) | tokens-theme |
 | `text-h3-pri` | Display face, regular weight (Figma pri/reg/hN) | stat-card |
 | `text-h4-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
-| `text-h5-pri` | Display face, regular weight (Figma pri/reg/hN) | tokens-theme, skills-overview |
+| `text-h5-pri` | Display face, regular weight (Figma pri/reg/hN) | tokens-theme |
 | `text-h6-pri` | Display face, regular weight (Figma pri/reg/hN) | — |
-| `text-h1-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | skills-overview, tokens-theme |
+| `text-h1-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | tokens-theme |
 | `text-h2-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | — |
 | `text-h3-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | — |
 | `text-h4-pri-bold` | Display face, emphasis weight (Figma pri/emp/hN) | — |

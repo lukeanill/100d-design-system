@@ -23,7 +23,7 @@ const useReducedMotion = () => typeof window !== "undefined" && window.matchMedi
 const TILE_SPRING = { type: "spring", stiffness: 60, damping: 18 } as const
 
 /** One line of the headline, cut in after `step` lines have started. */
-function HeroLine({ step, children }: { step: number; children: string }) {
+export function HeroLine({ step, children }: { step: number; children: string }) {
   const reduce = useReducedMotion()
   return (
     <VerticalCutReveal
@@ -38,7 +38,7 @@ function HeroLine({ step, children }: { step: number; children: string }) {
 }
 
 /** A block that fades and slides in once the lines above it have started. */
-function LoadIn({ step, className, children }: { step: number; className?: string; children: ReactNode }) {
+export function LoadIn({ step, className, children }: { step: number; className?: string; children: ReactNode }) {
   const reduce = useReducedMotion()
   return (
     <Effect className={className} fade={!reduce} slide={reduce ? false : { direction: "up", offset: 40 }} delay={step * LINE * 1000} transition={TILE_SPRING}>
@@ -48,7 +48,7 @@ function LoadIn({ step, className, children }: { step: number; className?: strin
 }
 
 /** A section: 1280 wide, the 1040 column held by 120 of padding either side. */
-function Section({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Section({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <section className={`w-full ${PAD}`}>
       <div className={`mx-auto w-full max-w-[1040px] ${className}`}>{children}</div>

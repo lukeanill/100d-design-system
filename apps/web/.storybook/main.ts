@@ -1,13 +1,16 @@
 import type { StorybookConfig } from "@storybook/react-vite"
 
 const config: StorybookConfig = {
-  stories: ["../../../packages/ui/src/components/**/*.stories.tsx"],
+  stories: ["../../../packages/ui/src/components/**/*.stories.tsx", "../src/**/*.stories.tsx"],
   staticDirs: ["../public"],
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
-  addons: ["@storybook/addon-vitest", "@storybook/addon-a11y"],
+  addons: [],
+  features: {
+    sidebarOnboardingChecklist: false,
+  },
   typescript: {
     reactDocgen: "react-docgen-typescript",
   },

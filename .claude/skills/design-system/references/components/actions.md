@@ -90,7 +90,7 @@ Also accepts the props of `cmdk` and standard HTML attributes.
 - Import: `@workspace/ui/components/animate-ui/components/buttons/copy`
 - Storybook: [Components/Actions/Copy](https://ds.lukeai.space/storybook/?path=/story/components-actions-copy--copy)
 - Used in the web app: Homepage (/)
-- Used by other components: skills-overview
+- Used by other components: none
 
 | Prop | Type | Required | Note |
 |---|---|---|---|
