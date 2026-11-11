@@ -23,10 +23,10 @@ const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] 
   { ask: "Phones", file: "mobile-web-guidelines.md", prompts: ["Make this page work well on phones"], note: "Anything that runs in a mobile browser." },
 ]
 
-const GET_STARTED: { title: string; body: string }[] = [
-  { title: "1. Install the skill", body: "Run the install command below in your project folder. It adds the skill to the project so Claude Code can find it." },
-  { title: "2. Open your project in Claude Code", body: "Claude Code loads the skill by itself. You never switch it on or call it by name." },
-  { title: "3. Ask a question or describe what to build", body: "Ask about themes, colors, components or screen sizes, or say what you want built. It answers from the design system, not from guesswork." },
+const GET_STARTED: { title: string; body: string; copy?: string; copyLabel: string }[] = [
+  { title: "1. Install the skill", body: "Run this in your project folder. It adds the skill to the project, in the folder where Claude Code looks for skills, and changes nothing else.", copy: "npx @lukeanill/ui install-skill", copyLabel: "Copy command" },
+  { title: "2. Open your project in Claude Code", body: "Claude Code loads the skill by itself. You never switch it on or call it by name.", copyLabel: "" },
+  { title: "3. Ask a question or describe what to build", body: "Ask about themes, colors, components or screen sizes, or say what you want built. To try it, ask for a new theme. Claude will point you to the Themer and take you through the choices. More to ask is listed below.", copy: "Help me create a new theme", copyLabel: "Copy prompt" },
 ]
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -35,18 +35,6 @@ function Section({ title, children }: { title: string; children: React.ReactNode
       <h2 className="text-h2-pri">{title}</h2>
       {children}
     </section>
-  )
-}
-
-function Command({ children, note }: { children: string; note: string }) {
-  return (
-    <Card size="sm">
-      <CardContent className="flex items-center justify-between gap-4">
-        <code className="min-w-0 overflow-x-auto font-mono text-md whitespace-nowrap">{children}</code>
-        <CopyButton content={children} variant="ghost" size="xs" aria-label="Copy command" />
-      </CardContent>
-      <CardDescription className="px-(--card-spacing)">{note}</CardDescription>
-    </Card>
   )
 }
 
@@ -62,26 +50,22 @@ export function SkillsOverview() {
         </header>
 
         <Section title="get started">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="flex flex-col gap-4">
             {GET_STARTED.map((step) => (
               <Card key={step.title}>
                 <CardHeader>
                   <CardTitle>{step.title}</CardTitle>
                   <CardDescription>{step.body}</CardDescription>
                 </CardHeader>
+                {step.copy ? (
+                  <CardContent className="flex items-center justify-between gap-4">
+                    <code className="min-w-0 overflow-x-auto font-mono text-md whitespace-nowrap">{step.copy}</code>
+                    <CopyButton content={step.copy} variant="ghost" size="xs" aria-label={step.copyLabel} />
+                  </CardContent>
+                ) : null}
               </Card>
             ))}
           </div>
-        </Section>
-
-        <Section title="install">
-          <Command note="Run this in your project folder. It adds the skill to the project, in the folder where Claude Code looks for skills, and changes nothing else.">
-            npx @lukeanill/ui install-skill
-          </Command>
-        </Section>
-
-        <Section title="make your first theme">
-          <Command note="Ask Claude to do it with you. It will point you to the Themer and take you through the choices.">Help me create a new theme</Command>
         </Section>
 
         <Section title="what you can ask">
