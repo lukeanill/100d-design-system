@@ -30,13 +30,6 @@ const GET_STARTED: { title: string; body: string }[] = [
   { title: "3. Ask a question or describe what to build", body: "Ask about themes, tokens, components or breakpoints, or say what you want built. It answers from the design system, not from guesswork." },
 ]
 
-const NEW_THEME: { title: string; body: string }[] = [
-  { title: "1. Open the Themer", body: "Go to ds.lukeai.space/themes. Choose Copy a Theme to start from one of the nine, Build from Scratch to answer its questions and set your own colours and fonts, or Get the Code for the blank template." },
-  { title: "2. Download your theme", body: "When it says your theme has been generated, press Download. You get one CSS file named after your theme, for example my-theme.css." },
-  { title: "3. Put the file in your project", body: "Save it in your project's folder. You can leave it as it is; it is safe to edit by hand later." },
-  { title: "4. Ask Claude to apply it", body: "In Claude Code, say: “Use the theme file I downloaded.” The file starts with notes written for Claude, so it knows how to import it and switch the theme on." },
-]
-
 const RULES: { title: string; body: string }[] = [
   { title: "Use the design system first", body: "Before writing UI it looks for the component, token, glass layer or theme setting that already does the job, and copies the closest thing already built." },
   { title: "Never fake what the system provides", body: "No hand-made gradients, blurs, shadows, radii or colours where a token, a glass weight or a component exists." },
@@ -102,17 +95,7 @@ export function SkillsOverview() {
         </Section>
 
         <Section title="make your first theme">
-          <div className="grid gap-4 md:grid-cols-2">
-            {NEW_THEME.map((step) => (
-              <Card key={step.title}>
-                <CardHeader>
-                  <CardTitle>{step.title}</CardTitle>
-                  <CardDescription>{step.body}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-          <Command note="Or ask Claude to do it with you. It will point you to the Themer and take you through the choices.">Help me create a new theme</Command>
+          <Command note="Ask Claude to do it with you. It will point you to the Themer and take you through the choices.">Help me create a new theme</Command>
         </Section>
 
         <Section title="what it answers">
