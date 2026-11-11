@@ -11,16 +11,16 @@ import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
 
 /** What you can ask the skill about, in a designer's words, with prompts to copy. */
-const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
-  { ask: "Starting something new", file: "kickoff.md", prompts: ["How do I start something new?"], note: "Before it builds anything new, it asks you a few questions about what you need." },
-  { ask: "Themes", file: "themes.md", prompts: ["Tell me about the themes"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
-  { ask: "Design tokens", file: "tokens.md", prompts: ["Tell me about the design tokens"], note: "Everything you can style: colors, type, corner radius, shadows, motion and glass, and what each is for." },
-  { ask: "Components", file: "components.md", prompts: ["Tell me about the components"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
-  { ask: "Animation", file: "animations.md", prompts: ["Tell me about the animations"], note: "Page transitions, text effects and how things move." },
-  { ask: "Screen sizes", file: "breakpoints.md", prompts: ["Tell me about the screen sizes"], note: "How layouts change from phone to desktop." },
-  { ask: "What it is built with", file: "tech.md", prompts: ["Tell me what it is built with"], note: "The technology behind it." },
-  { ask: "Figma designs", file: "figma.md", prompts: ["How do I build from a Figma design?"], note: "Turn a design into a build, or check a build against the design." },
-  { ask: "Bringing in a component", file: "import.md", prompts: ["How do I bring in a component?"], note: "Add a component from somewhere else so it follows your theme." },
+const ANSWERS: { group: "Build with it" | "Explore the system"; ask: string; file: string; prompts: string[]; note: string }[] = [
+  { group: "Build with it", ask: "Starting something new", file: "kickoff.md", prompts: ["How do I start something new?"], note: "Before it builds anything new, it asks you a few questions about what you need." },
+  { group: "Build with it", ask: "Figma designs", file: "figma.md", prompts: ["How do I build from a Figma design?"], note: "Turn a design into a build, or check a build against the design." },
+  { group: "Build with it", ask: "Bringing in a component", file: "import.md", prompts: ["How do I bring in a component?"], note: "Add a component from somewhere else so it follows your theme." },
+  { group: "Explore the system", ask: "Themes", file: "themes.md", prompts: ["Tell me about the themes"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
+  { group: "Explore the system", ask: "Design tokens", file: "tokens.md", prompts: ["Tell me about the design tokens"], note: "Everything you can style: colors, type, corner radius, shadows, motion and glass, and what each is for." },
+  { group: "Explore the system", ask: "Components", file: "components.md", prompts: ["Tell me about the components"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
+  { group: "Explore the system", ask: "Animation", file: "animations.md", prompts: ["Tell me about the animations"], note: "Page transitions, text effects and how things move." },
+  { group: "Explore the system", ask: "Screen sizes", file: "breakpoints.md", prompts: ["Tell me about the screen sizes"], note: "How layouts change from phone to desktop." },
+  { group: "Explore the system", ask: "What it is built with", file: "tech.md", prompts: ["Tell me what it is built with"], note: "The technology behind it." },
 ]
 
 const GET_STARTED: { title: string; body: string; copy?: string; command?: boolean; copyLabel: string }[] = [
@@ -91,22 +91,29 @@ export function SkillsOverview() {
         </Section>
 
         <Section title="What you can ask">
-          <div className="flex flex-col gap-4">
-            {ANSWERS.map((row) => (
-              <Card key={row.ask}>
-                <CardHeader>
-                  <CardTitle>{row.ask}</CardTitle>
-                  {row.note ? <CardDescription>{row.note}</CardDescription> : null}
-                  <CardAction>
-                    <Badge variant="secondary" className="font-mono">{row.file}</Badge>
-                  </CardAction>
-                </CardHeader>
-                <CardContent className="flex flex-col">
-                  {row.prompts.map((prompt) => (
-                    <CopyRow key={prompt} text={prompt} label="Copy prompt" />
+          <div className="flex flex-col gap-16">
+            {(["Build with it", "Explore the system"] as const).map((group) => (
+              <div key={group} className="flex flex-col gap-6">
+                <h3 className="text-h4-pri opacity-60">{group}</h3>
+                <div className="flex flex-col gap-4">
+                  {ANSWERS.filter((row) => row.group === group).map((row) => (
+                    <Card key={row.ask}>
+                      <CardHeader>
+                        <CardTitle>{row.ask}</CardTitle>
+                        {row.note ? <CardDescription>{row.note}</CardDescription> : null}
+                        <CardAction>
+                          <Badge variant="secondary" className="font-mono">{row.file}</Badge>
+                        </CardAction>
+                      </CardHeader>
+                      <CardContent className="flex flex-col">
+                        {row.prompts.map((prompt) => (
+                          <CopyRow key={prompt} text={prompt} label="Copy prompt" />
+                        ))}
+                      </CardContent>
+                    </Card>
                   ))}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </Section>
