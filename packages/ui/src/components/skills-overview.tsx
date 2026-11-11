@@ -107,7 +107,7 @@ export function SkillsOverview() {
                       ))}
                     </div>
                   </ItemContent>
-                  <ItemActions>
+                  <ItemActions className="self-start">
                     <Badge variant="secondary" className="font-mono">{row.file}</Badge>
                   </ItemActions>
                 </Item>
