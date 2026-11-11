@@ -67,13 +67,13 @@ export function SkillsOverview() {
     <div className="min-h-screen w-full bg-background text-foreground">
       <div className="mx-auto flex max-w-[1280px] flex-col gap-30 px-5 py-20 sm:px-10 lg:px-30 lg:py-40">
         <header className="flex flex-col gap-6">
-          <h1 className="text-h1-pri-bold">Design System skill</h1>
+          <h1 className="text-h1-pri-bold">Design system skill</h1>
           <p className="max-w-3xl text-h5-pri">
             New to this design system? This is where to start. A skill is a set of notes that Claude Code reads before it helps you, so it already knows this design system: its themes, colors, fonts, components and animations, and the rules for building with them.
           </p>
         </header>
 
-        <Section title="Get Started">
+        <Section title="Get started">
           <Card>
             {GET_STARTED.map((step, i) => (
               <React.Fragment key={step.title}>
@@ -92,7 +92,7 @@ export function SkillsOverview() {
           </Card>
         </Section>
 
-        <Section title="What You Can Ask">
+        <Section title="What you can ask">
           <div className="flex flex-col gap-4">
             {ANSWERS.map((row) => (
               <Card key={row.ask}>
