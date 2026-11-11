@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { ArrowUp, Clock, Ellipsis, Plus } from "lucide-react"
+import { ArrowUpIcon, ClockIcon, DotsThreeIcon, PlusIcon } from "@phosphor-icons/react"
 
 import { IconButton } from "@workspace/ui/components/animate-ui/components/buttons/icon"
 import { Button } from "@workspace/ui/components/button"
+import { ThemedIcon } from "@workspace/ui/components/themed-icon"
 import { SurfaceFill } from "@workspace/ui/components/themed-surface"
 import { cn } from "@workspace/ui/lib/utils"
 
@@ -104,7 +105,7 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
   }
 
   return (
-    <div className={cn("relative isolate flex h-72 w-full max-w-95 flex-col self-start rounded-(--radius-md) shadow-xs outline-1 -outline-offset-[0.5px] outline-(--control-edge)", className)}>
+    <div className={cn("relative isolate flex h-80 w-full max-w-95 flex-col self-start rounded-(--radius-md) shadow-xs outline-1 -outline-offset-[0.5px] outline-(--control-edge)", className)}>
       <SurfaceFill />
       <div className="relative flex shrink-0 items-center justify-between border-b border-border p-1.5">
         <div className="flex items-center">
@@ -123,9 +124,9 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
           ))}
         </div>
         <div className="flex items-center gap-1">
-          {[Plus, Clock, Ellipsis].map((Icon, i) => (
-            <IconButton key={i} type="button" aria-label="Action" variant="ghost" size="xs">
-              <Icon strokeWidth={2} />
+          {[PlusIcon, ClockIcon, DotsThreeIcon].map((Icon, i) => (
+            <IconButton key={i} type="button" aria-label="Action" variant="ghost">
+              <ThemedIcon phosphor={Icon} />
             </IconButton>
           ))}
         </div>
@@ -167,8 +168,8 @@ export const ChatComposer = ({ data, labels, actions, className }: ChatComposerP
             className="bg-transparent text-md text-foreground outline-none placeholder:text-foreground/75"
           />
           <div className="flex items-center justify-end">
-            <IconButton type="button" aria-label="Send" disabled={!canSend} onClick={send} size="xs">
-              <ArrowUp strokeWidth={2.4} />
+            <IconButton type="button" aria-label="Send" disabled={!canSend} onClick={send}>
+              <ThemedIcon phosphor={ArrowUpIcon} />
             </IconButton>
           </div>
         </div>
