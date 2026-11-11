@@ -9,7 +9,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparat
 
 /** What the design-system skill can answer, and the reference file that holds the answer. */
 const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
-  { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", prompts: ["Which themes are there, and what are their settings?", "Which theme has glass?", "Help me create a new theme"], note: "Fixed order, Berghain is the default." },
+  { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", prompts: ["Which themes are there, and what are their settings?", "Help me create a new theme"], note: "Fixed order, Berghain is the default." },
   { ask: "What a custom property is in a theme", file: "themes-resolved.md", prompts: ["What is --primary in Fabrik?", "What does --radius-button resolve to in each theme?"], note: "Every --name for every theme." },
   { ask: "A design token: meaning, value, where it is used", file: "tokens.md", prompts: ["Tell me about the tokens", "What is --control-edge and where is it used?"], note: "Colour, alpha, type, radius, shadow, motion, glass and the text styles." },
   { ask: "A component: props, where it is used, its Storybook link", file: "components.md", prompts: ["How do I use the Dialog? Give me its props and a link to its story", "Which components use glass?"], note: "An index, then one file per Storybook group." },
