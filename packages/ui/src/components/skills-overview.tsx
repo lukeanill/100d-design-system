@@ -10,7 +10,6 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparat
 /** What the design-system skill can answer, and the reference file that holds the answer. */
 const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
   { ask: "The nine themes, their settings, palettes, fonts and UX direction", file: "themes.md", prompts: ["Which themes are there, and what are their settings?", "Help me create a new theme"], note: "Fixed order, Berghain is the default." },
-  { ask: "What a custom property is in a theme", file: "themes-resolved.md", prompts: ["What is --primary in Fabrik?", "What does --radius-button resolve to in each theme?"], note: "Every --name for every theme." },
   { ask: "A design token: meaning, value, where it is used", file: "tokens.md", prompts: ["Tell me about the tokens", "Which colours can I use, and what is each one for?"], note: "Colour, alpha, type, radius, shadow, motion, glass and the text styles." },
   { ask: "A component: props, where it is used, its Storybook link", file: "components.md", prompts: ["What components are available?", "Can I add my own components?"], note: "An index, then one file per Storybook group." },
   { ask: "An animation, transition or text effect", file: "animations.md", prompts: ["What animations does the Splitting text effect have?", "Which page transitions are there?"], note: "An index, then one file per group." },
