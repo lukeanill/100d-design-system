@@ -12,15 +12,15 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 
 /** What you can ask the skill about, in a designer's words, with prompts to copy. */
 const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
-  { ask: "Starting something new", file: "kickoff.md", prompts: ["I'm starting a new app with this design system"], note: "Before it builds anything new, it asks you a few questions about what you need." },
-  { ask: "Themes", file: "themes.md", prompts: ["Which themes are there, and what are they like?", "Help me create a new theme"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
-  { ask: "Design tokens", file: "tokens.md", prompts: ["What tokens are available?", "How do I use the tokens?"], note: "Everything you can style: colors, type, corner radius, shadows, motion and glass, and what each is for." },
-  { ask: "Components", file: "components.md", prompts: ["What components are available?", "How do I add my own components?"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
-  { ask: "Animation", file: "animations.md", prompts: ["What animations are there?", "Which page transitions are there?"], note: "Page transitions, text effects and how things move." },
-  { ask: "Screen sizes", file: "breakpoints.md", prompts: ["What screen sizes does it support?", "How does it change on a phone?"], note: "How layouts change from phone to desktop." },
-  { ask: "What it is built with", file: "tech.md", prompts: ["What is the design system built with?"], note: "The technology behind it." },
-  { ask: "Figma designs", file: "figma.md", prompts: ["Build this from my Figma design: <link>", "Check my Figma variables against what is built"], note: "Turn a design into a build, or check a build against the design." },
-  { ask: "Bringing in a component", file: "import.md", prompts: ["How do I bring a component into the design system?"], note: "Add a component from somewhere else so it follows your theme." },
+  { ask: "Starting something new", file: "kickoff.md", prompts: ["How do I start something new?"], note: "Before it builds anything new, it asks you a few questions about what you need." },
+  { ask: "Themes", file: "themes.md", prompts: ["Tell me about the themes"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
+  { ask: "Design tokens", file: "tokens.md", prompts: ["Tell me about the design tokens"], note: "Everything you can style: colors, type, corner radius, shadows, motion and glass, and what each is for." },
+  { ask: "Components", file: "components.md", prompts: ["Tell me about the components"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
+  { ask: "Animation", file: "animations.md", prompts: ["Tell me about the animations"], note: "Page transitions, text effects and how things move." },
+  { ask: "Screen sizes", file: "breakpoints.md", prompts: ["Tell me about the screen sizes"], note: "How layouts change from phone to desktop." },
+  { ask: "What it is built with", file: "tech.md", prompts: ["Tell me what it is built with"], note: "The technology behind it." },
+  { ask: "Figma designs", file: "figma.md", prompts: ["How do I build from a Figma design?"], note: "Turn a design into a build, or check a build against the design." },
+  { ask: "Bringing in a component", file: "import.md", prompts: ["How do I bring in a component?"], note: "Add a component from somewhere else so it follows your theme." },
 ]
 
 const GET_STARTED: { title: string; body: string; copy?: string; command?: boolean; copyLabel: string }[] = [
