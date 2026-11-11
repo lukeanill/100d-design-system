@@ -3,23 +3,24 @@
 import * as React from "react"
 
 import { CopyButton } from "@workspace/ui/components/animate-ui/components/buttons/copy"
+import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from "@workspace/ui/components/item"
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemSeparator, ItemTitle } from "@workspace/ui/components/item"
 
 /** What you can ask the skill about, in a designer's words, with prompts to copy. */
-const ANSWERS: { ask: string; prompts: string[]; note: string }[] = [
-  { ask: "Themes", prompts: ["Which themes are there, and what are they like?", "Help me create a new theme"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
-  { ask: "Colours, fonts and styling", prompts: ["Tell me about the colours and fonts", "Which colours can I use, and what is each one for?"], note: "Colours, fonts, corner radius, shadows and glass effects, and what each is for." },
-  { ask: "Components", prompts: ["What components are available?", "Can I add my own components?"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
-  { ask: "Animation", prompts: ["What animations are there?", "Which page transitions are there?"], note: "Page transitions, text effects and how things move." },
-  { ask: "Rules for designing with it", prompts: ["What are the rules for using the design system?", "What isn't finished yet?"], note: "What to do and not to do, and what is still missing." },
-  { ask: "Screen sizes", prompts: ["What screen sizes does it support?", "How does it change on a phone?"], note: "How layouts change from phone to desktop." },
-  { ask: "What it is built with", prompts: ["What is the design system built with?"], note: "The technology behind it." },
-  { ask: "Who uses it", prompts: ["Which sites are built with the design system?"], note: "Sites built with it, kept apart from ones that only say they are." },
-  { ask: "Figma designs", prompts: ["Build this from my Figma design: <link>", "Check my Figma variables against what is built"], note: "Turn a design into a build, or check a build against the design." },
-  { ask: "Starting something new", prompts: ["I'm starting a new app with this design system"], note: "Before it builds anything new, it asks you a few questions about what you need." },
-  { ask: "Bringing in a component", prompts: ["Add this component to the design system: <name>"], note: "Add a component from somewhere else so it follows your theme." },
-  { ask: "Phones", prompts: ["Make this page work well on phones"], note: "Anything that runs in a mobile browser." },
+const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] = [
+  { ask: "Themes", file: "themes.md", prompts: ["Which themes are there, and what are they like?", "Help me create a new theme"], note: "The nine themes and how each one looks and feels. Berghain is the default." },
+  { ask: "Colours, fonts and styling", file: "tokens.md", prompts: ["Tell me about the colours and fonts", "Which colours can I use, and what is each one for?"], note: "Colours, fonts, corner radius, shadows and glass effects, and what each is for." },
+  { ask: "Components", file: "components.md", prompts: ["What components are available?", "Can I add my own components?"], note: "The ready-made pieces, like buttons, menus, cards and dialogs, and how to use them." },
+  { ask: "Animation", file: "animations.md", prompts: ["What animations are there?", "Which page transitions are there?"], note: "Page transitions, text effects and how things move." },
+  { ask: "Rules for designing with it", file: "guidance.md", prompts: ["What are the rules for using the design system?", "What isn't finished yet?"], note: "What to do and not to do, and what is still missing." },
+  { ask: "Screen sizes", file: "breakpoints.md", prompts: ["What screen sizes does it support?", "How does it change on a phone?"], note: "How layouts change from phone to desktop." },
+  { ask: "What it is built with", file: "tech.md", prompts: ["What is the design system built with?"], note: "The technology behind it." },
+  { ask: "Who uses it", file: "sites.md", prompts: ["Which sites are built with the design system?"], note: "Sites built with it, kept apart from ones that only say they are." },
+  { ask: "Figma designs", file: "figma.md", prompts: ["Build this from my Figma design: <link>", "Check my Figma variables against what is built"], note: "Turn a design into a build, or check a build against the design." },
+  { ask: "Starting something new", file: "kickoff.md", prompts: ["I'm starting a new app with this design system"], note: "Before it builds anything new, it asks you a few questions about what you need." },
+  { ask: "Bringing in a component", file: "import.md", prompts: ["Add this component to the design system: <name>"], note: "Add a component from somewhere else so it follows your theme." },
+  { ask: "Phones", file: "mobile-web-guidelines.md", prompts: ["Make this page work well on phones"], note: "Anything that runs in a mobile browser." },
 ]
 
 const GET_STARTED: { title: string; body: string }[] = [
@@ -101,6 +102,9 @@ export function SkillsOverview() {
                       ))}
                     </div>
                   </ItemContent>
+                  <ItemActions>
+                    <Badge variant="secondary" className="font-mono">{row.file}</Badge>
+                  </ItemActions>
                 </Item>
               </React.Fragment>
             ))}
