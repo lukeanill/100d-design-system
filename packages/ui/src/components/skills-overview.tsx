@@ -40,7 +40,7 @@ function CopyRow({ text, label, mono }: { text: string; label: string; mono?: bo
       type="button"
       variant="ghost"
       aria-label={`${label}: ${text}`}
-      className="h-auto w-full min-w-0 justify-between gap-4 py-1.5 text-left whitespace-normal"
+      className="h-auto w-fit max-w-full min-w-0 justify-start gap-2 py-1.5 text-left whitespace-normal"
       onClick={() => {
         void navigator.clipboard?.writeText(text).then(() => {
           setCopied(true)
