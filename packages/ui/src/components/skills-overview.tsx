@@ -18,7 +18,6 @@ const ANSWERS: { ask: string; file: string; prompts: string[]; note: string }[] 
   { ask: "Animation", file: "animations.md", prompts: ["What animations are there?", "Which page transitions are there?"], note: "Page transitions, text effects and how things move." },
   { ask: "Screen sizes", file: "breakpoints.md", prompts: ["What screen sizes does it support?", "How does it change on a phone?"], note: "How layouts change from phone to desktop." },
   { ask: "What it is built with", file: "tech.md", prompts: ["What is the design system built with?"], note: "The technology behind it." },
-  { ask: "Who uses it", file: "sites.md", prompts: ["Which sites are built with the design system?"], note: "Sites built with it, kept apart from ones that only say they are." },
   { ask: "Figma designs", file: "figma.md", prompts: ["Build this from my Figma design: <link>", "Check my Figma variables against what is built"], note: "Turn a design into a build, or check a build against the design." },
   { ask: "Starting something new", file: "kickoff.md", prompts: ["I'm starting a new app with this design system"], note: "Before it builds anything new, it asks you a few questions about what you need." },
   { ask: "Bringing in a component", file: "import.md", prompts: ["How do I bring a component into the design system?"], note: "Add a component from somewhere else so it follows your theme." },
