@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from "react"
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react"
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "@workspace/ui/components/drawer"
 import { CopyButton } from "@workspace/ui/components/animate-ui/components/buttons/copy"
 import VerticalCutReveal from "@workspace/ui/components/fancy/text/vertical-cut-reveal"
@@ -20,6 +20,8 @@ const PAD = "px-[clamp(20px,9.375vw,120px)]"
 /* The page loads in from the top down: each line of the headline cuts in (Animation / Text / Reveal / Vertical Cut Reveal),
  * then the byline and the three tiles fade and slide in (Animation / Transitions / Combined), one after the other. */
 const LINE = 0.25 // seconds between one element and the next
+const BACKDROP_FADE_MS = 900 // the glow fades in first
+const TEXT_DELAY_MS = 500 // the text intro starts this long after the glow starts to fade in
 const useReducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
 const TILE_SPRING = { type: "spring", stiffness: 60, damping: 18 } as const
 
@@ -183,15 +185,22 @@ const BODY_LG = `${BODY} text-lg leading-[1.42]`
 export function Showcase() {
   const [installOpen, setInstallOpen] = useState(false)
   const ready = useHomeReady()
+  const reduce = useReducedMotion()
+  const [textGo, setTextGo] = useState(false)
+  useEffect(() => {
+    if (!ready) return
+    const t = window.setTimeout(() => setTextGo(true), reduce ? 0 : TEXT_DELAY_MS)
+    return () => window.clearTimeout(t)
+  }, [ready, reduce])
 
   return (
     <div className="relative isolate flex min-h-svh flex-col items-center overflow-x-clip bg-black text-[#fbfbfc]">
-      {/* black until the fonts and images are ready; then the glow is there from the first frame and the intro plays */}
-      <div className={ready ? "opacity-100" : "opacity-0"}>
+      {/* black until the fonts and images are ready; then the glow fades in, and the text intro starts a beat later */}
+      <div className={`transition-opacity ease-out motion-reduce:transition-none ${ready ? "opacity-100" : "opacity-0"}`} style={{ transitionDuration: `${BACKDROP_FADE_MS}ms` }}>
         <Backdrop />
       </div>
 
-      {ready && <div className="relative z-10 flex w-full flex-col gap-[clamp(40px,6.25vw,80px)]">
+      {textGo && <div className="relative z-10 flex w-full flex-col gap-[clamp(40px,6.25vw,80px)]">
         {/* Hero */}
         <Section className="flex flex-col items-center gap-10 pt-[clamp(96px,12.5vw,160px)]">
           {/* Figma 436:8485: 36 / 60 / 48 on a 1.4 line, each line pulled 6px into the next; "design system" carries a double space */}
