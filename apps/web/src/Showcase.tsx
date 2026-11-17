@@ -6,6 +6,7 @@ import { Effect } from "@workspace/ui/components/animate-ui/primitives/effects/e
 import { BODY, LinkTile, MIGRA } from "./LinkTile"
 import { Pill } from "./Pill"
 import { Preview } from "./Preview"
+import { useHomeReady } from "./home-ready"
 
 /* The homepage, built to the Figma "HOME" frame (Themes file, node 94:3232).
  * Sizes, gaps and colours are the frame's own values, not theme tokens. */
@@ -181,12 +182,16 @@ const BODY_LG = `${BODY} text-lg leading-[1.42]`
 
 export function Showcase() {
   const [installOpen, setInstallOpen] = useState(false)
+  const ready = useHomeReady()
 
   return (
     <div className="relative isolate flex min-h-svh flex-col items-center overflow-x-clip bg-black text-[#fbfbfc]">
-      <Backdrop />
+      {/* black until the fonts and images are ready; then the glow is there from the first frame and the intro plays */}
+      <div className={ready ? "opacity-100" : "opacity-0"}>
+        <Backdrop />
+      </div>
 
-      <div className="relative z-10 flex w-full flex-col gap-[clamp(40px,6.25vw,80px)]">
+      {ready && <div className="relative z-10 flex w-full flex-col gap-[clamp(40px,6.25vw,80px)]">
         {/* Hero */}
         <Section className="flex flex-col items-center gap-10 pt-[clamp(96px,12.5vw,160px)]">
           {/* Figma 436:8485: 36 / 60 / 48 on a 1.4 line, each line pulled 6px into the next; "design system" carries a double space */}
@@ -329,7 +334,7 @@ export function Showcase() {
         </Section>
 
         <Footer />
-      </div>
+      </div>}
     </div>
   )
 }

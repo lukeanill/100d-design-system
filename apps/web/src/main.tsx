@@ -6,6 +6,7 @@ import "@workspace/ui/globals.css"
 import { History } from "./History.tsx"
 import { Showcase } from "./Showcase.tsx"
 import { Versions } from "./Versions.tsx"
+import { startHomePreload } from "./home-ready"
 import { Themer } from "./themer/Themer"
 import { ThemeProvider } from "@workspace/ui/components/theme-provider"
 import { ThemePageTransition } from "@workspace/ui/components/transitions/theme-page-transition"
@@ -48,6 +49,9 @@ function Themed({ children }: { children: React.ReactNode }) {
     </ThemeProvider>
   )
 }
+
+// start the homepage's fonts and images downloading straight away, before React has drawn anything
+if (window.location.pathname === "/") startHomePreload()
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
