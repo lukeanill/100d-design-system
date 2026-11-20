@@ -18,6 +18,7 @@ import { GradientBackground } from "@workspace/ui/components/backgrounds/gradien
 import { animatedBackgroundAurora } from "@workspace/ui/components/backgrounds/gradients/animated-background-aurora"
 import { animatedBackgroundHolo } from "@workspace/ui/components/backgrounds/gradients/animated-background-holo"
 import { Pill } from "./Pill"
+import { BODY } from "./LinkTile"
 import { SlopesPhone } from "./SlopesPhone"
 import { DEFAULT_STYLING, themeScope } from "./explore/styling"
 
@@ -342,7 +343,12 @@ export function Preview() {
     <>
       {/* themes */}
       <div className="flex w-full flex-col gap-12">
-        <Pill>Preview</Pill>
+        <div className="flex flex-col gap-6">
+          <Pill>Preview</Pill>
+          <p className={`${BODY} text-lg leading-[1.42] opacity-90 max-w-[435px]`}>
+            AI can generate screens in seconds, but they all look alike and take time to refine. I’m exploring how far a prototyping system, built entirely with AI, can stretch.
+          </p>
+        </div>
         <div className="flex w-full flex-col gap-2">
           <div role="group" aria-label="Theme" className="grid grid-cols-3 gap-2 sm:flex">
             <ThemeButton id="default" label="This Theme" selected={selected === null} onClick={() => setSelected(null)} />
