@@ -205,9 +205,9 @@ export function Showcase() {
         <Section className="flex flex-col items-center gap-10 pt-[clamp(96px,12.5vw,160px)]">
           {/* Figma 436:8485: 36 / 60 / 48 on a 1.4 line, each line pulled 6px into the next; "design system" carries a double space */}
           <div className="flex flex-col items-center text-center leading-[1.4]">
-            <p className="text-h4-pri mb-[-6px]"><HeroLine step={0}>A themeable AI</HeroLine></p>
+            <p className="text-h4-pri mb-[-6px]"><HeroLine step={0}>An AI</HeroLine></p>
             <p className="text-h2-pri-bold mb-[-6px] whitespace-pre"><HeroLine step={1}>{"design  system"}</HeroLine></p>
-            <p className="text-h3-sec"><HeroLine step={2}>on a mission.</HeroLine></p>
+            <p className="text-h3-sec"><HeroLine step={2}>for better prototyping</HeroLine></p>
           </div>
           {/* Figma 436:8489: the line, then who made it, with Luke's photo and the Claude mark */}
           <div className={`${BODY} flex flex-col items-center leading-[1.6]`}>
